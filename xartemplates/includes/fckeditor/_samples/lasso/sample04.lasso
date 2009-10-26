@@ -24,71 +24,71 @@
 ]
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
-	<head>
-		<title>FCKeditor - Sample</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="robots" content="noindex, nofollow">
-		<link href="../sample.css" rel="stylesheet" type="text/css" />
-		<script type="text/javascript">
-		<!--
+    <head>
+        <title>FCKeditor - Sample</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="robots" content="noindex, nofollow">
+        <link href="../sample.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript">
+        <!--
 function FCKeditor_OnComplete( editorInstance )
 {
-	var oCombo = document.getElementById( 'cmbSkins' ) ;
+    var oCombo = document.getElementById( 'cmbSkins' ) ;
 
-	// Get the active skin.
-	var sSkin = editorInstance.Config['SkinPath'] ;
-	sSkin = sSkin.match( /[^\/]+(?=\/$)/g ) ;
+    // Get the active skin.
+    var sSkin = editorInstance.Config['SkinPath'] ;
+    sSkin = sSkin.match( /[^\/]+(?=\/$)/g ) ;
 
-	oCombo.value = sSkin ;
-	oCombo.style.visibility = '' ;
+    oCombo.value = sSkin ;
+    oCombo.style.visibility = '' ;
 }
 
 function ChangeSkin( skinName )
 {
-	window.location.href = window.location.pathname + "?Skin=" + skinName ;
+    window.location.href = window.location.pathname + "?Skin=" + skinName ;
 }
-		//-->
-		</script>
-	</head>
-	<body>
-		<h1>FCKeditor - Lasso - Sample 4</h1>
-		This sample shows how to change the editor skin.
-		<hr>
-		<table cellpadding="0" cellspacing="0" border="0">
-			<tr>
-				<td>
-					Select the skin to load:&nbsp;
-				</td>
-				<td>
-					<select id="cmbSkins" onchange="ChangeSkin(this.value);" style="VISIBILITY: hidden">
-						<option value="default" selected>Default</option>
-						<option value="office2003">Office 2003</option>
-						<option value="silver">Silver</option>
-					</select>
-				</td>
-			</tr>
-		</table>
-		<br>
-		<form action="sampleposteddata.lasso" method="post" target="_blank">
+        //-->
+        </script>
+    </head>
+    <body>
+        <h1>FCKeditor - Lasso - Sample 4</h1>
+        This sample shows how to change the editor skin.
+        <hr>
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                <td>
+                    Select the skin to load:&nbsp;
+                </td>
+                <td>
+                    <select id="cmbSkins" onchange="ChangeSkin(this.value);" style="VISIBILITY: hidden">
+                        <option value="default" selected>Default</option>
+                        <option value="office2003">Office 2003</option>
+                        <option value="silver">Silver</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <form action="sampleposteddata.lasso" method="post" target="_blank">
 [//lasso
-	include('../../fckeditor.lasso');
-	var('basepath') = response_filepath->split('_samples')->get(1);
+    include('../../fckeditor.lasso');
+    var('basepath') = response_filepath->split('_samples')->get(1);
 
-	var('myeditor') = fck_editor(
-		-instancename='FCKeditor1',
-		-basepath=$basepath,
-		-initialvalue='<p>This is some <strong>sample text</strong>. You are using <a href="http://www.fckeditor.net/">FCKeditor</a>.</p>'
-	);
+    var('myeditor') = fck_editor(
+        -instancename='FCKeditor1',
+        -basepath=$basepath,
+        -initialvalue='<p>This is some <strong>sample text</strong>. You are using <a href="http://www.fckeditor.net/">FCKeditor</a>.</p>'
+    );
 
-	if(action_param('Skin'));
-		var('skin') = (String_ReplaceRegExp: action_param('Skin'), -find='[^a-zA-Z0-9]', -replace='');
-		$myeditor->config = array('SkinPath' = $basepath + 'editor/skins/' + $skin + '/');
-	/if;
+    if(action_param('Skin'));
+        var('skin') = (String_ReplaceRegExp: action_param('Skin'), -find='[^a-zA-Z0-9]', -replace='');
+        $myeditor->config = array('SkinPath' = $basepath + 'editor/skins/' + $skin + '/');
+    /if;
 
-	$myeditor->create;
+    $myeditor->create;
 ]
-			<br>
-			<input type="submit" value="Submit">
-		</form>
-	</body>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
 </html>

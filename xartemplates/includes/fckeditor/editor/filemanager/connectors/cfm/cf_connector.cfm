@@ -52,7 +52,7 @@
 <cffunction name="DoResponse" output="true" returntype="void">
 
 	<!--- Get the main request informaiton. --->
-	<cfset var sCommand	= "#URL.Command#" >
+	<cfset var sCommand	= "#URL.Command#">
 	<cfset var sResourceType	= URL.Type >
 	<cfset var sCurrentFolder	= GetCurrentFolder() >
 

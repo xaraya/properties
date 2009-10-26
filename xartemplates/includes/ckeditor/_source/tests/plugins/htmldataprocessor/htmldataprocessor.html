@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>Plugin: htmldataprocessor</title>
-	<link rel="stylesheet" type="text/css" href="../../test.css" />
+	<link rel="stylesheet" type="text/css" href="../../test.css"/>
 	<script type="text/javascript" src="../../../ckeditor.js"></script>
 	<script type="text/javascript" src="../../test.js"></script>
 	<script type="text/javascript">
@@ -61,7 +61,7 @@ CKEDITOR.test.addTestCase( testCase = (function()
 
 			// IE adds the XML namespace tag.
 			if ( CKEDITOR.env.ie )
-				assert.areSame( '<?xml:namespace prefix="x" /><x:x>Test</x:x>', getDataProcessor().toDataFormat( element.getHtml() ) );
+				assert.areSame( '<?xml:namespace prefix="x"/><x:x>Test</x:x>', getDataProcessor().toDataFormat( element.getHtml() ) );
 			else
 				assert.areSame( '<x:x>Test</x:x>', getDataProcessor().toDataFormat( element.getHtml() ) );
 		},
@@ -79,7 +79,7 @@ CKEDITOR.test.addTestCase( testCase = (function()
 
 			// IE adds the XML namespace tag.
 			if ( CKEDITOR.env.ie )
-				assert.areSame( '<?xml:namespace prefix="x" /><x:x></x:x><p>Test</p>', getDataProcessor().toDataFormat( element.getHtml() ) );
+				assert.areSame( '<?xml:namespace prefix="x"/><x:x></x:x><p>Test</p>', getDataProcessor().toDataFormat( element.getHtml() ) );
 			else
 				assert.areSame( '<x:x></x:x><p>Test</p>', getDataProcessor().toDataFormat( element.getHtml() ) );
 		},
@@ -95,20 +95,20 @@ CKEDITOR.test.addTestCase( testCase = (function()
 
 			// IE adds the XML namespace tag.
 			if ( CKEDITOR.env.ie )
-				assert.areSame( '<p class="MsoNormal"><b><i><span lang="EN-US"><?xml:namespace prefix="o" /><o:p>Test</o:p></span></i></b></p>', getDataProcessor().toDataFormat( element.getHtml() ) );
+				assert.areSame( '<p class="MsoNormal"><b><i><span lang="EN-US"><?xml:namespace prefix="o"/><o:p>Test</o:p></span></i></b></p>', getDataProcessor().toDataFormat( element.getHtml() ) );
 			else
 				assert.areSame( '<p class="MsoNormal"><b><i><span lang="EN-US"><o:p>Test</o:p></span></i></b></p>', getDataProcessor().toDataFormat( element.getHtml() ) );
 		},
 
 		test_toDataFormat_ticket_3036_1 : function()
 		{
-			assert.areSame( '<input autocomplete="off" checked="checked" type="checkbox" />',
+			assert.areSame( '<input autocomplete="off" checked="checked" type="checkbox"/>',
 				getDataProcessor().toDataFormat( '<INPUT type="checkbox" CHECKED  autocomplete=off>' ) );
 		},
 
 		test_toDataFormat_ticket_3036_2 : function()
 		{
-			assert.areSame( '<input autocomplete="off" type="checkbox" unknown="" />',
+			assert.areSame( '<input autocomplete="off" type="checkbox" unknown=""/>',
 				getDataProcessor().toDataFormat( '<INPUT type="checkbox" UNKNOWN  autocomplete=off>' ) );
 		},
 
@@ -349,7 +349,7 @@ CKEDITOR.test.addTestCase( testCase = (function()
 include ("head.html"); ?></td></tr></tbody></table><noscript>Your browser doesn't support JavaScript</noscript></textarea>
 	<textarea id="_TEXTAREA_3591"><object><param /><param /><embed></embed></object></textarea>
 	<textarea id="_TEXTAREA_3591_protected"><cke:object><cke:param></cke:param><cke:param></cke:param><cke:embed></cke:embed></cke:object></textarea>
-	<textarea id="_TEXTAREA_3591_protected_ie"><?xml:namespace prefix="cke" /><cke:object><cke:param></cke:param><cke:param></cke:param><cke:embed></cke:embed></cke:object></textarea>
+	<textarea id="_TEXTAREA_3591_protected_ie"><?xml:namespace prefix="cke"/><cke:object><cke:param></cke:param><cke:param></cke:param><cke:embed></cke:embed></cke:object></textarea>
  	<textarea id="_TEXTAREA_3801_1"><!-- foo --><p>bar</p></textarea>
  	<textarea id="_TEXTAREA_3801_2"><p><!-- foo -->bar</p></textarea>
  	<textarea id="_TEXTAREA_3801_3"><!-- foo --><p><!-- foo -->bar</p></textarea>
@@ -381,6 +381,6 @@ include ("head.html"); ?></td></tr></tbody></table><noscript>Your browser doesn'
 		//--&gt;&lt;/script&gt;
 		ddd';
 	?&gt;html</textarea>
-	<textarea id="_TEXTAREA_3591_2"><object classid="clsid"><param name="movie" value="movie.swf" /><embed src="movie.swf" type="application/x-shockwave-flash"></embed></object></textarea>
+	<textarea id="_TEXTAREA_3591_2"><object classid="clsid"><param name="movie" value="movie.swf"/><embed src="movie.swf" type="application/x-shockwave-flash"></embed></object></textarea>
 </body>
 </html>

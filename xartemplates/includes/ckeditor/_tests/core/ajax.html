@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>CKEDITOR.ajax</title>
-	<link rel="stylesheet" type="text/css" href="../test.css" />
+	<link rel="stylesheet" type="text/css" href="../test.css"/>
 	<script type="text/javascript" src="../../ckeditor.js"></script>
 	<script type="text/javascript" src="../../_source/core/loader.js"></script>
 	<script type="text/javascript" src="../test.js"></script>
@@ -137,7 +137,7 @@ CKEDITOR.test.addTestCase( (function()
 
 		test_parseXml : function()
 		{
-			var data = new CKEDITOR.xml( '<?xml version="1.0" encoding="utf-8" ?><list><item id="test1" /><item id="test2" /></list>' );
+			var data = new CKEDITOR.xml( '<?xml version="1.0" encoding="utf-8" ?><list><item id="test1"/><item id="test2"/></list>' );
 			assert.isInstanceOf( CKEDITOR.xml, data );
 			assert.isNotNull( data.selectSingleNode( '//list/item' ), 'The loaded data doesn\'t match (null)' );
 			assert.isNotUndefined( data.selectSingleNode( '//list/item' ), 'The loaded data doesn\'t match (undefined)' );
@@ -145,7 +145,7 @@ CKEDITOR.test.addTestCase( (function()
 
 		test_parseXml_nbsp : function()
 		{
-			var data = new CKEDITOR.xml( '<?xml version="1.0" encoding="utf-8" ?><list><item id="test1">&nbsp;</item><item id="test2" /></list>' );
+			var data = new CKEDITOR.xml( '<?xml version="1.0" encoding="utf-8" ?><list><item id="test1">&nbsp;</item><item id="test2"/></list>' );
 			assert.isInstanceOf( CKEDITOR.xml, data );
 			assert.isNotNull( data.selectSingleNode( '//list/item' ), 'The loaded data doesn\'t match (null)' );
 			assert.isNotUndefined( data.selectSingleNode( '//list/item' ), 'The loaded data doesn\'t match (undefined)' );

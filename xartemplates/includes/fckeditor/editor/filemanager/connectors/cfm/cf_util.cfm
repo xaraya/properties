@@ -68,7 +68,7 @@ detectionLevel:
 		<cfif REQUEST.CFVersion gte 8>
 			<cfset objImage = ImageRead(ARGUMENTS.filePath) >
 			<cfset imageInfo = ImageInfo(objImage)>
-			<!--- <cfimage action="info" source="#ARGUMENTS.filePath#" structName="imageInfo" /> --->
+			<!--- <cfimage action="info" source="#ARGUMENTS.filePath#" structName="imageInfo"/> --->
 		<cfelse>
 			<cfset imageCFC = createObject("component", "image")>
 			<cfset imageInfo = imageCFC.getImageInfo("", ARGUMENTS.filePath)>

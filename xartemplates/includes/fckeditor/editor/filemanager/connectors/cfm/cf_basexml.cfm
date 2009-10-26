@@ -37,7 +37,7 @@
 	<cfset SetXmlHeaders()>
 	<cfoutput><?xml version="1.0" encoding="utf-8" ?></cfoutput>
 	<cfoutput><Connector command="#ARGUMENTS.command#" resourceType="#ARGUMENTS.resourceType#"></cfoutput>
-	<cfoutput><CurrentFolder path="#HTMLEditFormat(ARGUMENTS.currentFolder)#" url="#HTMLEditFormat( GetUrlFromPath( resourceType, currentFolder, command ) )#" /></cfoutput>
+	<cfoutput><CurrentFolder path="#HTMLEditFormat(ARGUMENTS.currentFolder)#" url="#HTMLEditFormat( GetUrlFromPath( resourceType, currentFolder, command ) )#"/></cfoutput>
 	<cfset REQUEST.HeaderSent = true>
 </cffunction>
 
@@ -65,8 +65,8 @@
 	<cfargument name="number" required="true" type="Numeric">
 	<cfargument name="text" required="true">
 	<cfif Len(ARGUMENTS.text)>
-		<cfoutput><Error number="#ARGUMENTS.number#" text="#htmleditformat(ARGUMENTS.text)#" /></cfoutput>
+		<cfoutput><Error number="#ARGUMENTS.number#" text="#htmleditformat(ARGUMENTS.text)#"/></cfoutput>
 	<cfelse>
-		<cfoutput><Error number="#ARGUMENTS.number#" /></cfoutput>
+		<cfoutput><Error number="#ARGUMENTS.number#"/></cfoutput>
 	</cfif>
 </cffunction>

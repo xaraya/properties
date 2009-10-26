@@ -130,8 +130,8 @@ else
 	</cfscript>
 
 	<cfoutput>
-	<input type="hidden" id="#attributes.instanceName#" name="#attributes.instanceName#" value="#HTMLEditFormat(attributes.value)#" style="display:none" />
-	<input type="hidden" id="#attributes.instanceName#___Config" value="#sConfig#" style="display:none" />
+	<input type="hidden" id="#attributes.instanceName#" name="#attributes.instanceName#" value="#HTMLEditFormat(attributes.value)#" style="display:none"/>
+	<input type="hidden" id="#attributes.instanceName#___Config" value="#sConfig#" style="display:none"/>
 	<iframe id="#attributes.instanceName#___Frame" src="#sURL#" width="#attributes.width#" height="#attributes.height#" frameborder="0" scrolling="no"></iframe>
 	</cfoutput>
 

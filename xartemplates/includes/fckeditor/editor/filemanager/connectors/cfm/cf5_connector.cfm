@@ -114,22 +114,22 @@
 
 <cfif not config.enabled>
 
-	<cfset xmlContent = "<Error number=""1"" text=""This connector is disabled. Please check the 'editor/filemanager/connectors/cfm/config.cfm' file"" />">
+	<cfset xmlContent = "<Error number=""1"" text=""This connector is disabled. Please check the 'editor/filemanager/connectors/cfm/config.cfm' file""/>">
 
 <cfelseif find("..",url.currentFolder) or find("\",url.currentFolder) or REFind('(/\.)|(//)|[[:cntrl:]]|([\\:\*\?\"<>])', url.currentFolder)>
 
 	<cfset invalidName = true>
-	<cfset xmlContent = "<Error number=""102"" />">
+	<cfset xmlContent = "<Error number=""102""/>">
 
 <cfelseif isDefined("Config.ConfigAllowedCommands") and not ListFind(Config.ConfigAllowedCommands, url.command)>
 
 	<cfset invalidName = true>
-	<cfset xmlContent = '<Error number="1" text="The &quot;' & HTMLEditFormat(url.command) & '&quot; command isn''t allowed" />'>
+	<cfset xmlContent = '<Error number="1" text="The &quot;' & HTMLEditFormat(url.command) & '&quot; command isn''t allowed"/>'>
 
 <cfelseif isDefined("Config.ConfigAllowedTypes") and not ListFind(Config.ConfigAllowedTypes, url.type)>
 
 	<cfset invalidName = true>
-	<cfset xmlContent = '<Error number="1" text="Invalid type specified" />'>
+	<cfset xmlContent = '<Error number="1" text="Invalid type specified"/>'>
 
 </cfif>
 
@@ -185,7 +185,7 @@
 	<cfcatch type="any">
 
 		<!--- this should only occur as a result of a permissions problem --->
-		<cfset xmlContent = "<Error number=""103"" />">
+		<cfset xmlContent = "<Error number=""103""/>">
 
 	</cfcatch>
 
@@ -224,7 +224,7 @@
 					if( not compareNoCase( qDir.type[i], "FILE" ))
 						break;
 					if( not listFind(".,..", qDir.name[i]) )
-						folders = folders & '<Folder name="#HTMLEditFormat( qDir.name[i] )#" />';
+						folders = folders & '<Folder name="#HTMLEditFormat( qDir.name[i] )#"/>';
 					i=i+1;
 				}
 
@@ -249,10 +249,10 @@
 				files = "";
 				while( i lte qDir.recordCount ) {
 					if( not compareNoCase( qDir.type[i], "DIR" ) and not listFind(".,..", qDir.name[i]) ) {
-						folders = folders & '<Folder name="#HTMLEditFormat(qDir.name[i])#" />';
+						folders = folders & '<Folder name="#HTMLEditFormat(qDir.name[i])#"/>';
 					} else if( not compareNoCase( qDir.type[i], "FILE" ) ) {
 						fileSizeKB = round(qDir.size[i] / 1024);
-						files = files & '<File name="#HTMLEditFormat(qDir.name[i])#" size="#IIf( fileSizeKB GT 0, DE( fileSizeKB ), 1)#" />';
+						files = files & '<File name="#HTMLEditFormat(qDir.name[i])#" size="#IIf( fileSizeKB GT 0, DE( fileSizeKB ), 1)#"/>';
 					}
 					i=i+1;
 				}
@@ -306,7 +306,7 @@
 				</cftry>
 			</cfif>
 
-			<cfset xmlContent = xmlContent & '<Error number="#errorNumber#" />'>
+			<cfset xmlContent = xmlContent & '<Error number="#errorNumber#"/>'>
 
 		</cfcase>
 
@@ -324,7 +324,7 @@
 	}
 	else {
 		xmlHeader = xmlHeader & '<Connector command="#url.command#" resourceType="#url.type#">';
-		xmlHeader = xmlHeader & '<CurrentFolder path="#url.currentFolder#" url="#resourceTypeUrl##url.currentFolder#" />';
+		xmlHeader = xmlHeader & '<CurrentFolder path="#url.currentFolder#" url="#resourceTypeUrl##url.currentFolder#"/>';
 	}
 	xmlFooter = '</Connector>';
 </cfscript>

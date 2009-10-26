@@ -49,7 +49,7 @@
 			<cfthrow message="Invalid temporary directory: #sTempDir#">
 		</cfif>
 
-		<cffile action="UPLOAD" filefield="NewFile" destination="#sTempDir#" nameconflict="makeunique" mode="0755" />
+		<cffile action="UPLOAD" filefield="NewFile" destination="#sTempDir#" nameconflict="makeunique" mode="0755"/>
 		<cfset sTempFilePath = CFFILE.ServerDirectory & REQUEST.fs & CFFILE.ServerFile>
 
 		<!--- Map the virtual path to the local server path. --->
@@ -156,7 +156,7 @@
 		{
 			if( compareNoCase( qDir.type[i], "FILE" ) and not listFind( ".,..", qDir.name[i] ) )
 			{
-				folders = folders & '<Folder name="#HTMLEditFormat( qDir.name[i] )#" />' ;
+				folders = folders & '<Folder name="#HTMLEditFormat( qDir.name[i] )#"/>' ;
 			}
 			i = i + 1;
 		}
@@ -181,12 +181,12 @@
 		{
 			if( not compareNoCase( qDir.type[i], "DIR" ) and not listFind( ".,..", qDir.name[i] ) )
 			{
-				folders = folders & '<Folder name="#HTMLEditFormat(qDir.name[i])#" />' ;
+				folders = folders & '<Folder name="#HTMLEditFormat(qDir.name[i])#"/>' ;
 			}
 			else if( not compareNoCase( qDir.type[i], "FILE" ) )
 			{
 				fileSizeKB = round(qDir.size[i] / 1024) ;
-				files = files & '<File name="#HTMLEditFormat(qDir.name[i])#" size="#IIf( fileSizeKB GT 0, DE( fileSizeKB ), 1)#" />' ;
+				files = files & '<File name="#HTMLEditFormat(qDir.name[i])#" size="#IIf( fileSizeKB GT 0, DE( fileSizeKB ), 1)#"/>' ;
 			}
 			i = i + 1 ;
 		}
@@ -200,7 +200,7 @@
 	<cfargument name="currentFolder" required="true" type="string">
 
 	<cfset var sNewFolderName = url.newFolderName >
-	<cfset var sServerDir = "" >
+	<cfset var sServerDir = "">
 	<cfset var errorNumber = 0>
 	<cfset var sErrorMsg = "">
 	<cfset var currentFolderPath = ServerMapFolder( ARGUMENTS.resourceType, ARGUMENTS.currentFolder, 'CreateFolder' )>
@@ -236,5 +236,5 @@
 		</cftry>
 	</cfif>
 
-	<cfoutput><Error number="#errorNumber#" /></cfoutput>
+	<cfoutput><Error number="#errorNumber#"/></cfoutput>
 </cffunction>

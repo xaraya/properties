@@ -1,4 +1,4 @@
-﻿<%@  codepage="65001" language="VBScript" %>
+<%@  codepage="65001" language="VBScript" %>
 <% Option Explicit %>
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
@@ -28,9 +28,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>FCKeditor - Sample</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="robots" content="noindex, nofollow" />
-	<link href="../sample.css" rel="stylesheet" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="robots" content="noindex, nofollow"/>
+	<link href="../sample.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 	<h1>
@@ -56,7 +56,7 @@ oFCKeditor.Value	= "<p>This is some <strong>sample text</strong>. You are using 
 oFCKeditor.Create "FCKeditor1"
 		%>
 		<br />
-		<input type="submit" value="Submit" />
+		<input type="submit" value="Submit"/>
 	</form>
 </body>
 </html>
