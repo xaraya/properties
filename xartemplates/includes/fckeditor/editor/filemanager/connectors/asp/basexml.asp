@@ -1,6 +1,6 @@
-<%
+﻿<%
  ' FCKeditor - The text editor for Internet - http://www.fckeditor.net
- ' Copyright (C) 2003-2009 Frederico Caldeira Knabben
+ ' Copyright (C) 2003-2010 Frederico Caldeira Knabben
  '
  ' == BEGIN LICENSE ==
  '
@@ -47,7 +47,7 @@ Sub CreateXmlHeader( command, resourceType, currentFolder, url )
 	Response.Write "<Connector command=""" & command & """ resourceType=""" & resourceType & """>"
 
 	' Add the current folder node.
-	Response.Write "<CurrentFolder path=""" & ConvertToXmlAttribute( currentFolder ) & """ url=""" & ConvertToXmlAttribute( url ) & """/>"
+	Response.Write "<CurrentFolder path=""" & ConvertToXmlAttribute( currentFolder ) & """ url=""" & ConvertToXmlAttribute( url ) & """ />"
 End Sub
 
 Sub CreateXmlFooter()
@@ -61,9 +61,9 @@ Sub SendError( number, text )
 	Response.Write "<?xml version=""1.0"" encoding=""utf-8"" ?>"
 
 	If text <> "" then
-	Response.Write "<Connector><Error number=""" & number & """ text=""" & Server.HTMLEncode( text ) & """/></Connector>"
+	Response.Write "<Connector><Error number=""" & number & """ text=""" & Server.HTMLEncode( text ) & """ /></Connector>"
 	else
-	Response.Write "<Connector><Error number=""" & number & """/></Connector>"
+	Response.Write "<Connector><Error number=""" & number & """ /></Connector>"
 	end if
 
 	Response.End

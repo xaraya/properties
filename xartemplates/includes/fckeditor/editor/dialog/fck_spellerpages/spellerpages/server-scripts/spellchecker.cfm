@@ -104,7 +104,7 @@ others files in certain cases.
 <cfoutput><html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="#spellercss#"/>
+<link rel="stylesheet" type="text/css" href="#spellercss#" />
 <script language="javascript" src="#word_win_src#"></script>
 <script language="javascript">
 var suggs      = new Array();

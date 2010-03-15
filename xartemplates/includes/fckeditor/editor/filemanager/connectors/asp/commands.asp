@@ -1,6 +1,6 @@
-<%
+﻿<%
  ' FCKeditor - The text editor for Internet - http://www.fckeditor.net
- ' Copyright (C) 2003-2009 Frederico Caldeira Knabben
+ ' Copyright (C) 2003-2010 Frederico Caldeira Knabben
  '
  ' == BEGIN LICENSE ==
  '
@@ -41,7 +41,7 @@ Sub GetFolders( resourceType, currentFolder )
 	Set oFolders = oCurrentFolder.SubFolders
 
 	For Each oFolder in oFolders
-		Response.Write "<Folder name=""" & ConvertToXmlAttribute( oFolder.name ) & """/>"
+		Response.Write "<Folder name=""" & ConvertToXmlAttribute( oFolder.name ) & """ />"
 	Next
 
 	Set oFSO = Nothing
@@ -70,7 +70,7 @@ Sub GetFoldersAndFiles( resourceType, currentFolder )
 	Response.Write "<Folders>"
 
 	For Each oFolder in oFolders
-		Response.Write "<Folder name=""" & ConvertToXmlAttribute( oFolder.name ) & """/>"
+		Response.Write "<Folder name=""" & ConvertToXmlAttribute( oFolder.name ) & """ />"
 	Next
 
 	' Close the "Folders" node.
@@ -84,7 +84,7 @@ Sub GetFoldersAndFiles( resourceType, currentFolder )
 		iFileSize = Round( oFile.size / 1024 )
 		If ( iFileSize < 1 AND oFile.size <> 0 ) Then iFileSize = 1
 
-		Response.Write "<File name=""" & ConvertToXmlAttribute( oFile.name ) & """ size=""" & iFileSize & """/>"
+		Response.Write "<File name=""" & ConvertToXmlAttribute( oFile.name ) & """ size=""" & iFileSize & """ />"
 	Next
 
 	' Close the "Files" node.
@@ -130,7 +130,7 @@ Sub CreateFolder( resourceType, currentFolder )
 	End If
 
 	' Create the "Error" node.
-	Response.Write "<Error number=""" & sErrorNumber & """/>"
+	Response.Write "<Error number=""" & sErrorNumber & """ />"
 End Sub
 
 Sub FileUpload( resourceType, currentFolder, sCommand )

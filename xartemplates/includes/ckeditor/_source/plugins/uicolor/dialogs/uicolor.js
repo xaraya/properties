@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -37,6 +37,7 @@ CKEDITOR.dialog.add( 'uicolor', function( editor )
 		onLoad : function( event )
 		{
 			var url = CKEDITOR.getUrl(
+					'_source/' + // @Packager.RemoveLine
 					'plugins/uicolor/yui/'
 				);
 

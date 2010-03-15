@@ -9,7 +9,7 @@
         // Security Check
         if (!xarSecurityCheck('ReadCKEditor')) return;
 
-//        xarResponse::Redirect(xarModURL('ckeditor', 'user', 'view'));
+//        xarResponse::redirect(xarModURL('ckeditor', 'user', 'view'));
         // success
         return array(); //true;
     }

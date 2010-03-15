@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2009 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -24,9 +24,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>FCKeditor - Sample</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<meta name="robots" content="noindex, nofollow"/>
-	<link href="../sample.css" rel="stylesheet" type="text/css"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="noindex, nofollow" />
+	<link href="../sample.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="../../fckeditor.js"></script>
 	<script type="text/javascript">
 
@@ -127,7 +127,7 @@ function PrepareSave()
 	<hr />
 	<form action="../php/sampleposteddata.php" method="post" target="_blank" onsubmit="PrepareSave();">
 		<div id="Textarea">
-			<input type="button" value="Switch to FCKeditor" onclick="Toggle()"/>
+			<input type="button" value="Switch to FCKeditor" onclick="Toggle()" />
 			<br />
 			<br />
 			<textarea id="DataTextarea" name="Data" cols="80" rows="20" style="width: 95%">This is some &lt;strong&gt;sample text&lt;/strong&gt;. You are using &lt;a href="http://www.fckeditor.net/"&gt;FCKeditor&lt;/a&gt;.</textarea>
@@ -135,14 +135,14 @@ function PrepareSave()
 		<div id="FCKeditor" style="display: none">
 			<!-- Note that the following button is disabled at startup.
 				It will be enabled once the editor is completely loaded. -->
-			<input id="BtnSwitchTextarea" type="button" disabled="disabled" value="Switch to Textarea" onclick="Toggle()"/>
+			<input id="BtnSwitchTextarea" type="button" disabled="disabled" value="Switch to Textarea" onclick="Toggle()" />
 			<br />
 			<br />
 			<!-- Note that the following textarea doesn't have a "name", so it will not be posted. -->
 			<textarea id="DataFCKeditor" cols="80" rows="20"></textarea>
 		</div>
 		<br />
-		<input type="submit" value="Submit"/>
+		<input type="submit" value="Submit" />
 	</form>
 </body>
 </html>

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -40,7 +40,7 @@ CKEDITOR.config =
 	 * // Do not load any custom configuration file.
 	 * CKEDITOR.replace( 'myfiled', { customConfig : '' } );
 	 */
-	customConfig : CKEDITOR.getUrl( 'config.js' ),
+	customConfig : 'config.js',
 
 	/**
 	 * Whether the replaced element (usually a textarea) is to be updated
@@ -63,13 +63,14 @@ CKEDITOR.config =
 	baseHref : '',
 
 	/**
-	 * The CSS file to be used to apply style to the contents. It should
+	 * The CSS file(s) to be used to apply style to the contents. It should
 	 * reflect the CSS used in the final pages where the contents are to be
 	 * used.
-	 * @type String
+	 * @type String|Array
 	 * @default '&lt;CKEditor folder&gt;/contents.css'
 	 * @example
 	 * config.contentsCss = '/css/mysitestyles.css';
+	 * config.contentsCss = ['/css/mysitestyles.css', '/css/anotherfile.css'];
 	 */
 	contentsCss : CKEDITOR.basePath + 'contents.css',
 
@@ -88,8 +89,8 @@ CKEDITOR.config =
 	 * The user interface language localization to use. If empty, the editor
 	 * automatically localize the editor to the user language, if supported,
 	 * otherwise the {@link CKEDITOR.config.defaultLanguage} language is used.
-	 * @default true
-	 * @type Boolean
+	 * @default '' (empty)
+	 * @type String
 	 * @example
 	 * // Load the German interface.
 	 * config.language = 'de';
@@ -166,10 +167,29 @@ CKEDITOR.config =
 	docType : '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
 
 	/**
+	 * Sets the "id" attribute to be used on the body element of the editing
+	 * area.
+	 * @since 3.1
+	 * @type String
+	 * @default ''
+	 */
+	bodyId : '',
+
+	/**
+	 * Sets the "class" attribute to be used on the body element of the editing
+	 * area.
+	 * @since 3.1
+	 * @type String
+	 * @default ''
+	 */
+	bodyClass : '',
+
+	/**
 	 * Indicates whether the contents to be edited are being inputted as a full
 	 * HTML page. A full page includes the &lt;html&gt;, &lt;head&gt; and
 	 * &lt;body&gt; tags. The final output will also reflect this setting,
 	 * including the &lt;body&gt; contents only if this setting is disabled.
+	 * @since 3.1
 	 * @type Boolean
 	 * @default false
 	 * @example
@@ -178,13 +198,14 @@ CKEDITOR.config =
 	fullPage : false,
 
 	/**
-	 * The editor height, in CSS size format or pixel integer.
+	 * The height of editing area( content ), in relative or absolute, e.g. 30px, 5em.
+	 * Note: Percentage unit is not supported yet. e.g. 30%.
 	 * @type Number|String
 	 * @default '200'
 	 * @example
 	 * config.height = 500;
-	 * @example
 	 * config.height = '25em';
+	 * config.height = '300px';
 	 */
 	height : 200,
 
@@ -196,7 +217,7 @@ CKEDITOR.config =
 	 * @type String
 	 * @example
 	 */
-	plugins : 'about,basicstyles,blockquote,button,clipboard,colorbutton,contextmenu,elementspath,enterkey,entities,filebrowser,find,flash,font,format,forms,horizontalrule,htmldataprocessor,image,indent,justify,keystrokes,link,list,maximize,newpage,pagebreak,pastefromword,pastetext,popup,preview,print,removeformat,resize,save,scayt,smiley,showblocks,sourcearea,stylescombo,table,tabletools,specialchar,tab,templates,toolbar,undo,wysiwygarea,wsc',
+	plugins : 'about,a11yhelp,basicstyles,blockquote,button,clipboard,colorbutton,colordialog,contextmenu,div,elementspath,enterkey,entities,filebrowser,find,flash,font,format,forms,horizontalrule,htmldataprocessor,image,indent,justify,keystrokes,link,list,maximize,newpage,pagebreak,pastefromword,pastetext,popup,preview,print,removeformat,resize,save,scayt,smiley,showblocks,showborders,sourcearea,stylescombo,table,tabletools,specialchar,tab,templates,toolbar,undo,wysiwygarea,wsc',
 
 	/**
 	 * List of additional plugins to be loaded. This is a tool setting which
@@ -281,7 +302,6 @@ CKEDITOR.config =
 	 * config.baseFloatZIndex = 2000
 	 */
 	baseFloatZIndex : 10000
-
 };
 
 // PACKAGER_RENAME( CKEDITOR.config )

@@ -1,8 +1,8 @@
-<%@ CodePage=65001 Language="VBScript"%>
+﻿<%@ CodePage=65001 Language="VBScript"%>
 <% Option Explicit %>
 <!--
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2009 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -28,7 +28,7 @@
 		<title>FCKeditor - Samples - Posted Data</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="robots" content="noindex, nofollow">
-		<link href="../sample.css" rel="stylesheet" type="text/css">
+		<link href="../sample.css" rel="stylesheet" type="text/css" >
 	</head>
 	<body>
 		<h1>FCKeditor - Samples - Posted Data</h1>

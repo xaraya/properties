@@ -1,6 +1,6 @@
 #####
 #  FCKeditor - The text editor for Internet - http://www.fckeditor.net
-#  Copyright (C) 2003-2009 Frederico Caldeira Knabben
+#  Copyright (C) 2003-2010 Frederico Caldeira Knabben
 #
 #  == BEGIN LICENSE ==
 #
@@ -23,28 +23,28 @@
 
 sub CreateXmlHeader
 {
-    local($command,$resourceType,$currentFolder) = @_;
+	local($command,$resourceType,$currentFolder) = @_;
 
-    # Create the XML document header.
-    print '<?xml version="1.0" encoding="utf-8" ?>';
+	# Create the XML document header.
+	print '<?xml version="1.0" encoding="utf-8" ?>';
 
-    # Create the main "Connector" node.
-    print '<Connector command="' . $command . '" resourceType="' . $resourceType . '">';
+	# Create the main "Connector" node.
+	print '<Connector command="' . $command . '" resourceType="' . $resourceType . '">';
 
-    # Add the current folder node.
-    print '<CurrentFolder path="' . ConvertToXmlAttribute($currentFolder) . '" url="' . ConvertToXmlAttribute(GetUrlFromPath($resourceType,$currentFolder)) . '"/>';
+	# Add the current folder node.
+	print '<CurrentFolder path="' . ConvertToXmlAttribute($currentFolder) . '" url="' . ConvertToXmlAttribute(GetUrlFromPath($resourceType,$currentFolder)) . '" />';
 }
 
 sub CreateXmlFooter
 {
-    print '</Connector>';
+	print '</Connector>';
 }
 
 sub SendError
 {
-    local( $number, $text ) = @_;
+	local( $number, $text ) = @_;
 
-    print << "_HTML_HEAD_";
+	print << "_HTML_HEAD_";
 Content-Type:text/xml; charset=utf-8
 Pragma: no-cache
 Cache-Control: no-cache
@@ -52,17 +52,17 @@ Expires: Thu, 01 Dec 1994 16:00:00 GMT
 
 _HTML_HEAD_
 
-    # Create the XML document header
-    print '<?xml version="1.0" encoding="utf-8" ?>' ;
+	# Create the XML document header
+	print '<?xml version="1.0" encoding="utf-8" ?>' ;
 
-    if ($text) {
-        print '<Connector><Error number="' . $number . '" text="' . &specialchar_cnv( $text ) . '"/></Connector>' ;
-    }
-    else {
-        print '<Connector><Error number="' . $number . '"/></Connector>' ;
-    }
+	if ($text) {
+		print '<Connector><Error number="' . $number . '" text="' . &specialchar_cnv( $text ) . '" /></Connector>' ;
+	}
+	else {
+		print '<Connector><Error number="' . $number . '" /></Connector>' ;
+	}
 
-    exit ;
+	exit ;
 }
 
 1;

@@ -1,7 +1,7 @@
 <cfsetting enablecfoutputonly="yes" showdebugoutput="no">
 <!---
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2009 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -52,7 +52,7 @@
 <cffunction name="DoResponse" output="true" returntype="void">
 
 	<!--- Get the main request informaiton. --->
-	<cfset var sCommand	= "#URL.Command#">
+	<cfset var sCommand	= "#URL.Command#" >
 	<cfset var sResourceType	= URL.Type >
 	<cfset var sCurrentFolder	= GetCurrentFolder() >
 
@@ -68,7 +68,7 @@
 
 	<!--- File Upload doesn't have to Return XML, so it must be intercepted before anything. --->
 	<cfif sCommand eq "FileUpload">
-		<cfset FileUpload( sResourceType, sCurrentFolder, sCommand )>
+		<cfset FCKeditorFileUpload( sResourceType, sCurrentFolder, sCommand )>
 		<cfabort>
 	</cfif>
 

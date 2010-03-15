@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -68,5 +68,19 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  *         CKEDITOR.ajax.loadXml( 'data.xml' );
  *     },
  *     async : true    // The command need some time to complete after exec function returns.
+ * });
+ */
+
+/**
+ * Whether the command should give focus to the editor before execution.
+ * @name  CKEDITOR.commandDefinition.editorFocus
+ * @type {Boolean}
+ * @example
+ * editorInstance.addCommand( 'maximize',
+ * {
+ *     exec : function( editor )
+ *     {
+ *     },
+ *     editorFocus : false    // The command doesn't require focusing the editing document.
  * });
  */

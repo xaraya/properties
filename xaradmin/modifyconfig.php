@@ -12,6 +12,10 @@
         if (!xarSecurityCheck('AdminCKEditor')) return;
         if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
         if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+
+        $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'dynamicdata'));
+        $data['module_settings']->setFieldList('items_per_page, enable_short_urls, use_module_alias, use_module_icons');
+        $data['module_settings']->getItem();
         switch (strtolower($phase)) {
             case 'modify':
             default:
@@ -33,16 +37,15 @@
                 if (!xarSecConfirmAuthKey()) return;
                 switch ($data['tab']) {
                     case 'general':
-                        if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('ckeditor', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-                        if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-                        if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('ckeditor', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
-                        if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('ckeditor', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
                         if (!xarVarFetch('editorversion', 'str', $editorversion,  xarModVars::get('ckeditor', 'editorversion'), XARVAR_NOT_REQUIRED)) return;
 
-                        xarModVars::set('ckeditor', 'itemsperpage', $itemsperpage);
-                        xarModVars::set('ckeditor', 'SupportShortURLs', $shorturls);
-                        xarModVars::set('ckeditor', 'useModuleAlias', $useModuleAlias);
-                        xarModVars::set('ckeditor', 'aliasname', $aliasname);
+                        $isvalid = $data['module_settings']->checkInput();
+                        if (!$isvalid) {
+                            return xarTplModule('dynamicdata','admin','modifyconfig', $data);
+                        } else {
+                            $itemid = $data['module_settings']->updateItem();
+                        }
+
                         xarModVars::set('ckeditor', 'editorversion', $editorversion);
                         break;
                     case 'tab2':
@@ -53,7 +56,7 @@
                         break;
                 }
 
-                xarResponse::Redirect(xarModURL('ckeditor', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+                xarResponse::redirect(xarModURL('ckeditor', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
                 // Return
                 return true;
                 break;

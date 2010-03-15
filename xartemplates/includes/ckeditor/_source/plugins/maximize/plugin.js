@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -111,16 +111,17 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			editor.addCommand( 'maximize',
 				{
 					modes : { wysiwyg : 1, source : 1 },
-
+					editorFocus : false,
 					exec : function()
 					{
-						var container = editor.container.getChild( [ 0, 0 ] );
+						var container = editor.container.getChild( 1 );
 						var contents = editor.getThemeSpace( 'contents' );
 
 						// Save current selection and scroll position in editing area.
 						if ( editor.mode == 'wysiwyg' )
 						{
-							savedSelection = editor.getSelection().getRanges();
+							var selection = editor.getSelection();
+							savedSelection = selection && selection.getRanges();
 							savedScroll = mainWindow.getScrollPosition();
 						}
 						else
@@ -164,8 +165,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 									} );
 							}
 
-							// Scroll to the top left.
-							mainWindow.$.scrollTo( 0, 0 );
+							// Scroll to the top left (IE needs some time for it - #4923).
+							CKEDITOR.env.ie ?
+								setTimeout( function() { mainWindow.$.scrollTo( 0, 0 ); }, 0 ) :
+								mainWindow.$.scrollTo( 0, 0 );
 
 							// Resize and move to top left.
 							var viewPaneSize = mainWindow.getViewPaneSize();
@@ -211,7 +214,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							}
 
 							// Restore the window scroll position.
-							mainWindow.$.scrollTo( outerScroll.x, outerScroll.y );
+							CKEDITOR.env.ie ?
+								setTimeout( function() { mainWindow.$.scrollTo( outerScroll.x, outerScroll.y ); }, 0 ) :
+								mainWindow.$.scrollTo( outerScroll.x, outerScroll.y );
 
 							// Remove cke_maximized class.
 							container.removeClass( 'cke_maximized' );
@@ -223,14 +228,25 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 						this.toggleState();
 
+						// Toggle button label.
+						var button = this.uiItems[ 0 ];
+						var label = ( this.state == CKEDITOR.TRISTATE_OFF )
+							? lang.maximize : lang.minimize;
+						var buttonNode = editor.element.getDocument().getById( button._.id );
+						buttonNode.getChild( 1 ).setHtml( label );
+						buttonNode.setAttribute( 'title', label );
+						buttonNode.setAttribute( 'href', 'javascript:void("' + label + '");' );
+
 						// Restore selection and scroll position in editing area.
 						if ( editor.mode == 'wysiwyg' )
 						{
-							editor.getSelection().selectRanges( savedSelection );
+							if ( savedSelection )
+							{
+								editor.getSelection().selectRanges(savedSelection);
+								var element = editor.getSelection().getStartElement();
+								element && element.scrollIntoView( true );
+							}
 
-							var element = editor.getSelection().getStartElement();
-							if ( element )
-								element.scrollIntoView( true );
 							else
 								mainWindow.$.scrollTo( savedScroll.x, savedScroll.y );
 						}

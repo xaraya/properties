@@ -26,6 +26,8 @@ class EditorProperty extends TextAreaProperty
     
     public $editor     = null;
     public $version;
+    public $height     ='512';
+    public $width      ='100%';
     
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -39,18 +41,21 @@ class EditorProperty extends TextAreaProperty
     public function showInput(Array $data = array())
     {
         if ($this->version == 'fckeditor') {
+            if (empty($data['height'])) $data['height'] = $this->height;
+            if (empty($data['width'])) $data['width'] = $this->width;
             sys::import('modules.ckeditor.xartemplates.includes.fckeditor.fckeditor');
             $editorpath = sys::code() . 'modules/ckeditor/xartemplates/includes/fckeditor/';
             $name = $this->getCanonicalName($data);
             $this->editor = new FCKeditor($name) ;
             $this->editor->BasePath = $editorpath;
             $this->editor->Value = $this->value;
+            $this->editor->Width = $data['width'];
+            $this->editor->Height = $data['height'];
             $data['editor'] = $this->editor;
         }
         $data['version'] = $this->version;
         return parent::showInput($data);
     }
 }
-
 
 ?>

@@ -11,7 +11,7 @@
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
         } else {
-            xarResponse::Redirect(xarModURL('ckeditor', 'admin', 'modifyconfig'));
+            xarResponse::redirect(xarModURL('ckeditor', 'admin', 'modifyconfig'));
         }
         // success
         return true;

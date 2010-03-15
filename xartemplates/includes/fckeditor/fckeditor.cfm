@@ -1,7 +1,7 @@
 <cfsetting enablecfoutputonly="Yes">
 <!---
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2009 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -130,8 +130,8 @@ else
 	</cfscript>
 
 	<cfoutput>
-	<input type="hidden" id="#attributes.instanceName#" name="#attributes.instanceName#" value="#HTMLEditFormat(attributes.value)#" style="display:none"/>
-	<input type="hidden" id="#attributes.instanceName#___Config" value="#sConfig#" style="display:none"/>
+	<input type="hidden" id="#attributes.instanceName#" name="#attributes.instanceName#" value="#HTMLEditFormat(attributes.value)#" style="display:none" />
+	<input type="hidden" id="#attributes.instanceName#___Config" value="#sConfig#" style="display:none" />
 	<iframe id="#attributes.instanceName#___Frame" src="#sURL#" width="#attributes.width#" height="#attributes.height#" frameborder="0" scrolling="no"></iframe>
 	</cfoutput>
 
