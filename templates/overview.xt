@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div>
         <h2>Address Property</h2>
-            <h3>What is it?</h3>
+            <h3>Description</h3>
             <p>
                 The Address dataproperty lets you manage mailing addresses. A mailing address has the folowing parts:
             <ul>
@@ -35,13 +35,25 @@
     &lt;xar:data-input property="$properties['address']" <i>[attr1="value1",...]</i> /&gt;
     &lt;xar:data-output property="$properties['address']" <i>[attr1="value1",...]</i> /&gt;
                 </pre>
-            <h4>Attributes</h4>
+            <h3>Attributes</h3>
             <ul>
                 <li>
-                    <strong>Form Block</strong>:&#160;displays an input form for a dataobject. This can be used for "quick entry" of data by users, such as a registration.or a feedback submission.
+                    <strong>rows</strong>: integer [default=2]&#160;The number of rows displayed for the street part of the address
+                </li>
+                <li>
+                    <strong>show_city</strong>: boolean [default=true]&#160;Display the city part of the address
+                </li>
+                <li>
+                    <strong>show_province</strong>: boolean [default=true]&#160;Display the state/province part of the address
+                </li>
+                <li>
+                    <strong>show_postal_code</strong>: boolean [default=true]&#160;Display the postal code part of the address
+                </li>
+                <li>
+                    <strong>show_country</strong>: boolean [default=true]&#160;Display the country part of the address
                 </li>
             </ul>
-
-
+            <h3>Methods</h3>
+            <strong>getValueArray()</strong>: Returns an associative array of the address components, with the keys line_{1..n}, city, province, postal_code, country.
         </div>
 </xar:template>
