@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div>
+        <h2>Address Property</h2>
+            <h3>What is it?</h3>
+            <p>
+                The Address dataproperty lets you manage mailing addresses. A mailing address has the folowing parts:
+            <ul>
+                <li>
+                    One or more lines for street, P.O. Box, apartment etc.
+                </li>
+                <li>
+                    City
+                </li>
+                <li>
+                    Province or state
+                </li>
+                <li>
+                    Postal code
+                </li>
+                <li>
+                    Country
+                </li>
+            </ul>
+            </p>
+
+            <h3>Usage</h3>
+            <h4>Standalone</h4>
+                <pre>
+    &lt;xar:data-input type="address" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output type="address" <i>[attr1="value1",...]</i> /&gt;
+                </pre>
+            <h4>Bound</h4>
+                <pre>
+    &lt;xar:data-input property="$properties['address']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output property="$properties['address']" <i>[attr1="value1",...]</i> /&gt;
+                </pre>
+            <h4>Attributes</h4>
+            <ul>
+                <li>
+                    <strong>Form Block</strong>:&#160;displays an input form for a dataobject. This can be used for "quick entry" of data by users, such as a registration.or a feedback submission.
+                </li>
+            </ul>
+
+
+        </div>
+</xar:template>
