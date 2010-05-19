@@ -138,7 +138,7 @@ class AddressProperty extends TextBoxProperty
     private function assemble_address(Array $data = array())
     {
         if (isset($data['rows'])) $this->display_rows = $data['rows'];
-        if (!isset($data['labels'])) $data['labels'] = $this->display_labels;;
+        if (!isset($data['labels'])) $data['labels'] = $this->display_labels;
         if (!isset($data['show_city'])) $data['show_city'] = $this->display_show_city;
         if (!isset($data['show_province'])) $data['show_province'] = $this->display_show_province;
         if (!isset($data['show_postal_code'])) $data['show_postal_code'] = $this->display_show_postal_code;
