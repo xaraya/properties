@@ -1,0 +1,26 @@
+<items>
+  <configurations>
+    <name>display_show_city</name>
+    <label>Display City</label>
+    <description>Display the city part of the address</description>
+    <property_id>14</property_id>
+  </configurations>
+  <configurations>
+    <name>display_show_province</name>
+    <label>Display State/Province</label>
+    <description>Display the state/province part of the address</description>
+    <property_id>14</property_id>
+  </configurations>
+  <configurations>
+    <name>display_show_postal_code</name>
+    <label>Display Postal Code</label>
+    <description>Display the postal code part of the address</description>
+    <property_id>14</property_id>
+  </configurations>
+  <configurations>
+    <name>display_show_country</name>
+    <label>Display Country</label>
+    <description>Display the country part of the address</description>
+    <property_id>14</property_id>
+  </configurations>
+</items>
