@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <form method="post" action="#xarServer::getCurrentURL()#">
+        <div class="xar-form-input-wrapper">
+            <xar:if condition="$show_search">
+                <xar:set name="search">isset($search) ? $search : '';</xar:set>
+                <xar:set name="searchclass">'xar-floatleft xar-fullwidth xar-align-center'</xar:set>
+                <div class="#$searchclass#">
+                    <fieldset style="height:50px;padding:0 10px;margin:0 5px 0 0;">
+                        <legend>Search:</legend>
+                        <input type="hidden" name="letter" id="letter" value=""/>
+                        <input type="hidden" name="op" id="op" value="submit"/>
+                        <input type="text" name="search" id="search" value="" size="40" maxlength="255" tabindex="1"/>
+                        <input type="submit" value="#xarML('Go')#"/>
+                    </fieldset>
+                    <xar:if condition="!empty($msg)">
+                        <fieldset style="height:auto;padding:0 10px;margin:0 5px 0 0;">
+                            <legend>Selected on:</legend>
+                                <p style="padding: 0 0 5px 5px; margin: 0 ;font-weight:bold;">#xarVarPrepForDisplay($msg)#</p>
+                       </fieldset>
+                    </xar:if>
+                </div>
+            </xar:if>
+        </div>
+    </form>
+</xar:template>

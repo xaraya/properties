@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:access level="700">
+         <th width="5%" style="text-align: center;">
+            Option
+         </th>
+     </xar:access>
+</xar:template>

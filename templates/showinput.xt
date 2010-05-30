@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:javascript filename="jquery-1.2.6.min.js" module="jquery" position="head"/>
+    <xar:javascript filename="jquery.tablehover.pack.js" module="jquery" position="head"/>
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            $('##listing_table').tableHover();
+    //        $('##listing_table').tableHover({colClass: 'hover'});
+    //        $('##listing_table').tableHover({colClass: 'hover', cellClass: 'hovercell', clickClass: 'click'});
+    //        $('##listing_table').tableHover({colClass: 'hover', allowBody: false, clickClass: 'click'});
+    //        $('##listing_table').tableHover({rowClass: 'hoverrow', colClass: 'hover', clickClass: 'click', headRows: true, footRows: true, headCols: true, footCols: true});
+    //        $('##listing_table').tableHover({colClass: 'hover'});
+    //        $('##listing_table').tableHover({colClass: 'hover', spanRows: false, spanCols: false});
+    //        $('##listing_table').tableHover({colClass: 'hover', ignoreCols: [4,5,6]});
+        });
+    </script>
+
+    <style type="text/css">
+        td.click, th.click { background-color: ##bbb; }
+        td.hover, tr.hover { background-color: ##BFBFD9; }
+        th.hover, tfoot td.hover { background-color: ivory; }
+        td.hovercell, th.hovercell { background-color: ##abc; }
+        td.hoverrow, th.hoverrow { background-color: ##6df; }
+    </style>
+
+    <xar:set name="allowread">false</xar:set>
+    <xar:set name="allowedit">false</xar:set>
+    <xar:access level="200">
+        <xar:set name="allowread">true</xar:set>
+    </xar:access>
+    <xar:access level="500">
+        <xar:set name="allowedit">true</xar:set>
+    </xar:access>
+
+    <xar:set name="url">xarServer::getCurrentURL($params)</xar:set>
+
+    <xar:style scope="module" module="base" file="navtabs"/>
+    <xar:template file="listing_alphabet" module="$module"/>
+
+    <div style="clear:both"></div>
+    
+    <xar:template file="listing_searchboxline" module="$module"/>
+    <xar:template file="listing_summaryline" module="$module"/>
+    <xar:template file="listing_pagerline" module="$module"/>
+    <table id="listing_table" style="clear:both; width: 100%" border="0">
+        <xar:template file="listing_header" module="$module"/>
+        <xar:template file="listing_body" module="$module"/>
+    </table>
+    <xar:if condition="empty($total)">
+              <p class="xar-align-center">There are no items selected</p>
+    </xar:if>
+    <!--
+    <form  action="#xarModURL('listings','admin','multiops')#" method="post" onsubmit = "listing_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;" style="clear: both">
+        <xar:template file="listing_footerline" module="$module"/>
+        <input type="hidden" name="returnurl" id="returnurl" value="#xarServer::getCurrentURL()#"/>
+        <input type="hidden" name="object" id="object" value="#$objectname#"/>
+        <input type="hidden" name="module" id="module" value="#$module#"/>
+    </form>
+    -->
+</xar:template>
