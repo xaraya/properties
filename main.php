@@ -310,7 +310,7 @@ Notes:
                 foreach ($indices as $index) $q->join($primarysource,$index);
                 foreach ($fieldnames as $key => $value) $q->addfield($key . ' AS ' . $value);
 
-                xarSession::setVar('listing.lastlistingearch',$objectname);
+                xarSession::setVar('listing.lastlistingsearch',$objectname);
                 xarSession::setVar('listing.msg','');
                 $order = '';
                 $sort = 'ASC';
