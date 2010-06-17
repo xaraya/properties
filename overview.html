@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../themes/installer/style/style.css"/>
+    </head>
+    <body>
+        <div style="margin-top: 20px">
+        <div id="contentouter">
+            <div id="contentwrap">
+                <div id="contentmain">
+                    <div id="contentmain_inner"><div id="contentmain_tlcorner"><div id="contentmain_trcorner">&#160;</div></div>
+                        <div id="contentmain_core">
+            <h2>Pager Property</h2>
+                <h3>Description</h3>
+                <p>
+                    The Pager dataproperty is a standalone widget that lets you perform pagination in listings displays with large numbers of items. It includes options for:
+                    <ul>
+                        <li>
+                            Setting the number of items to be diplayed per page
+                        </li>
+                        <li>
+                            Filtering by initial letter of the key field
+                        </li>
+                    </ul>
+                    The property is based on the pager code originally developed by Jason Judge. Some of this code is still present as a class in the Base module,and it can be expected that at some time in the future this duplication will be removed..
+                </p>
+                <h3>Usage</h3>
+                <h4>Standalone (create in template)</h4>
+                    <pre>
+    &lt;xar:data-input type="pager" <i>[attr1="value1",...]</i> /&gt;
+                    </pre>
+                <h4>Standalone (pass from code, under construction)</h4>
+                    <pre>
+    $mypager = DataPropertyMaster::getProperty(array('name' => 'pager'));
+    $mypager->checkInput('mypager');
+    $data['mypager'] = $mypager;
+
+    &lt;xar:data-input property="$mypager" <i>name="mypager" [attr1="value1",...]</i> /&gt;
+                    </pre>
+            <h3>Attributes</h3>
+            <ul>
+                <li>
+                    <strong>items_per_page</strong>: integer&#160;The number of items shown on a page
+                </li>
+            </ul>
+        </div>
+                        </div>
+                        <div id="contentmain_blcorner"><div id="contentmain_brcorner">&#160;</div></div>
+                    </div>
+                </div>
+            </div>
+            <br class="xar-clearboth"/>
+        </div>
+    </body>
+</xar:template>
