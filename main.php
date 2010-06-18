@@ -106,9 +106,15 @@ Notes:
         if (!isset($object) && !isset($objectname)) throw new Exception('No object passed to the listing property');
 
         // We accept both object names and objects, but objectname overrides
-        if (isset($objectname)) $object = DataObjectMaster::getObject(array('name' => $objectname));
-
-        if (!is_object($object)) throw new Exception('No object passed to the listing property');
+        if (isset($objectname)) {
+            $object = DataObjectMaster::getObject(array('name' => $objectname));
+        } else {
+            if (!is_object($object)) throw new Exception('No object passed to the listing property');
+            else {
+                $objectname = $object->name;
+                $data['objectname'] = $objectname;
+            }
+        }
 
         // itemtype 0 means all itemtypes
         $itemtype = isset($itemtype) ? $itemtype : 0;
