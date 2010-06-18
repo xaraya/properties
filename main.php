@@ -107,7 +107,7 @@ Notes:
 
         // We accept both object names and objects, but objectname overrides
         if (isset($objectname)) {
-            $object = DataObjectMaster::getObject(array('name' => $objectname));
+            $object = DataObjectMaster::getObjectList(array('name' => $objectname));
         } else {
             if (!is_object($object)) throw new Exception('No object passed to the listing property');
             else {
