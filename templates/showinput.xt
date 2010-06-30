@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    
+    <xar:javascript filename="codemirror/js/codemirror.js" module="codeeditor" position="head"/>
+
+    <div style="clear:both; border: 1px dotted black; padding: 3px; background-color: ##F8F8F8">
+        <textarea id="#$name#" name="#$name#" style="width: 100%">#$value#</textarea>
+    </div>
+
+    <script type="text/javascript">
+      var editor = CodeMirror.fromTextArea('#$name#', {
+        height: "350px",
+        parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js",
+                     "../contrib/php/js/tokenizephp.js", "../contrib/php/js/parsephp.js",
+                     "../contrib/php/js/parsephphtmlmixed.js"],
+        stylesheet: ["#$basepath#/css/xmlcolors.css", "#$basepath#/css/jscolors.css", "#$basepath#/css/csscolors.css", "#$basepath#/css/phpcolors.css"],
+        path: "#$basepath#/js/",
+        continuousScanning: 500,
+        lineNumbers: true,
+        tabMode: 'shift',
+      });
+    </script>
+</xar:template>
