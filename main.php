@@ -18,7 +18,7 @@ sys::import('modules.base.xarproperties.textarea');
 
 class CodeMirrorProperty extends TextAreaProperty
 {
-    public $id         = 30091;
+    public $id         = 30101;
     public $name       = 'codemirror';
     public $desc       = 'CodeMirror';
     public $reqmodules = array();
