@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Listing Property
  * @package math
@@ -6,6 +6,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <mfl@netspan.ch>
  */
+
+sys::import('modules.dynamicdata.class.properties.base');
 
 class ListingProperty extends DataProperty
 {
@@ -115,7 +117,7 @@ Notes:
                 $data['objectname'] = $objectname;
             }
         }
-
+        
         // itemtype 0 means all itemtypes
         $itemtype = isset($itemtype) ? $itemtype : 0;
 
@@ -152,19 +154,6 @@ Notes:
 
     //--- 5. Assemble the data sources (data tables)
 
-        $tablealiases = array();
-        $i = 1;
-        foreach ($object->getDataStores() as $key => $value) {
-            if (in_array($key, $baddatastores)) continue;
-            $tablealiases[$key] = $tablename . $i;
-            $i++;
-        }
-
-        // if no datasource found we're stuck
-        if (empty($tablealiases)) {
-            return array();
-        }
-
     //--- 6. Assemble the fields to be displayed
 
         // Someone passed a fieldlist attribute
@@ -177,8 +166,13 @@ Notes:
         // Someone passed a keyfield attribute
         if (!empty($keyfield)) $defaultkey = $keyfield;
 
-        // We'll put fields into the output of the query that have status active in the object
-        $properties = $object->getProperties();
+        // Pass the field list to the object    
+        // we'll put fields into the output of the query that have status active in the object
+        // Make sure the primary index is included; its display will be steered by the $showprimary variable
+        $object->properties[$object->primary]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
+        $object->setFieldlist($fieldlist,array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY));
+        $properties =& $object->getProperties(array('status' => array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY)));
+
         $activefields = array();
         $columnfields = array();
         $sourcefields = array();
@@ -192,12 +186,7 @@ Notes:
 
         foreach ($properties as $property) {
             $source = $property->source;
-            $alias = $property->source;
-
-            foreach ($tablealiases as $key => $value) {
-                $source = str_replace($key, $value, $source);
-                $alias = str_replace($key . '.', $value . '_', $alias);
-            }
+            $alias = $property->name;
 
             if ($property->name == 'itemtype') $itemtypefield = $source;
 
@@ -300,26 +289,31 @@ Notes:
                     $q = unserialize($q);
                     $q->open();
                 }
-                if (!empty($conditions)) $q->addconditions($conditions);
+                if (!empty($conditions)) $object->dataquery->addconditions($conditions);
                 $data['msg'] = $lastmsg;
             break;
 
     //--- 9. First time visit to this page; empty the sessionvars and reset the categories
             case "newsearch":
                 if (!empty($conditions)) {
-                    $q = $conditions;
-                } else {
-                    $q = new Query('SELECT');
+                    $q = new Query();
+                    $q->addconditions($conditions);
+                    $object->dataquery->addconditions($conditions);
+                    $object->dataquery->addsorts($conditions);
                 }
-                $q->setdistinct();
-                foreach ($tablealiases as $key => $value) $q->addtable($key,$value);
-                foreach ($indices as $index) $q->join($primarysource,$index);
-                foreach ($fieldnames as $key => $value) $q->addfield($key . ' AS ' . $value);
 
                 xarSession::setVar('listing.lastlistingsearch',$objectname);
                 xarSession::setVar('listing.msg','');
-                $order = '';
-                $sort = 'ASC';
+
+                // Get any odering from the object's data query if possible
+                if (!empty($object->dataquery->sorts)) {
+                    $setting = current($object->dataquery->sorts);
+                    $order = $setting['name'];
+                    $sort = $setting['order'];
+                } else {
+                    $order = '';
+                    $sort = 'ASC';
+                }
             break;
 
     //--- 10. Any other operation:get the query if it was passed as conditions, or create a new one
@@ -327,24 +321,12 @@ Notes:
             case "textsearch":
 
                 if (!empty($conditions)) {
-                    $q = $conditions;
-                } else {
-                    $q = new Query('SELECT');
+                    $object->dataquery->addconditions($conditions);
                 }
-                $q->setdistinct();
-
-                foreach ($tablealiases as $key => $value) $q->addtable($key,$value);
-                foreach ($indices as $index) $q->join($primarysource,$index);
-                foreach ($fieldnames as $key => $value) $q->addfield($key . ' AS ' . $value);
+                $object->dataquery->setdistinct();
 
     //--- 11. Filter on the objects and itemtypes we'll be displaying
 
-    /*        if (isset($objectidfield) && !empty($object)) {
-                $thisobject = DataObjectMaster::getObject(array('name' => $object));
-                $q->eq($objectidfield, $thisobject->objectid);
-            }
-            if (isset($itemtypefield) && !empty($itemtype)) $q->eq($itemtypefield, $itemtype);
-    */
                 $data['msg'] = '';
             break;
 
@@ -384,7 +366,7 @@ Notes:
             }
             $data['msg'] = '';
         }
-        $q->setorder($order,$sort);
+        $object->dataquery->setorder($order,$sort);
 
         switch ($operation) {
             case "lettersearch":
@@ -403,7 +385,7 @@ Notes:
                 } else {
                 // TODO: handle case-sensitive databases
                     //$q->like('r.name', $letter.'%');
-                    $q->like($tablekeyfield, $letter.'%');
+                    $object->dataquery->regex($tablekeyfield, '^(\\\%)*' . $letter);
                     $data['msg'] = xarML('Listing where #(1) begins with "#(2)"', $defaultkeyname, $letter);
                 }
 
@@ -426,7 +408,7 @@ Notes:
                         if ($i >0) {
                             $msg .= ' or';
                         }
-                        $c[$i]= $q->plike($value, $qsearch);
+                        $c[$i]= $object->dataquery->plike($value, $qsearch);
                         $msg .= ' '.$activefields[$sourcefield].' ';
                         $i++;
                     }
@@ -435,7 +417,7 @@ Notes:
                         else  $data['msg'] .= xarML(' and listing where #(1) contain "#(2)"',$msg,$search);
                     }
                     // take the conditions we decided on above and add them to the query as a bunch of ORs
-                    $q->qor($c);
+                    $object->dataquery->qor($c);
                 }
                 if (empty($data['msg'])) $data['msg'] = xarML('All items');
 
@@ -459,10 +441,10 @@ Notes:
 
     //--- 19. Set the number of rows to display and the starting point
 
-        $q->setrowstodo($this->display_items_per_page);
+        $object->dataquery->setrowstodo($this->display_items_per_page);
 
         // The record to start at needs to come from the template
-        $q->setstartat($data['startnum']);
+        $object->dataquery->setstartat($data['startnum']);
 
         // CHECKME: do we need all 3 of these passed to the template
         $data['order'] = $order;
@@ -470,19 +452,39 @@ Notes:
         $data['searchstring'] = $search;
 
         // display the query if I need to
-    //    echo "<br />"; $q->qecho();
+    //    echo "<br />"; $object->dataquery->qecho();
     //    exit;
 
         // run the query
         // it does the bindvars thing automatically away from mine eyes :)
-        if (!$q->run()) return;
+//        if (!$q->run()) return;
 
-        // get the total number of rows irrespective of number to be displayed
-        $data['total'] = $q->getrows();
-
+    // Now we run the query, if that is required
+    if (empty($items)) {
+        // add conditions if they were passed
+        if (!empty($conditions)) $object->dataquery->addconditions($conditions);
         // get the records to be displayed
-        $data['items'] = $q->output();
-
+        $items = $object->getItems();
+        // We may need to recalculate the total if we have linked tables
+        // Just force it for now
+        $data['total'] = $object->dataquery->getrows();
+    } else {
+        $data['total'] = count($items);
+    }
+    
+    
+/*
+    $parts = explode('.',$primarysource);
+    $primarytable = "**MISSING**";
+    foreach ($object->dataquery->tables as $table) {
+        if ($parts[0] == $table['alias']) {
+            $primarytable = $table;
+            break;
+        }
+    }
+    $object->dataquery->addfield('COUNT(' . $primarytable['alias'] . '.id) AS total');
+*/
+    
         // Add field definitions to the template variables
         $data['fields'] = $activefields;
         $data['columns'] = $columnfields;
@@ -491,6 +493,9 @@ Notes:
         $data['keyfieldalias'] = $keyfieldalias;
         $data['defaultkeyname'] = $defaultkeyname;
         $data['properties'] = $properties;
+
+        // Add the array of items to the template variables
+        $data['items'] = $items;
 
         // a bunch of params the pager will want to see in its target url
         // order and sort are used by the up and down arrows
@@ -513,7 +518,7 @@ Notes:
 
         // Sort of ugly. How can we do better?
         unset($q->dbconn);unset($q->output);unset($q->result);
-        xarSession::setVar('listing.currentquery',serialize($q));
+        xarSession::setVar('listing.currentquery',serialize($object->dataquery));
         return $data;
     }
 }
