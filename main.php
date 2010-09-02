@@ -110,12 +110,14 @@ Notes:
         // We accept both object names and objects, but objectname overrides
         if (isset($objectname)) {
             $object = DataObjectMaster::getObjectList(array('name' => $objectname));
-        } else {
+        } elseif (isset($object)) {
             if (!is_object($object)) throw new Exception('No object passed to the listing property');
             else {
                 $objectname = $object->name;
                 $data['objectname'] = $objectname;
             }
+        } else {
+            throw new Exception('No object passed to the listing property');
         }
         
         // itemtype 0 means all itemtypes
