@@ -135,7 +135,7 @@ class AddressProperty extends TextBoxProperty
         return DataProperty::showOutput($data);
     }
 
-    private function assemble_address(Array $data = array())
+    public function assemble_address(Array $data = array())
     {
         if (isset($data['rows'])) $this->display_rows = $data['rows'];
         if (!isset($data['labels'])) $data['labels'] = $this->display_labels;
