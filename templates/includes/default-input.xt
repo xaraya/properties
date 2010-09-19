@@ -15,12 +15,14 @@
             <input type="text" name="#$name#_line_#$i#" id="#$id#_line_#$i#" value="#$value[$fieldname]#"/>
         </div>
     </xar:for>
-    <div class="xar-form-input-wrapper">
-        <label for="#$name#_city" class="xar-form-label">
-            #$labels['city']#
-        </label>
-        <input type="text" name="#$name#_city" id="#$id#_city" value="#$value['city']#"/>
-    </div>
+    <xar:if condition="!empty($show_city)">
+        <div class="xar-form-input-wrapper">
+            <label for="#$name#_city" class="xar-form-label">
+                #$labels['city']#
+            </label>
+            <input type="text" name="#$name#_city" id="#$id#_city" value="#$value['city']#"/>
+        </div>
+    </xar:if>
     <xar:if condition="!empty($show_province)">
         <div class="xar-form-input-wrapper">
             <label for="#$name#_province" class="xar-form-label">
@@ -52,6 +54,7 @@
         </div>
     </xar:if>
     <xar:if condition="!empty($invalid)">
+        <xar:set name="keys">var_dump($invalid)</xar:set>
         <xar:set name="keys">explode(',',$invalid)</xar:set>
         <xar:set name="badlabels">array()</xar:set>
         <xar:foreach in="$keys" value="$key">

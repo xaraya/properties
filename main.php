@@ -16,12 +16,13 @@ class AddressProperty extends TextBoxProperty
     public $desc       = 'Address';
     public $reqmodules = array();
 
-    public $display_show_city         = true;
-    public $display_show_province     = true;
-    public $display_show_postal_code  = true;
-    public $display_show_country      = true;
+    public $display_show_city;
+    public $display_show_province;
+    public $display_show_postal_code;
+    public $display_show_country;
     public $display_rows              = 2;
     public $display_labels            = array();
+    public $validation_ignore_validations;
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -41,9 +42,11 @@ class AddressProperty extends TextBoxProperty
             $validity = true;
             $value = array();
             $textbox = DataPropertyMaster::getProperty(array('name' => 'textbox'));
-            $textbox->validation_min_length = 3;
+            if (!$this->validation_ignore_validations) {
+                $textbox->validation_min_length = 3;
+            }
 
-            $streetvalidity = false;
+            $streetvalidity = true;
             for ($i=1;$i<=$this->display_rows;$i++) {
                 $isvalid = $textbox->checkInput($name . '_line_' . $i);
                 if ($isvalid) {
@@ -66,6 +69,9 @@ class AddressProperty extends TextBoxProperty
 
             if ($this->display_show_province) {
                 $province = DataPropertyMaster::getProperty(array('name' => 'statelisting'));
+				if ($this->validation_ignore_validations) {
+					$province->validation_override = true;
+				}
                 $isvalid = $province->checkInput($name . '_province');
                 if ($isvalid) {
                     $value['province'] = $province->value;
@@ -82,6 +88,9 @@ class AddressProperty extends TextBoxProperty
             
             if ($this->display_show_country) {
                 $country = DataPropertyMaster::getProperty(array('name' => 'countrylisting'));
+				if ($this->validation_ignore_validations) {
+					$country->validation_override = true;
+				}
                 $isvalid = $country->checkInput($name . '_country');
                 if ($isvalid) {
                     $value['country'] = $country->value;
