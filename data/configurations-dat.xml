@@ -1,0 +1,8 @@
+<items>
+  <configurations>
+    <name>initialization_province_country</name>
+    <label>Country</label>
+    <description>The country whose provinces to display</description>
+    <property_id>42</property_id>
+  </configurations>
+</items>
