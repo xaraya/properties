@@ -9,7 +9,7 @@
  * @author Marc Lutolf
  */
 
-    function getProvinces()
+    function provinces_ch()
    {
         $options[] = array('id' =>'AG', 'name' =>'Aargau');
         $options[] = array('id' =>'AI', 'name' =>'Appenzell Inner Rhoden');

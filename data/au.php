@@ -8,7 +8,7 @@
  * @subpackage math
  * @author Marc Lutolf
  */
-   function getProvinces()
+   function provinces_au()
    {
         $options[] = array('id' =>'Australian Capital Territory', 'name' =>'Australian Capital Territory');
         $options[] = array('id' =>'New South Wales', 'name' =>'New South Wales');

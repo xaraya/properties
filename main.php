@@ -33,10 +33,14 @@ class ProvinceProperty extends SelectProperty
     {
         if (empty($data['country'])) $data['country'] = $this->initialization_province_country;
         $data['options'] = $this->getFirstline();
-        try {
-            sys::import('properties.province.data.' . $data['country']);
-            $data['options'] = array_merge($data['options'], getProvinces());
-        } catch (Exception $e) {}
+        $countries = explode(',',$data['country']);
+        foreach ($countries as $country) {
+            try {
+                sys::import('properties.province.data.' . $country);
+                $func = 'provinces_'.$country;
+                $data['options'] = array_merge($data['options'], $func());
+            } catch (Exception $e) {}
+        }
         
         return parent::showInput($data);
     }

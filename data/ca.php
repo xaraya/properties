@@ -8,7 +8,7 @@
  * @subpackage math
  * @author Marc Lutolf
  */
-   function getProvinces()
+   function provinces_ca()
    {
         $options[] = array('id' =>'Alberta', 'name' =>'Alberta');
         $options[] = array('id' =>'British Columbia', 'name' =>'British Columbia');

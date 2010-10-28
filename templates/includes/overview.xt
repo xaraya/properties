@@ -22,7 +22,10 @@
         <h3>Attributes</h3>
         <ul>
             <li>
-                <strong>country</strong>: char(2) [default='us']&#160;The country of the provinces to be displayed
+                <strong>country</strong>: char(2) [default='us']&#160;The ISO code of the country of the provinces to be displayed. Codes of unsupported countries are ignored. You can have the provinces of more than one country shown by inputting a comma separated list of ISO codes:
+                <pre>
+&lt;xar:data-input type="province" country="us,ca"/&gt;
+                </pre>
             </li>
         </ul>
         <p>

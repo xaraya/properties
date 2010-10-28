@@ -8,7 +8,7 @@
  * @subpackage math
  * @author Marc Lutolf
  */
-   function getProvinces()
+   function provinces_us()
    {
         $options[] = array('id' =>'Alabama', 'name' =>'Alabama');
         $options[] = array('id' =>'Alaska', 'name' =>'Alaska');
