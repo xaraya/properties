@@ -65,7 +65,7 @@ class AddressProperty extends TextBoxProperty
             }
 
             if ($this->display_show_province) {
-                $province = DataPropertyMaster::getProperty(array('name' => 'statelisting'));
+                $province = DataPropertyMaster::getProperty(array('name' => 'province'));
                 $isvalid = $province->checkInput($name . '_province');
                 if ($isvalid) {
                     $value['province'] = $province->value;
