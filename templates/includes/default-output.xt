@@ -25,7 +25,7 @@
                 <xar:set name="newline">0</xar:set>
             </xar:if>
             <xar:if condition="!empty($show_city)">,&#160;</xar:if>
-            <span class="region"><xar:data-output type="statelisting" value="$value['province']"/></span>
+            <span class="region"><xar:data-output type="province" value="$value['province']"/></span>
         </xar:if>
 
         <xar:if condition="!empty($show_postal_code)">

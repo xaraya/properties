@@ -68,7 +68,7 @@ class AddressProperty extends TextBoxProperty
             }
 
             if ($this->display_show_province) {
-                $province = DataPropertyMaster::getProperty(array('name' => 'statelisting'));
+                $province = DataPropertyMaster::getProperty(array('name' => 'province'));
 				if ($this->validation_ignore_validations) {
 					$province->validation_override = true;
 				}
