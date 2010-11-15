@@ -1,7 +1,9 @@
 <?php
 /**
  * Province Property
- * @package math
+ *
+ * @package properties
+ * @subpackage province property
  * @copyright (C) 2010 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <mfl@netspan.ch>

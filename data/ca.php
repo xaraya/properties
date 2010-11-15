@@ -1,12 +1,12 @@
 <?php
 /**
- * @package modules
- * @copyright see the html/credits.html file in this release
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.netspan.ch
+ * Province Property
  *
- * @subpackage math
- * @author Marc Lutolf
+ * @package properties
+ * @subpackage province property
+ * @copyright (C) 2010 Netspan AG
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @author Marc Lutolf <mfl@netspan.ch>
  */
    function provinces_ca()
    {
