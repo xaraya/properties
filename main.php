@@ -450,41 +450,41 @@ class CelkoPositionProperty extends DataProperty
         return $items;
     }
 
-    function build_tree($parent_id, $left_id)
-    {       
-       // the right value of this node is the left value + 1  
-       $right_id = $left_id+1;  
+function build_tree($parent_id, $left_id)
+{       
+   // the right value of this node is the left value + 1  
+   $right_id = $left_id+1;  
 
-       // get all children of this node  
-        $q = "SELECT id, name 
-              FROM " . $this->initialization_celkotable;
-        $q .= " WHERE " . $this->initialization_celkoparent_id . " = ?";
-        $bindvars = array($parent_id);
-        $result = $this->dbconn->Execute($q, $bindvars);
+   // get all children of this node  
+    $q = "SELECT id
+          FROM " . $this->initialization_celkotable;
+    $q .= " WHERE " . $this->initialization_celkoparent_id . " = ?";
+    $bindvars = array($parent_id);
+    $result = $this->dbconn->Execute($q, $bindvars);
 
-        while (!$result->EOF) {
-            list($child_id,$name) = $result->fields;
-           // recursive execution of this function for each  
-           // child of this node  
-           // $right_id is the current right value, which is  
-           // incremented by the rebuild_tree function  
-           $right_id = $this->build_tree($child_id, $right_id);  
-           $result->MoveNext();
-       }  
-       // we've got the left value, and now that we've processed  
-       // the children of this node we also know the right value  
-        $bindvars = array($left_id);
-        $bindvars[] = $right_id;
-        $bindvars[] = $parent_id;
-        $q = "UPDATE " . $this->initialization_celkotable;
-        $q .= " SET " . $this->initialization_celkoleft_id . " = ?, ";
-        $q .= $this->initialization_celkoright_id . " = ? ";
-        $q .= "WHERE " . $this->initialization_celkoparent_id . " = ?";  
-        $result = $this->dbconn->Execute($q, $bindvars);
-     
-       // return the right value of this node + 1  
-       return $right_id+1;  
-    }  
+    while (!$result->EOF) {
+        list($child_id,$name) = $result->fields;
+       // recursive execution of this function for each  
+       // child of this node  
+       // $right_id is the current right value, which is  
+       // incremented by the rebuild_tree function  
+       $right_id = $this->build_tree($child_id, $right_id);  
+       $result->MoveNext();
+   }  
+   // we've got the left value, and now that we've processed  
+   // the children of this node we also know the right value  
+    $bindvars = array($left_id);
+    $bindvars[] = $right_id;
+    $bindvars[] = $parent_id;
+    $q = "UPDATE " . $this->initialization_celkotable;
+    $q .= " SET " . $this->initialization_celkoleft_id . " = ?, ";
+    $q .= $this->initialization_celkoright_id . " = ? ";
+    $q .= "WHERE " . $this->initialization_celkoparent_id . " = ?";  
+    $result = $this->dbconn->Execute($q, $bindvars);
+ 
+   // return the right value of this node + 1  
+   return $right_id+1;  
+}  
 
 }
 ?>
