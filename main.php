@@ -44,7 +44,6 @@ class CelkoPositionProperty extends DataProperty
         $this->template =  'celkoposition';
         $this->filepath   = 'auto';
         $this->dbconn = xarDB::getConn();
-
     }
 
     public function checkInput($name = '', $value = null)
@@ -61,11 +60,11 @@ class CelkoPositionProperty extends DataProperty
                     $this->rightorleft = 'right';
                     $this->inorout = 'out';
                     break;
-                case 3: // below - child category
+                case 3: // below - child item
                     $this->rightorleft = 'right';
                     $this->inorout = 'in';
                     break;
-                case 4: // above - child category
+                case 4: // above - child item
                     $this->rightorleft = 'left';
                     $this->inorout = 'in';
                     break;
@@ -81,18 +80,18 @@ class CelkoPositionProperty extends DataProperty
             $itemid = $this->updateposition($itemid);
         } else {
 
-           // Obtain current information on the reference category
+           // Obtain current information on the reference item
            $cat = $this->getiteminfo($this->refcid);
 
            if ($cat == false) {
-               xarSession::setVar('errormsg', xarML('That category does not exist'));
+               xarSession::setVar('errormsg', xarML('That item does not exist'));
                return false;
            }
 
            $this->right = $cat['right_id'];
            $this->left = $cat['left_id'];
 
-           /* Find out where you should put the new category in */
+           /* Find out where you should put the new item in */
            if (
                !($point_of_insertion =
                     $this->find_point_of_insertion(
@@ -108,7 +107,7 @@ class CelkoPositionProperty extends DataProperty
                return false;
            }
 
-            /* Find the right parent for this category */
+            /* Find the right parent for this item */
             if (strtolower($this->inorout) == 'in') {
                 $parent = (int)$this->refcid;
             } else {
@@ -121,19 +120,19 @@ class CelkoPositionProperty extends DataProperty
 
     public function updateValue($itemid=0)
     {
-        // Obtain current information on the category
+        // Obtain current information on the item
         $cat = $this->getiteminfo($itemid);
 
         if ($cat == false) {
-           xarSession::setVar('errormsg', xarML('That category does not exist'));
+           xarSession::setVar('errormsg', xarML('That item does not exist'));
            return false;
         }
 
-       // Obtain current information on the reference category
+       // Obtain current information on the reference item
        $refcat = $this->getiteminfo($this->refcid);
 
        if ($refcat == false) {
-           xarSession::setVar('errormsg', xarML('That category does not exist'));
+           xarSession::setVar('errormsg', xarML('That item does not exist'));
            return false;
        }
 
@@ -143,7 +142,7 @@ class CelkoPositionProperty extends DataProperty
            ($refcat['left_id'] <= $cat['right_id'])
           )
        {
-            $msg = xarML('Category references siblings.');
+            $msg = xarML('This item references siblings.');
             throw new BadParameterException(null, $msg);
        }
 
@@ -197,7 +196,7 @@ class CelkoPositionProperty extends DataProperty
             $result = $this->dbconn->Execute($SQLquery);
             if (!$result) return;
 
-          /* Find the right parent for this category */
+          /* Find the right parent for this item */
           if (strtolower($this->inorout) == 'in') {
               $parent_id = $this->refcid;
           } else {
@@ -215,40 +214,38 @@ class CelkoPositionProperty extends DataProperty
 
     public function showInput(Array $data = array())
     {
-        $this->build_tree(140, 1);
-        echo "done";exit;
         $data['itemid'] = isset($data['itemid']) ? $data['itemid'] : $this->value;
         if (!empty($data['itemid'])) {        
-            $data['category'] = $this->getiteminfo($data['itemid']);
-            $categories = $this->getcat(array('cid' => false,
+            $data['item'] = $this->getiteminfo($data['itemid']);
+            $items = $this->getcat(array('cid' => false,
                                               'eid' => $data['itemid']));
             $data['cid'] = $data['itemid'];
         } else {
-            $data['category'] = Array('left_id'=>0,'right_id'=>0,'name'=>'','description'=>'', 'template' => '');
-            $categories = $this->getcat(array('cid' => false));
+            $data['item'] = Array('left_id'=>0,'right_id'=>0,'name'=>'','description'=>'', 'template' => '');
+            $items = $this->getcat(array('cid' => false));
             $data['cid'] = null;
         }
 
-        $category_Stack = array ();
+        $item_Stack = array ();
 
-        foreach ($categories as $key => $category) {
-            $categories[$key]['slash_separated'] = '';
+        foreach ($items as $key => $item) {
+            $items[$key]['slash_separated'] = '';
 
-            while ((count($category_Stack) > 0 ) &&
-                   ($category_Stack[count($category_Stack)-1]['indentation'] >= $category['indentation'])
+            while ((count($item_Stack) > 0 ) &&
+                   ($item_Stack[count($item_Stack)-1]['indentation'] >= $item['indentation'])
                   ) {
-               array_pop($category_Stack);
+               array_pop($item_Stack);
             }
 
-            foreach ($category_Stack as $stack_cat) {
-                    $categories[$key]['slash_separated'] .= $stack_cat['name'].'&#160;/&#160;';
+            foreach ($item_Stack as $stack_cat) {
+                    $items[$key]['slash_separated'] .= $stack_cat['name'].'&#160;/&#160;';
             }
 
-            array_push($category_Stack, $category);
-            $categories[$key]['slash_separated'] .= $category['name'];
+            array_push($item_Stack, $item);
+            $items[$key]['slash_separated'] .= $item['name'];
         }
 
-        $data['categories'] = $categories;
+        $data['items'] = $items;
         return parent::showInput($data);
 
     }
@@ -380,7 +377,7 @@ class CelkoPositionProperty extends DataProperty
         if (isset($eid) && !is_array($eid) && $eid != false) {
            $ecat = $this->getiteminfo($eid);
            if ($ecat == false) {
-               xarSession::setVar('errormsg', xarML('That category does not exist'));
+               xarSession::setVar('errormsg', xarML('That item does not exist'));
                return array();
            }
            //$SQLquery .= " AND P1.left_id
@@ -403,7 +400,7 @@ class CelkoPositionProperty extends DataProperty
         if (!$result) return;
         if ($result->EOF) return Array();
 
-        $categories = array();
+        $items = array();
 
         $index = -1;
         while (!$result->EOF) {
@@ -416,10 +413,11 @@ class CelkoPositionProperty extends DataProperty
                    ) = $result->fields;
             $result->MoveNext();
 
+/*          CHECKME: how do we handle privileges?
             if (!xarSecurityCheck('ViewCategories',0,'Category',"$name:$cid")) {
                  continue;
             }
-
+*/
             if ($indexby == 'cid') {
                 $index = $cid;
             } else {
@@ -428,12 +426,12 @@ class CelkoPositionProperty extends DataProperty
 
             // are we looking to have the output in the "standard" form?
             if (!empty($dropdown)) {
-                $categories[$index+1] = Array(
+                $items[$index+1] = Array(
                     'id'         => $cid,
                     'name'        => $name,
                 );
             } else {
-                $categories[$index] = Array(
+                $items[$index] = Array(
                     'indentation' => $indentation,
                     'cid'         => $cid,
                     'name'        => $name,
@@ -446,10 +444,10 @@ class CelkoPositionProperty extends DataProperty
         $result->Close();
 
         if (!empty($dropdown)) {
-            $categories[0] = array('id' => 0, 'name' => '');
+            $items[0] = array('id' => 0, 'name' => '');
         }
 
-        return $categories;
+        return $items;
     }
 
     function build_tree($parent_id, $left_id)
@@ -460,7 +458,7 @@ class CelkoPositionProperty extends DataProperty
        // get all children of this node  
         $q = "SELECT id, name 
               FROM " . $this->initialization_celkotable;
-        $q .= " WHERE " . $this->initialization_celkoparent_id . " = ?"; echo $q;//exit;
+        $q .= " WHERE " . $this->initialization_celkoparent_id . " = ?";
         $bindvars = array($parent_id);
         $result = $this->dbconn->Execute($q, $bindvars);
 
