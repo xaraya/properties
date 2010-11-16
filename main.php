@@ -30,7 +30,7 @@ class CelkoPositionProperty extends DataProperty
     public $parent;
     public $catexists;
     
-    public $initialization_itemstable;
+    public $initialization_celkotable;
     public $initialization_celkoname = 'name';
     public $initialization_celkoparent_id = 'parent_id';
     public $initialization_celkoright_id = 'right_id';
@@ -46,7 +46,7 @@ class CelkoPositionProperty extends DataProperty
         sys::import('modules.categories.xartables');
         xarDB::importTables(categories_xartables());
         $xartable = xarDB::getTables();
-        $this->initialization_itemstable = $xartable['categories'];
+        $this->initialization_celkotable = $xartable['categories'];
     }
 
     public function checkInput($name = '', $value = null)
@@ -179,7 +179,7 @@ class CelkoPositionProperty extends DataProperty
           }
 
           // TODO: besided portability, also check performance here
-          $SQLquery = "UPDATE " . $this->initialization_itemstable . " SET
+          $SQLquery = "UPDATE " . $this->initialization_celkotable . " SET
                        left_id = CASE
                         WHEN " . $this->initialization_celkoright_id . " BETWEEN ".$cat['left_id']." AND ".$cat['right_id']."
                            THEN " . $this->initialization_celkoleft_id . " + ($distance)
@@ -209,7 +209,7 @@ class CelkoPositionProperty extends DataProperty
               $parent_id = $refcat['parent_id'];
           }
           // Update parent id
-          $SQLquery = "UPDATE " . $this->initialization_itemstable .
+          $SQLquery = "UPDATE " . $this->initialization_celkotable .
                        " SET " . $this->initialization_celkoparent_id . " = ?
                        WHERE id = ?";
         $result = $dbconn->Execute($SQLquery,array($parent_id, $itemid));
@@ -265,18 +265,18 @@ class CelkoPositionProperty extends DataProperty
         $bindvars[3] = array();
 
         /* Opening space for the new node */
-        $SQLquery[1] = "UPDATE " . $this->initialization_itemstable .
+        $SQLquery[1] = "UPDATE " . $this->initialization_celkotable .
                         " SET " . $this->initialization_celkoright_id . " = " . $this->initialization_celkoright_id . " + 2
                         WHERE " . $this->initialization_celkoright_id . ">= ?";
         $bindvars[1][] = $point_of_insertion;
 
-        $SQLquery[2] = "UPDATE " . $this->initialization_itemstable .
+        $SQLquery[2] = "UPDATE " . $this->initialization_celkotable .
                         " SET " . $this->initialization_celkoleft_id . " = " . $this->initialization_celkoleft_id . " + 2
                         WHERE " . $this->initialization_celkoleft_id . ">= ?";
         $bindvars[2][] = $point_of_insertion;
         // Both can be transformed into just one SQL-statement, but i dont know if every database is SQL-92 compliant(?)
 
-        $SQLquery[3] = "UPDATE " . $this->initialization_itemstable . " SET " .
+        $SQLquery[3] = "UPDATE " . $this->initialization_celkotable . " SET " .
                                     $this->initialization_celkoparent_id . " = ?," .
                                     $this->initialization_celkoleft_id . " = ?," .
                                     $this->initialization_celkoright_id . " = ?
@@ -336,7 +336,7 @@ class CelkoPositionProperty extends DataProperty
     function getiteminfo($id) 
     {
         sys::import('xaraya.structures.query');
-        $q = new Query('SELECT', $this->initialization_itemstable);
+        $q = new Query('SELECT', $this->initialization_celkotable);
         $q->eq('id',$id);
         if (!$q->run()) return;
         $result = $q->row();
@@ -377,8 +377,8 @@ class CelkoPositionProperty extends DataProperty
                             P1." . $this->initialization_celkoparent_id . ",
                             P1." . $this->initialization_celkoleft_id . ",
                             P1." . $this->initialization_celkoright_id . 
-                       " FROM " . $this->initialization_itemstable . " P1, " .
-                            $this->initialization_itemstable . " P2
+                       " FROM " . $this->initialization_celkotable . " P1, " .
+                            $this->initialization_celkotable . " P2
                       WHERE P1." . $this->initialization_celkoleft_id . " 
                          >= P2." . $this->initialization_celkoleft_id . " 
                         AND P1." . $this->initialization_celkoleft_id . " 
