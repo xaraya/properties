@@ -29,24 +29,22 @@ class CelkoPositionProperty extends DataProperty
     public $inorout;
     public $parent;
     public $catexists;
+    public $dbconn;
     
     public $initialization_celkotable;
     public $initialization_celkoname = 'name';
     public $initialization_celkoparent_id = 'parent_id';
     public $initialization_celkoright_id = 'right_id';
     public $initialization_celkoleft_id  = 'left_id';
-    
+
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
         $this->template =  'celkoposition';
         $this->filepath   = 'auto';
-        
-        sys::import('modules.categories.xartables');
-        xarDB::importTables(categories_xartables());
-        $xartable = xarDB::getTables();
-        $this->initialization_celkotable = $xartable['categories'];
+        $this->dbconn = xarDB::getConn();
+
     }
 
     public function checkInput($name = '', $value = null)
@@ -131,9 +129,6 @@ class CelkoPositionProperty extends DataProperty
            return false;
         }
 
-        // Get datbase setup
-        $dbconn = xarDB::getConn();
-
        // Obtain current information on the reference category
        $refcat = $this->getiteminfo($this->refcid);
 
@@ -199,7 +194,7 @@ class CelkoPositionProperty extends DataProperty
                      // the databases we are supporting are complying with it. This can be
                      // broken down in 3 simple UPDATES which shouldnt be a problem with any database
 
-            $result = $dbconn->Execute($SQLquery);
+            $result = $this->dbconn->Execute($SQLquery);
             if (!$result) return;
 
           /* Find the right parent for this category */
@@ -212,7 +207,7 @@ class CelkoPositionProperty extends DataProperty
           $SQLquery = "UPDATE " . $this->initialization_celkotable .
                        " SET " . $this->initialization_celkoparent_id . " = ?
                        WHERE id = ?";
-        $result = $dbconn->Execute($SQLquery,array($parent_id, $itemid));
+        $result = $this->dbconn->Execute($SQLquery,array($parent_id, $itemid));
         if (!$result) return;
 
        } 
@@ -220,6 +215,8 @@ class CelkoPositionProperty extends DataProperty
 
     public function showInput(Array $data = array())
     {
+        $this->build_tree(140, 1);
+        echo "done";exit;
         $data['itemid'] = isset($data['itemid']) ? $data['itemid'] : $this->value;
         if (!empty($data['itemid'])) {        
             $data['category'] = $this->getiteminfo($data['itemid']);
@@ -231,7 +228,7 @@ class CelkoPositionProperty extends DataProperty
             $categories = $this->getcat(array('cid' => false));
             $data['cid'] = null;
         }
-        
+
         $category_Stack = array ();
 
         foreach ($categories as $key => $category) {
@@ -258,7 +255,6 @@ class CelkoPositionProperty extends DataProperty
     
     function updateposition($itemid=0, $parent=0, $point_of_insertion=1) 
     {
-        $dbconn = xarDB::getConn();
         $bindvars = array();
         $bindvars[1] = array();
         $bindvars[2] = array();
@@ -283,7 +279,7 @@ class CelkoPositionProperty extends DataProperty
                                      WHERE id = ?";
         $bindvars[3] = array($parent, $point_of_insertion, $point_of_insertion + 1,$itemid);
 
-        for ($i=1;$i<4;$i++) if (!$dbconn->Execute($SQLquery[$i],$bindvars[$i])) return;
+        for ($i=1;$i<4;$i++) if (!$this->dbconn->Execute($SQLquery[$i],$bindvars[$i])) return;
     }
 
     function find_point_of_insertion($args)
@@ -350,12 +346,10 @@ class CelkoPositionProperty extends DataProperty
     
     function countitems()
     {
-        // Database information
-        $dbconn = xarDB::getConn();
         $sql = "SELECT COUNT(id) AS childnum
                   FROM " . $this->initialization_itemstable;
 
-        $result = $dbconn->Execute($sql);
+        $result = $this->dbconn->Execute($sql);
         if (!$result) return;
         $num = $result->fields[0];
         $result->Close();
@@ -366,7 +360,6 @@ class CelkoPositionProperty extends DataProperty
     {
         extract($args);
 
-        $dbconn = xarDB::getConn();
         $indexby = 'default';
 
         $bindvars = array();
@@ -403,9 +396,9 @@ class CelkoPositionProperty extends DataProperty
     // cfr. xarcachemanager - this approach might change later
         $expire = xarModVars::get('categories','cache.userapi.getcat');
         if (!empty($expire)){
-            $result = $dbconn->CacheExecute($expire,$SQLquery,$bindvars);
+            $result = $this->dbconn->CacheExecute($expire,$SQLquery,$bindvars);
         } else {
-            $result = $dbconn->Execute($SQLquery, $bindvars);
+            $result = $this->dbconn->Execute($SQLquery, $bindvars);
         }
         if (!$result) return;
         if ($result->EOF) return Array();
@@ -458,6 +451,42 @@ class CelkoPositionProperty extends DataProperty
 
         return $categories;
     }
+
+    function build_tree($parent_id, $left_id)
+    {       
+       // the right value of this node is the left value + 1  
+       $right_id = $left_id+1;  
+
+       // get all children of this node  
+        $q = "SELECT id, name 
+              FROM " . $this->initialization_celkotable;
+        $q .= " WHERE " . $this->initialization_celkoparent_id . " = ?"; echo $q;//exit;
+        $bindvars = array($parent_id);
+        $result = $this->dbconn->Execute($q, $bindvars);
+
+        while (!$result->EOF) {
+            list($child_id,$name) = $result->fields;
+           // recursive execution of this function for each  
+           // child of this node  
+           // $right_id is the current right value, which is  
+           // incremented by the rebuild_tree function  
+           $right_id = $this->build_tree($child_id, $right_id);  
+           $result->MoveNext();
+       }  
+       // we've got the left value, and now that we've processed  
+       // the children of this node we also know the right value  
+        $bindvars = array($left_id);
+        $bindvars[] = $right_id;
+        $bindvars[] = $parent_id;
+        $q = "UPDATE " . $this->initialization_celkotable;
+        $q .= " SET " . $this->initialization_celkoleft_id . " = ?, ";
+        $q .= $this->initialization_celkoright_id . " = ? ";
+        $q .= "WHERE " . $this->initialization_celkoparent_id . " = ?";  
+        $result = $this->dbconn->Execute($q, $bindvars);
+     
+       // return the right value of this node + 1  
+       return $right_id+1;  
+    }  
 
 }
 ?>
