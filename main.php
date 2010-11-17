@@ -463,7 +463,7 @@ function build_tree($parent_id, $left_id)
     $result = $this->dbconn->Execute($q, $bindvars);
 
     while (!$result->EOF) {
-        list($child_id,$name) = $result->fields;
+        list($child_id) = $result->fields;
        // recursive execution of this function for each  
        // child of this node  
        // $right_id is the current right value, which is  
