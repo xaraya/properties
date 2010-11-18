@@ -479,7 +479,7 @@ function build_tree($parent_id, $left_id)
     $q = "UPDATE " . $this->initialization_celkotable;
     $q .= " SET " . $this->initialization_celkoleft_id . " = ?, ";
     $q .= $this->initialization_celkoright_id . " = ? ";
-    $q .= "WHERE " . $this->initialization_celkoparent_id . " = ?";  
+    $q .= "WHERE id = ?";  
     $result = $this->dbconn->Execute($q, $bindvars);
  
    // return the right value of this node + 1  
