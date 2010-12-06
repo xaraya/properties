@@ -11,8 +11,7 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-//sys::import('modules.base.xarproperties.floatbox');
-//sys::import('xaraya.structures.datetime');
+sys::import('xaraya.structures.datetime');
 
 class DateTimeProperty extends DataProperty
 {
