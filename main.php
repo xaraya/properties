@@ -11,6 +11,7 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
+sys::import('modules.dynamicdata.class.properties.base');
 sys::import('xaraya.structures.datetime');
 
 class DateTimeProperty extends DataProperty
