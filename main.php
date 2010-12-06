@@ -11,6 +11,8 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
+sys::import('modules.dynamicdata.class.properties.base');
+
 class DateProperty extends DataProperty
 {
     public $id   = 30022;
