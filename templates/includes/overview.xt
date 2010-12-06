@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+     <div id="contentmain_core">
+        <h2>TimeFrame Property</h2>
+            <h3>Description</h3>
+            <p>
+                The TimeFrame dataproperty is a dropdown that displays past and/or future timeframes.
+            </p>
+            <p>
+                The property's values are integers representing references to timeframes, and not in any way timeframes themselves.
+            </p>
+            <h3>Usage</h3>
+            <h4>Standalone</h4>
+                <pre>
+    &lt;xar:data-input type="timeframe" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output type="timeframe" <i>[attr1="value1",...]</i> /&gt;
+                    </pre>
+            <h4>Bound</h4>
+                <pre>
+    &lt;xar:data-input property="$properties['timeframe']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output property="$properties['timeframe']" <i>[attr1="value1",...]</i> /&gt;
+                </pre>
+            <h3>Attributes</h3>
+            <ul>
+                <li>
+                    <strong>frames</strong>: mixed [default='past']&#160;A list or array of sets of timeframes. 'past' and 'future' are included in the defualt templates.
+                    <ul>
+                        <li>'past' has the following values:
+                            <table>
+                                <tr>
+                                    <th>Display</th><th>Value</th>
+                                </tr>
+                                <tr>
+                                    <td>This Month</td><td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Last Month</td><td>-100</td>
+                                </tr>
+                                <tr>
+                                    <td>Last 2 Months</td><td>-200</td>
+                                </tr>
+                                <tr>
+                                    <td>Last Quarter</td><td>-300</td>
+                                </tr>
+                                <tr>
+                                    <td>Year to Date</td><td>-400</td>
+                                </tr>
+                                <tr>
+                                    <td>Last Year</td><td>-500</td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li>'future' has the following values:
+                            <table>
+                                <tr>
+                                    <th>Display</th><th>Value</th>
+                                </tr>
+                                <tr>
+                                    <td>Current Year</td><td>500</td>
+                                </tr>
+                                <tr>
+                                    <td>Till Yearend</td><td>400</td>
+                                </tr>
+                                <tr>
+                                    <td>This Quarter</td><td>300</td>
+                                </tr>
+                                <tr>
+                                    <td>Next 2 Months</td><td>200</td>
+                                </tr>
+                                <tr>
+                                    <td>Next Month</td><td>100</td>
+                                </tr>
+                            </table>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Other attributes as inherited from the parent dropdown dataproperty.
+                </li>
+            </ul>
+        </div>                 
+</xar:template>
