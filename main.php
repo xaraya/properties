@@ -11,7 +11,7 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-//sys::import('modules.math.xarproperties.formattednumber');
+sys::import('modules.dynamicdata.class.properties.base');
 sys::import('xaraya.structures.datetime');
 
 class TimeProperty extends DataProperty
