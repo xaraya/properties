@@ -1,5 +1,12 @@
 <?php
 /**
+ * Pager Property
+ *
+ * @package properties
+ * @subpackage pager property
+ * @category Xaraya Property
+ * @version 1.0.0
+ * @copyright see the html/credits.html file in this release
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  *
  *
@@ -16,6 +23,7 @@
  * @param integer $template     alternative template name within base/user (default 'pager')
  *
  */
+
 sys::import('modules.base.xarproperties.textbox');
 
 /**
