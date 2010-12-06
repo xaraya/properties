@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:set name="val1">"00".$value['time']['hour'];$val1=substr($val1,strlen($val1)-2)</xar:set>
+    <xar:set name="val2">"00".$value['time']['minute'];$val2=substr($val2,strlen($val2)-2)</xar:set>
+    <xar:set name="val3">"00".$value['time']['second'];$val3=substr($val3,strlen($val3)-2)</xar:set>
+    <xar:if condition="isset($seconds) AND ($seconds eq 'true')">
+        #$val1#:#$val2#:#$val3#
+    <xar:else />
+        #$val1#:#$val2#
+    </xar:if>
+    <xar:if condition="isset($format) AND ($format eq 'ampm')">
+        &#160;#$value['ampm']#
+    </xar:if>
+</xar:template>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:set name="nameampm">$name . "_ampm"</xar:set>
+    <xar:set name="idampm1">$id . "_ampm1"</xar:set>
+    <xar:set name="idampm2">$id . "_ampm2"</xar:set>
+
+    <xar:if condition="!isset($style)">
+        <xar:set name="style">""</xar:set>
+    </xar:if>
+
+    <xar:if condition="$layout eq 'default' OR $layout eq '' OR $layout eq 'byminute'">
+        <xar:if condition="isset($dropdown) AND $dropdown">
+            <select name="#$name#_hour" id="#$id#_hour" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#">
+                <xar:for start="$i=0" test="$i lt 24" iter="$i++">
+                    <xar:set name="val">"00".$i;$val=substr($val,strlen($val)-2)</xar:set>
+                    <xar:if condition="$i eq $value['hour']">
+                        <option value="#$i#" selected="selected">#$val#</option>
+                    <xar:else />
+                        <option value="#$i#">#$val#</option>
+                    </xar:if>
+                </xar:for>
+            </select>
+
+            <xar:if condition="isset($minutes) AND ($minutes eq 'false')">
+                <input type="hidden" name="#$name#_minute" id="#$id#_minute" tabindex="#$tabindex#" value="1"/>
+            <xar:else/>
+                &#160;:&#160;
+                <select name="#$name#_minute" id="#$id#_minute" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#">
+                    <xar:for start="$i=0" test="$i lt 60" iter="$i++">
+                        <xar:set name="val">"00".$i;$val=substr($val,strlen($val)-2)</xar:set>
+                        <xar:if condition="$i eq $value['minute']">
+                            <option value="#$i#" selected="selected">#$val#</option>
+                        <xar:else />
+                            <option value="#$i#">#$val#</option>
+                        </xar:if>
+                    </xar:for>
+                </select>
+            </xar:if>
+
+            <xar:if condition="isset($seconds) AND ($seconds eq 'false')">
+                <input type="hidden" name="#$name#_second" id="#$id#_second" tabindex="#$tabindex#" value="1"/>
+            <xar:else/>
+                &#160;:&#160;
+                <select name="#$name#_second" id="#$id#_second" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#">
+                    <xar:for start="$i =1" test="$i lt 61" iter="$i++">
+                        <xar:set name="val">"00".$i;$val=substr($val,strlen($val)-2)</xar:set>
+                        <xar:if condition="$i eq $value['second']">
+                            <option value="#$i#" selected="selected">#$val#</option>
+                        <xar:else />
+                            <option value="#$i#">#$val#</option>
+                        </xar:if>
+                    </xar:for>
+                </select>
+            </xar:if>
+
+            <xar:if condition="isset($format) AND ($format eq 'ampm')">
+                &#160;
+                <xar:set name="ampmoptions">array(
+                                                array('id' => 'am', 'name' => 'am'),
+                                                array('id' => 'pm', 'name' => 'pm'),
+                                                )
+                </xar:set>
+                <xar:data-input type="dropdown" name="$nameampm" id="$idampm1" tabindex="$tabindex" value="$value['ampm']" options="$ampmoptions" onchange="$evt_change"/>
+            </xar:if>
+        <xar:else/>
+            <xar:set name="val">"00".$value['hour'];$val=substr($val,strlen($val)-2)</xar:set>
+            <input type="text" name="#$name#_hour" id="#$id#_hour" tabindex="#$tabindex#" value="#$val#" onchange="#$evt_change#" maxlength="2" style="width: 20px; text-align: right"/>
+            &#160;:&#160;
+            <xar:set name="val">"00".$value['minute'];$val=substr($val,strlen($val)-2)</xar:set>
+            <input type="text" name="#$name#_minute" id="#$id#_minute" tabindex="#$tabindex#" value="#$val#" onchange="#$evt_change#" maxlength="2" style="width: 20px; text-align: right"/>
+            <xar:if condition="isset($seconds) AND ($seconds eq 'false')">
+                <input type="hidden" name="#$name#_second" id="#$id#_second" tabindex="#$tabindex#" value="1"/>
+            <xar:else/>
+                &#160;:&#160;
+                <xar:set name="val">"00".$value['second'];$val=substr($val,strlen($val)-2)</xar:set>
+                <input type="text" name="#$name#_second" id="#$id#_second" tabindex="#$tabindex#" value="#$val#" onchange="#$evt_change#" maxlength="2" style="width: 20px; text-align: right"/>
+            </xar:if>
+            <xar:if condition="isset($format) AND ($format eq 'ampm')">
+                &#160;
+                <xar:set name="ampmoptions">array(
+                                                array('id' => 'am', 'name' => 'am'),
+                                                array('id' => 'pm', 'name' => 'pm'),
+                                                )
+                </xar:set>
+                <xar:data-input type="dropdown" name="$nameampm" id="$idampm2" tabindex="$tabindex" value="$value['ampm']" options="$ampmoptions" onchange="$evt_change"/>
+            </xar:if>
+        </xar:if>
+    <xar:elseif condition="$layout eq 'byhalfhour'"/>
+        <xar:set name="options">options_halfhours()</xar:set>
+        <xar:set name="minutename">$name . '_minute'</xar:set>
+        <xar:set name="minuteid">$id . '_minute'</xar:set>
+        <xar:set name="minutes">$value['hour'] * 60 + $value['minute']</xar:set>
+        <xar:if condition="!isset($style)">
+            <xar:set name="style">''</xar:set>
+        </xar:if>
+        <xar:data-input type="dropdown" name="$minutename" id="$minuteid" tabindex="$tabindex" value="$minutes" options="$options" style="$style"/>
+        <input type="hidden" name="#$name#_hour" id="#$id#_hour" value="0"/>
+        <input type="hidden" name="#$name#_second" id="#$id#_second" value="0"/>
+    <xar:elseif condition="$layout eq 'byhour'"/>
+        <xar:set name="options">options_hours()</xar:set>
+        <xar:set name="minutename">$name . '_minute'</xar:set>
+        <xar:set name="minuteid">$id . '_minute'</xar:set>
+        <xar:data-input type="dropdown" name="$minutename" id="$minuteid" tabindex="$tabindex" value="$value['hour']" options="$options" style="$style"/>
+        <input type="hidden" name="#$name#_hour" id="#$id#_hour" value="0"/>
+        <input type="hidden" name="#$name#_second" id="#$id#_second" value="0"/>
+    </xar:if>
+</xar:template>
