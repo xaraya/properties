@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div>
+            <h2>Timeperiod Property</h2>
+                <h3>Description</h3>
+                <p>
+                    The Timeperiod dataproperty lets you input time periods. It consists of a dropdown and a text field.  The dropdown is meant for choosing the unit of time (seconds, minutes, hours, days, weeks, months and years). The textbox is meant for entering the number of units. 
+                </p>
+                <p>
+                    The property stores time periods as seconds. When displaying a period, it will choose the largest possible unit the period can be displayed in without decimals.
+                </p>
+                <h3>Usage</h3>
+                <h4>Standalone</h4>
+                    <pre>
+    &lt;xar:data-input type="timeperiod" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output type="timeperiod" <i>[attr1="value1",...]</i> /&gt;
+                    </pre>
+            <h4>Bound</h4>
+                <pre>
+    &lt;xar:data-input property="$properties['timeperiod']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output property="$properties['timeperiod']" <i>[attr1="value1",...]</i> /&gt;
+                </pre>
+            <h3>Attributes</h3>
+            <ul>
+                <li>
+                    The attributes are those inherited from the parent base dataproperty.
+                </li>
+            </ul>
+            <h3>Values</h3>
+                The units have the following values:
+                    <table>
+                        <tr>
+                            <th>Display</th><th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>seconds</td><td>s</td>
+                        </tr>
+                        <tr>
+                            <td>minutes</td><td>m</td>
+                        </tr>
+                        <tr>
+                            <td>hours</td><td>h</td>
+                        </tr>
+                        <tr>
+                            <td>days</td><td>d</td>
+                        </tr>
+                        <tr>
+                            <td>weeks</td><td>w</td>
+                        </tr>
+                        <tr>
+                            <td>years</td><td>y</td>
+                        </tr>
+                    </table>
+        </div>
+</xar:template>
