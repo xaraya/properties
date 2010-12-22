@@ -85,7 +85,8 @@
             </xar:if>
         </xar:if>
     <xar:elseif condition="$layout eq 'byhalfhour'"/>
-        <xar:set name="options">xarMod::apiFunc('math','data','halfhours')</xar:set>
+        <xar:set name="dummy">1;sys::import('properties.datetime.data.halfhours')</xar:set>
+        <xar:set name="options">datetime_halfhours()</xar:set>
         <xar:set name="minutename">$name . '_minute'</xar:set>
         <xar:set name="minuteid">$id . '_minute'</xar:set>
         <xar:set name="minutes">$value['hour'] * 60 + $value['minute']</xar:set>
@@ -96,7 +97,8 @@
         <input type="hidden" name="#$name#_hour" id="#$id#_hour" value="0"/>
         <input type="hidden" name="#$name#_second" id="#$id#_second" value="0"/>
     <xar:elseif condition="$layout eq 'byhour'"/>
-        <xar:set name="options">xarMod::apiFunc('math','data','hours')</xar:set>
+        <xar:set name="dummy">1;sys::import('properties.datetime.data.hours')</xar:set>
+        <xar:set name="options">datetime_hours()</xar:set>
         <xar:set name="minutename">$name . '_minute'</xar:set>
         <xar:set name="minuteid">$id . '_minute'</xar:set>
         <!--
