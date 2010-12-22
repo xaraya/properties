@@ -20,9 +20,9 @@ class DateProperty extends DataProperty
     public $desc = 'Date';
     public $reqmodules = array();
 
-//    public $numberformat    = null;
-//    public $currencyformat  = null;
-    public $dateformat      = null;
+    public $display_date_format_type = 1;
+    public $display_date_format_predef = 0;
+    public $display_date_format_custom = 'c';
     public $initialization_start_year;
     public $initialization_end_year;
 
@@ -32,6 +32,9 @@ class DateProperty extends DataProperty
         $this->tplmodule = 'auto';
         $this->template =  'date';
         $this->filepath   = 'auto';
+
+        // Import the predefined display formats here
+        sys::import('properties.date.data.formats');
     }
 
     public function checkInput($name = '', $value = null)
@@ -123,28 +126,23 @@ class DateProperty extends DataProperty
 
     function format($value)
     {
-        if (empty($value)) return "";
-        $info = xarController::$request->getInfo();
-        $moduleid = xarMod::getRegID($info[0]);
-        if (empty($this->dateformat) &&
-            (xarModUserVars::get('math','defaultdatesettings',$moduleid) == 'locale')) {
-                $settings =& xarMLSLoadLocaleData();
+        switch($this->display_date_format_type) {
+            case 1:
+            default:
                 $value = xarLocaleGetFormattedDate('short', $value, false);
-        } else {
-            $settings = $this->assembleSettings($moduleid);
-            $value = xarLocaleFormatDate($settings['format'],$value,$settings['useoffset']);
+            break;
+            case 2:
+                // If no format chosen, just return the raw value
+                if (!empty($this->display_date_format_predef)) {
+                    $formats = date_formats();die("X");
+                    $value = date($formats[$this->display_date_format_predef]['format'], $value);
+                }
+            break;
+            case 3:
+                $value = date($this->display_date_format_custom, $value);
+            break;
         }
-        return xarVarPrepHTMLDisplay($value);
-    }
-
-    function assembleSettings($moduleid=0)
-    {
-        if (empty($this->dateformat)) {
-            $info = xarMod::apiFunc('math','user','getcurrentdatesetting',array('moduleid' => $moduleid));
-        } else {
-            $info = xarMod::apiFunc('math','user','getdatesetting',array('moduleid' => $moduleid, 'name' => $this->dateformat));
-        }
-        return $info;
+        return $value;
     }
 
     function showHidden(Array $data = array())
@@ -167,9 +165,7 @@ class DateProperty extends DataProperty
         if(!isset($data['template'])) $data['template'] = $this->template;
         if(!isset($data['layout']))   $data['layout']   = $this->layout;
 
-        // We cannot call the parent method becaust the value we are passing is an array, not a string
-        // TODO: find a way out of this quandary?
-        return xarTplProperty($data['module'], $data['template'], 'showhidden', $data);
+        return parent::showHidden($data);
     }
 }
 
