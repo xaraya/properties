@@ -21,7 +21,10 @@ class DateTimeProperty extends DataProperty
     public $desc       = 'DateTime';
     public $reqmodules = array();
 
-    public $display_dateformat;
+    public $dateformat;
+    public $display_datetime_format_type = 1;
+    public $display_datetime_format_predef = 0;
+    public $display_datetime_format_custom = 'c';
     public $initialization_start_year;
     public $initialization_end_year;
 
@@ -31,6 +34,9 @@ class DateTimeProperty extends DataProperty
         $this->tplmodule = 'auto';
         $this->template =  'datetime';
         $this->filepath   = 'auto';
+        
+        // Import the predefined display formats here
+        sys::import('properties.datetime.data.formats');
     }
 
     public function checkInput($name = '', $value = null)
@@ -117,29 +123,24 @@ class DateTimeProperty extends DataProperty
 
     function format($value)
     {
-        if (empty($value)) return "";
-        $info = xarController::$request->getInfo();
-        $moduleid = xarMod::getRegID($info[0]);
-        if (empty($this->dateformat) &&
-            (xarModUserVars::get('math','defaultdatesettings',$moduleid) == 'locale')) {
-                $settings =& xarMLSLoadLocaleData();
+        sys::import('properties.datetime.data.formats');
+        switch($this->display_datetime_format_type) {
+            case 1:
+            default:
                 $value = xarLocaleGetFormattedDate('short', $value, false);
-        } else {
-            $settings = $this->assembleSettings($moduleid);
-            $value = xarLocaleFormatDate($settings['format'],$value,$settings['useoffset']);
+            break;
+            case 2:
+                // If no format chosen, just return the raw value
+                if (!empty($this->display_datetime_format_predef)) {
+                    $formats = datetime_formats();
+                    $value = date($formats[$this->display_datetime_format_predef]['format'], $value);
+                }
+            break;
+            case 3:
+                $value = date($this->display_datetime_format_custom, $value);
+            break;
         }
-
-        return xarVarPrepHTMLDisplay($value);
-    }
-
-    function assembleSettings($moduleid=0)
-    {
-        if (empty($this->dateformat)) {
-            $info = xarMod::apiFunc('math','user','getcurrentdatesetting',array('moduleid' => $moduleid));
-        } else {
-            $info = xarMod::apiFunc('math','user','getdatesetting',array('moduleid' => $moduleid, 'name' => $this->dateformat));
-        }
-        return $info;
+        return $value;
     }
 
     function showHidden(Array $data = array())
