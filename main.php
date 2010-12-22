@@ -21,7 +21,6 @@ class DateTimeProperty extends DataProperty
     public $desc       = 'DateTime';
     public $reqmodules = array();
 
-    public $dateformat;
     public $display_datetime_format_type = 1;
     public $display_datetime_format_predef = 0;
     public $display_datetime_format_custom = 'c';
@@ -123,7 +122,6 @@ class DateTimeProperty extends DataProperty
 
     function format($value)
     {
-        sys::import('properties.datetime.data.formats');
         switch($this->display_datetime_format_type) {
             case 1:
             default:
@@ -163,9 +161,7 @@ class DateTimeProperty extends DataProperty
         if(!isset($data['template'])) $data['template'] = $this->template;
         if(!isset($data['layout']))   $data['layout']   = $this->layout;
         
-        // We cannot call the parent method becaust the value we are passing is an array, not a string
-        // TODO: find a way out of this quandary?
-        return xarTplProperty($data['module'], $data['template'], 'showhidden', $data);
+        return parent::showHidden($data);
     }
 }
 

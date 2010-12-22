@@ -32,19 +32,27 @@
             <h3>Attributes</h3>
             <ul>
                 <li>
-                    <strong>rows</strong>: integer [default=2]&#160;The number of rows displayed for the street part of the address
+                    <strong>start_year</strong>: integer [default=-5]&#160;The first year of the year dropdown. If not specified it is 5 years before the smaller of the current year or the year value of the property.
                 </li>
                 <li>
-                    <strong>show_city</strong>: boolean [default=true]&#160;Display the city part of the address
+                    <strong>end_year</strong>: integer [default=+5]&#160;The last year of the year dropdown. If not specified it is 5 years after the larger of the current year or the year value of the property.
                 </li>
                 <li>
-                    <strong>show_province</strong>: boolean [default=true]&#160;Display the state/province part of the address
+                    <strong>format</strong>: string [default='']&#160;If the value of this attribute is 'ampm' a dropdown is shown with AM or PM to choose from.
                 </li>
                 <li>
-                    <strong>show_postal_code</strong>: boolean [default=true]&#160;Display the postal code part of the address
+                    <strong>minutes</strong>: boolean [default=true]&#160;If false then the input display of minutes is suppressed.
                 </li>
                 <li>
-                    <strong>show_country</strong>: boolean [default=true]&#160;Display the country part of the address
+                    <strong>seconds</strong>: boolean [default=true]&#160;If false then the input display of seconds is suppressed.
+                </li>
+                <li>
+                    <strong>layout</strong>: string [default='default']&#160;The layout options all show year, month and day dropdowns. The layouts available are:
+                    <ul>
+                        <li><strong>byminute</strong>: show a dropdown of minute increments
+                        <li><strong>byhalfhour</strong>: show a dropdown of half hour increments.
+                        <li><strong>byhour</strong>: show a dropdown of hours.
+                    </ul>
                 </li>
             </ul>
         </div>

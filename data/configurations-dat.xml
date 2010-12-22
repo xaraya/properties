@@ -1,0 +1,29 @@
+<items>
+  <configurations itemid="566">
+    <id>566</id>
+    <name>display_datetime_format_type</name>
+    <label>Format source</label>
+    <description>Where to get the datetime format setting</description>
+    <property_id>34</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:51:"1,Site Locale;2,Predefined formats;3,Custom format;";}</configuration>
+  </configurations>
+  <configurations itemid="567">
+    <id>567</id>
+    <name>display_datetime_format_custom</name>
+    <label>Custom format</label>
+    <description>A custom datetime fomat PHP can understand</description>
+    <property_id>2</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration>a:1:{s:14:"display_layout";s:7:"default";}</configuration>
+  </configurations>
+  <configurations itemid="568">
+    <id>568</id>
+    <name>display_datetime_format_predef</name>
+    <label>Predefined formats</label>
+    <description>A set of predefined datetime formats</description>
+    <property_id>6</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration>a:4:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_firstline";s:17:"0,Choose a format";s:23:"initialization_function";s:18:"datetime_formats()";}</configuration>
+  </configurations>
+</items>
