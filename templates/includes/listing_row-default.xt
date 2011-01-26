@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <tr>
-        <xar:template file="listing_rowprefix" module="$module"/>
+        <xar:template file="listing_rowprefix" module="$module" property="listing"/>
         <xar:foreach in="$fields" key="$field">
             <xar:set name="value">$loopitem[$field]</xar:set>
             <xar:set name="column">$columns[$field]</xar:set>
@@ -9,7 +9,7 @@
                 <xar:continue />
             </xar:if>
             <td class="#$item_class#">
-                <xar:if condition="$field eq $keyfieldalias AND $allowread">
+                <xar:if condition="$field eq $keyfieldalias">
                     <a href="#xarModURL($module,'user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
                         <xar:data-output property="$properties[$column]" value="$value" hidden="active"/>
                     </a>
@@ -19,6 +19,6 @@
             </td>
         </xar:foreach>
 
-        <xar:template file="listing_rowsuffix" module="$module"/>
+        <xar:template file="listing_rowsuffix" module="$module" property="listing"/>
     </tr>
 </xar:template>

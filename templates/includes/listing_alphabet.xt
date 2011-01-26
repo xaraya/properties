@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="$show_alphabet">
-        <xar:style scope="module" module="listings" file="alphapager"/>
+        <xar:style scope="property" property="listing" file="alphapager"/>
         <div class="listingsalphapager-wrapper">
             <div class="listings-alphapager xar-padding-thick xar-border-thin">
                 <span>
