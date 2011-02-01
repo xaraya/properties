@@ -11,7 +11,7 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-sys::import('properties.date.main');
+sys::import('properties.time.main');
 sys::import('modules.dynamicdata.class.properties.interfaces');
 
 class TimePropertyInstall extends TimeProperty implements iDataPropertyInstall
