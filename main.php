@@ -49,7 +49,7 @@ class PagerProperty extends TextBoxProperty
     {
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
-        $this->template =  'pager-default';
+        $this->template =  'pager';
         $this->filepath   = 'auto';
 
         extract($descriptor->getArgs());
