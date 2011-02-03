@@ -1,9 +1,9 @@
 <?php 
 /**
- * Language Property
+ * Currency Property
  *
  * @package properties
- * @subpackage language property
+ * @subpackage currency property
  * @category Third Party Xaraya Property
  * @version 1.0.0
  * @copyright (C) 2010 Netspan AG
@@ -13,15 +13,15 @@
 
 sys::import('modules.dynamicdata.xarproperties.objectref');
 
-class LanguageProperty extends ObjectRefProperty
+class CurrencyProperty extends ObjectRefProperty
 {
-    public $id         = 30039;
-    public $name       = 'language';
-    public $desc       = 'Language';
+    public $id         = 30012;
+    public $name       = 'currency';
+    public $desc       = 'Currency';
     public $reqmodules = array();
 
-    public $initialization_refobject    = 'languages';
-    public $initialization_store_prop   = 'locale';
+    public $initialization_refobject    = 'currencies';
+    public $initialization_store_prop   = 'iso_code';
     public $initialization_display_prop = 'name';
 
     function __construct(ObjectDescriptor $descriptor)
@@ -29,8 +29,7 @@ class LanguageProperty extends ObjectRefProperty
         parent::__construct($descriptor);
         
         $this->tplmodule = 'auto';
-//        $this->template =  'language';
-        $this->filepath   = 'auto';
+        $this->filepath  = 'auto';
     }
     
     function showInput(Array $data=array())
@@ -57,7 +56,7 @@ class LanguageProperty extends ObjectRefProperty
         
         sys::import('modules.dynamicdata.class.properties.master');
         $property = DataPropertyMaster::getProperty(array('name' => 'objectref'));
-        $property->initialization_refobject = 'languages';
+        $property->initialization_refobject = 'currencies';
         $property->initialization_store_prop = $this->initialization_store_prop;
         $property->initialization_display_prop = $this->initialization_display_prop;
         $options = $property->getOptions();

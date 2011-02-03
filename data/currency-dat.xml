@@ -1,0 +1,62 @@
+<items>
+  <currencies itemid="2">
+    <id>2</id>
+    <iso_code>EUR</iso_code>
+    <numeric_code>978</numeric_code>
+    <name>Euro</name>
+    <country>European Union</country>
+    <symbol>?</symbol>
+    <decimalseparator>.</decimalseparator>
+    <dsalwaysshown>1</dsalwaysshown>
+    <groupingseparator>,</groupingseparator>
+    <groupingsize>3</groupingsize>
+    <minfractiondigits>2</minfractiondigits>
+    <maxfractiondigits>2</maxfractiondigits>
+    <minintegerdigits>0</minintegerdigits>
+    <maxintegerdigits>0</maxintegerdigits>
+    <precision>1</precision>
+    <rounding>5</rounding>
+    <zerodigitsign>0</zerodigitsign>
+    <minussign>-</minussign>
+  </currencies>
+  <currencies itemid="3">
+    <id>3</id>
+    <iso_code>USD</iso_code>
+    <numeric_code>840</numeric_code>
+    <name>US Dollar</name>
+    <country>United States</country>
+    <symbol>$</symbol>
+    <decimalseparator>.</decimalseparator>
+    <dsalwaysshown>1</dsalwaysshown>
+    <groupingseparator>,</groupingseparator>
+    <groupingsize>3</groupingsize>
+    <minfractiondigits>2</minfractiondigits>
+    <maxfractiondigits>2</maxfractiondigits>
+    <minintegerdigits>0</minintegerdigits>
+    <maxintegerdigits>0</maxintegerdigits>
+    <precision>1</precision>
+    <rounding>5</rounding>
+    <zerodigitsign>0</zerodigitsign>
+    <minussign>-</minussign>
+  </currencies>
+  <currencies itemid="4">
+    <id>4</id>
+    <iso_code>CHF</iso_code>
+    <numeric_code>756</numeric_code>
+    <name>Swiss Franc</name>
+    <country>Switzerland</country>
+    <symbol>Fr.</symbol>
+    <decimalseparator>.</decimalseparator>
+    <dsalwaysshown>1</dsalwaysshown>
+    <groupingseparator>,</groupingseparator>
+    <groupingsize>3</groupingsize>
+    <minfractiondigits>2</minfractiondigits>
+    <maxfractiondigits>2</maxfractiondigits>
+    <minintegerdigits>0</minintegerdigits>
+    <maxintegerdigits>0</maxintegerdigits>
+    <precision>1</precision>
+    <rounding>5</rounding>
+    <zerodigitsign>0</zerodigitsign>
+    <minussign>-</minussign>
+  </currencies>
+</items>

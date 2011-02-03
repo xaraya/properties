@@ -1,9 +1,9 @@
 <?php
 /**
- * Language Property
+ * Currency Property
  *
  * @package properties
- * @subpackage language property
+ * @subpackage currency property
  * @category Third Party Xaraya Property
  * @version 1.0.0
  * @copyright (C) 2010 Netspan AG
@@ -11,20 +11,20 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-sys::import('properties.language.main');
+sys::import('properties.currency.main');
 sys::import('modules.dynamicdata.class.properties.interfaces');
 sys::import('modules.dynamicdata.class.objects.master');
 
-class LanguagePropertyInstall extends LanguageProperty implements iDataPropertyInstall
+class CurrencyPropertyInstall extends CurrencyProperty implements iDataPropertyInstall
 {
     public function install(Array $data=array())
     {    
-        $object = DataObjectMaster::getObject(array('name' => 'languages'));
+        $object = DataObjectMaster::getObject(array('name' => 'currencies'));
         
         // We only load the object once
         if (empty($object)) {
-            $files[] = sys::code() . 'properties/language/data/language-def.xml';
-            $files[] = sys::code() . 'properties/language/data/language-dat.xml';
+            $files[] = sys::code() . 'properties/currency/data/currency-def.xml';
+            $files[] = sys::code() . 'properties/currency/data/currency-dat.xml';
             foreach ($files as $file) {
                 try {
                     $objectid = xarMod::apiFunc('dynamicdata','util','import', array('file' => $file));
