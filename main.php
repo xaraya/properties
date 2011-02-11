@@ -1,7 +1,7 @@
 <?php 
 /**
  * Counter Property
- *
+ * 
  * @package properties
  * @subpackage counter property
  * @category Third Party Xaraya Property
