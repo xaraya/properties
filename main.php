@@ -1,9 +1,9 @@
 <?php 
 /**
- * Counter Property
+ * Date Property
  *
  * @package properties
- * @subpackage counter property
+ * @subpackage date property
  * @category Third Party Xaraya Property
  * @version 1.0.0
  * @copyright (C) 2010 Netspan AG
@@ -11,129 +11,162 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-sys::import('modules.base.xarproperties.textbox');
+sys::import('modules.dynamicdata.class.properties.base');
 
-class CounterProperty extends TextBoxProperty
+class DateProperty extends DataProperty
 {
-    public $id   = 30108;
-    public $name = 'counter';
-    public $desc = 'Counter';
+    public $id   = 30022;
+    public $name = 'date';
+    public $desc = 'Date';
     public $reqmodules = array();
 
-    public $initialization_counter_store;
-    public $initialization_counter_value                  = ',0';
-    public $initialization_counter_allow_prefix_change    = 0;
+    public $display_date_format_type = 1;
+    public $display_date_format_predef = 0;
+    public $display_date_format_custom = 'c';
+    public $initialization_start_year;
+    public $initialization_end_year;
 
-    private $counter;
-    
     function __construct(ObjectDescriptor $descriptor)
     {
-        // We need to set up the counter. First get all the args for it.
-        $args = $descriptor->getArgs();
-        
-        // Parse the configuration to populate the initialization vars
-        if (!empty($args['configuration'])) {
-            $this->parseConfiguration($args['configuration']);
-        }
-        // Get the currently stored counter value in the (assumed) current store
-        try {
-            $parts = explode(',',$this->initialization_counter_store);
-            $value = xarModVars::get($parts[0],$parts[1]);
-        } catch (Exception $e) {
-            $this->initialization_counter_store = 'dynamicdata,' . $this->id;
-            $value = xarModVars::get('dynamicdata,',$this->id);
-        }
-        
-        // If the ID is the value of the property's type, it means we are configuring the property.
-        // If the value is empty it means the modvar doesn't exist. So we create it.
-        if (empty($value) && $this->id != 30108) {
-            $parts = explode(',',$this->initialization_counter_store);
-            $counterparts = explode(',',$this->initialization_counter_value);
-            xarModVars::set($parts[0],$parts[1],serialize($counterparts));
-        }        
-
-        // When no $args['value'] is present, this would make the value the default value,
-        // but we cannot use the default value here.
-        // We get around this by populating the value directly and so avoid that standard 
-        // behavior in the parent
-        if(!isset($args['value'])) {
-            $args['value'] = $this->getCounterValue();
-            $descriptor->setArgs($args);
-            $this->value = $args['value'];
-        } 
-
-        // Now pass the descriptor to the parent. The default value will not be triggered. See the base property code.
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
+        $this->template =  'date';
         $this->filepath   = 'auto';
+
+        // Import the predefined display formats here
+        sys::import('properties.date.data.formats');
     }
 
-    public function createValue($itemid)
+    public function checkInput($name = '', $value = null)
     {
-        // With this we update the counter store to contain the latest value
-        $this->setCounterValue($this->value);
-    }
-
-    private function setCounter()
-    {
-        if (!empty($this->counter)) return true;
-        if (empty($this->initialization_counter_store)) {
-            $this->counter = array('',1);
-        } else {
-            $parts = explode(',',$this->initialization_counter_store);
-            try {
-                $counter = unserialize(xarModVars::get($parts[0],$parts[1]));
-            } catch (Exception $e) {
-                throw new Exception(xarML('Missing a proper store for counter property default value'));
-            }
-            $this->counter = $counter;
+        $name = empty($name) ? 'dd_'.$this->id : $name;
+        // store the fieldname for validations who need them (e.g. file uploads)
+        $this->fieldname = $name;
+        if (!isset($value)) {
+            list($isvalid, $years) = $this->fetchValue($name . '_year');
+            list($isvalid, $months) = $this->fetchValue($name . '_month');
+            list($isvalid, $days) = $this->fetchValue($name . '_day');
         }
-        return true;
+        if (!isset($years) ||!isset($months) ||!isset($days)) {
+            $this->objectref->missingfields[] = $this->name;
+            return null;
+        }
+        $value = mktime(0,0,0,$months,$days,$years);
+        return $this->validateValue($value);
     }
-    
-    private function getCounterPrefix()
+
+    public function showInput(Array $data = array())
     {
-        $this->setCounter();
-        return $this->counter[0];
+        $data['value'] = $this->getvaluearray($data);
+
+        if(!isset($data['onchange'])) $data['onchange'] = null; // let tpl decide what to do
+        $data['extraparams'] =!empty($extraparams) ? $extraparams : "";
+        
+        if($this->initialization_start_year == null)            
+            $this->initialization_start_year =  min($data['value']['year'], date("Y")) - 5;
+        
+        if($this->initialization_end_year == null)          
+            $this->initialization_end_year = max($data['value']['year'], date("Y")) + 5;
+            
+        $data['start_year'] = isset($data['start_year'])? $data['start_year'] : $this->initialization_start_year;
+        $data['end_year'] = isset($data['end_year'])? $data['end_year'] : $this->initialization_end_year;
+                
+        return DataProperty::showInput($data);
     }
-    
-    private function getCounterNumber()
+
+    public function showOutput(Array $data = array())
     {
-        $this->setCounter();
-        $temp = (string)$this->counter[1];
-        if (empty($this->counter[1])) $this->counter[1] = 1;
-        else $this->counter[1]++;
-        $this->counter[1] = str_pad($this->counter[1], strlen($temp), "0", STR_PAD_LEFT);
-        return $this->counter[1];
+        if (!isset($data['value'])) {
+            $value = $this->value;
+        } else {
+            $value = $data['value'];
+        }
+        if (empty($value)) {
+            $data['value']['date'] = "";
+        } else {
+            $date = new XarDateTime();
+            if (is_array($value)) {
+                $timestamp = mktime(0,0,0,$value['month'],$value['day'],$value['year']);
+                $value['date'] = $this->format($timestamp);
+                $data['value'] = $value;
+            } else {
+                $date->settimestamp($value);
+                $valuearray['day'] = $date->getDay();
+                $valuearray['month'] = $date->getMonth();
+                $valuearray['year'] = $date->getYear();
+                $valuearray['date'] = $this->format($value);
+                $data['value'] = $valuearray;
+            }
+        }
+
+        return DataProperty::showOutput($data);
     }
-    
-    private function getCounterValue()
+
+    function getvaluearray($data)
     {
-        $value = $this->getCounterPrefix() . $this->getCounterNumber();
+        if (!isset($data['value'])) $value = $this->value;
+        else $value = $data['value'];
+        
+        // This is already a time array
+        if (is_array($value)) return $value;
+
+        if (empty($value)) $value = 0;
+// Not a good ideea to force to time()
+//        $value = $value == 0 ? time() : $value;
+        if (empty($value)) $value = 0;
+        $date = new XarDateTime();
+        $date->settimestamp($value);
+        $valuearray['day'] = $date->getDay();
+        $valuearray['month'] = $date->getMonth();
+        $valuearray['year'] = $date->getYear();
+        $valuearray['timestamp'] = $value;
+
+        return $valuearray;
+    }
+
+    function format($value)
+    {
+        switch($this->display_date_format_type) {
+            case 1:
+            default:
+                $value = xarLocaleGetFormattedDate('short', $value, false);
+            break;
+            case 2:
+                // If no format chosen, just return the raw value
+                if (!empty($this->display_date_format_predef)) {
+                    $formats = date_formats();die("X");
+                    $value = date($formats[$this->display_date_format_predef]['format'], $value);
+                }
+            break;
+            case 3:
+                $value = date($this->display_date_format_custom, $value);
+            break;
+        }
         return $value;
     }
 
-    private function setCounterValue($value)
+    function showHidden(Array $data = array())
     {
-        // Replace non-digits with "X"
-        $transformedvalue = preg_replace ( '#\D#' , 'X' , $value ) ;
-        
-        // Get the number to the right of the last "X"
-        $counternumber = substr($transformedvalue,strrpos($transformedvalue,'X')+1);
-        
-        // Get the prefix part
-        if ($this->initialization_counter_allow_prefix_change) {
-            $counterprefix = substr($value,0,strlen($value) - strlen($counternumber));
-        } else {
-            $counterparts = explode(',',$this->initialization_counter_value);
-            $counterprefix = $counterparts[0];
-        }
-        
-        // Get the parts of the store
-        $parts = explode(',',$this->initialization_counter_store);
-        
-        // Save the counter
-        xarModVars::set($parts[0],$parts[1],serialize(array($counterprefix,$counternumber)));
+        $data['name']     = !empty($data['name']) ? $data['name'] : 'dd_'.$this->id;
+        $data['id']       = !empty($data['id'])   ? $data['id']   : 'dd_'.$this->id;
+
+        // Add the object's field prefix if there is one
+        $prefix = '';
+        // Allow 0 as a fieldprefix
+        if(!empty($this->_fieldprefix) || $this->_fieldprefix === 0)  $prefix = $this->_fieldprefix . '_';
+        // A field prefix added here can override the previous one
+        if(isset($data['fieldprefix']))  $prefix = $data['fieldprefix'] . '_';
+        if(!empty($prefix)) $data['name'] = $prefix . $data['name'];
+        if(!empty($prefix)) $data['id'] = $prefix . $data['id'];
+
+        $data['invalid']  = !empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) :'';
+        $data['value'] = $this->getvaluearray($data);
+        if(!isset($data['module']))   $data['module']   = $this->tplmodule;
+        if(!isset($data['template'])) $data['template'] = $this->template;
+        if(!isset($data['layout']))   $data['layout']   = $this->layout;
+
+        return parent::showHidden($data);
     }
 }
+
 ?>
