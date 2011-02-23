@@ -12,7 +12,7 @@
     <id>567</id>
     <name>display_date_format_custom</name>
     <label>Custom format</label>
-    <description>A custom date fomat PHP can understand</description>
+    <description>A custom date format PHP can understand</description>
     <property_id>2</property_id>
     <ignore_empty>1</ignore_empty>
     <configuration>a:1:{s:14:"display_layout";s:7:"default";}</configuration>

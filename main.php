@@ -114,6 +114,7 @@ class DateProperty extends DataProperty
 // Not a good ideea to force to time()
 //        $value = $value == 0 ? time() : $value;
         if (empty($value)) $value = 0;
+        sys::import('xaraya.structures.datetime');
         $date = new XarDateTime();
         $date->settimestamp($value);
         $valuearray['day'] = $date->getDay();
@@ -134,7 +135,7 @@ class DateProperty extends DataProperty
             case 2:
                 // If no format chosen, just return the raw value
                 if (!empty($this->display_date_format_predef)) {
-                    $formats = date_formats();die("X");
+                    $formats = date_formats();
                     $value = date($formats[$this->display_date_format_predef]['format'], $value);
                 }
             break;
