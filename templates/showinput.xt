@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:if condition="isset($onchange)">
-      <xar:set name="evt_change">$onchange</xar:set>
-    <xar:else/>
-      <xar:set name="evt_change">'return true;'</xar:set>
-    </xar:if>
-
-    <xar:template file="timetemplate-input"/>
-
-    <xar:template file="dataproperty_additions" module="base"/>
+    <xar:style scope="module" module="base" file="tabs"/>
+    <ul class="xar-tabs xar-alt xar-norm-outline">
+        <li class="xar-tabs-label">Recent Pages:</li>
+        <xar:foreach in="$links" key="$title" value="$link">
+            <li class="xar-tab"><a href="#$link#" class="xar-norm xar-norm-outline">#$title#</a></li>
+        </xar:foreach>
+    </ul>
 </xar:template>
