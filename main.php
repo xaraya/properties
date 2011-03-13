@@ -4,10 +4,17 @@
  *
  * @package properties
  * @subpackage codemirror property
+ * @category Third Party Xaraya Property
+ * @version 1.0.0
  * @copyright (C) 2010 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @author Marc Lutolf <mfl@netspan.ch>
+ * @author M. Lutolf (mfl@netspan.ch)
+ */
+
+/**
+ * Handle the codemirror property
  * Utilizes JavaScript based  Editor: CodeMirror
+ *
  */
 
 sys::import('modules.base.xarproperties.textarea');
