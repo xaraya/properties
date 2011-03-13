@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div>
+            <h2>Time Property</h2>
+                <h3>Description</h3>
+                <p>
+                    The Time dataproperty lets you input times. It consists of text and/or dropdown fields. The fields define hours, minutes and seconds.  
+                </p>
+                <p>
+                    The property stores times internally as seconds.
+                </p>
+                <h3>Usage</h3>
+                <h4>Standalone</h4>
+                    <pre>
+    &lt;xar:data-input type="time" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output type="time" <i>[attr1="value1",...]</i> /&gt;
+                    </pre>
+            <h4>Bound</h4>
+                <pre>
+    &lt;xar:data-input property="$properties['time']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output property="$properties['time']" <i>[attr1="value1",...]</i> /&gt;
+                </pre>
+            <h3>Examples</h3>
+                    <pre>
+    &lt;xar:data-input type="time" layout="byhour" /&gt;
+    &lt;xar:data-input type="time" format="ampm" /&gt;
+                    </pre>
+            <h3>Attributes</h3>
+            <ul>
+                <li>
+                    <strong>layout</strong>: string [default='default']&#160;The default and byminute layouts show 3 text fields for hours, minutes and seconds in 12 or 24 hour format. The byhalfhour layout shows a single dropdown displaying half hourly increments in 24h format. The byhour layout shows a single dropdown displaying hourly increments in 24h format.
+                </li>
+                <li>
+                    <strong>format</strong>: string [default='24']&#160;If the value is 'ampm' then a am/pm dropdown is displayed.
+                </li>
+            </ul>
+        </div>
+</xar:template>
