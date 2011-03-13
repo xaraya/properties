@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div>
+            <h2>CodeMirror Property</h2>
+                <h3>Description</h3>
+                <p>
+                    The CodeMirror dataproperty is a standalone widget that lets you embed the <a href="http://marijn.haverbeke.nl/codemirror/">CodeMirror</a> code editor into your application. It doesn't have any configuration options at present.
+                </p>
+                <p>
+                    The property is based on version 0.7 of CodeMirror
+                </p>
+                <h3>Usage</h3>
+                <h4>Standalone</h4>
+                    <pre>
+    &lt;xar:data-input type="codemirror" <i>[attr1="value1",...]</i> /&gt;
+                    </pre>
+            <h3>Attributes</h3>
+            <p>
+                The only attributes supported are those inherited from the parent textarea property.
+            </p>
+            <p>
+                If you want to configure the editor you need to tweak the javascript in the showinput template (line 11 and following). There are many examples on the CodeMirror site that show how this can be done..
+            </p>
+        </div>
+</xar:template>

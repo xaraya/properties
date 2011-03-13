@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     
-    <xar:javascript filename="codemirror/js/codemirror.js" module="codeeditor" position="head"/>
+    <xar:javascript filename="codemirror/js/codemirror.js" property="codemirror" position="head"/>
 
     <div style="clear:both; border: 1px dotted black; padding: 3px; background-color: ##F8F8F8">
         <textarea id="#$name#" name="#$name#" style="width: 100%">#$value#</textarea>

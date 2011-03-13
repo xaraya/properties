@@ -1,19 +1,15 @@
 <?php
 /**
- * CodeMirror Editor property
+ * CodeMirror Property
  *
  * @package properties
+ * @subpackage codemirror property
  * @copyright (C) 2010 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- *
+ * @author Marc Lutolf <mfl@netspan.ch>
+ * Utilizes JavaScript based  Editor: CodeMirror
  */
 
-/**
- * Handle the codemirror property
- * Utilizes JavaScript based  Editor: CodeMirror
- *
- * @author M. Lutolf (mfl@netspan.ch)
- */
 sys::import('modules.base.xarproperties.textarea');
 
 class CodeMirrorProperty extends TextAreaProperty
