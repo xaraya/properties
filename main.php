@@ -6,7 +6,7 @@
  * @subpackage celkoposition property
  * @category Third Party Xaraya Property
  * @version 1.0.0
- * @copyright (C) 2010 Netspan AG
+ * @copyright (C) 2011 Netspan AG
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <mfl@netspan.ch>
  */
@@ -346,7 +346,7 @@ class CelkoPositionProperty extends DataProperty
     function countitems()
     {
         $sql = "SELECT COUNT(id) AS childnum
-                  FROM " . $this->initialization_itemstable;
+                  FROM " . $this->initialization_celkotable;
 
         $result = $this->dbconn->Execute($sql);
         if (!$result) return;
