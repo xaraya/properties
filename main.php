@@ -125,7 +125,9 @@ class DateTimeProperty extends DataProperty
         switch($this->display_datetime_format_type) {
             case 1:
             default:
-                $value = xarLocaleGetFormattedDate('short', $value, false);
+                $date = xarLocaleGetFormattedDate('short', $value, false);
+                $time = xarLocaleGetFormattedTime('short', $value, false);
+                $value = $date . " " . $time;
             break;
             case 2:
                 // If no format chosen, just return the raw value
