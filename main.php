@@ -72,9 +72,21 @@ class TimeProperty extends DataProperty
         } else {
             $value = $data['value'];
         }
-        $time = $this->format($value);
-        $data['value'] = array();
-        $data['value']['time'] = $time;
+
+        if (empty($value)) {
+            $data['value']['date'] = "";
+        } else {
+            $date = new XarDateTime();
+            if (is_array($value)) {
+                $timestamp = mktime($value['hour'],$value['minute'],$value['second'],0,0,0);
+                $data['value']['time'] = $this->format($timestamp);
+            } else {
+                $time = $this->format($value);
+                $data['value'] = array();
+                $data['value']['time'] = $time;
+            }
+        }
+
         return DataProperty::showOutput($data);
     }
 
@@ -82,6 +94,8 @@ class TimeProperty extends DataProperty
     {
         if (!isset($data['value'])) $value = $this->value;
         else $value = $data['value'];
+
+        if (is_array($value)) return $value;
 
         $value = $value == 0 ? time() : $value;
         $date = new xarDateTime();
@@ -108,7 +122,7 @@ class TimeProperty extends DataProperty
         switch($this->display_time_format_type) {
             case 1:
             default:
-                $value = xarLocaleGetFormattedDate('short', $value, false);
+                $value = xarLocaleGetFormattedTime('short', $value, false);
             break;
             case 2:
                 // If no format chosen, just return the raw value
