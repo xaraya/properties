@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div>
+            <h2>DateTime Property</h2>
+                <h3>Description</h3>
+                <p>
+                    The DateTime dataproperty lets you input times displayed as dates and times. It consists of a series of dropdown and a text fields.
+                </p>
+                <p>
+                    The property stores times internally as seconds.
+                </p>
+                <h3>Usage</h3>
+                <h4>Standalone</h4>
+                    <pre>
+    &lt;xar:data-input type="datetime" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output type="datetime" <i>[attr1="value1",...]</i> /&gt;
+                    </pre>
+            <h4>Bound</h4>
+                <pre>
+    &lt;xar:data-input property="$properties['datetime']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output property="$properties['datetime']" <i>[attr1="value1",...]</i> /&gt;
+                </pre>
+            <h3>Attributes</h3>
+            <ul>
+                <li>
+                    <strong>start_year</strong>: integer [default=-5]&#160;The first year of the year dropdown. If not specified it is 5 years before the smaller of the current year or the year value of the property.
+                </li>
+                <li>
+                    <strong>end_year</strong>: integer [default=+5]&#160;The last year of the year dropdown. If not specified it is 5 years after the larger of the current year or the year value of the property.
+                </li>
+                <li>
+                    <strong>format</strong>: string [default='']&#160;If the value of this attribute is 'ampm' a dropdown is shown with AM or PM to choose from.
+                </li>
+                <li>
+                    <strong>minutes</strong>: boolean [default=true]&#160;If false then the input display of minutes is suppressed.
+                </li>
+                <li>
+                    <strong>seconds</strong>: boolean [default=true]&#160;If false then the input display of seconds is suppressed.
+                </li>
+                <li>
+                    <strong>layout</strong>: string [default='default']&#160;The layout options all show year, month and day dropdowns. The layouts available are:
+                    <ul>
+                        <li><strong>byminute</strong>: show a dropdown of minute increments.</li>
+                        <li><strong>byhalfhour</strong>: show a dropdown of half hour increments.</li>
+                        <li><strong>byhour</strong>: show a dropdown of hours.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+</xar:template>
