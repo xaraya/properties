@@ -148,15 +148,6 @@ class DateTimeProperty extends DataProperty
         $data['name']     = !empty($data['name']) ? $data['name'] : 'dd_'.$this->id;
         $data['id']       = !empty($data['id'])   ? $data['id']   : 'dd_'.$this->id;
 
-        // Add the object's field prefix if there is one
-        $prefix = '';
-        // Allow 0 as a fieldprefix
-        if(!empty($this->_fieldprefix) || $this->_fieldprefix === 0)  $prefix = $this->_fieldprefix . '_';
-        // A field prefix added here can override the previous one
-        if(isset($data['fieldprefix']))  $prefix = $data['fieldprefix'] . '_';
-        if(!empty($prefix)) $data['name'] = $prefix . $data['name'];
-        if(!empty($prefix)) $data['id'] = $prefix . $data['id'];
-
         $data['invalid']  = !empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) :'';
         $data['value'] = $this->getvaluearray($data);
         if(!isset($data['module']))   $data['module']   = $this->tplmodule;
