@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div style="float: left; margin-right: 50px">
+        Start:
+        <xar:set name="startname">$name . "_start_date"</xar:set>
+        <xar:data-input type="jscalendardate" name="$startname" value="$value[0]" dateformat="%Y-%m-%d" validation="date"/>
+    </div>
+    <div style="float: left; margin-right: 50px">
+        End:
+        <xar:set name="endname">$name . "_end_date"</xar:set>
+        <xar:data-input type="jscalendardate" name="$endname" value="$value[1]" dateformat="%Y-%m-%d" validation="date"/>
+    </div>
+</xar:template>

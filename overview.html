@@ -36,7 +36,7 @@
             <h3>Attributes</h3>
             <ul>
                 <li>
-                    <strong>frames</strong>: mixed [default='past']&#160;A list or array of sets of timeframes. 'past' and 'future' are included in the defualt templates. Unrecognized frames are ignored.
+                    <strong>frames</strong>: mixed [default='past']&#160;A list or array of sets of timeframes for the periods dropdown. The sets are displayed in the dropdown in the order they are listed in the attribute. The sets 'past' and 'future' are included in the defualt templates. Unrecognized frames are ignored.
                     <ul>
                         <li>'past' has the following values:
                             <table>
@@ -44,22 +44,31 @@
                                     <th>Display</th><th>Value</th>
                                 </tr>
                                 <tr>
-                                    <td>This Month</td><td>0</td>
+                                    <td>This Month</td><td>-100</td>
                                 </tr>
                                 <tr>
-                                    <td>Last Month</td><td>-100</td>
+                                    <td>Last 7 days</td><td>-200</td>
                                 </tr>
                                 <tr>
-                                    <td>Last 2 Months</td><td>-200</td>
+                                    <td>Last 14 days Month</td><td>-300</td>
                                 </tr>
                                 <tr>
-                                    <td>Last Quarter</td><td>-300</td>
+                                    <td>This Quarter</td><td>-400</td>
                                 </tr>
                                 <tr>
-                                    <td>Year to Date</td><td>-400</td>
+                                    <td>Last Month</td><td>-500</td>
                                 </tr>
                                 <tr>
-                                    <td>Last Year</td><td>-500</td>
+                                    <td>Last 2 Months</td><td>-600</td>
+                                </tr>
+                                <tr>
+                                    <td>Last Quarter</td><td>-700</td>
+                                </tr>
+                                <tr>
+                                    <td>Year to Date</td><td>-800</td>
+                                </tr>
+                                <tr>
+                                    <td>Last Year</td><td>-900</td>
                                 </tr>
                             </table>
                         </li>
@@ -69,13 +78,13 @@
                                     <th>Display</th><th>Value</th>
                                 </tr>
                                 <tr>
-                                    <td>Current Year</td><td>500</td>
+                                    <td>Next Year</td><td>500</td>
                                 </tr>
                                 <tr>
                                     <td>Till Yearend</td><td>400</td>
                                 </tr>
                                 <tr>
-                                    <td>This Quarter</td><td>300</td>
+                                    <td>Next Quarter</td><td>300</td>
                                 </tr>
                                 <tr>
                                     <td>Next 2 Months</td><td>200</td>
@@ -86,6 +95,12 @@
                             </table>
                         </li>
                     </ul>
+                </li>
+                <li>
+                    <strong>show</strong>: mixed [default='period']&#160;A list or array of sets of widgets to display. Possible values 'period' and 'calendar' are included in the defualt templates. Unrecognized display types are ignored.
+                    <br/>
+                    Choosing 'period' displays a dropdown with predefined time frames, whicle choosing 'calendar' displays 2 calendar widgets for defining start and end dates of the time frame.
+                    If 'period' is chosen it will be given precedence in calculating start and end dates.
                 </li>
                 <li>
                     Other attributes as inherited from the parent dropdown dataproperty.

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:set name="label">$name . "_frames_future"</xar:set>
+    <xar:set name="$label">
+        array(
+            array('id' => 500, 'name' => xarML('Next Year')),
+            array('id' => 400, 'name' => xarML('Till Yearend')),
+            array('id' => 300, 'name' => xarML('Next Quarter')),
+            array('id' => 200, 'name' => xarML('Next 2 Months')),
+            array('id' => 100, 'name' => xarML('Next Month')),
+        )
+    </xar:set>
+    <xar:set name="label">$name . "_frames_past"</xar:set>
+    <xar:set name="$label">
+        array(
+            array('id' => -100, 'name' => xarML('This Month')),
+            array('id' => -200, 'name' => xarML('Last 7 Days')),
+            array('id' => -300, 'name' => xarML('Last 14 Days')),
+            array('id' => -400, 'name' => xarML('This Quarter')),
+            array('id' => -500, 'name' => xarML('Last Month')),
+            array('id' => -600, 'name' => xarML('Last 2 Months')),
+            array('id' => -700, 'name' => xarML('Last Quarter')),
+            array('id' => -800, 'name' => xarML('Year to Date')),
+            array('id' => -900, 'name' => xarML('Last Year')),
+        )
+    </xar:set>
+    <xar:set name="options">array()</xar:set>
+    <xar:foreach in="$frames" value="$frame">
+        <xar:if condition="isset($$frame)">
+            <xar:set name="options">array_merge($options,$$frame)</xar:set>
+        </xar:if>
+    </xar:foreach>
+    <xar:if condition="empty($options)">
+        <xar:set name="options">$$label</xar:set>
+    </xar:if>
+    <xar:set name="dropdownname">$name . "_period"</xar:set>
+    <xar:data-input name="$dropdownname" type="dropdown" options="$options" value="$value[2]"/>
+</xar:template>

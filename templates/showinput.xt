@@ -1,35 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:set name="label">$name . "_frames_future"</xar:set>
-    <xar:set name="$label">
-        array(
-            array('id' => 500, 'name' => xarML('Current Year')),
-            array('id' => 400, 'name' => xarML('Till Yearend')),
-            array('id' => 300, 'name' => xarML('This Quarter')),
-            array('id' => 200, 'name' => xarML('Next 2 Months')),
-            array('id' => 100, 'name' => xarML('Next Month')),
-        )
-    </xar:set>
-    <xar:set name="label">$name . "_frames_past"</xar:set>
-    <xar:set name="$label">
-        array(
-            array('id' => 0, 'name' => xarML('This Month')),
-            array('id' => -100, 'name' => xarML('Last Month')),
-            array('id' => -200, 'name' => xarML('Last 2 Months')),
-            array('id' => -300, 'name' => xarML('Last Quarter')),
-            array('id' => -400, 'name' => xarML('Year to Date')),
-            array('id' => -500, 'name' => xarML('Last Year')),
-        )
-    </xar:set>
-    <xar:set name="options">array()</xar:set>
-    <xar:foreach in="$frames" value="$frame">
-        <xar:if condition="isset($$frame)">
-            <xar:set name="options">array_merge($options,$$frame)</xar:set>
-        </xar:if>
-    </xar:foreach>
-    <xar:if condition="empty($options)">
-        <xar:set name="options">$$label</xar:set>
+    <xar:if condition="in_array('dropdown',$show)">
+        <div style="float: left; margin-right: 20px">
+    <xar:template file="dropdown"/>
+        </div>
     </xar:if>
-    <xar:data-input name="$name" type="dropdown" options="$options" value="$value"/>
+    <xar:if condition="in_array('calendar',$show) AND in_array('calendar',$show)">
+        <div style="float: left; margin-right: 20px">
+            OR
+        </div>
+    </xar:if>
+    <xar:if condition="in_array('calendar',$show)">
+        <div style="float: left;">
+            <xar:template file="calendar"/>
+        </div>
+    </xar:if>
 </xar:template>
