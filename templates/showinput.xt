@@ -5,7 +5,7 @@
     <xar:template file="dropdown"/>
         </div>
     </xar:if>
-    <xar:if condition="in_array('calendar',$show) AND in_array('calendar',$show)">
+    <xar:if condition="in_array('calendar',$show) AND in_array('period',$show)">
         <div style="float: left; margin-right: 20px">
             OR
         </div>
