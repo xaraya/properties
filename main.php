@@ -59,7 +59,7 @@ class TimeFrameProperty extends DataProperty
         if (!isset($data['value'])) $data['value'] = $this->value;
         
         // The display widgets to show
-        if (empty($data['show'])) $data['show'] = array();
+        if (empty($data['show'])) $data['show'] = array('calendar');
         if (!empty($data['show']) && !is_array($data['show'])) $data['show'] = explode(',',$data['show']);
         
         // The timeframes to show in the dropdown
