@@ -13,10 +13,14 @@
             <h2>TimeFrame Property</h2>
                 <h3>Description</h3>
                 <p>
-                    The TimeFrame dataproperty is a dropdown that displays past and/or future timeframes.
+                    The TimeFrame dataproperty is a widget that displays timeframes. A timeframe is defined by a start and end date. The Timeframe property displays timeframes in 2 ways:
+                    <ul>
+                        <li>A pair of jscalendar properties for start and end date respectively</li>
+                        <li>A dropdown with predefined timeframes (e.g. 'last month')</li>
+                    </ul>
                 </p>
                 <p>
-                    The property's values are integers representing references to timeframes, and not in any way timeframes themselves.
+                    The property's valueis an array of 3 integers. The first two are timestamps representing start and end dates. The final value is the value of the period dropdown.
                 </p>
                 <h3>Usage</h3>
                 <h4>Standalone</h4>
