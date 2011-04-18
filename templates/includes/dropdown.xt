@@ -35,5 +35,7 @@
         <xar:set name="options">$$label</xar:set>
     </xar:if>
     <xar:set name="dropdownname">$name . "_period"</xar:set>
-    <xar:data-input name="$dropdownname" type="dropdown" options="$options" value="$value[2]"/>
+    <xar:var name="firstline">No period</xar:var>
+    <xar:set name="firstline">array('id'=>0,'name'=>$firstline)</xar:set>
+    <xar:data-input name="$dropdownname" type="dropdown" options="$options" value="$value[2]" firstline="$firstline"/>
 </xar:template>
