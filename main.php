@@ -24,33 +24,35 @@ class CelkoPositionProperty extends DataProperty
     public $desc         = 'Celko Position';
     public $reqmodules   = array();
 
-    public $refcid;
+    public $reference_id;               // The ID of the parent item
     public $moving;
     public $position;
     public $rightorleft;
     public $inorout;
-    public $parent;
+//    public $parent;
     public $catexists;
     public $dbconn;
+    public $parentindices     = array();    // helper variable to hold parent items when importing
+    public $parentunresolveds = array();    // helper variable to hold unresolved parent references (key) and their itemids (value)
     
     public $initialization_celkotable;
-    public $initialization_celkoname = 'name';
+    public $initialization_celkoname      = 'name';
     public $initialization_celkoparent_id = 'parent_id';
-    public $initialization_celkoright_id = 'right_id';
-    public $initialization_celkoleft_id  = 'left_id';
+    public $initialization_celkoright_id  = 'right_id';
+    public $initialization_celkoleft_id   = 'left_id';
 
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
-        $this->template =  'celkoposition';
-        $this->filepath   = 'auto';
+        $this->template  = 'celkoposition';
+        $this->filepath  = 'auto';
         $this->dbconn = xarDB::getConn();
     }
 
     public function checkInput($name = '', $value = null)
     {
-        if (!xarVarFetch($name . '_refcid', 'int:0', $refcid)) return;
+        if (!xarVarFetch($name . '_reference_id', 'int:0', $reference_id)) return;
         if (!xarVarFetch($name . '_position', 'enum:1:2:3:4', $position)) return;
             switch (intval($position)) {
                 case 1: // above - same level
@@ -71,51 +73,78 @@ class CelkoPositionProperty extends DataProperty
                     $this->inorout = 'in';
                     break;
             }
-        $this->refcid = $refcid;
+        $this->reference_id = $reference_id;
         return true;
     }
 
     public function createValue($itemid=0)
     {
-        $n = $this->countitems();
-        if ($n == 1) {
-            $itemid = $this->updateposition($itemid);
+        $n = $this->countItems($itemid);
+        if ($n > 1) {
+            // There is more than one item for this itemid. That's a problem.
+            throw new Exception(xarML('More than one item for the itemid value #(1)',$itemid));
+        } elseif ($n == 1) {
+            // There is one item for this itemid. This means it was already created
+            // Usually this means the same datasource used for this property and the others of this object item
+            if ($this->value) $parentid = $this->unpackValue($itemid);
+            else $parentid = 0;
+            
+            // CHECKME: why do we need to run updateposition AND updateValue?
+            $itemid = $this->updateposition($itemid, $parentid);
+            $this->reference_id = $parentid;
+            $this->rightorleft = 'RIGHT';
+            $this->inorout = 'IN';
+            $this->updateValue($itemid);
+
+            // We updated a position. now go back and see if any of the unresolveds we have can be resolved
+            foreach ($this->parentunresolveds as $key => $value) {
+                if (isset($this->parentindices[$value])) {
+                    $this->reference_id = $this->parentindices[$value];
+                    $this->rightorleft = 'RIGHT';
+                    $this->inorout = 'IN';
+                    $this->updateValue($key);
+                    unset($this->parentunresolveds[$key]);
+                }
+            }
+            
         } else {
-
-           // Obtain current information on the reference item
-           $cat = $this->getiteminfo($this->refcid);
-
-           if ($cat == false) {
-               xarSession::setVar('errormsg', xarML('That item does not exist'));
-               return false;
-           }
-
-           $this->right = $cat['right_id'];
-           $this->left = $cat['left_id'];
-
-           /* Find out where you should put the new item in */
-           if (
-               !($point_of_insertion =
-                    $this->find_point_of_insertion(
-                       array('inorout' => $this->inorout,
-                               'rightorleft' => $this->rightorleft,
-                               'right' => $this->right,
-                               'left' => $this->left
-                       )
-                   )
+            // There is no item for this itemid yet
+            // The datasource for this property is likely different from that of the other properties of this object.
+            // We'll need to create an item.
+            if ($this->value) {
+            // FIXME: this has not been tested!!!
+                $this->unpackValue();
+            } else {
+                // No value, this insert is via the UI
+                // Obtain current information on the reference item
+                $parentItem = $this->getItem($this->reference_id);
+                
+                if ($parentItem == false) {
+                   xarSession::setVar('errormsg', xarML('The parent item does not exist'));
+                   return false;
+                }
+                $this->right = $parentItem['right_id'];
+                $this->left = $parentItem['left_id'];                
+            }
+            
+            /* Find out where you should put the new item in */
+            if (
+               !($point_of_insertion = $this->find_point_of_insertion($this->inorout, 
+                                                                      $this->rightorleft, 
+                                                                      $this->left, 
+                                                                      $this->right))
               )
-              )
-           {
+            {
                return false;
-           }
+            }
 
             /* Find the right parent for this item */
             if (strtolower($this->inorout) == 'in') {
-                $parent = (int)$this->refcid;
+                $parent_id = (int)$this->reference_id;
             } else {
-                $parent = (int)$cat['parent_id'];
+                $parent_id = (int)$parentItem['parent_id'];
             }
-            $itemid = $this->updateposition($itemid,$parent,$point_of_insertion);
+            $itemid = $this->updateposition($itemid,$parent_id,$point_of_insertion);
         }
         return true;
     }
@@ -123,15 +152,15 @@ class CelkoPositionProperty extends DataProperty
     public function updateValue($itemid=0)
     {
         // Obtain current information on the item
-        $cat = $this->getiteminfo($itemid);
+        $thisItem = $this->getItem($itemid);
 
-        if ($cat == false) {
+        if ($thisItem == false) {
            xarSession::setVar('errormsg', xarML('That item does not exist'));
            return false;
         }
 
        // Obtain current information on the reference item
-       $refcat = $this->getiteminfo($this->refcid);
+       $refcat = $this->getItem($this->reference_id);
 
        if ($refcat == false) {
            xarSession::setVar('errormsg', xarML('That item does not exist'));
@@ -140,8 +169,8 @@ class CelkoPositionProperty extends DataProperty
 
        // Checking if the reference ID is of a child or itself
        if (
-           ($refcat['left_id'] >= $cat['left_id'])  &&
-           ($refcat['left_id'] <= $cat['right_id'])
+           ($refcat['left_id'] >= $thisItem['left_id'])  &&
+           ($refcat['left_id'] <= $thisItem['right_id'])
           )
        {
             $msg = xarML('This item references siblings.');
@@ -150,41 +179,38 @@ class CelkoPositionProperty extends DataProperty
 
        // Find the needed variables for moving things...
        $point_of_insertion =
-                   $this->find_point_of_insertion(
-                       array('inorout' => $this->inorout,
-                               'rightorleft' => $this->rightorleft,
-                               'right' => $refcat['right_id'],
-                               'left' => $refcat['left_id']
-                       )
-                   );
-       $size = $cat['right_id'] - $cat['left_id'] + 1;
-       $distance = $point_of_insertion - $cat['left_id'];
+                   $this->find_point_of_insertion($this->inorout, 
+                                                  $this->rightorleft, 
+                                                  $refcat['left_id'], 
+                                                  $refcat['right_id']);
+       $size = $thisItem['right_id'] - $thisItem['left_id'] + 1;
+       $distance = $point_of_insertion - $thisItem['left_id'];
 
        // If necessary to move then evaluate
        if ($distance != 0) { // It´s Moving, baby!  Do the Evolution!
           if ($distance > 0)
           { // moving forward
-              $distance = $point_of_insertion - $cat['right_id'] - 1;
+              $distance = $point_of_insertion - $thisItem['right_id'] - 1;
               $deslocation_outside = -$size;
-              $between_string = ($cat['right_id'] + 1)." AND ".($point_of_insertion - 1);
+              $between_string = ($thisItem['right_id'] + 1)." AND ".($point_of_insertion - 1);
           }
           else
           { // $distance < 0 (moving backward)
               $deslocation_outside = $size;
-              $between_string = $point_of_insertion." AND ".($cat['left_id'] - 1);
+              $between_string = $point_of_insertion." AND ".($thisItem['left_id'] - 1);
           }
 
           // TODO: besided portability, also check performance here
           $SQLquery = "UPDATE " . $this->initialization_celkotable . " SET
                        left_id = CASE
-                        WHEN " . $this->initialization_celkoright_id . " BETWEEN ".$cat['left_id']." AND ".$cat['right_id']."
+                        WHEN " . $this->initialization_celkoright_id . " BETWEEN ".$thisItem['left_id']." AND ".$thisItem['right_id']."
                            THEN " . $this->initialization_celkoleft_id . " + ($distance)
                         WHEN " . $this->initialization_celkoleft_id . " BETWEEN $between_string
                            THEN " . $this->initialization_celkoleft_id . " + ($deslocation_outside)
                         ELSE " . $this->initialization_celkoleft_id . "
                         END,
                       " . $this->initialization_celkoright_id . " = CASE
-                        WHEN " . $this->initialization_celkoright_id . " BETWEEN ".$cat['left_id']." AND ".$cat['right_id']."
+                        WHEN " . $this->initialization_celkoright_id . " BETWEEN ".$thisItem['left_id']." AND ".$thisItem['right_id']."
                            THEN " . $this->initialization_celkoright_id . " + ($distance)
                         WHEN " . $this->initialization_celkoright_id . " BETWEEN $between_string
                            THEN " . $this->initialization_celkoright_id . " + ($deslocation_outside)
@@ -200,7 +226,7 @@ class CelkoPositionProperty extends DataProperty
 
           /* Find the right parent for this item */
           if (strtolower($this->inorout) == 'in') {
-              $parent_id = $this->refcid;
+              $parent_id = $this->reference_id;
           } else {
               $parent_id = $refcat['parent_id'];
           }
@@ -216,16 +242,16 @@ class CelkoPositionProperty extends DataProperty
 
     public function showInput(Array $data = array())
     {
-        $data['itemid'] = isset($data['itemid']) ? $data['itemid'] : $this->value;
+        $data['itemid'] = isset($data['itemid']) ? $data['itemid'] : $this->_itemid;
         if (!empty($data['itemid'])) {        
-            $data['item'] = $this->getiteminfo($data['itemid']);
-            $items = $this->getcat(array('cid' => false,
+            $data['item'] = $this->getItem($data['itemid']);
+            $items = $this->getItems(array('cid' => false,
                                               'eid' => $data['itemid']));
-            $data['cid'] = $data['itemid'];
+            $data['id'] = $data['itemid'];
         } else {
             $data['item'] = Array('left_id'=>0,'right_id'=>0,'name'=>'','description'=>'', 'template' => '');
-            $items = $this->getcat(array('cid' => false));
-            $data['cid'] = null;
+            $items = $this->getItems(array('cid' => false));
+            $data['id'] = null;
         }
 
         $item_Stack = array ();
@@ -252,6 +278,8 @@ class CelkoPositionProperty extends DataProperty
 
     }
     
+    // Update the parent, item, left and right IDs at the point of insertion
+    // while moving all the links to the left and right apart to make place for the insertion
     function updateposition($itemid=0, $parent=0, $point_of_insertion=1) 
     {
         $bindvars = array();
@@ -281,10 +309,76 @@ class CelkoPositionProperty extends DataProperty
         for ($i=1;$i<4;$i++) if (!$this->dbconn->Execute($SQLquery[$i],$bindvars[$i])) return;
     }
 
-    function find_point_of_insertion($args)
+    public function getItem($id) 
     {
-        extract($args);
+        sys::import('xaraya.structures.query');
+        $q = new Query('SELECT', $this->initialization_celkotable);
+        $q->eq('id',$id);
+        if (!$q->run()) return;
+        $result = $q->row();
+        if (empty($result)) return $result;
+        $result['name'] = $result[$this->initialization_celkoname];
+        $result['parent_id'] = $result[$this->initialization_celkoparent_id];
+        $result['left_id'] = $result[$this->initialization_celkoleft_id];
+        $result['right_id'] = $result[$this->initialization_celkoright_id];
+        return $result;
+    }
+    
+    public function getItemValue($id) 
+    {
+        return serialize($this->getItem($id));
+    }
+    
+    private function countItems($itemid)
+    {
+        $sql = "SELECT COUNT(id) AS childnum
+                  FROM " . $this->initialization_celkotable . " WHERE id = " . $itemid;
+        $result = $this->dbconn->Execute($sql);
+        if (!$result) return;
+        $num = $result->fields[0];
+        $result->Close();
+        return $num;
+    }
 
+    function build_tree($parent_id, $left_id)
+    {       
+       // the right value of this node is the left value + 1  
+       $right_id = $left_id+1;  
+    
+       // get all children of this node  
+        $q = "SELECT id
+              FROM " . $this->initialization_celkotable;
+        $q .= " WHERE " . $this->initialization_celkoparent_id . " = ?";
+        $bindvars = array($parent_id);
+        $result = $this->dbconn->Execute($q, $bindvars);
+    
+        while (!$result->EOF) {
+            list($child_id) = $result->fields;
+           // recursive execution of this function for each  
+           // child of this node  
+           // $right_id is the current right value, which is  
+           // incremented by the rebuild_tree function  
+           $right_id = $this->build_tree($child_id, $right_id);  
+           $result->MoveNext();
+       }  
+       // we've got the left value, and now that we've processed  
+       // the children of this node we also know the right value  
+        $bindvars = array($left_id);
+        $bindvars[] = $right_id;
+        $bindvars[] = $parent_id;
+        $q = "UPDATE " . $this->initialization_celkotable;
+        $q .= " SET " . $this->initialization_celkoleft_id . " = ?, ";
+        $q .= $this->initialization_celkoright_id . " = ? ";
+        $q .= "WHERE id = ?";  
+        $result = $this->dbconn->Execute($q, $bindvars);
+     
+       // return the right value of this node + 1  
+       return $right_id+1;  
+    }  
+
+    // Given a left and right link id, define a point of insertion to the left or right of either
+    private function find_point_of_insertion($inorout, $rightorleft, $left, $right)
+    {
         $rightorleft = strtolower ($rightorleft);
         $inorout = strtolower ($inorout);
 
@@ -327,35 +421,9 @@ class CelkoPositionProperty extends DataProperty
         }
         return $point_of_insertion;
     }
-    
-    function getiteminfo($id) 
-    {
-        sys::import('xaraya.structures.query');
-        $q = new Query('SELECT', $this->initialization_celkotable);
-        $q->eq('id',$id);
-        if (!$q->run()) return;
-        $result = $q->row();
-        if (empty($result)) return $result;
-        $result['name'] = $result[$this->initialization_celkoname];
-        $result['parent_id'] = $result[$this->initialization_celkoparent_id];
-        $result['left_id'] = $result[$this->initialization_celkoleft_id];
-        $result['right_id'] = $result[$this->initialization_celkoright_id];
-        return $result;
-    }
-    
-    function countitems()
-    {
-        $sql = "SELECT COUNT(id) AS childnum
-                  FROM " . $this->initialization_celkotable;
 
-        $result = $this->dbconn->Execute($sql);
-        if (!$result) return;
-        $num = $result->fields[0];
-        $result->Close();
-        return $num;
-    }
-
-    function getcat($args)
+    // Get all the items of this Celko tree
+    private function getItems($args)
     {
         extract($args);
 
@@ -377,7 +445,7 @@ class CelkoPositionProperty extends DataProperty
                          <= P2." . $this->initialization_celkoright_id;
 
         if (isset($eid) && !is_array($eid) && $eid != false) {
-           $ecat = $this->getiteminfo($eid);
+           $ecat = $this->getItem($eid);
            if ($ecat == false) {
                xarSession::setVar('errormsg', xarML('That item does not exist'));
                return array();
@@ -407,7 +475,7 @@ class CelkoPositionProperty extends DataProperty
         $index = -1;
         while (!$result->EOF) {
             list($indentation,
-                    $cid,
+                    $id,
                     $name,
                     $parent,
                     $left,
@@ -421,7 +489,7 @@ class CelkoPositionProperty extends DataProperty
             }
 */
             if ($indexby == 'cid') {
-                $index = $cid;
+                $index = $id;
             } else {
                 $index++;
             }
@@ -429,13 +497,13 @@ class CelkoPositionProperty extends DataProperty
             // are we looking to have the output in the "standard" form?
             if (!empty($dropdown)) {
                 $items[$index+1] = Array(
-                    'id'         => $cid,
+                    'id'         => $id,
                     'name'        => $name,
                 );
             } else {
                 $items[$index] = Array(
                     'indentation' => $indentation,
-                    'cid'         => $cid,
+                    'id'          => $id,
                     'name'        => $name,
                     'parent'      => $parent,
                     'left'        => $left,
@@ -452,41 +520,37 @@ class CelkoPositionProperty extends DataProperty
         return $items;
     }
 
-function build_tree($parent_id, $left_id)
-{       
-   // the right value of this node is the left value + 1  
-   $right_id = $left_id+1;  
-
-   // get all children of this node  
-    $q = "SELECT id
-          FROM " . $this->initialization_celkotable;
-    $q .= " WHERE " . $this->initialization_celkoparent_id . " = ?";
-    $bindvars = array($parent_id);
-    $result = $this->dbconn->Execute($q, $bindvars);
-
-    while (!$result->EOF) {
-        list($child_id) = $result->fields;
-       // recursive execution of this function for each  
-       // child of this node  
-       // $right_id is the current right value, which is  
-       // incremented by the rebuild_tree function  
-       $right_id = $this->build_tree($child_id, $right_id);  
-       $result->MoveNext();
-   }  
-   // we've got the left value, and now that we've processed  
-   // the children of this node we also know the right value  
-    $bindvars = array($left_id);
-    $bindvars[] = $right_id;
-    $bindvars[] = $parent_id;
-    $q = "UPDATE " . $this->initialization_celkotable;
-    $q .= " SET " . $this->initialization_celkoleft_id . " = ?, ";
-    $q .= $this->initialization_celkoright_id . " = ? ";
-    $q .= "WHERE id = ?";  
-    $result = $this->dbconn->Execute($q, $bindvars);
- 
-   // return the right value of this node + 1  
-   return $right_id+1;  
-}  
-
+    // Takes the serialized value in $this->value and assigns its unserialized values to their proper places
+    private function unpackValue($itemid)
+    {
+        // Unpack the values of this property
+        $params = unserialize($this->value);
+        
+        // Get the value for the reference ID (parent)
+        $this->reference_id = $params[$this->initialization_celkoparent_id];
+        $this->setCelkoValues($this->reference_id, $params['id']);
+                
+        // add this itemid to the list of known parents for subsequent rounds
+        $this->parentindices[$params['id']] = $itemid;
+        return $this->reference_id;
+    }
+    
+    private function setCelkoValues($parentid, $itemid)
+    {
+        if (isset($this->parentindices[$parentid])) {
+            $this->reference_id = $this->parentindices[$parentid];
+        } else {
+            // We'll still need to resolve this entry later
+            // add this parent to the list of known parents for subsequent rounds
+            $this->parentindices[$parentid] = null;
+            $this->parentunresolveds[$itemid] = $parentid;
+            $this->reference_id = 0;
+        }
+        
+        // Set the left and right values null and let the updateposition method take care of them
+        $this->right = null;
+        $this->left = null;
+        return true;
+    }
 }
 ?>
