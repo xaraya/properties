@@ -1,0 +1,11 @@
+<items>
+  <configurations itemid="13257">
+    <id>13257</id>
+    <name>display_editor_flavor</name>
+    <label>Editor Flavor</label>
+    <description>Which editor type to display</description>
+    <property_id>6</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration>a:3:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:38:"fckeditor,FCKEditor;ckeditor,CKEditor;";}</configuration>
+  </configurations>
+</items>
