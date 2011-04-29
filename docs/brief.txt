@@ -1,6 +1,5 @@
-1. Designation: CKEditor module
+1. Designation: MySQL property
 
-2. Purpose: Wrapper for the CKEditor WYSIWYG web editor
+2. Purpose: Configure MySQL from the user interface
 
 3. Description: 
-Details of CKEditor can be found at www.ckeditor.com
