@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+    <form action="#xarServer::getCurrentURL()#" method="post">
+    <fieldset>
+        <legend>MySQL Configuration</legend>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">Turn the query cache on or off</xar:var>
+            <label title="#$label#" class="xar-form-label">                            
+                Turn on/off query cache                           
+            </label>
+            <xar:data-input property="$properties['cache']" name="cache" value="$settings['query_cache_type']"/>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">The memory available for caching queries</xar:var>
+            <label title="#$label#" class="xar-form-label">                            
+                Query cache size                           
+            </label>
+            <xar:data-input property="$properties['size']" name="size" value="$settings['query_cache_size']"/>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">The memory available for caching queries</xar:var>
+            <label title="#$label#" class="xar-form-label">                            
+                Query cache limit                           
+            </label>
+            <xar:data-input property="$properties['limit']" name="limit" value="$settings['query_cache_limit']"/>
+        </div>
+        <div class="xar-form-input-wrapper-after">
+            <xar:var name="label">Update</xar:var>
+            <xar:button type="submit" label="$label"/>
+        </div>
+    </fieldset>
+
+    <xar:template file="dataproperty_additions" module="base"/>
+        <input type="hidden" name="#$name#_confirm" value="1"/>
+    </form>
+</xar:template>
