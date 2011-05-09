@@ -2,6 +2,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:access level="600">
         <xar:set name="returnurl">xarModURL($module,'user','view')</xar:set>
-        <a style="font-weight:bold;" href ="#xarModURL($module,'user','new',array('name'=> $objectname, 'tplmodule'=> $module))#">Add A New Item</a>
+        <a style="font-weight:bold;" href ="#xarModURL($module,'admin','new',array('name'=> $objectname, 'tplmodule'=> $module))#">Add A New Item</a>
     </xar:access>
 </xar:template>

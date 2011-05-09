@@ -116,6 +116,9 @@ Notes:
             else {
                 $objectname = $object->name;
                 $data['objectname'] = $objectname;
+                if (!method_exists($object,'getItems')) {
+                    $object = DataObjectMaster::getObjectList(array('name' => $objectname));
+                }
             }
         } else {
             throw new Exception('No object passed to the listing property');
@@ -499,6 +502,9 @@ Notes:
     $object->dataquery->addfield('COUNT(' . $primarytable['alias'] . '.id) AS total');
 */
     
+        // Add the filter variable to show a filter form
+        if (!isset($data['filter'])) $data['filter'] = 0;
+
         // Add field definitions to the template variables
         $data['fields'] = $activefields;
         $data['columns'] = $columnfields;

@@ -37,11 +37,13 @@
     <xar:set name="url">xarServer::getCurrentURL($params)</xar:set>
 
     <xar:style scope="module" module="base" file="navtabs"/>
-    <xar:template file="listing_alphabet" module="$module"/>
-
-    <div style="clear:both"></div>
-    
-    <xar:template file="listing_searchboxline" module="$module"/>
+    <xar:if condition="!empty($filter)">
+        <xar:data-form objectname="$objectname" layout="filter"/>
+    <xar:else/>
+        <xar:template file="listing_alphabet" module="$module"/>
+        <div style="clear:both"></div>    
+        <xar:template file="listing_searchboxline" module="$module"/>
+    </xar:if>
     <xar:template file="listing_summaryline" module="$module"/>
     <xar:template file="listing_pagerline" module="$module"/>
     <table id="listing_table" style="clear:both; width: 100%" border="0">
