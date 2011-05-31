@@ -102,6 +102,11 @@ class DateProperty extends DataProperty
         return DataProperty::showOutput($data);
     }
 
+    public function getValue()
+    {
+        return $this->format($this->value);
+    }
+    
     function getvaluearray($data)
     {
         if (!isset($data['value'])) $value = $this->value;
