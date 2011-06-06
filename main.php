@@ -268,7 +268,10 @@ Notes:
             $columnfields = $_columnfields;
             $sourcefields = $_sourcefields;        
         }
-
+        
+        // We have the fields sorted in proper order. Add them to the query
+        foreach ($sourcefields as $sourcefield) $object->dataquery->addfield($sourcefield);
+        
     //--- 7. Figure out the operation we are performing
 
         $firsttime = !isset($lastobject) || ($objectname != $lastobject);       // criterium for first time display
@@ -449,6 +452,10 @@ Notes:
 
     //--- 19. Set the number of rows to display and the starting point
 
+        // Save the query in a sessionvar for others who might need it
+        xarSession::setVar('listing.' . $objectname,serialize($object->dataquery));
+        
+        // Set the number of lines to display
         if (!empty($this->display_items_per_page)) $object->dataquery->setrowstodo($this->display_items_per_page);
 
         // The record to start at needs to come from the template
@@ -541,7 +548,6 @@ Notes:
 
         // Sort of ugly. How can we do better?
         unset($q->dbconn);unset($q->output);unset($q->result);
-        xarSession::setVar('listing.' . $objectname . '.currentquery',serialize($object->dataquery));
         return $data;
     }
 }
