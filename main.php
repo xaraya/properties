@@ -91,9 +91,9 @@ class CelkoPositionProperty extends DataProperty
             
             // CHECKME: why do we need to run updateposition AND updateValue?
             $itemid = $this->updateposition($itemid, $parentid);
-            $this->reference_id = $parentid;
-            $this->rightorleft = 'RIGHT';
-            $this->inorout = 'IN';
+//            $this->reference_id = $parentid;
+//            $this->rightorleft = 'RIGHT';
+//            $this->inorout = 'IN';
             $this->updateValue($itemid);
 
             // We updated a position. now go back and see if any of the unresolveds we have can be resolved
