@@ -24,7 +24,7 @@ class CelkoPositionProperty extends DataProperty
     public $desc         = 'Celko Position';
     public $reqmodules   = array();
 
-    public $reference_id;               // The ID of the parent item
+    public $reference_id = 0;               // The ID of the parent item
     public $moving;
     public $position;
     public $rightorleft;
@@ -54,25 +54,25 @@ class CelkoPositionProperty extends DataProperty
     {
         if (!xarVarFetch($name . '_reference_id', 'int:0', $reference_id)) return;
         if (!xarVarFetch($name . '_position', 'enum:1:2:3:4', $position)) return;
-            switch (intval($position)) {
-                case 1: // above - same level
-                default:
-                    $this->rightorleft = 'left';
-                    $this->inorout = 'out';
-                    break;
-                case 2: // below - same level
-                    $this->rightorleft = 'right';
-                    $this->inorout = 'out';
-                    break;
-                case 3: // below - child item
-                    $this->rightorleft = 'right';
-                    $this->inorout = 'in';
-                    break;
-                case 4: // above - child item
-                    $this->rightorleft = 'left';
-                    $this->inorout = 'in';
-                    break;
-            }
+        switch (intval($position)) {
+            case 1: // above - same level
+            default:
+                $this->rightorleft = 'left';
+                $this->inorout = 'out';
+                break;
+            case 2: // below - same level
+                $this->rightorleft = 'right';
+                $this->inorout = 'out';
+                break;
+            case 3: // below - child item
+                $this->rightorleft = 'right';
+                $this->inorout = 'in';
+                break;
+            case 4: // above - child item
+                $this->rightorleft = 'left';
+                $this->inorout = 'in';
+                break;
+        }
         $this->reference_id = $reference_id;
         return true;
     }
