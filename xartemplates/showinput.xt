@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:if condition="isset($onchange)">
-      <xar:set name="evt_change">$onchange</xar:set>
-    <xar:else/>
-      <xar:set name="evt_change">'return true;'</xar:set>
-    </xar:if>
+    <fieldset style="border: none; margin: 0">
+        <xar:set name="onchange">"this.form.action = '" . xarServer::getCurrentURL() . "';this.form.submit();"</xar:set>
 
-    <xar:template file="timetemplate-input"/>
+        <div>
+            <xar:set name="name">"country_" . $id</xar:set>
+            <xar:set name="firstline">xarML('Choose a country')</xar:set>
+            <xar:data-input type="countrylisting" name="$name" value="$country" firstline="$firstline" onchange="$onchange"/>
+        </div>
 
-    <xar:template file="dataproperty_additions" module="base"/>
+        <xar:if condition="$country eq 'us'">
+            <div>
+                <xar:set name="name">"region_" . $id</xar:set>
+                <xar:set name="firstline">xarML('Choose a region')</xar:set>
+                <xar:data-input type="statelisting" name="$name" value="$region" firstline="$firstline" onchange="$onchange"/>
+            </div>
+        </xar:if>
+        <div>
+            <xar:set name="name">"city_" . $id</xar:set>
+            <xar:set name="firstline">xarML('Choose a city')</xar:set>
+            <xar:data-input type="countrylisting" name="$name" value="$city" options="$cityoptions" firstline="$firstline"/>
+        </div>
+
+        <xar:template file="dataproperty_additions" module="base"/>
+    </fieldset>
 </xar:template>

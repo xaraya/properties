@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    #$value['time']#
+    <xar:data-output type="countrylisting" value="$country"/>&#160;&#62;&#160;
+    <xar:if condition="!empty($region)">
+        <xar:data-output type="statelisting" value="$region"/>&#160;&#62;&#160;
+    </xar:if>
+    #$city#
 </xar:template>
