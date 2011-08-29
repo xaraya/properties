@@ -10,56 +10,34 @@
                 <div id="contentmain">
                     <div id="contentmain_inner"><div id="contentmain_tlcorner"><div id="contentmain_trcorner">&#160;</div></div>
                         <div id="contentmain_core">
-            <h2>Timeperiod Property</h2>
+            <h2>Secureemail Property</h2>
                 <h3>Description</h3>
                 <p>
-                    The Timeperiod dataproperty lets you input time periods. It consists of a dropdown and a text field.  The dropdown is meant for choosing the unit of time (seconds, minutes, hours, days, weeks, months and years). The textbox is meant for entering the number of units. 
+                    The Secureemail dataproperty lets you obfuscate emails on web pages. It displays a mailto link which opens a mail client page with an email address. The email address is obfuscated in the web page on which it appears and so cannot be read by email harvesters.
                 </p>
                 <p>
-                    The property stores time periods as seconds. When displaying a period, it will choose the largest possible unit the period can be displayed in without decimals.
+                    The property uses a simple obfuscation method, splitting the email address into parts and then reassembling the address when the link is clicked.
                 </p>
                 <h3>Usage</h3>
                 <h4>Standalone</h4>
                     <pre>
-    &lt;xar:data-input type="timeperiod" <i>[attr1="value1",...]</i> /&gt;
-    &lt;xar:data-output type="timeperiod" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-input type="secureemail" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output type="secureemail" <i>[attr1="value1",...]</i> /&gt;
                     </pre>
             <h4>Bound</h4>
                 <pre>
-    &lt;xar:data-input property="$properties['timeperiod']" <i>[attr1="value1",...]</i> /&gt;
-    &lt;xar:data-output property="$properties['timeperiod']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-input property="$properties['secureemail']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output property="$properties['secureemail']" <i>[attr1="value1",...]</i> /&gt;
                 </pre>
             <h3>Attributes</h3>
             <ul>
                 <li>
-                    The attributes are those inherited from the parent base dataproperty.
+                    <strong>value</strong>: string [default='']&#160;The email address to be obfuscated. Clicking on an email link will open a page in your mail client with this address as the recipient.
+                </li>
+                <li>
+                    <strong>label</strong>: string [default='']&#160;An optional display name for the email link. If not set, the link will display the email address.
                 </li>
             </ul>
-            <h3>Values</h3>
-                The units have the following values:
-                    <table>
-                        <tr>
-                            <th>Display</th><th>Value</th>
-                        </tr>
-                        <tr>
-                            <td>seconds</td><td>s</td>
-                        </tr>
-                        <tr>
-                            <td>minutes</td><td>m</td>
-                        </tr>
-                        <tr>
-                            <td>hours</td><td>h</td>
-                        </tr>
-                        <tr>
-                            <td>days</td><td>d</td>
-                        </tr>
-                        <tr>
-                            <td>weeks</td><td>w</td>
-                        </tr>
-                        <tr>
-                            <td>years</td><td>y</td>
-                        </tr>
-                    </table>
         </div>
                         </div>
                         <div id="contentmain_blcorner"><div id="contentmain_brcorner">&#160;</div></div>

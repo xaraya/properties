@@ -1,26 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:set name="unitarray">
-        array(
-            's' => array('singular' => xarML('second'), 'plural' => xarML('seconds')),
-            'm' => array('singular' => xarML('minute'), 'plural' => xarML('minutes')),
-            'h' => array('singular' => xarML('hour'), 'plural' => xarML('hours')),
-            'd' => array('singular' => xarML('day'), 'plural' => xarML('days')),
-            'w' => array('singular' => xarML('week'), 'plural' => xarML('weeks')),
-            'y' => array('singular' => xarML('year'), 'plural' => xarML('years')),
-        )
-    </xar:set>
-    <xar:if condition="$value['duration'] eq 1">
-        <xar:ml>
-            <xar:mlstring>#(1) #(2)</xar:mlstring>
-            <xar:mlvar>#$value['duration']#</xar:mlvar>
-            <xar:mlvar>#$unitarray[$value['unit']]['singular']#</xar:mlvar>
-        </xar:ml>
-    <xar:else />
-        <xar:ml>
-            <xar:mlstring>#(1) #(2)</xar:mlstring>
-            <xar:mlvar>#$value['duration']#</xar:mlvar>
-            <xar:mlvar>#$unitarray[$value['unit']]['plural']#</xar:mlvar>
-        </xar:ml>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:if condition="!empty($label)">
+        <a href="mailto:nospam" id="#$id#_#$_itemid#_securelink">#$label#</a>
+        <script type="text/javascript">
+            function obfuscate(id) {
+                var nospam = 'mailto:';
+                var value1 = '#$value[0]#';
+                var value2 = '#$value[1]#';
+                var value3 = '#$value[2]#';
+                var a = document.getElementById(id);
+                if (value1 == '') {
+                    var value = '';
+                } else {
+                    var value = value1 + '@' + value2 + '.' + value3;
+                }
+                a.href = nospam + value;
+            }
+            obfuscate('#$id#_#$_itemid#_securelink')
+        </script>
+    <xar:else/>
+        <a href="mailto:nospam" id="#$id#_#$_itemid#_securelink">No Spam</a>
+        <script type="text/javascript">
+            function obfuscate(id) {
+                var nospam = 'mailto:';
+                var value1 = '#$value[0]#';
+                var value2 = '#$value[1]#';
+                var value3 = '#$value[2]#';
+                var a = document.getElementById(id);
+                if (value1 == '') {
+                    var value = '';
+                } else {
+                    var value = value1 + '@' + value2 + '.' + value3;
+                }
+                a.href = nospam + value;
+                a.innerHTML = value;
+            }
+            obfuscate('#$id#_#$_itemid#_securelink')
+        </script>
     </xar:if>
 </xar:template>
