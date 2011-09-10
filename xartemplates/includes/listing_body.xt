@@ -11,6 +11,6 @@
         </xar:if>
 
         <xar:set name="loopitem">$loop->item</xar:set>
-        <xar:template file="listing_row" module="$module"/>
+        <xar:template file="listing_row" module="$module" property="listing"/>
     </xar:loop>
 </xar:template>

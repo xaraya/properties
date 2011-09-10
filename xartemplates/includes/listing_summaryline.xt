@@ -53,7 +53,7 @@
             </xar:if>
         </div>
         <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
-            <xar:template file="listing_newlink" module="$module"/>
+            <xar:template file="listing_newlink" module="$module" property="listing"/>
         </div>
     </xar:if>
 </xar:template>

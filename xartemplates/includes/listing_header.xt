@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <tr>
-        <xar:template file="listing_headerprefix" module="$module"/>
+        <xar:template file="listing_headerprefix" module="$module" property="listing"/>
         <xar:foreach in="$fields" key="$column" value="$field">
             <xar:if condition="($column eq $primaryalias) AND !$show_primary">
                 <xar:continue />
@@ -12,9 +12,9 @@
                     #$field#
                 </a>
                 <xar:set name="subdata">array_merge($params,array('column' => $column))</xar:set>
-                <xar:template file="sortarrows" subdata="$subdata" module="$module"/>
+                <xar:template file="sortarrows" subdata="$subdata" module="$module" property="listing"/>
             </th>
         </xar:foreach>
-        <xar:template file="listing_headersuffix" module="$module"/>
+        <xar:template file="listing_headersuffix" module="$module" property="listing"/>
     </tr>
 </xar:template>

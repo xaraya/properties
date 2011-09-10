@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Listing Property
  *
@@ -59,26 +59,23 @@ class ListingProperty extends DataProperty
             $this->module = $info[0];
             $data['module'] = $this->module;
         }
-        $data['items_per_page'] = xarModVars::get($this->module, 'items_per_page');
 
-        // Take over these values because we use them below
-        if (isset($data['show_primary'])) $this->display_show_primary = $data['show_primary'];
-        if (isset($data['items_per_page'])) $this->display_items_per_page = $data['items_per_page'];
-
-        $data = array_merge($data, $this->runquery($data));
+        $ipp = xarModVars::get($this->module, 'items_per_page');
+        if (!empty($ipp)) $this->display_items_per_page = $ipp;
 
         // Send any config settings not overwritten to the template
-        if (!isset($data['show_primary'])) $data['show_primary'] = $this->display_show_primary;
-        if (!isset($data['show_search'])) $data['show_search'] = $this->display_show_search;
-        if (!isset($data['show_alphabet'])) $data['show_alphabet'] = $this->display_show_alphabet;
-        if (!isset($data['showall_tab'])) $data['showall_tab'] = $this->display_showall_tab;
-        if (!isset($data['showother_tab'])) $data['showother_tab'] = $this->display_showother_tab;
-        if (!isset($data['show_items_per_page'])) $data['show_items_per_page'] = $this->display_show_items_per_page;
-        if (!isset($data['items_per_page'])) $data['items_per_page'] = $this->display_items_per_page;
+        if (isset($data['show_items_per_page'])) $this->display_show_items_per_page = $data['show_items_per_page'];
+        if (isset($data['items_per_page'])) $this->display_items_per_page = $data['items_per_page'];
+        if (isset($data['show_primary'])) $this->display_show_primary = $data['show_primary'];
+        if (isset($data['show_search'])) $this->display_show_search = $data['show_search'];
+        if (isset($data['show_alphabet'])) $this->display_show_alphabet = $data['show_alphabet'];
+        if (isset($data['showall_tab'])) $this->display_showall_tab = $data['showall_tab'];
+        if (isset($data['showother_tab'])) $this->display_showother_tab = $data['showother_tab'];
         
         // give the template the alphabet chars
         $data['alphabet'] = $this->alphabet;
 
+        $data = array_merge($data, $this->runquery($data));
         return parent::showInput($data);
     }
 
@@ -102,7 +99,7 @@ Notes:
     //--- 0. Local parameters
         $tablename = 'ft';
         $baddatastores = array('_dynamic_data_','_dummy_');
-        $baddatasources = array('dynamic_data','dummy','modulevars');
+        $baddatasources = array('dynamic_data','dummy','modulevars','');
 
     //--- 1. Get the args passed to this function
 
@@ -114,14 +111,19 @@ Notes:
         // We accept both object names and objects, but objectname overrides
         if (isset($objectname)) {
             $object = DataObjectMaster::getObjectList(array('name' => $objectname));
-        } else {
+        } elseif (isset($object)) {
             if (!is_object($object)) throw new Exception('No object passed to the listing property');
             else {
                 $objectname = $object->name;
                 $data['objectname'] = $objectname;
+                if (!method_exists($object,'getItems')) {
+                    $object = DataObjectMaster::getObjectList(array('name' => $objectname));
+                }
             }
+        } else {
+            throw new Exception('No object passed to the listing property');
         }
-
+        
         // itemtype 0 means all itemtypes
         $itemtype = isset($itemtype) ? $itemtype : 0;
 
@@ -138,11 +140,11 @@ Notes:
 
     //--- 2. Retrieve session vars we work with
 
-        $lastobject = xarSession::getVar('listing.lastlistingsearch');
-        $lastmsg = xarSession::getVar('listing.msg') ? xarSession::getVar('listing.msg') : '';
-        $sort = xarSession::getVar('listing.sort')?xarSession::getVar('listing.sort'):'DESC';
-        $lastorder = xarSession::getVar('listing.lastorder') ? xarSession::getVar('listing.lastorder') : '';
-        $q = xarSession::getVar('listing.currentquery');
+        $lastobject = xarSession::getVar('listing.' . $objectname . '.lastlistingsearch');
+        $lastmsg = xarSession::getVar('listing.' . $objectname . '.msg') ? xarSession::getVar('listing.' . $objectname . '.msg') : '';
+        $sort = xarSession::getVar('listing.' . $objectname . '.sort')?xarSession::getVar('listing.' . $objectname . '.sort'):'DESC';
+        $lastorder = xarSession::getVar('listing.' . $objectname . '.lastorder') ? xarSession::getVar('listing.' . $objectname . '.lastorder') : '';
+        $q = xarSession::getVar('listing.' . $objectname . '.currentquery');
 
     //--- 3. Get all the parameters we need from the form
 
@@ -158,19 +160,6 @@ Notes:
 
     //--- 5. Assemble the data sources (data tables)
 
-        $tablealiases = array();
-        $i = 1;
-        foreach ($object->getDataStores() as $key => $value) {
-            if (in_array($key, $baddatastores)) continue;
-            $tablealiases[$key] = $tablename . $i;
-            $i++;
-        }
-
-        // if no datasource found we're stuck
-        if (empty($tablealiases)) {
-            return array();
-        }
-
     //--- 6. Assemble the fields to be displayed
 
         // Someone passed a fieldlist attribute
@@ -183,8 +172,13 @@ Notes:
         // Someone passed a keyfield attribute
         if (!empty($keyfield)) $defaultkey = $keyfield;
 
-        // We'll put fields into the output of the query that have status active in the object
-        $properties = $object->getProperties();
+        // Pass the field list to the object    
+        // we'll put fields into the output of the query that have status active in the object
+        // Make sure the primary index is included; its display will be steered by the $showprimary variable
+        $object->properties[$object->primary]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
+        $object->setFieldlist($fieldlist,array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY));
+        $properties =& $object->getProperties(array('status' => array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY)));
+
         $activefields = array();
         $columnfields = array();
         $sourcefields = array();
@@ -198,12 +192,7 @@ Notes:
 
         foreach ($properties as $property) {
             $source = $property->source;
-            $alias = $property->source;
-
-            foreach ($tablealiases as $key => $value) {
-                $source = str_replace($key, $value, $source);
-                $alias = str_replace($key . '.', $value . '_', $alias);
-            }
+            $alias = $property->name;
 
             if ($property->name == 'itemtype') $itemtypefield = $source;
 
@@ -226,7 +215,9 @@ Notes:
 
             if (empty($fieldlist)) { 
                 // If no field list ignore fields that don't have active display status
-                if ($property->getDisplayStatus() != DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE) continue;
+                if (($property->getDisplayStatus() != DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE) &&
+                    ($property->getDisplayStatus() != DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY)
+                ) continue;
             } elseif (!empty($fieldlist) && !in_array($property->name, $fieldlist)) {
                 // if a field list was passed, make sure the property is in it
                 continue;
@@ -253,6 +244,11 @@ Notes:
             }
         }
 
+        // Sanity check to make sure we got a key
+        if (empty($defaultkey)) {
+            throw new BadParameterException(array($module), "The listing cannot be displayed, because no select key was found");
+        }
+
         // Resort if we have a fieldlist
         if (!empty($fieldlist)) {
             if (!in_array($object->primary, $fieldlist)) {
@@ -272,12 +268,10 @@ Notes:
             $columnfields = $_columnfields;
             $sourcefields = $_sourcefields;        
         }
-
-        // Sanity check to make sure we got a key
-        if (empty($defaultkey)) {
-            throw new BadParameterException(array($module), "The listing cannot be displayed, either because no object or no select key defined");
-        }
-
+        
+        // We have the fields sorted in proper order. Add them to the query
+        foreach ($sourcefields as $sourcefield) $object->dataquery->addfield($sourcefield);
+        
     //--- 7. Figure out the operation we are performing
 
         $firsttime = !isset($lastobject) || ($objectname != $lastobject);       // criterium for first time display
@@ -298,7 +292,7 @@ Notes:
             case "pagerclick":
             case "columnclick":
 
-                $q = xarSession::getVar('listing.currentquery');
+                $q = xarSession::getVar('listing.' . $objectname . '.currentquery');
                 if (empty($q) || !isset($q)) {
                     $q = new Query('SELECT');
                     $q->setdistinct();
@@ -306,26 +300,31 @@ Notes:
                     $q = unserialize($q);
                     $q->open();
                 }
-                if (!empty($conditions)) $q->addconditions($conditions);
+                if (!empty($conditions)) $object->dataquery->addconditions($conditions);
                 $data['msg'] = $lastmsg;
             break;
 
     //--- 9. First time visit to this page; empty the sessionvars and reset the categories
             case "newsearch":
                 if (!empty($conditions)) {
-                    $q = $conditions;
-                } else {
-                    $q = new Query('SELECT');
+                    $q = new Query();
+                    $q->addconditions($conditions);
+                    $object->dataquery->addconditions($conditions);
+                    $object->dataquery->addsorts($conditions);
                 }
-                $q->setdistinct();
-                foreach ($tablealiases as $key => $value) $q->addtable($key,$value);
-                foreach ($indices as $index) $q->join($primarysource,$index);
-                foreach ($fieldnames as $key => $value) $q->addfield($key . ' AS ' . $value);
 
-                xarSession::setVar('listing.lastlistingsearch',$objectname);
-                xarSession::setVar('listing.msg','');
-                $order = '';
-                $sort = 'ASC';
+                xarSession::setVar('listing.' . $objectname . '.lastlistingsearch',$objectname);
+                xarSession::setVar('listing.' . $objectname . '.msg','');
+
+                // Get any odering from the object's data query if possible
+                if (!empty($object->dataquery->sorts)) {
+                    $setting = current($object->dataquery->sorts);
+                    $order = $setting['name'];
+                    $sort = $setting['order'];
+                } else {
+                    $order = '';
+                    $sort = 'ASC';
+                }
             break;
 
     //--- 10. Any other operation:get the query if it was passed as conditions, or create a new one
@@ -333,24 +332,12 @@ Notes:
             case "textsearch":
 
                 if (!empty($conditions)) {
-                    $q = $conditions;
-                } else {
-                    $q = new Query('SELECT');
+                    $object->dataquery->addconditions($conditions);
                 }
-                $q->setdistinct();
-
-                foreach ($tablealiases as $key => $value) $q->addtable($key,$value);
-                foreach ($indices as $index) $q->join($primarysource,$index);
-                foreach ($fieldnames as $key => $value) $q->addfield($key . ' AS ' . $value);
+                $object->dataquery->setdistinct();
 
     //--- 11. Filter on the objects and itemtypes we'll be displaying
 
-    /*        if (isset($objectidfield) && !empty($object)) {
-                $thisobject = DataObjectMaster::getObject(array('name' => $object));
-                $q->eq($objectidfield, $thisobject->objectid);
-            }
-            if (isset($itemtypefield) && !empty($itemtype)) $q->eq($itemtypefield, $itemtype);
-    */
                 $data['msg'] = '';
             break;
 
@@ -370,7 +357,7 @@ Notes:
         // change  the sort direction if I clicked one of the column names
         // but only if the column name is the same so it acts like a toggle for that field
         // only change sort if column name is clicked, not a letter which will retain the current settings
-        $thisstart = xarSession::getVar('listing.start') ? xarSession::getVar('listing.start') : 1;
+        $thisstart = xarSession::getVar('listing.' . $objectname . '.start') ? xarSession::getVar('listing.' . $objectname . '.start') : 1;
         if ($operation == "columnclick") {
             if (isset($order) && $data['startnum']== $thisstart){
                 if ($order == $lastorder) {
@@ -379,18 +366,18 @@ Notes:
                 } else {
                     $sort = 'ASC';
                 }
-                xarSession::setVar('listing.sort',$sort);
-                xarSession::setVar('listing.lastorder',$order);
+                xarSession::setVar('listing.' . $objectname . '.sort',$sort);
+                xarSession::setVar('listing.' . $objectname . '.lastorder',$order);
                 $data['search'] = $search; //pass along search
             } elseif (empty($letter) && empty($search)) {
                 //if order is not set - set it to the default key field but keep it at 'DESC'
                 $order = $keyfieldalias;
                 $sort = 'ASC';
-                xarSession::setVar('listing.lastorder',$order);
+                xarSession::setVar('listing.' . $objectname . '.lastorder',$order);
             }
             $data['msg'] = '';
         }
-        $q->setorder($order,$sort);
+        $object->dataquery->setorder($order,$sort);
 
         switch ($operation) {
             case "lettersearch":
@@ -409,7 +396,7 @@ Notes:
                 } else {
                 // TODO: handle case-sensitive databases
                     //$q->like('r.name', $letter.'%');
-                    $q->like($tablekeyfield, $letter.'%');
+                    $object->dataquery->regex($tablekeyfield, '^(\\\%)*' . $letter);
                     $data['msg'] = xarML('Listing where #(1) begins with "#(2)"', $defaultkeyname, $letter);
                 }
 
@@ -432,7 +419,7 @@ Notes:
                         if ($i >0) {
                             $msg .= ' or';
                         }
-                        $c[$i]= $q->plike($value, $qsearch);
+                        $c[$i]= $object->dataquery->plike($value, $qsearch);
                         $msg .= ' '.$activefields[$sourcefield].' ';
                         $i++;
                     }
@@ -441,7 +428,7 @@ Notes:
                         else  $data['msg'] .= xarML(' and listing where #(1) contain "#(2)"',$msg,$search);
                     }
                     // take the conditions we decided on above and add them to the query as a bunch of ORs
-                    $q->qor($c);
+                    $object->dataquery->qor($c);
                 }
                 if (empty($data['msg'])) $data['msg'] = xarML('All items');
 
@@ -465,10 +452,14 @@ Notes:
 
     //--- 19. Set the number of rows to display and the starting point
 
-        $q->setrowstodo($this->display_items_per_page);
+        // Save the query in a sessionvar for others who might need it
+        xarSession::setVar('listing.' . $objectname,serialize($object->dataquery));
+        
+        // Set the number of lines to display
+        if (!empty($this->display_items_per_page)) $object->dataquery->setrowstodo($this->display_items_per_page);
 
         // The record to start at needs to come from the template
-        $q->setstartat($data['startnum']);
+        $object->dataquery->setstartat($data['startnum']);
 
         // CHECKME: do we need all 3 of these passed to the template
         $data['order'] = $order;
@@ -476,18 +467,50 @@ Notes:
         $data['searchstring'] = $search;
 
         // display the query if I need to
-    //    echo "<br />"; $q->qecho();
+//        echo "<br />"; $object->dataquery->qecho();
     //    exit;
 
-        // run the query
-        // it does the bindvars thing automatically away from mine eyes :)
-        if (!$q->run()) return;
-
-        // get the total number of rows irrespective of number to be displayed
-        $data['total'] = $q->getrows();
-
+    // Now we run the query, if that is required
+    // Use isset here to check whether a $items param was even passed
+    if (!isset($items)) {
+        // add conditions if they were passed
+        if (!empty($conditions)) $object->dataquery->addconditions($conditions);
         // get the records to be displayed
-        $data['items'] = $q->output();
+        $items = $object->getItems();
+        // We may need to recalculate the total if we have linked tables
+        // Just force it for now
+        $data['total'] = $object->dataquery->getrows();
+    } else {
+        if (!empty($this->display_items_per_page)) {
+            // items were passed, but we need to get the correct subset
+            // first get the total
+            $data['total'] = count($items);
+            $tempitems = array();
+            $startat = $object->dataquery->startat-1;
+            $endat = $startat + $object->dataquery->rowstodo;
+            for ($i=$startat;$i<$endat;$i++)  {
+                if (!isset($items[$i])) break;
+                $tempitems[] = $items[$i];
+            }
+            $items = $tempitems;
+        }
+    }
+    
+    
+/*
+    $parts = explode('.',$primarysource);
+    $primarytable = "**MISSING**";
+    foreach ($object->dataquery->tables as $table) {
+        if ($parts[0] == $table['alias']) {
+            $primarytable = $table;
+            break;
+        }
+    }
+    $object->dataquery->addfield('COUNT(' . $primarytable['alias'] . '.id) AS total');
+*/
+    
+        // Add the filter variable to show a filter form
+        if (!isset($data['filter'])) $data['filter'] = 0;
 
         // Add field definitions to the template variables
         $data['fields'] = $activefields;
@@ -497,6 +520,9 @@ Notes:
         $data['keyfieldalias'] = $keyfieldalias;
         $data['defaultkeyname'] = $defaultkeyname;
         $data['properties'] = $properties;
+
+        // Add the array of items to the template variables
+        $data['items'] = $items;
 
         // a bunch of params the pager will want to see in its target url
         // order and sort are used by the up and down arrows
@@ -510,16 +536,18 @@ Notes:
         // need this in case this code is turned into a dprop
         $data['regid'] = $regid;
 
-        // we also need a reference ot the primary column for the template
+        // we also need a reference to the primary column for the template
         $data['primaryalias'] = $primaryalias;
 
+        // Add a reference to the object itself
+        $data['object'] = $object;
+
         // Set the session vars to the latest state
-        xarSession::setVar('listing.start',$data['startnum']);
-        xarSession::setVar('listing.msg',$data['msg']);
+        xarSession::setVar('listing.' . $objectname . '.start',$data['startnum']);
+        xarSession::setVar('listing.' . $objectname . '.msg',$data['msg']);
 
         // Sort of ugly. How can we do better?
         unset($q->dbconn);unset($q->output);unset($q->result);
-        xarSession::setVar('listing.currentquery',serialize($q));
         return $data;
     }
 }
