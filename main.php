@@ -13,11 +13,11 @@
 
 sys::import('modules.dynamicdata.xarproperties.objectref');
 
-class LanguageProperty extends ObjectRefProperty
+class LanguagesProperty extends ObjectRefProperty
 {
     public $id         = 30039;
-    public $name       = 'language';
-    public $desc       = 'Language';
+    public $name       = 'languages';
+    public $desc       = 'Languages';
     public $reqmodules = array();
 
     public $initialization_refobject    = 'languages';

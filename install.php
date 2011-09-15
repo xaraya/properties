@@ -11,25 +11,23 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-sys::import('properties.language.main');
+sys::import('properties.languages.main');
 sys::import('modules.dynamicdata.class.properties.interfaces');
 sys::import('modules.dynamicdata.class.objects.master');
 
-class LanguagePropertyInstall extends LanguageProperty implements iDataPropertyInstall
+class LanguagesPropertyInstall extends LanguagesProperty implements iDataPropertyInstall
 {
     public function install(Array $data=array())
     {    
-        $object = DataObjectMaster::getObject(array('name' => 'languages'));
-        
-        // We only load the object once
-        if (empty($object)) {
-            $files[] = sys::code() . 'properties/language/data/language-def.xml';
-            $files[] = sys::code() . 'properties/language/data/language-dat.xml';
+        if (!DataObjectMaster::isObject(array('name' => 'languages'))) {
+            $files[] = sys::code() . 'properties/languages/data/language-def.xml';
+            $files[] = sys::code() . 'properties/languages/data/language-dat.xml';
             foreach ($files as $file) {
                 try {
                     $objectid = xarMod::apiFunc('dynamicdata','util','import', array('file' => $file));
                 } catch (Exception $e) {
-                    //
+                    // We only load the object once
+                    break;
                 }
             }
         }
