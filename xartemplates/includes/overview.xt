@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div>
-            <h2>CityLocation Property</h2>
+            <h2>ObjectItem Property</h2>
                 <h3>Description</h3>
                 <p>
-                    The CityLocation dataproperty lets you choose a city from a series of dropdowns. It consists of 3 dropdown fields: country, region and city. Depending on the country chosen the region dropdown may or may not be available.  
+                    The ObjectItem dataproperty lets you choose a DD object and item from a series of dropdowns. 
                 </p>
                 <p>
-                    The cities available are those used in weather widgets such as the Xaraya weather module. In other words, they correspond to weather station locations.
+                    The object can be chosen from a dropdown that lists all the DD objects on the site. Initially the object is an empty string and the item value is 0, with no dropdown for it visible. Once an object is chosen, it's items become visible in a second dropdown
+                </p>
+                <p>
+                    The object is stored by its name and displayed by its label. The item is stored by its ID and displayed by its name. If no name property is defined it is displayed as an ID.
+                </p>
+                <p>
+                    The value of this property is stored and displayed as a string of the form <i>[objectname]:[itemid]</i>.
                 </p>
                 <p>
                     This property has no configuration properties.
@@ -15,13 +21,25 @@
                 <h3>Usage</h3>
                 <h4>Standalone</h4>
                     <pre>
-    &lt;xar:data-input type="citylocation" /&gt;
-    &lt;xar:data-output type="citylocation" /&gt;
+    &lt;xar:data-input type="objectitem" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output type="objectitem" <i>[attr1="value1",...]</i> /&gt;
                     </pre>
             <h4>Bound</h4>
                 <pre>
-    &lt;xar:data-input property="$properties['citylocation']" /&gt;
-    &lt;xar:data-output property="$properties['citylocation']" /&gt;
+    &lt;xar:data-input property="$properties['objectitem']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output property="$properties['objectitem']" <i>[attr1="value1",...]</i> /&gt;
                 </pre>
+            <h3>Attributes</h3>
+            <ul>
+                <li>
+                    <strong>object</strong>: string [default='']&#160;The name of the dataobject
+                </li>
+                <li>
+                    <strong>item</strong>: integer [default=0]&#160;The ID of the item
+                </li>
+                <li>
+                    <strong>value</strong>: string [default=':0']&#160;A value of the form <i>[objectname]:[itemid]</i>
+                </li>
+            </ul>
         </div>
 </xar:template>

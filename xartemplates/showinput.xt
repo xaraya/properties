@@ -4,22 +4,18 @@
         <xar:set name="onchange">"this.form.action = '" . xarServer::getCurrentURL() . "';this.form.submit();"</xar:set>
 
         <div>
-            <xar:set name="name">"country_" . $id</xar:set>
-            <xar:set name="firstline">xarML('Choose a country')</xar:set>
-            <xar:data-input type="countrylisting" name="$name" value="$country" firstline="$firstline" onchange="$onchange"/>
+            <xar:set name="name">"object_" . $id</xar:set>
+            <xar:var name="firstline">Choose an object</xar:var>
+            <xar:data-input type="objectref" name="$name" refobject="objects" store_prop="name" display_prop="label" value="$object" firstline="$firstline" onchange="$onchange"/>
         </div>
-
-        <xar:if condition="$country eq 'us'">
-            <div>
-                <xar:set name="name">"region_" . $id</xar:set>
-                <xar:set name="firstline">xarML('Choose a region')</xar:set>
-                <xar:data-input type="statelisting" name="$name" value="$region" firstline="$firstline" onchange="$onchange"/>
-            </div>
-        </xar:if>
         <div>
-            <xar:set name="name">"city_" . $id</xar:set>
-            <xar:set name="firstline">xarML('Choose a city')</xar:set>
-            <xar:data-input type="countrylisting" name="$name" value="$city" options="$cityoptions" firstline="$firstline"/>
+            <xar:set name="name">"item_" . $id</xar:set>
+            <xar:var name="firstline">Choose an item</xar:var>
+            <xar:if condition="!empty($object)">
+                <xar:data-input type="objectref" name="$name" refobject="$object" store_prop="id" display_prop="$item_display_prop" value="$item" firstline="$firstline"/>
+            <xar:else/>
+                <input type="hidden" name="$name" value="0"/>
+            </xar:if>
         </div>
 
         <xar:template file="dataproperty_additions" module="base"/>

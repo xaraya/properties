@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:data-output type="countrylisting" value="$country"/>&#160;&#62;&#160;
-    <xar:if condition="!empty($region)">
-        <xar:data-output type="statelisting" value="$region"/>&#160;&#62;&#160;
-    </xar:if>
-    #$city#
+    <xar:var name="firstline">Choose an object</xar:var>
+    <xar:data-output type="objectref" name="$name" refobject="objects" value="$object" store_prop="name" display_prop="label" firstline="$firstline"/>
+    <xar:var name="firstline">Choose an item</xar:var>
+    :<xar:data-output type="objectref" name="$name" refobject="$object" value="$item" store_prop="id" display_prop="$item_display_prop" firstline="$firstline"/>
 </xar:template>
