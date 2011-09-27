@@ -52,24 +52,34 @@ class ObjectItemProperty extends DataProperty
 
         try {
             $value = explode(':',$data['value']);
-            $this->object = $value[0];
+            $object = $value[0];
             if (!isset($value[1])) $value[1] = 0;
-            $this->item = $value[1];
+            $item = $value[1];
         } catch (Exception $e) {}
 
-        if (empty($data['object'])) $data['object'] = $this->object;
-        if (empty($data['item'])) $data['item'] = $this->item;
-
-        if (!xarVarFetch('object_' . $data['name'], 'str', $data['object'], '', XARVAR_DONT_REUSE)) return;
-        if (!xarVarFetch('item_' . $data['name'],   'str', $data['item'], '', XARVAR_DONT_REUSE)) return;
+        if (!xarVarFetch('object_' . $data['name'], 'str', $data['object'], $object, XARVAR_DONT_REUSE)) return;
+        if (!xarVarFetch('item_' . $data['name'],   'str', $data['item'], $item, XARVAR_DONT_REUSE)) return;
         if (empty($data['object'])) $data['object'] = $this->object;
         if (empty($data['item'])) $data['item'] = $this->item;
         
-        $object = DataObjectMaster::getObject(array('name' => $data['object']));
-        if (isset($object->properties['name'])) {
-            $data['item_display_prop'] = "name";
-        } else {
-            $data['item_display_prop'] = "id";
+        try {
+            $object = DataObjectMaster::getObject(array('name' => $data['object']));
+        } catch (Exception $e) {
+            $data['object'] = '';
+        }
+        if (!empty($data['object'])) {
+            // Special case if the object is Dynamic Objects
+            if (!isset($object->properties['id'])) {
+                $data['item_store_prop'] = "objectid";
+            } else {
+                $data['item_store_prop'] = "id";
+            }
+            // Special case if there the object has no name property
+            if (isset($object->properties['name'])) {
+                $data['item_display_prop'] = "name";
+            } else {
+                $data['item_display_prop'] = "id";
+            }
         }
 
         return parent::showInput($data);
@@ -88,11 +98,24 @@ class ObjectItemProperty extends DataProperty
         if (empty($data['object'])) $data['object'] = $this->object;
         if (empty($data['item'])) $data['item'] = $this->item;
 
-        $object = DataObjectMaster::getObject(array('name' => $data['object']));
-        if (isset($object->properties['name'])) {
-            $data['item_display_prop'] = "name";
-        } else {
-            $data['item_display_prop'] = "id";
+        try {
+            $object = DataObjectMaster::getObject(array('name' => $data['object']));
+        } catch (Exception $e) {
+            $data['object'] = '';
+        }
+        if (!empty($data['object'])) {
+            // Special case if the object is Dynamic Objects
+            if (!isset($object->properties['id'])) {
+                $data['item_store_prop'] = "objectid";
+            } else {
+                $data['item_store_prop'] = "id";
+            }
+            // Special case if there the object has no name property
+            if (isset($object->properties['name'])) {
+                $data['item_display_prop'] = "name";
+            } else {
+                $data['item_display_prop'] = "id";
+            }
         }
 
         return parent::showOutput($data);

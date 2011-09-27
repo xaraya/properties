@@ -4,5 +4,5 @@
     <xar:var name="firstline">Choose an object</xar:var>
     <xar:data-output type="objectref" name="$name" refobject="objects" value="$object" store_prop="name" display_prop="label" firstline="$firstline"/>
     <xar:var name="firstline">Choose an item</xar:var>
-    :<xar:data-output type="objectref" name="$name" refobject="$object" value="$item" store_prop="id" display_prop="$item_display_prop" firstline="$firstline"/>
+    :<xar:data-output type="objectref" name="$name" refobject="$object" value="$item" store_prop="$item_store_prop" display_prop="$item_display_prop" firstline="$firstline"/>
 </xar:template>

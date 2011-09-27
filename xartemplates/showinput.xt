@@ -12,7 +12,7 @@
             <xar:set name="name">"item_" . $id</xar:set>
             <xar:var name="firstline">Choose an item</xar:var>
             <xar:if condition="!empty($object)">
-                <xar:data-input type="objectref" name="$name" refobject="$object" store_prop="id" display_prop="$item_display_prop" value="$item" firstline="$firstline"/>
+                <xar:data-input type="objectref" name="$name" refobject="$object" store_prop="$item_store_prop" display_prop="$item_display_prop" value="$item" firstline="$firstline"/>
             <xar:else/>
                 <input type="hidden" name="$name" value="0"/>
             </xar:if>
