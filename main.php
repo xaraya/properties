@@ -25,6 +25,7 @@ class CelkoPositionProperty extends DataProperty
     public $reqmodules   = array();
 
     public $reference_id = 0;               // The ID of the parent item
+    public $include_reference = 1;          // Get a reference to the parent object
     public $moving;
     public $position;
     public $rightorleft;
@@ -246,7 +247,7 @@ class CelkoPositionProperty extends DataProperty
         if (!empty($data['itemid'])) {        
             $data['item'] = $this->getItem($data['itemid']);
             $items = $this->getItems(array('cid' => false,
-                                              'eid' => $data['itemid']));
+                                           'eid' => $data['itemid']));
             $data['id'] = $data['itemid'];
         } else {
             $data['item'] = Array('left_id'=>0,'right_id'=>0,'name'=>'','description'=>'', 'template' => '');
