@@ -27,9 +27,6 @@ class LanguagesProperty extends ObjectRefProperty
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
-        
-        $this->tplmodule = 'auto';
-//        $this->template =  'language';
         $this->filepath   = 'auto';
     }
     
