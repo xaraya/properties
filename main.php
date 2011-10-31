@@ -36,7 +36,7 @@ class CodeMirrorProperty extends TextAreaProperty
 
     public function showInput(Array $data = array())
     {
-        $data['basepath'] = sys::code() . 'properties/codemirror/templates/includes/codemirror/';
+        $data['basepath'] = sys::code() . 'properties/codemirror/xartemplates/includes/codemirror/';
         return parent::showInput($data);
     }
 }
