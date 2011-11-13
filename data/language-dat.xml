@@ -4,9 +4,9 @@
     <name>English</name>
     <code_3>eng</code_3>
     <code_2>en</code_2>
-    <locale>en_US</locale>
+    <locale>en_US.utf-8</locale>
     <image>us-flag.png</image>
-    <directory>en_US.utf-8</directory>
+    <directory>en_US</directory>
     <sort_seq>1</sort_seq>
     <charset>utf-8</charset>
   </languages>
@@ -15,9 +15,9 @@
     <name>German</name>
     <code_3>deu</code_3>
     <code_2>de</code_2>
-    <locale>de_DE</locale>
+    <locale>de_DE.utf-8</locale>
     <image>de-flag.png</image>
-    <directory>de_DE.utf-8</directory>
+    <directory>de_DE</directory>
     <sort_seq>2</sort_seq>
     <charset>utf-8</charset>
   </languages>
