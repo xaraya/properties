@@ -1,69 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:javascript filename="jquery-1.2.6.min.js" module="jquery" position="head"/>
-    <xar:javascript filename="jquery.tablehover.pack.js" module="jquery" position="head"/>
-                <xar:javascript filename="checkall.js" property="listing" position="head"/>
-    <script type="text/javascript">
-        $(document).ready(function()
-        {
-            $('##listing_table').tableHover();
-    //        $('##listing_table').tableHover({colClass: 'hover'});
-    //        $('##listing_table').tableHover({colClass: 'hover', cellClass: 'hovercell', clickClass: 'click'});
-    //        $('##listing_table').tableHover({colClass: 'hover', allowBody: false, clickClass: 'click'});
-    //        $('##listing_table').tableHover({rowClass: 'hoverrow', colClass: 'hover', clickClass: 'click', headRows: true, footRows: true, headCols: true, footCols: true});
-    //        $('##listing_table').tableHover({colClass: 'hover'});
-    //        $('##listing_table').tableHover({colClass: 'hover', spanRows: false, spanCols: false});
-    //        $('##listing_table').tableHover({colClass: 'hover', ignoreCols: [4,5,6]});
-        });
-    </script>
-
+    <!--
+    <xar:style type="import" file="QapTcha.jquery" scope="property" property="qaptcha" title="Qaptcha styles" position="body"/>
+    -->
     <style type="text/css">
-        td.click, th.click { background-color: ##bbb; }
-        td.hover, tr.hover { background-color: ##BFBFD9; }
-        th.hover, tfoot td.hover { background-color: ivory; }
-        td.hovercell, th.hovercell { background-color: ##abc; }
-        td.hoverrow, th.hoverrow { background-color: ##6df; }
+        @import url(#sys::code()#properties/Qaptcha/xarstyles/QapTcha.jquery.css); 
     </style>
+    <xar:javascript filename="jquery.js" scope="property" property="qaptcha"/>
+    <xar:javascript filename="jquery-ui.js" scope="property" property="qaptcha"/>
+    <xar:javascript filename="jquery.ui.touch.js" scope="property" property="qaptcha"/>
+    <xar:javascript filename="QapTcha.jquery.js" scope="property" property="qaptcha"/>
+    
+    <div class="QapTcha" style="width: 300px">Move the slider to the right to unlock the form</div>
 
-    <xar:set name="allowread">false</xar:set>
-    <xar:set name="allowedit">false</xar:set>
-    <xar:access level="200">
-        <xar:set name="allowread">true</xar:set>
-    </xar:access>
-    <xar:access level="500">
-        <xar:set name="allowedit">true</xar:set>
-    </xar:access>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('.QapTcha').QapTcha();
+      });
+    </script>
+    <input type="hidden" name="#$name#" />
 
-    <xar:set name="url">xarServer::getCurrentURL($params)</xar:set>
-
-    <xar:if condition="empty($show_bulk)">
-        <xar:set name="show_bulk">1</xar:set>
-    </xar:if>
-
-    <xar:style scope="module" module="base" file="navtabs"/>
-    <xar:if condition="!empty($filter)">
-        <xar:data-form objectname="$objectname" layout="filter"/>
-    <xar:else/>
-        <xar:template file="listing_alphabet" module="$module" property="listing"/>
-        <div style="clear:both"></div>    
-        <xar:template file="listing_searchboxline" module="$module" property="listing"/>
-    </xar:if>
-    <xar:template file="listing_summaryline" module="$module" property="listing"/>
-    <xar:template file="listing_pagerline" module="$module" property="listing"/>
-    <table id="listing_table" style="clear:both; width: 100%" border="0">
-        <xar:template file="listing_header" module="$module" property="listing"/>
-        <xar:template file="listing_body" module="$module" property="listing"/>
-    </table>
-    <xar:if condition="empty($total)">
-              <p class="xar-align-center">There are no items selected</p>
-    </xar:if>
-    <xar:if condition="isset($show_bulk) AND $show_bulk">
-        <form  action="#xarModURL('dynamicdata','user','property',array('prop' => 'listing','act' => 'bulk_action'))#" method="post" enctype="application/x-www-form-urlencoded" onsubmit = "listing_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;">
-            <xar:template file="listing_footerline" module="$module" property="listing" />
-            <input type="hidden" name="returnurl" id="returnurl" value="#xarServer::getCurrentURL()#"/>
-            <input type="hidden" name="objectname" id="objectname" value="#$objectname#"/>
-            <input type="hidden" name="localmodule" id="localmodule" value="#$module#"/>
-        </form>
-    </xar:if>
 </xar:template>
