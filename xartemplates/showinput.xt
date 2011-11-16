@@ -37,16 +37,16 @@
     <xar:set name="url">xarServer::getCurrentURL($params)</xar:set>
 
     <xar:style scope="module" module="base" file="navtabs"/>
-    <xar:template file="listing_alphabet" module="$module"/>
+    <xar:template file="listing_alphabet" module="$module" property="listing"/>
 
     <div style="clear:both"></div>
     
-    <xar:template file="listing_searchboxline" module="$module"/>
-    <xar:template file="listing_summaryline" module="$module"/>
-    <xar:template file="listing_pagerline" module="$module"/>
+    <xar:template file="listing_searchboxline" module="$module" property="listing"/>
+    <xar:template file="listing_summaryline" module="$module" property="listing"/>
+    <xar:template file="listing_pagerline" module="$module" property="listing"/>
     <table id="listing_table" style="clear:both; width: 100%" border="0">
-        <xar:template file="listing_header" module="$module"/>
-        <xar:template file="listing_body" module="$module"/>
+        <xar:template file="listing_header" module="$module" property="listing"/>
+        <xar:template file="listing_body" module="$module" property="listing"/>
     </table>
     <xar:if condition="empty($total)">
               <p class="xar-align-center">There are no items selected</p>

@@ -34,7 +34,7 @@
         </tr>
     <xar:else />
         <tr class="#$item_class#">
-            <xar:template file="listing_rowprefix" module="$module"/>
+            <xar:template file="listing_rowprefix" module="$module" property="listing"/>
             <xar:foreach in="$fields" key="$field">
                 <xar:set name="value">$loopitem[$field]</xar:set>
                 <xar:set name="column">$columns[$field]</xar:set>
@@ -51,7 +51,7 @@
                     </xar:if>
                 </td>
             </xar:foreach>
-            <xar:template file="listing_rowsuffix" module="$module"/>
+            <xar:template file="listing_rowsuffix" module="$module" property="listing"/>
         </tr>
     </xar:if>
 </xar:template>
