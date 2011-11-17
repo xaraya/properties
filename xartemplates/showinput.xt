@@ -5,7 +5,7 @@
     <xar:style type="import" file="QapTcha.jquery" scope="property" property="qaptcha" title="Qaptcha styles" position="body"/>
     -->
     <style type="text/css">
-        @import url(#sys::code()#properties/Qaptcha/xarstyles/QapTcha.jquery.css); 
+        @import url(#sys::code()#properties/qaptcha/xarstyles/QapTcha.jquery.css); 
     </style>
     <xar:javascript filename="jquery.js" scope="property" property="qaptcha"/>
     <xar:javascript filename="jquery-ui.js" scope="property" property="qaptcha"/>
