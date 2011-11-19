@@ -2,12 +2,12 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     
-    <xar:javascript filename="codemirror/js/codemirror.js" property="codemirror" position="head"/>
-
+    <link rel="stylesheet" href="#sys::code()#properties/codemirror/codemirror/lib/codemirror.css"/>
+    <script type="text/javascript" src="#sys::code()#properties/codemirror/codemirror/lib/codemirror.js"/>
     <div style="clear:both; border: 1px dotted black; padding: 3px; background-color: ##F8F8F8">
-        <textarea id="#$name#" name="#$name#" style="width: 100%">#$value#</textarea>
+        <textarea id="#$name#" name="#$name#">#$value#</textarea>
     </div>
-
+<!--
     <script type="text/javascript">
       var editor = CodeMirror.fromTextArea('#$name#', {
         height: "350px",
@@ -19,6 +19,12 @@
         continuousScanning: 500,
         lineNumbers: true,
         tabMode: 'shift',
+      });
+    </script>
+    -->
+    <script>
+      var editor = CodeMirror.fromTextArea(document.getElementById("#$name#"), {
+        lineNumbers: true
       });
     </script>
 </xar:template>
