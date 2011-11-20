@@ -7,7 +7,7 @@
                     The CodeMirror dataproperty is a standalone widget that lets you embed the <a href="http://marijn.haverbeke.nl/codemirror/">CodeMirror</a> code editor into your application. It doesn't have any configuration options at present.
                 </p>
                 <p>
-                    The property is based on version 0.7 of CodeMirror
+                    The property is based on version 2 of CodeMirror
                 </p>
                 <h3>Usage</h3>
                 <h4>Standalone</h4>
