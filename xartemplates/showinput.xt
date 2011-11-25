@@ -12,7 +12,7 @@
     <xar:javascript filename="jquery.ui.touch.js" scope="property" property="qaptcha"/>
     <xar:javascript filename="QapTcha.jquery.js" scope="property" property="qaptcha"/>
     
-    <div class="QapTcha" style="width: 300px">Move the slider to the right to unlock the form</div>
+    <div class="QapTcha" style="width: 350px">Move the slider to the right to unlock the form</div>
 
     <script type="text/javascript">
       $(document).ready(function(){
