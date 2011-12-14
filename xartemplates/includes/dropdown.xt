@@ -21,8 +21,10 @@
             array('id' => -500, 'name' => xarML('Last Month')),
             array('id' => -600, 'name' => xarML('Last 2 Months')),
             array('id' => -700, 'name' => xarML('Last Quarter')),
-            array('id' => -800, 'name' => xarML('Year to Date')),
-            array('id' => -900, 'name' => xarML('Last Year')),
+            array('id' => -800, 'name' => xarML('This Half Year')),
+            array('id' => -850, 'name' => xarML('Last Half Year')),
+            array('id' => -900, 'name' => xarML('Year to Date')),
+            array('id' => -950, 'name' => xarML('Last Year')),
         )
     </xar:set>
     <xar:set name="options">array()</xar:set>
