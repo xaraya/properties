@@ -162,23 +162,21 @@ class TimeFrameProperty extends DataProperty
                 $enddate->addDays(-1);
             break;
             case -800:
-                $startdate->addMonths(-6);
-                $enddate->addMonths(-6);
                 $month = $enddate->getMonth();                
-                $index = $month % 6;
-                $startdate->addMonths(1 - $index);
-                $startdate->setDay(1);
-                $enddate->addMonths(7 - $index);
-                $enddate->setDay(1);                
+                $monthoffset = ($month-1) % 6;
+                $startdate->setDay(1);                
+                $startdate->addMonths(-$monthoffset);
+                $enddate->setTimestamp($startdate->getTimestamp());
+                $enddate->addMonths(6);
                 $enddate->addDays(-1);                
             break;
             case -850:
                 $month = $enddate->getMonth();                
-                $index = $month % 6;
-                $startdate->addMonths(1 - $index);
-                $startdate->setDay(1);
-                $enddate->addMonths(7 - $index);
-                $enddate->setDay(1);                
+                $monthoffset = ($month-1) % 6;
+                $startdate->setDay(1);                
+                $startdate->addMonths(-$monthoffset-6);
+                $enddate->setTimestamp($startdate->getTimestamp());
+                $enddate->addMonths(6);
                 $enddate->addDays(-1);                
             break;
             case -900:
