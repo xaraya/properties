@@ -131,6 +131,12 @@ class TimeFrameProperty extends DataProperty
             case -100: $startdate->setDay(1); break;
             case -200: $startdate->addDays(-7); break;
             case -300: $startdate->addDays(-14); break;
+            case -310: $startdate->addMonths(-1); break;
+            case -320: $startdate->addMonths(-2); break;
+            case -330: $startdate->addMonths(-3); break;
+            case -340: $startdate->addMonths(-4); break;
+            case -350: $startdate->addMonths(-6); break;
+            case -360: $startdate->addMonths(-12); break;
             case -400:
                 $month = $enddate->getMonth();                
                 $monthoffset = ($month-1) % 3;

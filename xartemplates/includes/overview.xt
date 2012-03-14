@@ -38,10 +38,28 @@
                                     <td>This Month</td><td>-100</td>
                                 </tr>
                                 <tr>
-                                    <td>Last 7 days</td><td>-200</td>
+                                    <td>Last 7 Days</td><td>-200</td>
                                 </tr>
                                 <tr>
-                                    <td>Last 14 days Month</td><td>-300</td>
+                                    <td>Last 14 Days</td><td>-300</td>
+                                </tr>
+                                <tr>
+                                    <td>Last 30 Days</td><td>-310</td>
+                                </tr>
+                                <tr>
+                                    <td>Last 2 Months</td><td>-320</td>
+                                </tr>
+                                <tr>
+                                    <td>Last 3 Months</td><td>-330</td>
+                                </tr>
+                                <tr>
+                                    <td>Last 4 Months</td><td>-340</td>
+                                </tr>
+                                <tr>
+                                    <td>Last 6 Months</td><td>-350</td>
+                                </tr>
+                                <tr>
+                                    <td>Last 12 Months</td><td>-360</td>
                                 </tr>
                                 <tr>
                                     <td>This Quarter</td><td>-400</td>
