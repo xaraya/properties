@@ -190,6 +190,7 @@ class TimeFrameProperty extends DataProperty
                 $startdate->setMonth(1);
             break;
             case -950:
+                $startdate->setDay(1);
                 $startdate->setMonth(1);
                 $startdate->addYears(-1);
                 $enddate->addYears(-1);
