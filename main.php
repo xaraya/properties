@@ -39,18 +39,19 @@ class LinkTrailProperty extends DataProperty
         $separator  = xarModVars::get('themes', 'SiteTitleSeparator');
         $titlearray = explode($separator,$title);
         $currenttitle = array_pop($titlearray);
-        
-        $currenturl = xarServer::getCurrentURL(); //xarServer::getVar('HTTP_REFERER');
-        foreach ($links as $k => $v) {
-            if ($v == $currenturl) unset($links[$k]);
+        if (!empty($currenttitle)) {            
+            $currenturl = xarServer::getCurrentURL(); //xarServer::getVar('HTTP_REFERER');
+            foreach ($links as $k => $v) {
+                if ($v == $currenturl) unset($links[$k]);
+            }
+            // Set the array of previous links for display
+            $this->links = $links;
+            
+            // Add the current page to the array to be shown on the next page
+            $links[$currenttitle] = $currenturl;
+            if (count($links) > $this->links_to_save) array_shift($links);
+            xarSession::setVar('link_trail',$links);
         }
-        // Set the array of previous links for display
-        $this->links = $links;
-        
-        // Add the current page to the array to be shown on the next page
-        $links[$currenttitle] = $currenturl;
-        if (count($links) > $this->links_to_save) array_shift($links);
-        xarSession::setVar('link_trail',$links);
     }
 
     public function showInput(Array $data = array())
