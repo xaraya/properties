@@ -87,8 +87,10 @@ class TimeFrameProperty extends DataProperty
     {
         $startdate = new XarDateTime();
         $startdate->setnow();
-        $enddate = new XarDateTime();
-        $enddate->setnow();
+        $startdate->setHour(0);
+        $startdate->setMinute(0);
+        $startdate->setSecond(0);
+        $enddate = clone $startdate;
 
         switch ($period) {
             case 500:
@@ -112,21 +114,21 @@ class TimeFrameProperty extends DataProperty
                 $startdate->setDay(1);
                 $enddate->addMonths(4 - $index);
                 $enddate->setDay(1);                
-                $enddate->addDays(-1);                
+                $enddate->addSeconds(-1);                
             break;
             case 200:
                 $startdate->addMonths(1);
                 $startdate->setDay(1);
                 $enddate->addMonths(3);
                 $enddate->setDay(1);                
-                $enddate->addDays(-1);                
+                $enddate->addSeconds(-1);                
             break;
             case 100:
                 $startdate->addMonths(1);
                 $startdate->setDay(1);
                 $enddate->addMonths(2);
                 $enddate->setDay(1);                
-                $enddate->addDays(-1);                
+                $enddate->addSeconds(-1);                
             break;
             case -100: $startdate->setDay(1); break;
             case -200: $startdate->addDays(-7); break;
@@ -144,7 +146,7 @@ class TimeFrameProperty extends DataProperty
                 $startdate->addMonths(-$monthoffset);
                 $enddate->setTimestamp($startdate->getTimestamp());
                 $enddate->addMonths(3);
-                $enddate->addDays(-1);                
+                $enddate->addSeconds(-1);                
             break;
             case -450:
                 $month = $enddate->getMonth();                
@@ -153,19 +155,19 @@ class TimeFrameProperty extends DataProperty
                 $startdate->addMonths(-$monthoffset-3);
                 $enddate->setTimestamp($startdate->getTimestamp());
                 $enddate->addMonths(3);
-                $enddate->addDays(-1);                
+                $enddate->addSeconds(-1);                
             break;
             case -500: 
                 $startdate->addMonths(-1);
                 $startdate->setDay(1);
                 $enddate->setDay(1);                
-                $enddate->addDays(-1);
+                $enddate->addSeconds(-1);
             break;
             case -600:
                 $startdate->addMonths(-2);
                 $startdate->setDay(1);
                 $enddate->setDay(1);                
-                $enddate->addDays(-1);
+                $enddate->addSeconds(-1);
             break;
             case -800:
                 $month = $enddate->getMonth();                
@@ -174,7 +176,7 @@ class TimeFrameProperty extends DataProperty
                 $startdate->addMonths(-$monthoffset);
                 $enddate->setTimestamp($startdate->getTimestamp());
                 $enddate->addMonths(6);
-                $enddate->addDays(-1);                
+                $enddate->addSeconds(-1);                
             break;
             case -850:
                 $month = $enddate->getMonth();                
@@ -183,7 +185,7 @@ class TimeFrameProperty extends DataProperty
                 $startdate->addMonths(-$monthoffset-6);
                 $enddate->setTimestamp($startdate->getTimestamp());
                 $enddate->addMonths(6);
-                $enddate->addDays(-1);                
+                $enddate->addSeconds(-1);                
             break;
             case -900:
                 $startdate->setDay(1);
@@ -193,9 +195,9 @@ class TimeFrameProperty extends DataProperty
                 $startdate->setDay(1);
                 $startdate->setMonth(1);
                 $startdate->addYears(-1);
-                $enddate->addYears(-1);
-                $enddate->setMonth(12);
-                $enddate->setDay(31);
+                $enddate = clone $startdate;
+                $enddate->addYears(+1);
+                $enddate->addSeconds(-1);
             break;
         }
         $return_startdate = $startdate->getTimeStamp();
