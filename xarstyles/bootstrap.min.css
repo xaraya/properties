@@ -70,7 +70,7 @@ button ::-moz-focus-inner,input ::-moz-focus-inner {
 	padding: 0;
 	border: 0;
 }
-
+/*
 button,input[type="button"],input[type="reset"],input[type="submit"] {
 	cursor: pointer;
 	-webkit-appearance: button;
@@ -91,7 +91,7 @@ input[type="search"] ::-webkit-search-decoration,input[type="search"] ::-webkit-
 textarea {
 	overflow: auto;
 	vertical-align: top;
-}
+}*/
 
 .clearfix {
 	zoom: 1;
@@ -123,8 +123,8 @@ textarea {
 	-ms-box-sizing: border-box;
 	box-sizing: border-box;
 }
-
-body {
+/*
+ body {
 	margin: 0;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 13px;
@@ -132,7 +132,7 @@ body {
 	color: #333333;
 	background-color: #ffffff;
 }
-
+*/
 a {
 	color: #0088cc;
 	text-decoration: none;
@@ -629,6 +629,7 @@ code {
 	border: 1px solid #e1e1e8;
 }
 
+/*
 pre {
 	display: block;
 	padding: 8.5px;
@@ -646,7 +647,7 @@ pre {
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
-
+*/
 pre.prettyprint {
 	margin-bottom: 18px;
 }
@@ -704,7 +705,7 @@ label {
 	display: block;
 	margin-bottom: 5px;
 }
-
+/*
 select,textarea,input[type="text"],input[type="password"],input[type="datetime"],input[type="datetime-local"],input[type="date"],input[type="month"],input[type="time"],input[type="week"],input[type="number"],input[type="email"],input[type="url"],input[type="search"],input[type="tel"],input[type="color"],.uneditable-input
 	{
 	display: inline-block;
@@ -718,12 +719,17 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
 
 input,textarea {
 	width: 210px;
-}
+} */
 
+#deleteChk
+{
+	width: 210px;
+}
 textarea {
 	height: auto;
 }
 
+/*
 textarea,input[type="text"],input[type="password"],input[type="datetime"],input[type="datetime-local"],input[type="date"],input[type="month"],input[type="time"],input[type="week"],input[type="number"],input[type="email"],input[type="url"],input[type="search"],input[type="tel"],input[type="color"],.uneditable-input
 	{
 	background-color: #ffffff;
@@ -763,7 +769,7 @@ input[type="radio"],input[type="checkbox"] {
 input[type="submit"],input[type="reset"],input[type="button"],input[type="radio"],input[type="checkbox"]
 	{
 	width: auto;
-}
+}*/
 
 .uneditable-textarea {
 	width: auto;
