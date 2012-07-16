@@ -25,7 +25,8 @@ class JSUploadProperty extends DataProperty
     public $desc       = 'JSUpload';
     public $reqmodules = array();
 
-    public $initialization_basedirectory    = 'var/uploads';
+    public $initialization_basedirectory    = 'var/uploads1';
+    public $initialization_subdirectories   = array('files','thumbnails');
 
     public function __construct(ObjectDescriptor $descriptor)
     {
@@ -33,11 +34,19 @@ class JSUploadProperty extends DataProperty
         $this->tplmodule = 'auto';
         $this->template  = 'jsupload';
         $this->filepath  = 'auto';
-        
+
+        // Make sure we have an directory to pass ajax configurations
+        if (!file_exists(sys::varpath() . '/cache/ajax')) {
+            mkdir(sys::varpath() . '/cache/ajax');
+        }
     }
     
     function showInput(Array $data=array())
     {
+        $this->createdirs();
+        if (empty($data['context'])) $data['context'] = ' ';
+        if (empty($data['id'])) $data['id'] = $this->id;
+        $data['config'] = md5($data['context'] . "-" . $data['id']);
         $configs = array(
             'upload_dir' => realpath($this->initialization_basedirectory .'/files') . "/",                
             'upload_url' => xarServer::getBaseURL() . $this->initialization_basedirectory .'/files/',   
@@ -45,24 +54,47 @@ class JSUploadProperty extends DataProperty
             'thumbnail_upload_url' => xarServer::getBaseURL() . $this->initialization_basedirectory .'/thumbnails/',                
         );
         $data['property_configs'] = $this->encrypt($configs);
+        
+        // Cache the configuration if it is not already done
+        sys::import('xaraya.caching');
+        $fileCache = xarCache::getStorage(array(
+            'storage' => 'filesystem',
+            'cachedir' => sys::varpath() . '/cache',
+            'type' => 'ajax',
+        ));
+        $cacheKey = $data['config'];
+        
+        if (!$fileCache->isCached($cacheKey)) {
+            $fileCache->setCached($cacheKey,$data['property_configs']);
+        }
+        
+        // The cache key is the name of the file the cached contents are stored in 
+        $data['key'] = $cacheKey;
         return parent::showInput($data);
     }
     
     function encrypt(Array $data=array())
     {
+        // Transform the array into a string
         $string = json_encode($data);
-
-        // From http://www.php.net/manual/en/function.mcrypt-encrypt.php
-        /*
-        $block = mcrypt_get_block_size('des', 'ecb');
-        if (($pad = $block - (strlen($string) % $block)) < $block) {
-            $string .= str_repeat(chr($pad), $pad);
-        }var_dump($string);
-        $string = mcrypt_encrypt(MCRYPT_DES, 'dork', $string, MCRYPT_MODE_ECB);
-        */
-//        $string = mcrypt_encrypt(MCRYPT_DES, '\xc8\xd9', $string, MCRYPT_MODE_ECB);
-        $string = base64_encode($string);
-        return $string;
+        
+        // Encrypt the string
+        sys::import('xaraya.encryptor');
+        $encryptor = xarEncryptor::instance();
+        return $encryptor->encrypt($string);
+    }
+    
+    private function createdirs()
+    {
+        if (!file_exists($this->initialization_basedirectory) || !is_dir($this->initialization_basedirectory)) {
+            mkdir($this->initialization_basedirectory);
+        }
+        foreach($this->initialization_subdirectories as $dir) {
+            if (!file_exists($this->initialization_basedirectory . "/" . $dir) || !is_dir($this->initialization_basedirectory . "/" . $dir)) {
+                mkdir($this->initialization_basedirectory . "/" . $dir);
+            }
+        }
+        return true;
     }
 }
 

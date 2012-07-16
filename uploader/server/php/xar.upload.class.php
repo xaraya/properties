@@ -13,8 +13,9 @@
 class xarUploadHandler
 {
     protected $options;
+    protected $offset = '';
 
-    function __construct($options=null) {
+    function __construct($options=null,$offset='') {
         $this->options = array(
             'script_url' => $this->getFullUrl().'/index.php',
             'upload_dir' => dirname($_SERVER['SCRIPT_FILENAME']).'/files/',
@@ -61,6 +62,7 @@ class xarUploadHandler
             )
         );
         $this->setoptions($options);
+        $this->offset = $offset;
     }
 
     protected function getFullUrl() {
@@ -462,22 +464,18 @@ class xarUploadHandler
         $configs = array();
         try {
             if (!empty($string)) {
-                $string = base64_decode($string);
-//                $string = mcrypt_decrypt(MCRYPT_DES, '\xc8\xd9', $string, MCRYPT_MODE_ECB);
-            /*
-                // From http://www.php.net/manual/en/function.mcrypt-encrypt.php
-                $string = mcrypt_decrypt(MCRYPT_DES, 'dork', $string, MCRYPT_MODE_ECB);
-                $block = mcrypt_get_block_size('des', 'ecb');
-                $pad = ord($string[($len = strlen($string)) - 1]);
-                if ($pad && $pad < $block && preg_match('/' . chr($pad) . '{' . $pad . '}$/', $string)) {
-                    $string = substr($string, 0, strlen($string) - $pad);
-                }
-*/
-                $string = stripslashes($string);
-//        file_put_contents('Out3_' . time() . ".txt", $string);
-                $configs = json_decode($string,TRUE);
-//        $t = implode('\n',$configs);
-//        file_put_contents('Out1_' . time() . ".txt", $t);
+                // Get the cache file contents
+                $url = sys::varpath($this->offset) . '/cache/ajax/';
+                $url .= $string . '.php';
+                $configstring = file_get_contents($url);
+                
+                // Decrypt it
+                sys::import('xaraya.encryptor',$this->offset);
+                $encryptor = xarEncryptor::instance();
+                $configstring = $encryptor->decrypt($configstring);
+
+                // Transform the string into an array of configuration settings
+                $configs = json_decode($configstring,TRUE);
             }
         } catch (Exception $e) {}
         return $configs;

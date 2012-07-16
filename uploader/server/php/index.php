@@ -12,9 +12,17 @@
 
 error_reporting(E_ALL | E_STRICT);
 
-require('xar.upload.class.php');
+/* Begin Xaraya adaptation */
+// Load the minimum code required
+$systemConfiguration = array();
+$diroffset = '../../../../../../';
+include $diroffset . 'var/layout.system.php';
+set_include_path(realpath($diroffset . $systemConfiguration['rootDir']) . PATH_SEPARATOR . get_include_path());
+include $diroffset . 'bootstrap.php';
 
-$upload_handler = new xarUploadHandler();
+require('xar.upload.class.php');
+$upload_handler = new xarUploadHandler(array(),$diroffset);
+/* End Xaraya adaptation */
 
 header('Pragma: no-cache');
 header('Cache-Control: no-store, no-cache, must-revalidate');
@@ -24,7 +32,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: OPTIONS, HEAD, GET, POST, PUT, DELETE');
 header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
 
-$property_configs = isset($_GET['property_configs']) ? $_GET['property_configs'] : '';
+$property_configs = isset($_GET['key']) ? $_GET['key'] : '';
 $options = $upload_handler->decrypt($property_configs);
 $upload_handler->setoptions($options);
 
