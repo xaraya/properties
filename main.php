@@ -34,6 +34,11 @@ class JSUploadProperty extends DataProperty
         $this->tplmodule = 'auto';
         $this->template  = 'jsupload';
         $this->filepath  = 'auto';
+
+        // Make sure we have an directory to pass ajax configurations
+        if (!file_exists(sys::varpath() . '/cache/ajax')) {
+            mkdir(sys::varpath() . '/cache/ajax');
+        }
     }
     
     function showInput(Array $data=array())
