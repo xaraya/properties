@@ -50,7 +50,7 @@ class JSUploadProperty extends DataProperty
         $this->createdirs();
         if (empty($data['context'])) $data['context'] = ' ';
         if (empty($data['id'])) $data['id'] = $this->id;
-        $data['config'] = base64_encode(xarServer::getBaseURL() . '::' . md5($data['context'] . "-" . $data['id']));
+        $data['config'] = md5($data['context'] . "-" . $data['id']);
         $configs = array(
             'upload_dir' => realpath($this->initialization_basedirectory .'/files') . "/",
             'upload_url' => xarServer::getBaseURL() . $this->initialization_basedirectory .'/files/',
@@ -72,8 +72,8 @@ class JSUploadProperty extends DataProperty
             $fileCache->setCached($cacheKey,$data['property_configs']);
         }
         
-        // The cache key is the name of the file the cached contents are stored in 
-        $data['key'] = $cacheKey;
+        // The key to pass to the ajax server file is the URL of the site in question + the name of the file the cached contents are stored in
+        $data['key'] = base64_encode(xarServer::getBaseURL() . '::' . $cacheKey));
         return parent::showInput($data);
     }
     

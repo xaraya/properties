@@ -472,7 +472,7 @@ class xarUploadHandler
         try {
             if (!empty($string)) {
                 // Get the cache file contents
-                $url = $this->url . '/var/cache/ajax/';
+                $url = $this->url . 'var/cache/ajax/';
                 $url .= $string . '.php';
                 if (!file_exists($url)) {
                     file_put_contents("Received_" . time() . "_1.txt", 'Could not open ' . $url);

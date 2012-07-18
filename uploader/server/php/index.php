@@ -33,13 +33,17 @@ header('Access-Control-Allow-Methods: OPTIONS, HEAD, GET, POST, PUT, DELETE');
 header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
 
 $property_configs = isset($_GET['key']) ? $_GET['key'] : '';
+
 /* Begin Xaraya adaptation */
 $unpacked_filename = base64_decode($property_configs);
 $unpacked_filename = explode('::',$unpacked_filename);
-$base_url = array_shift($unpacked_filename);
+// Get the base URL of this site
+$base_url = $unpacked_filename[0];
 $upload_handler->seturl($base_url);
 
-$options = $upload_handler->decrypt($property_configs);
+// Get the file that contains the configuration
+$config_filename = $unpacked_filename[1];
+$options = $upload_handler->decrypt($config_filename);
 $upload_handler->setoptions($options);
 /* End Xaraya adaptation */
 
