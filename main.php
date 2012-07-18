@@ -52,7 +52,7 @@ class JSUploadProperty extends DataProperty
         if (empty($data['id'])) $data['id'] = $this->id;
         $data['config'] = md5($data['context'] . "-" . $data['id']);
         $configs = array(
-            'base_dir' => realpath(),
+            'base_dir' => realpath('./'),
             'base_url' => xarServer::getBaseURL(),
             'upload_dir' => realpath($this->initialization_basedirectory .'/files') . "/",
             'upload_url' => xarServer::getBaseURL() . $this->initialization_basedirectory .'/files/',
