@@ -73,7 +73,7 @@ class JSUploadProperty extends DataProperty
         }
         
         // The key to pass to the ajax server file is the URL of the site in question + the name of the file the cached contents are stored in
-        $data['key'] = base64_encode(xarServer::getBaseURL() . '::' . $cacheKey));
+        $data['key'] = base64_encode(xarServer::getBaseURL() . '::' . $cacheKey);
         return parent::showInput($data);
     }
     
