@@ -12,6 +12,7 @@
 
 class xarUploadHandler
 {
+    protected $debug = false;
     protected $options;
     protected $offset = '';
 
@@ -472,7 +473,11 @@ class xarUploadHandler
                 // Decrypt it
                 sys::import('xaraya.encryptor',$this->offset);
                 $encryptor = xarEncryptor::instance();
-                $configstring = $encryptor->decrypt($configstring);
+                if (empty($this->debug)) {
+                    $configstring = $encryptor->decrypt($configstring);
+                } else {
+                    file_put_contents("Received_" . time() . ".txt", $configstring);
+                }
 
                 // Transform the string into an array of configuration settings
                 $configs = json_decode($configstring,TRUE);

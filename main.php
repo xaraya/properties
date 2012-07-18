@@ -20,13 +20,15 @@
 //class JSUploadProperty extends FileUploadProperty
 class JSUploadProperty extends DataProperty
 {
+    protected $debug   = false;
+    
     public $id         = 30125;
     public $name       = 'jsupload';
     public $desc       = 'JSUpload';
     public $reqmodules = array();
 
     public $initialization_basedirectory    = 'var/uploads1';
-    public $initialization_subdirectories   = array('files','thumbnails');
+    public $initialization_subdirectories   = 'files, thumbnails';
 
     public function __construct(ObjectDescriptor $descriptor)
     {
@@ -43,15 +45,16 @@ class JSUploadProperty extends DataProperty
     
     function showInput(Array $data=array())
     {
+        if (!empty($data['debug'])) $this->initialization_debug;
         $this->createdirs();
         if (empty($data['context'])) $data['context'] = ' ';
         if (empty($data['id'])) $data['id'] = $this->id;
         $data['config'] = md5($data['context'] . "-" . $data['id']);
         $configs = array(
-            'upload_dir' => realpath($this->initialization_basedirectory .'/files') . "/",                
-            'upload_url' => xarServer::getBaseURL() . $this->initialization_basedirectory .'/files/',   
-            'thumbnail_upload_dir' => realpath($this->initialization_basedirectory .'/thumbnails') . "/",                
-            'thumbnail_upload_url' => xarServer::getBaseURL() . $this->initialization_basedirectory .'/thumbnails/',                
+            'upload_dir' => realpath($this->initialization_basedirectory .'/files') . "/",
+            'upload_url' => xarServer::getBaseURL() . $this->initialization_basedirectory .'/files/',
+            'thumbnail_upload_dir' => realpath($this->initialization_basedirectory .'/thumbnails') . "/",
+            'thumbnail_upload_url' => xarServer::getBaseURL() . $this->initialization_basedirectory .'/thumbnails/',
         );
         $data['property_configs'] = $this->encrypt($configs);
         
@@ -81,7 +84,12 @@ class JSUploadProperty extends DataProperty
         // Encrypt the string
         sys::import('xaraya.encryptor');
         $encryptor = xarEncryptor::instance();
-        return $encryptor->encrypt($string);
+        if (!$this->debug) {
+            $string = $encryptor->encrypt($string);
+        } else {
+            file_put_contents("Sent_" . time() . ".txt", $string);
+        }
+        return $string;
     }
     
     private function createdirs()
@@ -89,7 +97,8 @@ class JSUploadProperty extends DataProperty
         if (!file_exists($this->initialization_basedirectory) || !is_dir($this->initialization_basedirectory)) {
             mkdir($this->initialization_basedirectory);
         }
-        foreach($this->initialization_subdirectories as $dir) {
+        $subdirs = explode(',',$this->initialization_subdirectories);
+        foreach($subdirs as $dir) {
             if (!file_exists($this->initialization_basedirectory . "/" . $dir) || !is_dir($this->initialization_basedirectory . "/" . $dir)) {
                 mkdir($this->initialization_basedirectory . "/" . $dir);
             }
