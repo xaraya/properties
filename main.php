@@ -50,10 +50,8 @@ class JSUploadProperty extends DataProperty
         $this->createdirs();
         if (empty($data['context'])) $data['context'] = ' ';
         if (empty($data['id'])) $data['id'] = $this->id;
-        $data['config'] = md5($data['context'] . "-" . $data['id']);
+        $data['config'] = base64_encode(xarServer::getBaseURL() . '::' . md5($data['context'] . "-" . $data['id']));
         $configs = array(
-            'base_dir' => realpath('./'),
-            'base_url' => xarServer::getBaseURL(),
             'upload_dir' => realpath($this->initialization_basedirectory .'/files') . "/",
             'upload_url' => xarServer::getBaseURL() . $this->initialization_basedirectory .'/files/',
             'thumbnail_upload_dir' => realpath($this->initialization_basedirectory .'/thumbnails') . "/",
