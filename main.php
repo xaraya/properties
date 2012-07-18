@@ -27,7 +27,7 @@ class JSUploadProperty extends DataProperty
     public $desc       = 'JSUpload';
     public $reqmodules = array();
 
-    public $initialization_basedirectory    = 'var/uploads1';
+    public $initialization_basedirectory    = 'var/uploads';
     public $initialization_subdirectories   = 'files,thumbnails';
 
     public function __construct(ObjectDescriptor $descriptor)
@@ -45,7 +45,8 @@ class JSUploadProperty extends DataProperty
     
     function showInput(Array $data=array())
     {
-        if (!empty($data['debug'])) $this->initialization_debug;
+        if (!empty($data['initialization_basedirectory'])) $this->initialization_basedirectory = $data['initialization_basedirectory'];
+        if (!empty($data['debug'])) $this->initialization_debug = $data['debug'];
         $this->createdirs();
         if (empty($data['context'])) $data['context'] = ' ';
         if (empty($data['id'])) $data['id'] = $this->id;
