@@ -34,7 +34,7 @@ header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
 
 $property_configs = isset($_GET['key']) ? $_GET['key'] : '';
 $unpacked_filename = base64_decode($property_configs);
-$unpacked_filename = explode('::',$property_configs);
+$unpacked_filename = explode('::',$unpacked_filename);
 $base_url = array_shift($unpacked_filename);
 $options = $upload_handler->decrypt($property_configs);
 $upload_handler->setoptions($options);
