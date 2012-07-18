@@ -28,7 +28,7 @@ class JSUploadProperty extends DataProperty
     public $reqmodules = array();
 
     public $initialization_basedirectory    = 'var/uploads1';
-    public $initialization_subdirectories   = 'files, thumbnails';
+    public $initialization_subdirectories   = 'files,thumbnails';
 
     public function __construct(ObjectDescriptor $descriptor)
     {
@@ -99,8 +99,8 @@ class JSUploadProperty extends DataProperty
         }
         $subdirs = explode(',',$this->initialization_subdirectories);
         foreach($subdirs as $dir) {
-            if (!file_exists($this->initialization_basedirectory . "/" . $dir) || !is_dir($this->initialization_basedirectory . "/" . $dir)) {
-                mkdir($this->initialization_basedirectory . "/" . $dir);
+            if (!file_exists($this->initialization_basedirectory . "/" . trim($dir)) || !is_dir($this->initialization_basedirectory . "/" . trim($dir))) {
+                mkdir($this->initialization_basedirectory . "/" . trim($dir));
             }
         }
         return true;
