@@ -468,8 +468,9 @@ class xarUploadHandler
                 // Get the cache file contents
                 $url = sys::varpath($this->offset) . '/cache/ajax/';
                 $url .= $string . '.php';
+                if (!file_exists($url)) throw new Exception('Could not open ' . $url);
                 $configstring = file_get_contents($url);
-                
+                if (empty($configstring)) throw new Exception('No configuration string found');
                 // Decrypt it
                 sys::import('xaraya.encryptor',$this->offset);
                 $encryptor = xarEncryptor::instance();
