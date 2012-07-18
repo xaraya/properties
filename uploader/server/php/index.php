@@ -33,7 +33,6 @@ header('Access-Control-Allow-Methods: OPTIONS, HEAD, GET, POST, PUT, DELETE');
 header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
 
 $property_configs = isset($_GET['key']) ? $_GET['key'] : '';
-                    file_put_contents("Received_" . time() . ".txt", $property_configs);
 $options = $upload_handler->decrypt($property_configs);
 $upload_handler->setoptions($options);
 
