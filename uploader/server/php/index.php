@@ -33,11 +33,15 @@ header('Access-Control-Allow-Methods: OPTIONS, HEAD, GET, POST, PUT, DELETE');
 header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
 
 $property_configs = isset($_GET['key']) ? $_GET['key'] : '';
+/* Begin Xaraya adaptation */
 $unpacked_filename = base64_decode($property_configs);
 $unpacked_filename = explode('::',$unpacked_filename);
 $base_url = array_shift($unpacked_filename);
+$upload_handler->seturl($base_url);
+
 $options = $upload_handler->decrypt($property_configs);
 $upload_handler->setoptions($options);
+/* End Xaraya adaptation */
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'OPTIONS':

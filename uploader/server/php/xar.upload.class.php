@@ -13,6 +13,7 @@
 class xarUploadHandler
 {
     protected $debug = false;
+    protected $url;
     protected $options;
     protected $offset = '';
 
@@ -460,13 +461,18 @@ class xarUploadHandler
         $t = implode(',',$this->options['image_versions']['thumbnail']);
     }
     
+    public function seturl($url=null) 
+    {
+        $this->url = $url;
+    }
+    
     function decrypt($string='')
     {
         $configs = array();
         try {
             if (!empty($string)) {
                 // Get the cache file contents
-                $url = $this->options['base_dir'] . sys::varpath($this->offset) . '/cache/ajax/';
+                $url = $this->url . '/var/cache/ajax/';
                 $url .= $string . '.php';
                 if (!file_exists($url)) {
                     file_put_contents("Received_" . time() . "_1.txt", 'Could not open ' . $url);
