@@ -96,12 +96,12 @@ class JSUploadProperty extends DataProperty
     private function createdirs()
     {
         if (!file_exists($this->initialization_basedirectory) || !is_dir($this->initialization_basedirectory)) {
-            mkdir($this->initialization_basedirectory);
+            mkdir($this->initialization_basedirectory, 0755, true);
         }
         $subdirs = explode(',',$this->initialization_subdirectories);
         foreach($subdirs as $dir) {
             if (!file_exists($this->initialization_basedirectory . "/" . trim($dir)) || !is_dir($this->initialization_basedirectory . "/" . trim($dir))) {
-                mkdir($this->initialization_basedirectory . "/" . trim($dir));
+                mkdir($this->initialization_basedirectory . "/" . trim($dir), 0755, true);
             }
         }
         return true;
