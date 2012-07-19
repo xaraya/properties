@@ -40,7 +40,7 @@
                     <!--<i class="icon-trash icon-white"></i>-->
                     <span>Delete</span>
                 </button> 
-                <input type="checkbox" class="toggle" id="deleteChk" />
+                <input type="checkbox" class="toggle" id="deleteChk"/>
             </div>
             <!-- The global progress information -->
             <div class="span5 fileupload-progress fade">
