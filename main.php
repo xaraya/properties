@@ -45,7 +45,7 @@ class JSUploadProperty extends DataProperty
     
     function showInput(Array $data=array())
     {
-        if (!empty($data['initialization_basedirectory'])) $this->initialization_basedirectory = $data['initialization_basedirectory'];
+        if (!empty($data['basedirectory'])) $this->initialization_basedirectory = $data['basedirectory'];
         if (!empty($data['debug'])) $this->initialization_debug = $data['debug'];
         $this->createdirs();
         if (empty($data['context'])) $data['context'] = ' ';
