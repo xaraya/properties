@@ -46,7 +46,16 @@ class TimeFrameProperty extends DataProperty
         xarVarFetch($name . "_period", 'int' ,$period,  0, XARVAR_NOT_REQUIRED);
         
         // Give the period precedence if it was chosen
-        if (!empty($period)) list($startdate, $enddate) = $this->settimeperiod($period);
+        if (!empty($period)) {
+            list($startdate, $enddate) = $this->settimeperiod($period);
+        } else {
+            $date = new XarDateTime();
+            $date->setTimeStamp($enddate);
+            $date->setHour(23);
+            $date->setMinute(59);
+            $date->setSecond(59);
+            $enddate = $date->getTimeStamp();
+        }
         
         $value = array($startdate,$enddate,$period);
         $this->value = $value;    
@@ -201,7 +210,13 @@ class TimeFrameProperty extends DataProperty
             break;
         }
         $return_startdate = $startdate->getTimeStamp();
+        
+        // The end date needs to go up to the last second 
+        $enddate->setHour(23);
+        $enddate->setMinute(59);
+        $enddate->setSecond(59);
         $return_enddate = $enddate->getTimeStamp();
+        
         return array($return_startdate,$return_enddate);
     }
 }
