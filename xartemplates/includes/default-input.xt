@@ -5,16 +5,22 @@
     <xar:if condition="empty($labels['postal_code'])"><xar:var name="label">Postal Code</xar:var><xar:set name="labels['postal_code']">$label</xar:set></xar:if>
     <xar:if condition="empty($labels['country'])"><xar:var name="label">Country</xar:var><xar:set name="labels['country']">$label</xar:set></xar:if>
 
-    <xar:for start="$i=1" test="$i le $rows" iter="$i++">
+    <xar:set name="lineindex">0</xar:set>
+    <xar:while condition="1">
+        <xar:set name="lineindex">$lineindex + 1</xar:set>
+        <xar:set name="fieldname">'line_'. $lineindex</xar:set>
+        <xar:if condition="!isset($value[$fieldname])">
+            <xar:break />
+        </xar:if>
         <div class="xar-form-input-wrapper">
             <label for="#$name#_city" class="xar-form-label">
-            <xar:set name="fieldname">'line_'. $i</xar:set>
                 <xar:if condition="empty($labels[$fieldname])"><xar:var name="label">Street</xar:var><xar:set name="labels[$fieldname]">$label</xar:set></xar:if>
                 #$labels[$fieldname]#
             </label>
-            <input type="text" name="#$name#_line_#$i#" id="#$id#_line_#$i#" value="#$value[$fieldname]#"/>
+            <input type="text" name="#$name#_line_#$lineindex#" id="#$id#_line_#$lineindex#" value="#$value[$fieldname]#"/>
         </div>
-    </xar:for>
+    </xar:while>
+
     <xar:if condition="!empty($show_city)">
         <div class="xar-form-input-wrapper">
             <label for="#$name#_city" class="xar-form-label">
@@ -23,6 +29,7 @@
             <input type="text" name="#$name#_city" id="#$id#_city" value="#$value['city']#"/>
         </div>
     </xar:if>
+    
     <xar:if condition="!empty($show_province)">
         <div class="xar-form-input-wrapper">
             <label for="#$name#_province" class="xar-form-label">
@@ -31,9 +38,10 @@
             <xar:var name="firstline">Choose a state</xar:var>
             <xar:set name="firstline">"0,$firstline"</xar:set>
             <xar:set name="provincename">$name . '_province'</xar:set>
-            <xar:data-input type="province" name="$provincename" value="$value['province']" firstline="$firstline"/>
+            <xar:data-input type="province" name="$provincename" value="$value['province']" country="ch" firstline="$firstline"/>
         </div>
     </xar:if>
+    
     <xar:if condition="!empty($show_postal_code)">
         <div class="xar-form-input-wrapper">
             <label for="#$name#_postal_code" class="xar-form-label">
@@ -42,6 +50,7 @@
             <input type="text" name="#$name#_postal_code" id="#$id#_postal_code" value="#$value['postal_code']#"/>
         </div>
     </xar:if>
+    
     <xar:if condition="!empty($show_country)">
         <div class="xar-form-input-wrapper">
             <label for="#$name#_country" class="xar-form-label">
@@ -53,6 +62,7 @@
             <xar:data-input type="countrylisting" name="$countryname" value="$value['country']" firstline="$firstline"/>
         </div>
     </xar:if>
+    
     <xar:if condition="!empty($invalid)">
         <xar:set name="keys">var_dump($invalid)</xar:set>
         <xar:set name="keys">explode(',',$invalid)</xar:set>

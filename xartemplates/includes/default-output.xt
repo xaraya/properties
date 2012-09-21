@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <span class="adr">
-        <xar:for start="$i=1" test="$i le $rows" iter="$i++">
-            <xar:set name="fieldname">'line_'. $i</xar:set>
-            <span class="street-address">#$value[$fieldname]#</span>
-            <xar:if condition="$i ne $rows">
-                <br/>
+
+        <xar:set name="lineindex">0</xar:set>
+        <xar:while condition="1">
+            <xar:set name="lineindex">$lineindex + 1</xar:set>
+            <xar:set name="fieldname">'line_'. $lineindex</xar:set>
+            <xar:if condition="!isset($value[$fieldname])">
+                <xar:break />
             </xar:if>
-        </xar:for>
+            <span class="street-address">#$value[$fieldname]#</span>
+        </xar:while>
 
         <xar:set name="newline">1</xar:set>
 
@@ -44,6 +47,5 @@
             <span class="country"><xar:data-output type="countrylisting" value="$value['country']"/></span>
         </xar:if>
     </span>
-    
     <xar:template file="dataproperty_additions" module="base"/>
 </xar:template>
