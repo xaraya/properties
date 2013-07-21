@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="$layout eq 'combined'">
+        <xar:template file="listing_row-combined" module="$module" property="listing"/>
+    <xar:else />
+        <xar:template file="listing_row-default" module="$module" property="listing"/>
+    </xar:if>
+</xar:template>

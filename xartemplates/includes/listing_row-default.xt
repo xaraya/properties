@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <tr>
+        <xar:template file="listing_rowprefix" module="$module" property="listing"/>
+        <xar:foreach in="$fieldnames" key="$field">
+            <xar:set name="formfieldname">$formfieldnames[$field] . '[' . $loopindex . ']'</xar:set>
+            <xar:set name="formfieldid">$formfieldnames[$field] . '_' . $loopindex</xar:set>
+            <xar:set name="formfieldstate">$formfieldstates[$field]</xar:set>
+            <xar:set name="column">$fieldnames[$field]</xar:set>
+            <xar:set name="value">$loopitem[$column]</xar:set>
+            <xar:if condition="$column eq $primaryalias AND !$show_primary">
+                <xar:continue />
+            </xar:if>
+            <td class="#$item_class#">
+                <xar:if condition="$formfieldstate eq 'hidden'">
+                    <!-- Hidden field -->
+                    <xar:data-input property="$properties[$column]" name="$formfieldname" id="$formfieldid" value="$value" hidden="hidden"/>                    
+                <xar:elseif condition="$formfieldstate eq 'input'"/>
+                    <!-- Input field -->
+                    <xar:data-input property="$properties[$column]" name="$formfieldname" id="$formfieldid" value="$value"/>                    
+                <xar:else />
+                    <!-- Output field -->
+                    <xar:if condition="$field eq $keyfieldalias">
+                        <a href="#xarModURL($module,'user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
+                            <xar:data-output property="$properties[$column]" value="$value"/>
+                        </a>
+                    <xar:else />
+                        <xar:data-output property="$properties[$column]" value="$value"/>
+                    </xar:if>
+                </xar:if>
+            </td>
+        </xar:foreach>
+        <xar:template file="listing_rowsuffix" module="$module" property="listing"/>
+    </tr>
+</xar:template>

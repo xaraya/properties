@@ -1,0 +1,44 @@
+<items>
+  <configurations>
+    <name>display_items_per_page</name>
+    <label>Items per Page</label>
+    <description>The number of items to show in list views</description>
+    <property_id>15</property_id>
+  </configurations>
+  <configurations>
+    <name>display_show_items_per_page</name>
+    <label>Show Items per Page</label>
+    <description>Whether to display the number of items shown</description>
+    <property_id>14</property_id>
+  </configurations>
+  <configurations>
+    <name>display_show_primary</name>
+    <label>Show Primary Index</label>
+    <description>Show the primary inde as a column</description>
+    <property_id>14</property_id>
+  </configurations>
+  <configurations>
+    <name>display_show_search</name>
+    <label>Show Primary Index</label>
+    <description>Show the primary inde as a column</description>
+    <property_id>14</property_id>
+  </configurations>
+  <configurations>
+    <name>display_show_alphabet</name>
+    <label>Show Alphabet</label>
+    <description>Show Alpha links for the display</description>
+    <property_id>14</property_id>
+  </configurations>
+  <configurations>
+    <name>display_showall_tab</name>
+    <label>Show "All" Tab</label>
+    <description>Show the "All" tab</description>
+    <property_id>14</property_id>
+  </configurations>
+  <configurations>
+    <name>display_showother_tab</name>
+    <label>Show "Other" Tab</label>
+    <description>Show the "Other" tab</description>
+    <property_id>14</property_id>
+  </configurations>
+</items>
