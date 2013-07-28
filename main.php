@@ -146,7 +146,13 @@ class NumberProperty extends FloatBoxProperty
 
     protected function assembleSettings()
     {
-        $info = $this->getnumbersetting(array('name' => $this->display_numberformat));
+        // We allow giving an ID or a name for the format to be applied
+        // Names are to be preferred in the future
+        if (is_numeric($this->display_numberformat)) {
+            $info = $this->getnumbersetting(array('id' => $this->display_numberformat));
+        } else |
+            $info = $this->getnumbersetting(array('name' => $this->display_numberformat));
+        }
 
         try {
             $settings["/$this->numbertype/groupingSize"] = $info['groupingsize'];
