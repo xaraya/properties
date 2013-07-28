@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- Differentiate display according to value -->
+    <xar:if condition="$rawvalue gt 0">
+        <xar:set name="value">$value</xar:set>
+    <xar:elseif condition="$rawvalue eq 0"/>
+        <xar:set name="value">'&#160;'</xar:set>
+    <xar:else/>
+        <xar:set name="value">$value</xar:set>
+    </xar:if>
+    <xar:if condition="!empty($style)">
+        <span style="#$style#">
+            #$value#
+        </span>
+    <xar:else/>
+        #$value#
+    </xar:if>
+</xar:template>

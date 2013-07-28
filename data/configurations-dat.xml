@@ -1,0 +1,11 @@
+<items>
+  <configurations itemid="566">
+    <id>566</id>
+    <name>display_numberpattern</name>
+    <label>Format pattern</label>
+    <description>The pattern to format this number with</description>
+    <property_id>2</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration>a:1:{s:14:"display_layout";s:7:"default";}</configuration>
+  </configurations>
+</items>

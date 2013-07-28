@@ -1,0 +1,32 @@
+<items>
+  <number itemid="1">
+    <id>1</id>
+    <name>Integer</name>
+    <decimalseparator>.</decimalseparator>
+    <dsalwaysshown>0</dsalwaysshown>
+    <groupingseparator>,</groupingseparator>
+    <groupingsize>3</groupingsize>
+    <minfractiondigits>0</minfractiondigits>
+    <maxfractiondigits>0</maxfractiondigits>
+    <minintegerdigits>0</minintegerdigits>
+    <maxintegerdigits>0</maxintegerdigits>
+    <infinitysign>?</infinitysign>
+    <minussign>-</minussign>
+    <zerodigitsign>0</zerodigitsign>
+  </number>
+  <number itemid="2">
+    <id>2</id>
+    <name>StandardDecimal</name>
+    <decimalseparator>.</decimalseparator>
+    <dsalwaysshown>1</dsalwaysshown>
+    <groupingseparator>,</groupingseparator>
+    <groupingsize>3</groupingsize>
+    <minfractiondigits>2</minfractiondigits>
+    <maxfractiondigits>2</maxfractiondigits>
+    <minintegerdigits>0</minintegerdigits>
+    <maxintegerdigits>0</maxintegerdigits>
+    <infinitysign>?</infinitysign>
+    <minussign>-</minussign>
+    <zerodigitsign>0</zerodigitsign>
+  </number>
+</items>
