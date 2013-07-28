@@ -231,7 +231,7 @@ Notes:
                 }
                 // save the field names for later use
 //                $fieldnames[$source] = $alias;
-                $data['fieldlabels'][] = $property->label;
+                $data['fieldlabels'][$alias] = $property->label;
                 $data['fieldnames'][] = $property->name;
                 $data['formfieldnames'][] = $formfieldname;
                 $data['formfieldstates'][] = 'output';
@@ -254,7 +254,7 @@ Notes:
             if ($alias != $primaryalias) {
                 // save the field names for later use
 //                $fieldnames[$source] = $alias;
-                $data['fieldlabels'][] = $property->label;
+                $data['fieldlabels'][$alias] = $property->label;
                 $data['fieldnames'][] = $property->name;
                 $data['formfieldnames'][] = $formfieldname;
                 $data['formfieldstates'][] = $formfieldstate;
@@ -285,7 +285,7 @@ Notes:
             $primarysource = $source;
             $primaryalias = $alias;
 //            $fieldnames[$source] = $alias;
-            $data['fieldlabels'][] = $property->label;
+            $data['fieldlabels'][$alias] = $property->label;
             $data['fieldnames'][] = $property->name;
             $data['formfieldnames'][] = $alias;
             $data['formfieldstates'][] = 'output';
