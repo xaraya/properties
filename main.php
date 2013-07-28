@@ -150,7 +150,7 @@ class NumberProperty extends FloatBoxProperty
         // Names are to be preferred in the future
         if (is_numeric($this->display_numberformat)) {
             $info = $this->getnumbersetting(array('id' => $this->display_numberformat));
-        } else |
+        } else {
             $info = $this->getnumbersetting(array('name' => $this->display_numberformat));
         }
 
