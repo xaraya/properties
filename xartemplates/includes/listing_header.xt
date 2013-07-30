@@ -9,8 +9,8 @@
             </xar:if>
             <th>
                 <xar:set name="url">xarServer::getCurrentURL(array('letter' => $letter, 'order' => $column, 'op' => 'column'))</xar:set>
-                <a href="#$url#" alt="Click to order by this field" title="Order by #$field#">
-                    #$fieldlabels[$field]#
+                <a href="#$url#" alt="Click to order by this field" title="Order by #$column#">
+                    #$fieldlabels[$column]#
                 </a>
                 <xar:set name="subdata">array_merge($params,array('column' => $column))</xar:set>
                 <xar:template file="sortarrows" subdata="$subdata" module="$module" property="listing"/>
