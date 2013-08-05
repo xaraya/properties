@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:var name="yes">Yes</xar:var>
+    <xar:var name="no">No</xar:var>
+    <xar:set name="iconpath">sys::code() . 'properties/iconcheckbox/xartemplates/icons/' . $icon_directory . '/' . $icon_option</xar:set>
+    <xar:if condition="file_exists($iconpath) AND !is_dir($iconpath)">
+        <xar:if condition="!empty($value)">
+            <img src="#$iconpath#" alt="#$yes#"/>
+        <xar:else />
+            <img src="#$iconpath#" alt="#$no#"/>
+        </xar:if>
+    </xar:if>
+</xar:template>
