@@ -21,9 +21,10 @@ class DateTimeProperty extends DataProperty
     public $desc       = 'DateTime';
     public $reqmodules = array();
 
-    public $display_datetime_format_type = 1;
+    public $display_datetime_format_type   = 1;
     public $display_datetime_format_predef = 0;
     public $display_datetime_format_custom = 'c';
+    public $initialization_encrypt         = false;
     public $initialization_start_year;
     public $initialization_end_year;
 
@@ -96,7 +97,8 @@ class DateTimeProperty extends DataProperty
         return DataProperty::showOutput($data);
     }
 
-    public function getValue()
+    // Review this
+    public function getValue_x()
     {
         return $this->format($this->value);
     }
