@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../themes/installer/style/style.css"/>
+    </head>
+    <body>
+        <div style="margin-top: 20px">
+        <div id="contentouter">
+            <div id="contentwrap">
+                <div id="contentmain">
+                    <div id="contentmain_inner"><div id="contentmain_tlcorner"><div id="contentmain_trcorner">&#160;</div></div>
+                        <div id="contentmain_core">
+            <h2>CurrentTime Property</h2>
+                <h3>Description</h3>
+                <p>
+                    The CurrentTime dataproperty displays the current time in a given timezone. 
+                    The timezone can be changed via the property's UI.
+                </p>
+                <h3>Usage</h3>
+                <h4>Standalone</h4>
+                    <pre>
+    &lt;xar:data-input type="currenttime" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output type="currenttime" <i>[attr1="value1",...]</i> /&gt;
+                    </pre>
+            <h4>Bound</h4>
+                <pre>
+    &lt;xar:data-input property="$properties['currenttime']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output property="$properties['currenttime']" <i>[attr1="value1",...]</i> /&gt;
+                </pre>
+            <h3> Configuration Values</h3>
+            <ul>
+                <li>
+                    <strong>Format</strong>: string lis [default="'Y-m-d H:i:s'"]&#160;A string representing the display format
+                </li>
+            </ul>
+        </div>
+                        </div>
+                        <div id="contentmain_blcorner"><div id="contentmain_brcorner">&#160;</div></div>
+                    </div>
+                </div>
+            </div>
+            <br class="xar-clearboth"/>
+        </div>
+    </body>
+</xar:template>

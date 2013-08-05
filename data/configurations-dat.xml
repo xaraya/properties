@@ -1,0 +1,11 @@
+<items>
+  <configurations itemid="1">
+    <id>1</id>
+    <name>initialization_currenttime_format</name>
+    <label>Format</label>
+    <description>The display format for the value of this property</description>
+    <property_id>2</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
+</items>
