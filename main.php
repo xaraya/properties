@@ -23,6 +23,7 @@ class DateProperty extends DataProperty
     public $display_date_format_type = 1;
     public $display_date_format_predef = 0;
     public $display_date_format_custom = 'c';
+    public $initialization_encrypt     = false;
     public $initialization_start_year;
     public $initialization_end_year;
 
