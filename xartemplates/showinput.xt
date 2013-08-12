@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="!isset($style)">
+        <xar:set name="style">''</xar:set>
+    </xar:if>
     <xar:if condition="in_array('dropdown',$show)">
         <div style="float: left; margin-right: 20px">
     <xar:template file="dropdown"/>
