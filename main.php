@@ -177,7 +177,12 @@ Notes:
         // Someone passed a keyfield attribute
         if (!empty($keyfield)) $defaultkey = $keyfield;
 
+        // Check if the object has a primary key
+        if (empty($object->primary)) {
+            throw new Exception(xarML("The listing cannot be displayed, because this object has no primary key"));
+        }
         // We'll put fields into the output of the query that have status active or list
+        var_dump($object->primary);exit;
         $object->properties[$object->primary]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
 //        $object->setFieldlist($fieldlist,array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY));
 
@@ -296,7 +301,7 @@ Notes:
 
         // Sanity check to make sure we got a key
         if (empty($defaultkey)) {
-            throw new BadParameterException(array($module), "The listing cannot be displayed, because no select key was found");
+            throw new BadParameterException(xarML("The listing cannot be displayed, because no select key was found"));
         }
 
     //--- 7. Figure out the operation we are performing
