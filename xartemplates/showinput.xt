@@ -51,9 +51,13 @@
     </xar:if>
     <xar:template file="listing_summaryline" module="$module" property="listing"/>
     <xar:template file="listing_pagerline" module="$module" property="listing"/>
-    <table id="listing_table" style="clear:both; width: 100%" border="0">
-        <xar:template file="listing_header" module="$module" property="listing"/>
-        <xar:template file="listing_body" module="$module" property="listing"/>
+    <table id="listing_table" class="xar-table xar-fullwidth xar-items" style="clear:both; width: 100%" border="0">
+        <thead>
+            <xar:template file="listing_header" module="$module" property="listing"/>
+        </thead>
+        <tbody>
+            <xar:template file="listing_body" module="$module" property="listing"/>
+        </tbody>
     </table>
     <xar:if condition="empty($total)">
               <p class="xar-align-center">There are no items selected</p>
