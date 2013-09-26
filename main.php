@@ -181,8 +181,8 @@ Notes:
         if (empty($object->primary)) {
             throw new Exception(xarML("The listing cannot be displayed, because this object has no primary key"));
         }
+
         // We'll put fields into the output of the query that have status active or list
-        var_dump($object->primary);exit;
         $object->properties[$object->primary]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
 //        $object->setFieldlist($fieldlist,array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY));
 
