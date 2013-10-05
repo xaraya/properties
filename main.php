@@ -71,6 +71,9 @@ class TimeFrameProperty extends DataProperty
         if (empty($data['show'])) $data['show'] = array('calendar');
         if (!empty($data['show']) && !is_array($data['show'])) $data['show'] = explode(',',$data['show']);
         
+        // If not displaying the dropdown, set some default values
+        if (!in_array('dropdown',$data['show'])) $data['value'] = array(time() - 3600*24*30, time(),0);
+
         // The timeframes to show in the dropdown
         if (empty($data['frames'])) $data['frames'] = array();
         if (!empty($data['frames']) && !is_array($data['frames'])) $data['frames'] = explode(',',$data['frames']);
