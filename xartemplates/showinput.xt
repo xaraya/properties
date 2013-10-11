@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+	<link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.8.21/themes/ui-lightness/jquery-ui.css" />
+    <xar:javascript type="src" src="http://code.jquery.com/jquery-1.7.2.min.js" position="head"/>
+    <xar:javascript type="src" src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js" position="head"/>
+
+    <style type="text/css"> 
+        ##ui-datepicker-div, .ui-datepicker{ font-size: 100%; }			
+    </style> 
+		    
+    <xar:style scope="property" property="jqdatetime" file="jquery-ui-timepicker-addon"/>
+    <xar:javascript filename="jquery-ui-timepicker-addon.js" scope="property" property="jqdatetime" position="head"/>
+    <xar:javascript filename="jquery-ui-sliderAccess.js" scope="property" property="jqdatetime" position="head"/>
+
+    <style type="text/css"> 
+        /* css for timepicker */
+        .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+        .ui-timepicker-div dl { text-align: left; }
+        .ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+        .ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+        .ui-timepicker-div td { font-size: 90%; }
+        .ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+    </style> 
+
+    <input type="text" name="#$name#" id="#$name#" value="#$value#" />
+
+    <xar:if condition="$include_time">
+        <script type="text/javascript">
+            $('###$name#').datetimepicker({
+                showSecond: false,
+                timeFormat: 'hh:mm',
+                stepHour: 1,
+                stepMinute: 5,
+                stepSecond: 10
+            });
+        </script>
+    <xar:else/>
+        <script type="text/javascript">
+            $('###$name#').datepicker({
+            });
+        </script>
+    </xar:if>
+</xar:template>
