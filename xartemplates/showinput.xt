@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="header"/>
+
+    <div class="xar-row">
+        <div class="xar-col">
+            <div id="map"></div>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <input name="#$id#_address" id="addresspicker_map_#$id#" value="#$value['address']#"/>
+            <input name="#$id#_locality" id="locality_#$id#" hidden="hidden" value="#$value['locality']#"/>
+            <input name="#$id#_country" id="country_#$id#" hidden="hidden" value="#$value['country']#"/>
+            <input name="#$id#_lat" id="lat_#$id#" hidden="hidden" value="#$value['lat']#"/>
+            <input name="#$id#_lng" id="lng_#$id#" hidden="hidden" value="#$value['lng']#"/>
+            <input name="#$id#_type" id="type_#$id#" hidden="hidden" value="#$value['type']#"/>
+        </div>
+    </div>
+</xar:template>
