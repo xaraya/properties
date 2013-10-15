@@ -9,23 +9,28 @@
     <xar:javascript type="src" src="http://code.jquery.com/jquery-1.7.2.min.js" position="head"/>
     <xar:javascript type="src" src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js" position="head"/>
     <xar:javascript filename="jquery.ui.addresspicker.js" scope="property" property="jqaddresspicker" position="head"/>
-	<script>
-	$(function() {
-		var addresspickerMap = $( "##addresspicker_map_#$id#" ).addresspicker({
-			regionBias: "ch",
-		  elements: {
-		    map:      "##map",
-		    lat:      "##lat_#$id#",
-		    lng:      "##lng_#$id#",
-		    locality: '##locality_#$id#',
-		    country:  '##country_#$id#',
-        type:    '##type_#$id#' 
-		  }
-		});
-		var gmarker = addresspickerMap.addresspicker( "marker");
-		gmarker.setVisible(true);
-		addresspickerMap.addresspicker( "updatePosition");
-		
-	});
-	</script>
+    <script>
+    $(function() {
+        var addresspickerMap = $( "##addresspicker_map_#$id#" ).addresspicker({
+            regionBias: "ch",
+            mapOptions: {
+                zoom: 5, 
+                center: new google.maps.LatLng(38.550313,-121.033859), 
+                scrollwheel: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            },
+            elements: {
+                map:      "##map",
+                lat:      "##lat_#$id#",
+                lng:      "##lng_#$id#",
+                locality: '##locality_#$id#',
+                country:  '##country_#$id#',
+                type:    '##type_#$id#' 
+            }
+        });
+        var gmarker = addresspickerMap.addresspicker( "marker");
+        gmarker.setVisible(true);
+        addresspickerMap.addresspicker( "updatePosition");
+    });
+    </script>
 </xar:template>

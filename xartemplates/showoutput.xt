@@ -3,13 +3,16 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="header"/>
 
+<!--
     <div class="xar-row">
         <div class="xar-col">
             <div id="map"></div>
         </div>
     </div>
+-->
     <div class="xar-row">
         <div class="xar-col">
+<!--
             <input name="#$id#_address" id="addresspicker_map_#$id#" hidden="hidden" value="#$value['address']#"/>
             <input name="#$id#_locality" id="locality_#$id#" hidden="hidden" value="#$value['locality']#"/>
             <input name="#$id#_country" id="country_#$id#" hidden="hidden" value="#$value['country']#"/>
@@ -17,11 +20,14 @@
             <input name="#$id#_lng" id="lng_#$id#" hidden="hidden" value="#$value['lng']#"/>
             <input name="#$id#_type" id="type_#$id#" hidden="hidden" value="#$value['type']#"/>
             #$value['address']#
+-->
+            <xar:set name="lat">#$value['lat']#</xar:set>
+            <xar:set name="lng">#$value['lng']#</xar:set>
+            <xar:set name="addr">str_replace(" ", "+", $value['address'])</xar:set>
+            <xar:set name="coun">str_replace(" ", "+", $value['country'])</xar:set>
+            <xar:set name="aa">$addr.','.$coun</xar:set>
+            <xar:set name="url">"http://maps.google.it/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=$aa&amp;aq=0&amp;oq=$addr&amp;sll=$lat,$lng&amp;ie=UTF8&amp;hq=&amp;hnear=$aa&amp;t=m&amp;ll=$lat,$lng&amp;z=13&amp;iwloc=A&amp;output=embed"</xar:set>
+            <iframe width="280" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="#$url#"></iframe>
         </div>
     </div>
-    <!--Google maps-->
-    <iframe width="280" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" 
-        src="http://maps.google.it/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;
-            q=1+Sports+Parkway,+Sacramento,+CA,+United+States&amp;
-            aq=0&amp;oq=1+Sports+Parkway+Sacram&amp;sll=41.442726,12.392578&amp;sspn=37.701599,39.506836&amp;ie=UTF8&amp;hq=&amp;hnear=1+Sports+Pkwy,+Sacramento,+California+95834,+United+States&amp;t=m&amp;ll=38.647981,-121.517029&amp;spn=0.033517,0.048065&amp;z=13&amp;iwloc=A&amp;output=embed"></iframe>
 </xar:template>
