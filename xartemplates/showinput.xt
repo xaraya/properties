@@ -154,7 +154,7 @@
 ]]>
 
 
-<xar:javascript filename="jquery-1.2.6.min.js" module="jquery" position="head"/>
+<xar:javascript filename="jquery-1.7.2.min.js" module="jquery" position="head"/>
 
 <script src="#sys::code()#properties/jsupload/uploader/js/jquery.min.js"></script>
 <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
