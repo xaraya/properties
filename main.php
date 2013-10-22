@@ -301,7 +301,7 @@ Notes:
 
         // Sanity check to make sure we got a key
         if (empty($defaultkey)) {
-            throw new BadParameterException(xarML("The listing cannot be displayed, because no select key was found"));
+            throw new Exception(xarML("The listing cannot be displayed, because no select key was found"));
         }
 
     //--- 7. Figure out the operation we are performing
