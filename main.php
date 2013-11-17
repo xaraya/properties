@@ -177,20 +177,20 @@ class NumberProperty extends FloatBoxProperty
         
         sys::import('modules.dynamicdata.class.objects.master');
         if (isset($id)) {
-            if (empty($this->numberobject)) {
+            if (empty($this->numberobject[$id])) {
                 $object = DataObjectMaster::getObject(array('name'  => 'number'));
-                $this->numberobject = $object;
+                $this->numberobject[$id] = $object;
             } else {
-                $object = $this->numberobject;
+                $object =& $this->numberobject[$id];
             }
             $itemid = $object->getItem(array('itemid' => $id));
             return $object->getFieldValues();
         } else {
-            if (empty($this->numberobject)) {
+            if (empty($this->numberobjectlist[$name])) {
                 $object = DataObjectMaster::getObjectList(array('name'  => 'number'));
-                $this->numberobjectlist = $object;
+                $this->numberobjectlist[$name] = $object;
             } else {
-                $object = $this->numberobjectlist;
+                $object =& $this->numberobjectlist[$name];
             }
             $name = "'" . $name . "'"; //argh
             $result = $object->getItems(array('where' => "name eq " . $name));
