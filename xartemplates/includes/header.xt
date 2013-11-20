@@ -5,12 +5,12 @@
     <xar:style scope="property" property="jqaddresspicker" file="jquery.ui.all"/>
     <xar:style scope="property" property="jqaddresspicker" file="demo"/>
 
-    <xar:javascript type="src" src="http://maps.google.com/maps/api/js?sensor=false" position="head"/>
-    <xar:javascript type="src" src="http://code.jquery.com/jquery-1.7.2.min.js" position="head"/>
+    <xar:javascript type="src" src="http://maps.google.com/maps/api/js?sensor=false" position="head"/>  
+    <xar:javascript type="lib" lib="jquery" position="head"/>
     <xar:javascript type="src" src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js" position="head"/>
     <xar:javascript filename="jquery.ui.addresspicker.js" scope="property" property="jqaddresspicker" position="head"/>
     <script>
-    $(function() {
+    jQuery(function($) {
         var addresspickerMap = $( "##addresspicker_map_#$id#" ).addresspicker({
             regionBias: "ch",
             mapOptions: {
