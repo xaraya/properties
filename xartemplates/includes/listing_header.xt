@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <tr>
+        <xar:set name="paramarray">array()</xar:set>x#$letter#x
+        <xar:if condition="!empty($letter)">
+            <xar:set name="dummy">1;$paramarray['letter'] = $letter</xar:set>
+        </xar:if>
+        <xar:if condition="!empty($column)">
+            <xar:set name="dummy">1;$paramarray['order'] = $column</xar:set>
+            <xar:set name="dummy">1;$paramarray['op'] = $column</xar:set>
+        </xar:if>
         <xar:template file="listing_headerprefix" module="$module" property="listing"/>
         <xar:foreach in="$fieldnames" key="$field">
             <xar:set name="column">$fieldnames[$field]</xar:set>
@@ -8,7 +16,7 @@
                 <xar:continue />
             </xar:if>
             <th>
-                <xar:set name="url">xarServer::getCurrentURL(array('letter' => $letter, 'order' => $column, 'op' => 'column'))</xar:set>
+                <xar:set name="url">xarServer::getCurrentURL($paramarray)</xar:set>
                 <a href="#$url#" alt="Click to order by this field" title="Order by #$column#">
                     #$fieldlabels[$column]#
                 </a>

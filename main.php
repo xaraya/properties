@@ -488,7 +488,7 @@ Notes:
 
     //--- 19. Set the number of rows to display and the starting point
 
-        // Save the query in a sessionvar for others who might need it
+        // Save the query in a sessionvar for reuse
         xarSession::setVar('listing.' . $objectname,serialize($object->dataquery));
         
         // Set the number of lines to display
