@@ -20,10 +20,12 @@ class ListingProperty extends DataProperty
     public $desc = 'Listing';
     public $reqmodules = array();
 
-    public $objectname;
-    public $listing = array();
-
     public $module;
+    public $object      = null;
+    public $objectname  = null;
+    public $fieldlist   = '';
+    public $conditions  = null;
+    public $listing = array();
 
     public $alphabet = array(
         'A', 'B', 'C', 'D', 'E', 'F',
@@ -52,33 +54,9 @@ class ListingProperty extends DataProperty
 
     public function showInput(Array $data = array())
     {
-        if (isset($data['module'])) {
-            $this->module = $data['module'];
-        } else {
-            $info = xarController::$request->getInfo();
-            $this->module = $info[0];
-            $data['module'] = $this->module;
-        }
-
-        $ipp = xarModVars::get($this->module, 'items_per_page');
-        if (!empty($ipp)) $this->display_items_per_page = $ipp;
-
-        // Send any config settings not overwritten to the template
-        if (isset($data['show_items_per_page'])) $this->display_show_items_per_page = $data['show_items_per_page'];
-        if (isset($data['items_per_page'])) $this->display_items_per_page = $data['items_per_page'];
-        if (isset($data['show_primary'])) $this->display_show_primary = $data['show_primary'];
-        if (isset($data['show_search'])) $this->display_show_search = $data['show_search'];
-        if (isset($data['show_alphabet'])) $this->display_show_alphabet = $data['show_alphabet'];
-        if (isset($data['showall_tab'])) $this->display_showall_tab = $data['showall_tab'];
-        if (isset($data['showother_tab'])) $this->display_showother_tab = $data['showother_tab'];
-        
-        // give the template the alphabet chars
-        $data['alphabet'] = $this->alphabet;
-
         $data = array_merge($data, $this->runquery($data));
         return parent::showInput($data);
     }
-
 
 /*
 Notes:
@@ -91,6 +69,35 @@ Notes:
 */
     function runquery($data)
     {
+    //--- -2. Initial parameters
+        if (!isset($data['object'])) $data['object'] = $this->object;
+        if (!isset($data['objectname'])) $data['objectname'] = $this->objectname;
+        if (!isset($data['fieldlist'])) $data['fieldlist'] = $this->fieldlist;
+        if (!isset($data['tplmodule'])) $data['tplmodule'] = $this->tplmodule;
+        if (!isset($data['layout'])) $data['layout'] = $this->layout;
+        if (!isset($data['conditions'])) $data['conditions'] = $this->conditions;
+        if (isset($data['module'])) {
+            $this->module = $data['module'];
+        } else {
+            $info = xarController::$request->getInfo();
+            $this->module = $info[0];
+            $data['module'] = $this->module;
+        }
+
+        $ipp = xarModVars::get($this->module, 'items_per_page');
+        if (!empty($ipp)) $this->display_items_per_page = $ipp;
+
+        // Send any config settings not overwritten to the template
+        if (!isset($data['show_items_per_page'])) $data['show_items_per_page'] = $this->display_show_items_per_page;
+        if (!isset($data['items_per_page'])) $data['items_per_page'] = $this->display_items_per_page;
+        if (!isset($data['show_primary'])) $data['show_primary'] = $this->display_show_primary;
+        if (!isset($data['show_search'])) $data['show_search'] = $this->display_show_search;
+        if (!isset($data['show_alphabet'])) $data['show_alphabet'] = $this->display_show_alphabet;
+        if (!isset($data['showall_tab'])) $data['showall_tab'] = $this->display_showall_tab;
+        if (!isset($data['showother_tab'])) $data['showother_tab'] = $this->display_showother_tab;
+        
+        // give the template the alphabet chars
+        $data['alphabet'] = $this->alphabet;
 
     //--- -1. Get the classes we need
         sys::import('xaraya.structures.query');
@@ -146,7 +153,7 @@ Notes:
         $lastmsg = xarSession::getVar('listing.' . $objectname . '.msg') ? xarSession::getVar('listing.' . $objectname . '.msg') : '';
         $sort = xarSession::getVar('listing.' . $objectname . '.sort')?xarSession::getVar('listing.' . $objectname . '.sort'):'DESC';
         $lastorder = xarSession::getVar('listing.' . $objectname . '.lastorder') ? xarSession::getVar('listing.' . $objectname . '.lastorder') : '';
-        $q = xarSession::getVar('listing.' . $objectname . '.currentquery');
+        $q = xarSession::getVar('listing.' . $objectname . '.currentquery');//var_dump($lastorder);
 
     //--- 3. Get all the parameters we need from the form
 
@@ -399,14 +406,13 @@ Notes:
                     $sort = 'ASC';
                 }
                 xarSession::setVar('listing.' . $objectname . '.sort',$sort);
-                xarSession::setVar('listing.' . $objectname . '.lastorder',$order);
                 $data['search'] = $search; //pass along search
             } elseif (empty($letter) && empty($search)) {
                 //if order is not set - set it to the default key field but keep it at 'DESC'
                 $order = $keyfieldalias;
                 $sort = 'ASC';
-                xarSession::setVar('listing.' . $objectname . '.lastorder',$order);
             }
+            xarSession::setVar('listing.' . $objectname . '.lastorder',$order);
             $data['msg'] = '';
         }
         if (isset($sourcefields[$order])) {
@@ -586,6 +592,22 @@ Notes:
         unset($q->dbconn);unset($q->output);unset($q->result);
 
         return $data;
+    }
+
+    public function ajaxRefresh($data=array())
+    {
+        if (xarController::$request->isAjax()) {
+            $file = sys::code().'properties/listing/xartemplates/showinput.xt';
+            sys::import('xaraya.templating.compiler');
+            $compiler = XarayaCompiler::instance();
+            $output = $compiler->compileFile($file);
+            $data = $this->runquery($data);
+            $output = xarTpl::string($output,$data);
+            echo $output;
+            xarController::$request->exitAjax();
+        } else {
+            return true;
+        }
     }
 }
 
