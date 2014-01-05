@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:javascript filename="jquery-1.2.6.min.js" module="jquery" position="head"/>
+    <xar:javascript type="lib" lib="jquery" position="head"/>
     <xar:javascript filename="jquery.tablehover.pack.js" module="jquery" position="head"/>
     <xar:javascript filename="checkall.js" property="listing" position="head"/>
     <script type="text/javascript">
@@ -42,26 +42,28 @@
     </xar:if>
 
     <xar:style scope="module" module="base" file="navtabs"/>
-    <xar:if condition="!empty($filter)">
-        <xar:data-form objectname="$objectname" layout="filter"/>
-    <xar:else/>
-        <xar:template file="listing_alphabet" module="$module" property="listing"/>
-        <div style="clear:both"></div>    
-        <xar:template file="listing_searchboxline" module="$module" property="listing"/>
-    </xar:if>
-    <xar:template file="listing_summaryline" module="$module" property="listing"/>
-    <xar:template file="listing_pagerline" module="$module" property="listing"/>
-    <table id="listing_table" class="xar-table xar-fullwidth xar-items" style="clear:both; width: 100%" border="0">
-        <thead>
-            <xar:template file="listing_header" module="$module" property="listing"/>
-        </thead>
-        <tbody>
-            <xar:template file="listing_body" module="$module" property="listing"/>
-        </tbody>
-    </table>
-    <xar:if condition="empty($total)">
-              <p class="xar-align-center">There are no items selected</p>
-    </xar:if>
+    <div id="listing_display">
+        <xar:if condition="!empty($filter)">
+            <xar:data-form objectname="$objectname" layout="filter"/>
+        <xar:else/>
+            <xar:template file="listing_alphabet" module="$module" property="listing"/>
+            <div style="clear:both"></div>    
+            <xar:template file="listing_searchboxline" module="$module" property="listing"/>
+        </xar:if>
+        <xar:template file="listing_summaryline" module="$module" property="listing"/>
+        <xar:template file="listing_pagerline" module="$module" property="listing"/>
+        <table id="listing_table" class="xar-table xar-fullwidth xar-items" style="clear:both; width: 100%" border="0">
+            <thead>
+                <xar:template file="listing_header" module="$module" property="listing"/>
+            </thead>
+            <tbody>
+                <xar:template file="listing_body" module="$module" property="listing"/>
+            </tbody>
+        </table>
+        <xar:if condition="empty($total)">
+            <p class="xar-align-center">There are no items selected</p>
+        </xar:if>
+    </div>
     <xar:if condition="isset($show_bulk) AND $show_bulk">
         <form  action="#xarModURL('dynamicdata','user','property',array('prop' => 'listing','act' => 'bulk_action'))#" method="post" enctype="application/x-www-form-urlencoded" onsubmit = "listing_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;">
             <xar:template file="listing_footerline" module="$module" property="listing" />
