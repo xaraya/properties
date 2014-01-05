@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:javascript type="lib" lib="jquery" position="head"/>
-    <xar:javascript filename="jquery.tablehover.pack.js" module="jquery" position="head"/>
     <xar:javascript filename="checkall.js" property="listing" position="head"/>
-    <script type="text/javascript">
-        $(document).ready(function()
-        {
-            $('##listing_table').tableHover();
-    //        $('##listing_table').tableHover({colClass: 'hover'});
-    //        $('##listing_table').tableHover({colClass: 'hover', cellClass: 'hovercell', clickClass: 'click'});
-    //        $('##listing_table').tableHover({colClass: 'hover', allowBody: false, clickClass: 'click'});
-    //        $('##listing_table').tableHover({rowClass: 'hoverrow', colClass: 'hover', clickClass: 'click', headRows: true, footRows: true, headCols: true, footCols: true});
-    //        $('##listing_table').tableHover({colClass: 'hover'});
-    //        $('##listing_table').tableHover({colClass: 'hover', spanRows: false, spanCols: false});
-    //        $('##listing_table').tableHover({colClass: 'hover', ignoreCols: [4,5,6]});
-        });
-    </script>
 
     <style type="text/css">
         td.click, th.click { background-color: ##bbb; }
