@@ -45,11 +45,11 @@ class ListingProperty extends DataProperty
 
     function __construct(ObjectDescriptor $descriptor)
     {
-        parent::__construct($descriptor);
-
         $this->tplmodule = 'auto';
         $this->template =  'listing';
         $this->filepath   = 'auto';
+
+        parent::__construct($descriptor);
     }
 
     public function showInput(Array $data = array())
