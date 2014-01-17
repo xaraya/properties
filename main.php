@@ -508,9 +508,12 @@ Notes:
         $data['letter'] = $letter;
         $data['searchstring'] = $search;
 
-        // display the query if I need to
-//        echo "<br />"; $object->dataquery->qecho();
-    //    exit;
+        // Debug display
+        if (xarModVars::get('dynamicdata','debugmode') && 
+        in_array(xarUserGetVar('uname'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+            $object->dataquery->qecho();
+            echo "<br />";
+        }
 
     // Now we run the query, if that is required
     // Use isset here to check whether a $items param was even passed
