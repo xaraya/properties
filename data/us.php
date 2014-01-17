@@ -61,27 +61,6 @@
         $options[] = array('id' =>'West Virginia', 'name' =>'West Virginia');
         $options[] = array('id' =>'Wisconsin', 'name' =>'Wisconsin');
         $options[] = array('id' =>'Wyoming', 'name' =>'Wyoming');
-        $options[] = array('id' =>'Alberta', 'name' =>'Alberta');
-        $options[] = array('id' =>'British Columbia', 'name' =>'British Columbia');
-        $options[] = array('id' =>'Manitoba', 'name' =>'Manitoba');
-        $options[] = array('id' =>'New Brunswick', 'name' =>'New Brunswick');
-        $options[] = array('id' =>'Newfoundland and Labrador', 'name' =>'Newfoundland and Labrador');
-        $options[] = array('id' =>'Northwest Territories', 'name' =>'Northwest Territories');
-        $options[] = array('id' =>'Nova Scotia', 'name' =>'Nova Scotia');
-        $options[] = array('id' =>'Nunavut', 'name' =>'Nunavut');
-        $options[] = array('id' =>'Ontario', 'name' =>'Ontario');
-        $options[] = array('id' =>'Prince Edward Island', 'name' =>'Prince Edward Island');
-        $options[] = array('id' =>'Quebec', 'name' =>'Quebec');
-        $options[] = array('id' =>'Saskatchewan', 'name' =>'Saskatchewan');
-        $options[] = array('id' =>'Yukon Territory', 'name' =>'Yukon Territory');
-        $options[] = array('id' =>'Australian Capital Territory', 'name' =>'Australian Capital Territory');
-        $options[] = array('id' =>'New South Wales', 'name' =>'New South Wales');
-        $options[] = array('id' =>'Northern Territory', 'name' =>'Northern Territory');
-        $options[] = array('id' =>'Queensland', 'name' =>'Queensland');
-        $options[] = array('id' =>'South Australia', 'name' =>'South Australia');
-        $options[] = array('id' =>'Tasmania', 'name' =>'Tasmania');
-        $options[] = array('id' =>'Victoria', 'name' =>'Victoria');
-        $options[] = array('id' =>'Western Australia', 'name' =>'Western Australia');
         return $options;
     }
 
