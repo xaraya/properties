@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <div id="listing_display">
-        <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:ajax-listing>
         <xar:javascript filename="checkall.js" property="listing" position="head"/>
 
         <style type="text/css">
@@ -56,5 +56,5 @@
                 <input type="hidden" name="localmodule" id="localmodule" value="#$module#"/>
             </form>
         </xar:if>
-    </div>
+    </xar:ajax-listing>
 </xar:template>
