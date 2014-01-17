@@ -20,10 +20,10 @@ class AddressProperty extends TextBoxProperty
     public $desc       = 'Address';
     public $reqmodules = array();
 
-    public $display_show_city;
-    public $display_show_province;
-    public $display_show_postal_code;
-    public $display_show_country;
+    public $display_show_city         = true;
+    public $display_show_province     = true;
+    public $display_show_postal_code  = true;
+    public $display_show_country      = true;
     public $display_rows              = 2;
     public $display_labels            = array();
     public $validation_ignore_validations;
