@@ -166,7 +166,7 @@ class AddressProperty extends TextBoxProperty
         if (empty($data['value'])) $data['value'] = $this->getValue();
         
         // Figure out what country layout template to use
-        if (empty($data['country_layout'])) $data['country_layout'] == 'auto';
+        if (empty($data['country_layout'])) $data['country_layout'] = 'auto';
         if ($data['country_layout'] == 'auto') {
             $layout = $data['value']['country'];
         } else {
