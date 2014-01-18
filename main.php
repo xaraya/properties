@@ -29,7 +29,6 @@ class AddressProperty extends TextBoxProperty
     public $validation_ignore_validations;
 
     public $specified_countries       = array('ch','us');   // The countries that have non-default layout templates in this property
-    public $country_layout            = 'us';               // The default country layout template
 
     function __construct(ObjectDescriptor $descriptor)
     {
