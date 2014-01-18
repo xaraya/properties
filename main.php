@@ -73,6 +73,10 @@ class AddressProperty extends TextBoxProperty
                 $validity = $validity && $isvalid;
             }
 
+            // Possible override from the template
+            if(!xarVarFetch($name . '_show_province', 'int', $show_province, null, XARVAR_NOT_REQUIRED)) {return;}
+            if (isset($show_province)) $this->display_show_province = $show_province;
+
             if ($this->display_show_province) {
                 $province = DataPropertyMaster::getProperty(array('name' => 'province'));
 				if ($this->validation_ignore_validations) {
