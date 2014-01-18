@@ -28,7 +28,8 @@ class AddressProperty extends TextBoxProperty
     public $display_labels            = array();
     public $validation_ignore_validations;
 
-    public $country_layout            = 'us';
+    public $specified_countries       = array('ch','us');   // The countries that have non-default layout templates in this property
+    public $country_layout            = 'us';               // The default country layout template
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -164,7 +165,7 @@ class AddressProperty extends TextBoxProperty
         if (!isset($data['show_country'])) $data['show_country'] = $this->display_show_country;
         if (empty($data['value'])) $data['value'] = $this->getValue();
         
-        // Figure out what country tmplate to use
+        // Figure out what country layout template to use
         if (!empty($data['country_layout'])) {
             if ($data['country_layout'] == 'auto') {
                 $layout = $data['value']['country'];
@@ -173,8 +174,9 @@ class AddressProperty extends TextBoxProperty
             }
             if (empty($layout)) $layout = 'default';
         } else {
-            $layout = 'default';
+            $layout = $this->country_layout;
         }
+        if (!in_array($layout, $this->specified_countries)) $layout = 'default';
         $data['country_layout'] = $layout;
         
         return $data;
