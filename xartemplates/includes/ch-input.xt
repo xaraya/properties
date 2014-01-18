@@ -40,7 +40,7 @@
     </xar:if>
     
     <!-- Don't show the canton dropdown -->
-    <input type="text" name="#$name#_show_province" id="#$id#_show_province" value="0"/>
+    <input type="text" name="#$name#_show_province" id="#$id#_show_province" value="0" hidden="hidden"/>
     
     <xar:if condition="!empty($show_country)">
         <div class="xar-form-input-wrapper">
