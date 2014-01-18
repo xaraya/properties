@@ -42,7 +42,8 @@ class ProvinceProperty extends SelectProperty
             try {
                 sys::import('properties.province.data.' . $country);
                 $func = 'provinces_'.$country;
-                $data['options'] = array_merge($data['options'], $func());
+                if (function_exists($func))
+                    $data['options'] = array_merge($data['options'], $func());
             } catch (Exception $e) {}
         }
         
