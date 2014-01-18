@@ -23,7 +23,7 @@
         </xar:if>
 
         <xar:if condition="!empty($show_city)">
-            &#160;<span class="locality">#$value['city']#</span><xar:if condition="!empty($show_province)">,&#160;</xar:if>
+            &#160;<span class="locality">#$value['city']#</span><xar:if condition="!empty($show_province) AND !empty($value['province'])">,&#160;</xar:if>
         </xar:if>
 
         <xar:if condition="!empty($show_province)">
