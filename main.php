@@ -28,6 +28,8 @@ class AddressProperty extends TextBoxProperty
     public $display_labels            = array();
     public $validation_ignore_validations;
 
+    public $country_layout            = 'us';
+
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
@@ -157,6 +159,20 @@ class AddressProperty extends TextBoxProperty
         if (!isset($data['show_postal_code'])) $data['show_postal_code'] = $this->display_show_postal_code;
         if (!isset($data['show_country'])) $data['show_country'] = $this->display_show_country;
         if (empty($data['value'])) $data['value'] = $this->getValue();
+        
+        // Figure out what country tmplate to use
+        if (!empty($data['country_layout'])) {
+            if ($data['country_layout'] == 'auto') {
+                $layout = $data['value']['country'];
+            } else {
+                $layout = $data['country_layout'];
+            }
+            if (empty($layout)) $layout = 'default';
+        } else {
+            $layout = 'default';
+        }
+        $data['country_layout'] = $layout;
+        
         return $data;
     }
 }
