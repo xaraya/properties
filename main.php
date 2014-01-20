@@ -600,8 +600,6 @@ Notes:
         // Sort of ugly. How can we do better?
         unset($q->dbconn);unset($q->output);unset($q->result);
         
-        $data['startnum'] = $startnum;  // Remove?
-
         return $data;
     }
 
