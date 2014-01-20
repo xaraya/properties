@@ -326,6 +326,8 @@ Notes:
         in_array(xarUserGetVar('uname'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
             echo $operation;
             echo "<br />";
+            echo $startnum;
+            echo "<br />";
         }
 
         $data['params'] = array();
