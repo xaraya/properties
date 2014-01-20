@@ -149,18 +149,21 @@ Notes:
 
     //--- 2. Retrieve session vars we work with
 
-        $lastobject = xarSession::getVar('listing.' . $objectname . '.lastlistingsearch');
-        $lastmsg = xarSession::getVar('listing.' . $objectname . '.msg') ? xarSession::getVar('listing.' . $objectname . '.msg') : '';
-        $sort = xarSession::getVar('listing.' . $objectname . '.sort')?xarSession::getVar('listing.' . $objectname . '.sort'):'DESC';
-        $lastorder = xarSession::getVar('listing.' . $objectname . '.lastorder') ? xarSession::getVar('listing.' . $objectname . '.lastorder') : '';
-        $q = xarSession::getVar('listing.' . $objectname . '.currentquery');//var_dump($lastorder);
+        $params = xarSession::getVar('listing.' . $objectname . '.params');
+        $lastobject = isset($params['lastsearch']) ? $params['lastsearch'] : null;
+        $lastmsg = isset($params['lastmsg']) ? $params['lastmsg'] : null;
+        $lastsort = isset($params['lastsort']) ? $params['lastsort'] : null;
+        $lastorder = isset($params['lastorder']) ? $params['lastorder'] : null;
+        $laststartnum = isset($params['laststartnum']) ? $params['laststartnum'] : 1;
+        $q = xarSession::getVar('listing.' . $objectname . '.currentquery');
 
     //--- 3. Get all the parameters we need from the form
 
-        if(!xarVarFetch('startnum',      'int:1', $data['startnum'], 1, XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('startnum',      'str:1', $startnum, $laststartnum, XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('letter',        'str:1', $letter, '', XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('search',        'str:1:100', $search, '', XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('order',         'str', $order, '', XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('order',         'str', $order, $lastorder, XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('sort',          'str', $sort, $lastsort, XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('submit',        'str', $submit, '', XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('op',            'str', $op, '', XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('conditions',    'isset', $conditions, NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -200,7 +203,7 @@ Notes:
         $data['fields'] = array();                  // Deprecated - remove from templates!!!
         $data['columns'] = array();                 // Deprecated - remove from templates!!!
         $sourcefields = array();
-//        $fieldnames = array();
+
         $primarysource = '';
         $primaryalias = '';
         $indices = array();
@@ -242,7 +245,6 @@ Notes:
                     $indices[] = $source;
                 }
                 // save the field names for later use
-//                $fieldnames[$source] = $alias;
                 $data['fieldlabels'][$alias] = $property->label;
                 $data['fieldnames'][] = $property->name;
                 $data['formfieldnames'][] = $formfieldname;
@@ -265,7 +267,6 @@ Notes:
             // We found a property that corresponds to the fieldlist entry
             if ($alias != $primaryalias) {
                 // save the field names for later use
-//                $fieldnames[$source] = $alias;
                 $data['fieldlabels'][$alias] = $property->label;
                 $data['fieldnames'][] = $property->name;
                 $data['formfieldnames'][] = $formfieldname;
@@ -296,7 +297,6 @@ Notes:
             $alias = $property->name;
             $primarysource = $source;
             $primaryalias = $alias;
-//            $fieldnames[$source] = $alias;
             $data['fieldlabels'][$alias] = $property->label;
             $data['fieldnames'][] = $property->name;
             $data['formfieldnames'][] = $alias;
@@ -323,7 +323,7 @@ Notes:
         else $operation = 'newsearch';                                          // any other operation: we fall back to new search
 
         $data['params'] = array();
-    //    echo "<br />".$operation;//exit;
+        echo "<br />".$operation;//exit;
 
         switch ($operation) {
 
@@ -351,9 +351,6 @@ Notes:
                     $object->dataquery->addconditions($conditions);
                     $object->dataquery->addsorts($conditions);
                 }
-
-                xarSession::setVar('listing.' . $objectname . '.lastlistingsearch',$objectname);
-                xarSession::setVar('listing.' . $objectname . '.msg','');
 
                 // Get any odering from the object's data query if possible
                 if (!empty($object->dataquery->sorts)) {
@@ -392,27 +389,24 @@ Notes:
 
         // if there is no order defined use the key field
         if (empty($order))  $order = $keyfieldalias;
-        if (empty($sort) && $operation != 'lettersearch')  $sort = 'ASC';
+        if (empty($lastsort) && $operation != 'lettersearch')  $sort = 'ASC';
         // change  the sort direction if I clicked one of the column names
         // but only if the column name is the same so it acts like a toggle for that field
         // only change sort if column name is clicked, not a letter which will retain the current settings
-        $thisstart = xarSession::getVar('listing.' . $objectname . '.start') ? xarSession::getVar('listing.' . $objectname . '.start') : 1;
-        if ($operation == "columnclick") {
-            if (isset($order) && $data['startnum']== $thisstart){
+        if ($operation == "columnclick") {echo $lastorder . $order;
+            if (isset($order) && $startnum == $startnum){
                 if ($order == $lastorder) {
-                    if($sort == 'ASC') $sort = 'DESC';
+                    if($lastsort == 'ASC') $sort = 'DESC';
                        else $sort = 'ASC';
                 } else {
                     $sort = 'ASC';
                 }
-                xarSession::setVar('listing.' . $objectname . '.sort',$sort);
                 $data['search'] = $search; //pass along search
             } elseif (empty($letter) && empty($search)) {
                 //if order is not set - set it to the default key field but keep it at 'DESC'
                 $order = $keyfieldalias;
                 $sort = 'ASC';
             }
-            xarSession::setVar('listing.' . $objectname . '.lastorder',$order);
             $data['msg'] = '';
         }
         if (isset($sourcefields[$order])) {
@@ -444,7 +438,7 @@ Notes:
 
                 //Adjust session vars and parameters
                 $data['params']['letter'] = '';
-                $data['startnum'] = 1;
+                $startnum = 1;
             break;
 
             case "newsearch":
@@ -476,7 +470,7 @@ Notes:
 
                 //Adjust session vars and parameters
                 $data['params']['letter'] = '';
-                $data['startnum'] = 1;
+                $startnum = 1;
 
             break;
             case "pagerclick":
@@ -501,7 +495,7 @@ Notes:
         if (!empty($this->display_items_per_page)) $object->dataquery->setrowstodo($this->display_items_per_page);
 
         // The record to start at needs to come from the template
-        $object->dataquery->setstartat($data['startnum']);
+        $object->dataquery->setstartat($startnum);
 
         // CHECKME: do we need all 3 of these passed to the template
         $data['order'] = $order;
@@ -586,13 +580,17 @@ Notes:
         $data['object'] = $object;
 
         // Set the session vars to the latest state
-        xarSession::setVar('listing.' . $objectname . '.sort',$sort);
-        xarSession::setVar('listing.' . $objectname . '.lastorder',$order);
-        xarSession::setVar('listing.' . $objectname . '.start',$data['startnum']);
-        xarSession::setVar('listing.' . $objectname . '.msg',$data['msg']);
+        $params['lastsearch'] = $objectname;
+        $params['lastmsg']    = $data['msg'];
+        $params['lastsort']   = $sort;
+        $params['lastorder']  = $order;
+        $params['startnum']   = $startnum;
+        xarSession::setVar('listing.' . $objectname . '.params', $params);
 
         // Sort of ugly. How can we do better?
         unset($q->dbconn);unset($q->output);unset($q->result);
+        
+        $data['startnum'] = $startnum;  // Remove?
 
         return $data;
     }
