@@ -314,8 +314,7 @@ Notes:
     //--- 7. Figure out the operation we are performing
 
         $firsttime = !isset($lastobject) || ($objectname != $lastobject);       // criterium for first time display
-        if ($firsttime) $operation = 'newsearch';                               // we are displaying the page for the first time
-        elseif ($op == 'column') $operation = 'columnclick';                    // a  column header was clicked
+        if ($op == 'column') $operation = 'columnclick';                        // a  column header was clicked
         elseif ($op == 'letter') $operation = 'lettersearch';                   // an alphabet link was clicked
         elseif ($op == 'submit') $operation = 'textsearch';                     // a string was entered into the text field
         elseif ($op == 'page') $operation = 'pagerclick';                       // the pager was clicked
@@ -351,21 +350,25 @@ Notes:
 
     //--- 9. First time visit to this page; empty the sessionvars and reset the categories
             case "newsearch":
-                if (!empty($conditions)) {
-                    $q = new Query();
-                    $q->addconditions($conditions);
-                    $object->dataquery->addconditions($conditions);
-                    $object->dataquery->addsorts($conditions);
-                }
+            echo $objectname; echo $lastobject;
+                // Only reset everything if we are starting with a new object
+                if ($firsttime) {
+                    if (!empty($conditions)) {
+                        $q = new Query();
+                        $q->addconditions($conditions);
+                        $object->dataquery->addconditions($conditions);
+                        $object->dataquery->addsorts($conditions);
+                    }
 
-                // Get any odering from the object's data query if possible
-                if (!empty($object->dataquery->sorts)) {
-                    $setting = reset($object->dataquery->sorts);
-                    $order = $setting['name'];
-                    $sort = $setting['order'];
-                } else {
-                    $order = '';
-                    $sort = 'ASC';
+                    // Get any odering from the object's data query if possible
+                    if (!empty($object->dataquery->sorts)) {
+                        $setting = reset($object->dataquery->sorts);
+                        $order = $setting['name'];
+                        $sort = $setting['order'];
+                    } else {
+                        $order = '';
+                        $sort = 'ASC';
+                    }
                 }
             break;
 
