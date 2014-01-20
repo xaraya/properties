@@ -481,7 +481,6 @@ Notes:
 
                 //Adjust session vars and parameters
                 $data['params']['letter'] = '';
-                $startnum = 1;
 
             break;
             case "pagerclick":
