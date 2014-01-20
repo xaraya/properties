@@ -150,10 +150,10 @@ Notes:
     //--- 2. Retrieve session vars we work with
 
         $params = xarSession::getVar('listing.' . $objectname . '.params');
-        $lastobject = isset($params['lastsearch']) ? $params['lastsearch'] : null;
-        $lastmsg = isset($params['lastmsg']) ? $params['lastmsg'] : null;
-        $lastsort = isset($params['lastsort']) ? $params['lastsort'] : null;
-        $lastorder = isset($params['lastorder']) ? $params['lastorder'] : null;
+        $lastobject   = isset($params['lastsearch']) ? $params['lastsearch'] : null;
+        $lastmsg      = isset($params['lastmsg']) ? $params['lastmsg'] : '';
+        $lastsort     = isset($params['lastsort']) ? $params['lastsort'] : 'ASC';
+        $lastorder    = isset($params['lastorder']) ? $params['lastorder'] : '';
         $laststartnum = isset($params['laststartnum']) ? $params['laststartnum'] : 1;
         $q = xarSession::getVar('listing.' . $objectname . '.currentquery');
 
@@ -322,8 +322,14 @@ Notes:
         elseif (!empty($submit) && !$firsttime) $operation = 'categorysearch';  // the submit button was clicked (= any other search)
         else $operation = 'newsearch';                                          // any other operation: we fall back to new search
 
+        // Debug display
+        if (xarModVars::get('dynamicdata','debugmode') && 
+        in_array(xarUserGetVar('uname'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+            $operation;
+            echo "<br />";
+        }
+
         $data['params'] = array();
-        echo "<br />".$operation;//exit;
 
         switch ($operation) {
 
@@ -514,7 +520,7 @@ Notes:
     if (!isset($items)) {
         // add conditions if they were passed
         if (!empty($conditions)) $object->dataquery->addconditions($conditions);
-        // get the records to be displayed
+        // Get the records to be displayed
         $items = $object->getItems();
         // We may need to recalculate the total if we have linked tables
         // Just force it for now
@@ -561,7 +567,7 @@ Notes:
         // Add the array of items to the template variables
         $data['items'] = $items;
 
-        // a bunch of params the pager will want to see in its target url
+        // A bunch of params the pager will want to see in its target url
         // order and sort are used by the up and down arrows
         // items_per_page is needed because we may be using dynamic items per page
         $data['params']['op'] = 'page';
@@ -570,10 +576,10 @@ Notes:
     //    $data['params']['items_per_page'] = $items_per_page;
         $data['params']['startnum'] = "%%";
 
-        // need this in case this code is turned into a dprop
+        // Need this in case this code is turned into a dprop
         $data['regid'] = $regid;
 
-        // we also need a reference to the primary column for the template
+        // We also need a reference to the primary column for the template
         $data['primaryalias'] = $primaryalias;
 
         // Add a reference to the object itself
