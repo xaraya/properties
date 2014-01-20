@@ -562,7 +562,6 @@ Notes:
         if (!isset($data['filter'])) $data['filter'] = 0;
 
         // Add field definitions to the template variables
-
         $data['tablekeyfield'] = $tablekeyfield;
         $data['keyfieldalias'] = $keyfieldalias;
         $data['defaultkeyname'] = $defaultkeyname;
@@ -579,6 +578,8 @@ Notes:
         $data['params']['sort'] = $sort;
     //    $data['params']['items_per_page'] = $items_per_page;
         $data['params']['startnum'] = "%%";
+        // The startnum parameter needs to be passed directly to th templae (pager and such)
+        $data['startnum'] = $startnum;
 
         // Need this in case this code is turned into a dprop
         $data['regid'] = $regid;
