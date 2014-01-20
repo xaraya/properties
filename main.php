@@ -325,7 +325,7 @@ Notes:
         // Debug display
         if (xarModVars::get('dynamicdata','debugmode') && 
         in_array(xarUserGetVar('uname'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
-            $operation;
+            echo $operation;
             echo "<br />";
         }
 
@@ -399,7 +399,7 @@ Notes:
         // change  the sort direction if I clicked one of the column names
         // but only if the column name is the same so it acts like a toggle for that field
         // only change sort if column name is clicked, not a letter which will retain the current settings
-        if ($operation == "columnclick") {echo $lastorder . $order;
+        if ($operation == "columnclick") {
             if (isset($order) && $startnum == $startnum){
                 if ($order == $lastorder) {
                     if($lastsort == 'ASC') $sort = 'DESC';
