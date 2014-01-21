@@ -324,9 +324,9 @@ Notes:
         // Debug display
         if (xarModVars::get('dynamicdata','debugmode') && 
         in_array(xarUserGetVar('uname'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
-            echo $operation;
+            echo "Operation: " . $operation;
             echo "<br />";
-            echo $startnum;
+            echo "Start at: " . $startnum;
             echo "<br />";
         }
 
