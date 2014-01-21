@@ -352,7 +352,6 @@ Notes:
 
     //--- 9. First time visit to this page; empty the sessionvars and reset the categories
             case "newsearch":
-            echo $objectname; echo $lastobject;
                 // Only reset everything if we are starting with a new object
                 if ($firsttime) {
                     if (!empty($conditions)) {
@@ -504,7 +503,7 @@ Notes:
         // Set the number of lines to display
         if (!empty($this->display_items_per_page)) $object->dataquery->setrowstodo($this->display_items_per_page);
 
-        // The record to start at needs to come from the template
+        // The record to start at needs to come from the template or from the session var
         $object->dataquery->setstartat($startnum);
 
         // CHECKME: do we need all 3 of these passed to the template
@@ -591,11 +590,11 @@ Notes:
         $data['object'] = $object;
 
         // Set the session vars to the latest state
-        $params['lastsearch'] = $objectname;
-        $params['lastmsg']    = $data['msg'];
-        $params['lastsort']   = $sort;
-        $params['lastorder']  = $order;
-        $params['startnum']   = $startnum;
+        $params['lastsearch']     = $objectname;
+        $params['lastmsg']        = $data['msg'];
+        $params['lastsort']       = $sort;
+        $params['lastorder']      = $order;
+        $params['laststartnum']   = $startnum;
         xarSession::setVar('listing.' . $objectname . '.params', $params);
 
         // Sort of ugly. How can we do better?
