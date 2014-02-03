@@ -67,7 +67,10 @@ class TimeFrameProperty extends DataProperty
 
     public function getValue()
     {
-        return unserialize($this->value);
+        $value = unserialize($this->value);
+        if(!is_array($value))
+            $value = $this->default;
+        return $value;
     }
 
     public function setValue($value=null)
@@ -78,12 +81,7 @@ class TimeFrameProperty extends DataProperty
     public function showInput(Array $data = array())
     {
         if (!isset($data['name'])) $data['name'] = 'dd_' . $this->id;
-        if (!isset($data['value'])) {
-            $data['value'] = $this->getValue();
-            if(!is_array($data['value'])) {
-                $data['value'] = $this->default;
-            }
-        }
+        if (!isset($data['value'])) $data['value'] = $this->getValue();
         
         // The display widgets to show
         if (empty($data['show'])) $data['show'] = array('calendar');
