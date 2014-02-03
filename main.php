@@ -20,6 +20,8 @@ class TimeFrameProperty extends DataProperty
     public $name = 'timeframe';
     public $desc = 'Time Frame';
     public $reqmodules = array();
+
+    private $default;
     
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -28,7 +30,8 @@ class TimeFrameProperty extends DataProperty
         $this->template =  'timeframe';
         $this->filepath   = 'auto';
         
-        $this->value = array(time(), time(), 0);        
+        // We cannot use $this->defaultvalue because that needs to be a string
+        $this->default = array(time(), time(), 0);
     }
 
     public function checkInput($name = '', $value = null)
@@ -58,14 +61,29 @@ class TimeFrameProperty extends DataProperty
         }
         
         $value = array($startdate,$enddate,$period);
-        $this->value = $value;    
+        $this->setValue($value);    
         return true;
+    }
+
+    public function getValue()
+    {
+        return unserialize($this->value);
+    }
+
+    public function setValue($value=null)
+    {
+        $this->value = serialize($value);
     }
 
     public function showInput(Array $data = array())
     {
         if (!isset($data['name'])) $data['name'] = 'dd_' . $this->id;
-        if (!isset($data['value'])) $data['value'] = $this->value;
+        if (!isset($data['value'])) {
+            $data['value'] = $this->getValue();
+            if(!is_array($data['value'])) {
+                $data['value'] = $this->default;
+            }
+        }
         
         // The display widgets to show
         if (empty($data['show'])) $data['show'] = array('calendar');
@@ -90,7 +108,7 @@ class TimeFrameProperty extends DataProperty
     public function showOutput(Array $data = array())
     {
         if (!isset($data['name'])) $data['name'] = 'dd_' . $this->id;
-        if (!isset($data['value'])) $data['value'] = $this->value;
+        if (!isset($data['value'])) $data['value'] = $this->getValue();
 
         return parent::showOutput($data);
     }
