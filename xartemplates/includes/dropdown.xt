@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:if condition="!isset($class)">
+        <xar:set name="class">'xar-timeframe-dropdown'</xar:set>
+    <xar:else/>
+        <xar:set name="class">'xar-timeframe-dropdown ' . $class</xar:set>
+    </xar:if>
+    <xar:if condition="!isset($style)">
+        <xar:set name="style">''</xar:set>
+    </xar:if>
+
     <xar:set name="label">$name . "_frames_future"</xar:set>
     <xar:set name="$label">
         array(
@@ -45,5 +54,5 @@
     <xar:set name="dropdownname">$name . "_period"</xar:set>
     <xar:var name="firstline">No period</xar:var>
     <xar:set name="firstline">array('id'=>0,'name'=>$firstline)</xar:set>
-    <xar:data-input name="$dropdownname" type="dropdown" options="$options" value="$value[2]" firstline="$firstline" style="$style"/>
+    <xar:data-input name="$dropdownname" type="dropdown" options="$options" value="$value[2]" firstline="$firstline" class="$class" style="$style"/>
 </xar:template>
