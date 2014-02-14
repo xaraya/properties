@@ -1,5 +1,5 @@
 <items>
-  <currencies itemid="2">
+  <currency itemid="2">
     <id>2</id>
     <iso_code>EUR</iso_code>
     <numeric_code>978</numeric_code>
@@ -18,8 +18,8 @@
     <rounding>5</rounding>
     <zerodigitsign>0</zerodigitsign>
     <minussign>-</minussign>
-  </currencies>
-  <currencies itemid="3">
+  </currency>
+  <currency itemid="3">
     <id>3</id>
     <iso_code>USD</iso_code>
     <numeric_code>840</numeric_code>
@@ -38,8 +38,8 @@
     <rounding>5</rounding>
     <zerodigitsign>0</zerodigitsign>
     <minussign>-</minussign>
-  </currencies>
-  <currencies itemid="4">
+  </currency>
+  <currency itemid="4">
     <id>4</id>
     <iso_code>CHF</iso_code>
     <numeric_code>756</numeric_code>
@@ -58,5 +58,5 @@
     <rounding>5</rounding>
     <zerodigitsign>0</zerodigitsign>
     <minussign>-</minussign>
-  </currencies>
+  </currency>
 </items>

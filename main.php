@@ -1,7 +1,7 @@
 <?php 
 /**
  * Currency Property
- *
+ * 
  * @package properties
  * @subpackage currency property
  * @category Third Party Xaraya Property
@@ -13,6 +13,10 @@
 
 sys::import('modules.dynamicdata.xarproperties.objectref');
 
+/**
+ * Currency Property
+ * @author Marc Lutolf (mfl@netspan.ch)
+ */
 class CurrencyProperty extends ObjectRefProperty
 {
     public $id         = 30012;
@@ -20,47 +24,23 @@ class CurrencyProperty extends ObjectRefProperty
     public $desc       = 'Currency';
     public $reqmodules = array();
 
-    public $initialization_refobject    = 'currencies';
-    public $initialization_store_prop   = 'iso_code';
-    public $initialization_display_prop = 'name';
+    public $initialization_refobject    = 'currency';    // Name of the object we want to reference
+    public $initialization_store_prop   = 'iso_code';         // Name of the property we want to use for storage
+    public $initialization_display_prop = 'name';             // Name of the property we want to use for displaying.
 
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
-        
         $this->tplmodule = 'auto';
-        $this->filepath  = 'auto';
+        $this->filepath   = 'auto';
     }
-    
-    function showInput(Array $data=array())
+
+    public function showInput(Array $data = array())
     {
-        if (!empty($data['store_prop'])) $this->initialization_store_prop = $data['store_prop'];
-        if (!empty($data['display_prop'])) $this->initialization_display_prop = $data['display_prop'];
+        // Set the class parameter and allow it to be overridden
+        if (!isset($data['class'])) $data['class'] = 'xar-dropdown-currency';
         return parent::showInput($data);
     }
-
-    function showOutput(Array $data=array())
-    {
-        if (!empty($data['store_prop'])) $this->initialization_store_prop = $data['store_prop'];
-        if (!empty($data['display_prop'])) $this->initialization_display_prop = $data['display_prop'];
-        return parent::showOutput($data);
-    }
-
-    function getOptions()
-    {
-        $options = $this->getFirstline();
-        if (count($this->options) > 0) {
-            if (!empty($firstline)) $this->options = array_merge($options,$this->options);
-            return $this->options;
-        }
-        
-        sys::import('modules.dynamicdata.class.properties.master');
-        $property = DataPropertyMaster::getProperty(array('name' => 'objectref'));
-        $property->initialization_refobject = 'currencies';
-        $property->initialization_store_prop = $this->initialization_store_prop;
-        $property->initialization_display_prop = $this->initialization_display_prop;
-        $options = $property->getOptions();
-        return $options;
-    }
 }
+
 ?>

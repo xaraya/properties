@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <div>
+        <div>
             <h2>Currency Property</h2>
                 <h3>Description</h3>
                 <p>
                     The Currency dataproperty consists of a dropdown showing the currencies available. The property can be used standalone or as bound to a dataobject.
                 </p>
                 <p>
-                    The available currencies are given by the items of the <i>currencies</i> dataobject, which is created when the currency property is installed. The dataobject stores its items in dynamic storage. Items can be added, changed or deleted via the dynamicdata admin interface.
+                    The available currencies are given by the items of the <i>currency</i> dataobject, which is created when the Currency property is installed. The dataobject stores its items in dynamic storage. Items can be added, changed or deleted via the dynamicdata admin interface.
                 </p>
                 <p>
-                    The <i>currencies</i> dataobject has the following properties: ID, iso_code, numeric_code, name, country, symbol, decimalseparator, dsalwaysshown, groupingseparator, groupingsize, minfractiondigits, maxfractiondigits, minintegerdigits, maxintegerdigits, precision, rounding, zerodigitsign, and minussign.
+                    The <i>Currency</i> dataobject has the following properties: ID, name, iso_code, numeric_code, country, symbol, decimalseparator, groupingseparator, groupingsize, minfractiondigits, maxfractondigits, minintegerdigits, maxintegerdigits, precision, rounding, zerodigitssign, minussign.
                 </p>
                 <p>
-                    The currency dataproperty presently does not have its own templates, but uses those of the parent dropdown property.
+                    The Currency dataproperty presently does not have its own templates, but uses those of the parent objectref property.
                 </p>
                 <h3>Usage</h3>
                 <h4>Standalone</h4>
@@ -37,7 +37,7 @@
                     <strong>display_prop</strong>: string [default='name']&#160;Defines the object property to be displayed in the dropdown.
                 </li>
                 <li>
-                    <strong>store_prop</strong>: string [default='iso_code']&#160;Defines the object property to be used in the dropdown values.
+                    <strong>store_prop</strong>: string [default='locale']&#160;Defines the object property to be used in the dropdown values.
                 </li>
             </ul>
         </div>
