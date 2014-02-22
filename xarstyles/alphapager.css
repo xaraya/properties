@@ -12,7 +12,6 @@ div.listings-alphapager {
     margin-bottom: 1em;
 }
 div.listings-alphapager span {
-    font-weight: bold;
     float: left;
 }
 div.listings-alphapager ul, div.listings-alphapager li {
@@ -27,15 +26,14 @@ div.listings-alphapager li {
     margin: 0 0 0 -1px;
     padding: 0 .4em;
     background: none;
-    background-color: #eee;
-    border: 1px solid;
+    border: 1px;
     float: left;
     position: relative;
 }
 
 div.listings-alphapager li.listings-letter-active {
-    background-color: #fff;
 }
+
 div.listings-alphapager a {
     text-decoration: none;
 }
