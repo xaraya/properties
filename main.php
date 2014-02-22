@@ -90,6 +90,10 @@ class TimeFrameProperty extends DataProperty
         // If not displaying the dropdown, set some default values
         if (!in_array('dropdown',$data['show'])) $data['value'][2] = 0;
 
+        // If displaying the dropdown, give it precedence
+        if (in_array('dropdown',$data['show'])) 
+            list($data['value'][0],$data['value'][1]) = $this->settimeperiod($data['value'][2]);
+
         // The timeframes to show in the dropdown
         if (empty($data['frames'])) $data['frames'] = array();
         if (!empty($data['frames']) && !is_array($data['frames'])) $data['frames'] = explode(',',$data['frames']);
