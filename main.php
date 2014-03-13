@@ -86,6 +86,9 @@ class TimeFrameProperty extends DataProperty
         // The display widgets to show
         if (empty($data['show'])) $data['show'] = array('calendar');
         if (!empty($data['show']) && !is_array($data['show'])) $data['show'] = explode(',',$data['show']);
+
+        // Remove any stray blanks, etc.
+        foreach ($data['show'] as $k => $v) $data['show'][$k] = trim($v);
         
         // If not displaying the dropdown, set some default values
         if (!in_array('dropdown',$data['show'])) $data['value'][2] = 0;
