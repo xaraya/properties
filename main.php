@@ -67,9 +67,13 @@ class TimeFrameProperty extends DataProperty
 
     public function getValue()
     {
-        $value = unserialize($this->value);
-        if(!is_array($value))
+        try {
+            $value = unserialize($this->value);
+            if(!is_array($value))
+                $value = $this->default;
+        } catch (Exception $e) {
             $value = $this->default;
+        }
         return $value;
     }
 
