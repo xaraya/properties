@@ -74,6 +74,7 @@ class TimeFrameProperty extends DataProperty
         } catch (Exception $e) {
             $value = $this->default;
         }
+        if (!empty($value[2])) list($value[0],$value[1]) = $this->settimeperiod($value[2]);
         return $value;
     }
 
@@ -117,8 +118,8 @@ class TimeFrameProperty extends DataProperty
     public function showOutput(Array $data = array())
     {
         if (!isset($data['name'])) $data['name'] = 'dd_' . $this->id;
-        if (!isset($data['value'])) $data['value'] = $this->getValue();
-
+        if (!isset($data['value'])) $data['value'] = $this->default;
+        if (!is_array($data['value'])) $data['value'] = @unserialize($data['value']);
         return parent::showOutput($data);
     }
 
