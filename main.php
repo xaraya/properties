@@ -38,6 +38,7 @@ class CaptchaProperty extends DataProperty
         $securimage = new Securimage();
         if ($securimage->check($value) == false) {
             $this->invalid = xarML('The characters entered do not correspond to those on the image');
+            xarLog::message($this->invalid, XARLOG_LEVEL_ERROR);
             $this->value = null;
             return false;
         }
