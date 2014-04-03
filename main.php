@@ -43,6 +43,8 @@ class JQDateProperty extends DataProperty
         if(!isset($value)) $value = $this->getValue();
         else $this->setValue($value);
 
+        if (!parent::validateValue($value)) return false;
+
         try {
             $this->value = strtotime($this->value);
         } catch (Exception $e) {
