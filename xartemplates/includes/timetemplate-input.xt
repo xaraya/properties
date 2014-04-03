@@ -7,10 +7,13 @@
     <xar:if condition="!isset($style)">
         <xar:set name="style">""</xar:set>
     </xar:if>
+    <xar:if condition="!isset($class)">
+        <xar:set name="class">''</xar:set>
+    </xar:if>
 
     <xar:if condition="$layout eq 'default' OR $layout eq '' OR $layout eq 'byminute'">
         <xar:if condition="isset($dropdown) AND $dropdown">
-            <select name="#$name#_hour" id="#$id#_hour" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#">
+            <select name="#$name#_hour" id="#$id#_hour" tabindex="#$tabindex#" onchange="#$evt_change#" class="#$class#" style="#$style#">
                 <xar:for start="$i=0" test="$i lt 24" iter="$i++">
                     <xar:set name="val">"00".$i;$val=substr($val,strlen($val)-2)</xar:set>
                     <xar:if condition="$i eq $value['hour']">
@@ -25,7 +28,7 @@
                 <input type="hidden" name="#$name#_minute" id="#$id#_minute" tabindex="#$tabindex#" value="1"/>
             <xar:else/>
                 &#160;:&#160;
-                <select name="#$name#_minute" id="#$id#_minute" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#">
+                <select name="#$name#_minute" id="#$id#_minute" tabindex="#$tabindex#" onchange="#$evt_change#" class="#$class#" style="#$style#">
                     <xar:for start="$i=0" test="$i lt 60" iter="$i++">
                         <xar:set name="val">"00".$i;$val=substr($val,strlen($val)-2)</xar:set>
                         <xar:if condition="$i eq $value['minute']">
@@ -41,7 +44,7 @@
                 <input type="hidden" name="#$name#_second" id="#$id#_second" tabindex="#$tabindex#" value="1"/>
             <xar:else/>
                 &#160;:&#160;
-                <select name="#$name#_second" id="#$id#_second" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#">
+                <select name="#$name#_second" id="#$id#_second" tabindex="#$tabindex#" onchange="#$evt_change#" class="#$class#" style="#$style#">
                     <xar:for start="$i =1" test="$i lt 61" iter="$i++">
                         <xar:set name="val">"00".$i;$val=substr($val,strlen($val)-2)</xar:set>
                         <xar:if condition="$i eq $value['second']">
