@@ -59,7 +59,6 @@ class DateProperty extends DataProperty
     public function showInput(Array $data = array())
     {
         $data['value'] = $this->getvaluearray($data);
-
         if(!isset($data['onchange'])) $data['onchange'] = null; // let tpl decide what to do
         $data['extraparams'] =!empty($extraparams) ? $extraparams : "";
         
@@ -83,6 +82,7 @@ class DateProperty extends DataProperty
             $value = $data['value'];
         }
         if (empty($value)) {
+            $data['value'] = array();
             $data['value']['date'] = "";
         } else {
             sys::import('xaraya.structures.datetime');
