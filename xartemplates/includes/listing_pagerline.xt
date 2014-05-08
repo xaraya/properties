@@ -22,7 +22,7 @@
                         )
                     </xar:set>
                     Show&#160;
-                    <xar:data-input type="dropdown" name="items_per_page" value="$items_per_page" options="$options" onchange="javascript: submit()"/>
+                    <xar:data-input type="dropdown" name="items_per_page" value="$items_per_page" options="$options" onchange="javascript: submit()" style="width: 50px"/>
                     &#160;items
                 </div>
             </xar:if>
