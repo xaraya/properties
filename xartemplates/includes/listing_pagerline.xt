@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:set name="url">xarServer::getCurrentURL($params)</xar:set>
-    <xar:if condition="($items_per_page lt $total)">
         <form action="#$url#" method="post" style="clear: both">
-            <div class="xar-align-center">
-                <xar:data-input type="pager" url="$url" items_per_page ="$items_per_page" startnum="$startnum" itemstotal="$total"/>
-            </div>
+            <xar:if condition="($items_per_page lt $total)">
+                <div class="xar-align-center">
+                    <xar:data-input type="pager" url="$url" items_per_page ="$items_per_page" startnum="$startnum" itemstotal="$total"/>
+                </div>
+            </xar:if>
             <xar:if condition="$show_items_per_page">
                 <div class="xar-align-center">
                     <xar:set name="options">array(
@@ -27,5 +28,4 @@
                 </div>
             </xar:if>
         </form>
-    </xar:if>
 </xar:template>
