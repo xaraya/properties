@@ -6,7 +6,7 @@
         <div class="xar-pager">
             <xar:if condition="$totalpages gt 1">
                 <xar:if condition="$currentpagenum ne $firstpagenum">
-                    &#160;&#160;<a title="#xarML('First page')#" href="#$firsturl#" class="refresh_url">|&lt;</a>
+                    &#160;&#160;<a title="#xarML('First page')#" href="#$firsturl#" class="refresh_listing">|&lt;</a>
                 <xar:else />
                     &#160;&#160;<span title="#xarML('First page')#">|&lt;</span>
                 </xar:if>
@@ -18,7 +18,7 @@
                     xarML('Previous #(1) pages',$prevblockpages)
                 </xar:set>
                 <xar:if condition="$currentblock ne $firstblock">
-                    &#160;&#160;<a title="#$prevblocklabel#" href="#$prevblockurl#" class="refresh_url">&lt;&lt;</a>
+                    &#160;&#160;<a title="#$prevblocklabel#" href="#$prevblockurl#" class="refresh_listing">&lt;&lt;</a>
                 <xar:else />
                     &#160;&#160;<span title="#$prevblocklabel#">&lt;&lt;</span>
                 </xar:if>
@@ -30,7 +30,7 @@
                     xarML('Previous #(1) items',$prevpageitems)
                 </xar:set>
                 <xar:if condition="$prevpageitems gt 0">
-                    &#160;&#160;<a title="#$prevpagelabel#" href="#$prevpageurl#" class="refresh_url">&lt;</a>
+                    &#160;&#160;<a title="#$prevpagelabel#" href="#$prevpageurl#" class="refresh_listing">&lt;</a>
                 <xar:else />
                     &#160;&#160;<span title="#$prevpagelabel#">&lt;</span>
                 </xar:if>
@@ -47,8 +47,8 @@
                             xarML('Page #(1)',$pagenumber)
                         </xar:set>
                     </xar:if>
-                    &#160;&#160;<a href="#$pageurl#" title="#$pageurllabel#" class="refresh_url">#$pagenumber#</a>
-                    <!-- &#160;&#160;<a href="#$pageurl#" class="refresh_url">[#$middleitemsfrom[$pagenumber]#-#$middleitemsto[$pagenumber]#]</a> -->
+                    &#160;&#160;<a href="#$pageurl#" title="#$pageurllabel#" class="refresh_listing">#$pagenumber#</a>
+                    <!-- &#160;&#160;<a href="#$pageurl#" class="refresh_listing">[#$middleitemsfrom[$pagenumber]#-#$middleitemsto[$pagenumber]#]</a> -->
                 <xar:else />
                     <xar:set name="pageurllabel">
                         xarML('Page #(1)',$pagenumber)
@@ -64,7 +64,7 @@
                     xarML('Next page; #(1) items',$nextpageitems)
                 </xar:set>
                 <xar:if condition="$nextpageitems gt 0">
-                    &#160;&#160;<a title="#$nextpagelabel#" href="#$nextpageurl#" class="refresh_url">&gt;</a>
+                    &#160;&#160;<a title="#$nextpagelabel#" href="#$nextpageurl#" class="refresh_listing">&gt;</a>
                 <xar:else />
                     &#160;&#160;<span title="#$nextpagelabel#">&gt;</span>
                 </xar:if>
@@ -76,7 +76,7 @@
                     xarML('Next #(1) pages',$nextblockpages)
                 </xar:set>
                 <xar:if condition="$currentblock ne $lastblock">
-                    &#160;&#160;<a title="#$nextblocklabel#" href="#$nextblockurl#" class="refresh_url">&gt;&gt;</a>
+                    &#160;&#160;<a title="#$nextblocklabel#" href="#$nextblockurl#" class="refresh_listing">&gt;&gt;</a>
                 <xar:else/>
                     &#160;&#160;<span title="#$nextblocklabel#">&gt;&gt;</span>
                 </xar:if>
@@ -85,7 +85,7 @@
             <!-- Display last-page link or text if there is more than one page -->
             <xar:if condition="$totalpages gt 1">
                 <xar:if condition="$currentpagenum ne $lastpagenum">
-                    &#160;&#160;<a title="#xarML('Last page')#" href="#$lasturl#" class="refresh_url">&gt;|</a>
+                    &#160;&#160;<a title="#xarML('Last page')#" href="#$lasturl#" class="refresh_listing">&gt;|</a>
                 <xar:else />
                     &#160;&#160;<span title="#xarML('Last page')#">&gt;|</span>
                 </xar:if>
