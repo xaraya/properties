@@ -5,7 +5,7 @@
     <xar:else/>
       <xar:set name="evt_change">'return true;'</xar:set>
     </xar:if>
-    #$value['date']#
+    <xar:var name="value.date"/>
 
     <xar:if condition="!empty($invalid)">
         <span class="xar-error">#$invalid#</span>
