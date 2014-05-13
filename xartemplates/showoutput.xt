@@ -11,9 +11,9 @@
     </xar:if>
     <xar:if condition="!empty($style)">
         <span style="#$style#">
-            #$value#
+            <xar:var name="value"/>
         </span>
     <xar:else/>
-        #$value#
+        <xar:var name="value"/>
     </xar:if>
 </xar:template>
