@@ -19,7 +19,7 @@
             <input name="#$id#_lat" id="lat_#$id#" hidden="hidden" value="#$value['lat']#"/>
             <input name="#$id#_lng" id="lng_#$id#" hidden="hidden" value="#$value['lng']#"/>
             <input name="#$id#_type" id="type_#$id#" hidden="hidden" value="#$value['type']#"/>
-            #$value['address']#
+            <xar:var name="value.address"/>
 -->
             <xar:set name="lat">#$value['lat']#</xar:set>
             <xar:set name="lng">#$value['lng']#</xar:set>
