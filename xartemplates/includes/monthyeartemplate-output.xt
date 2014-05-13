@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    #$value['month']#/#$value['year']#
+    <xar:var name="value.month"/>/<xar:var name="value.year"/>
 </xar:template>
