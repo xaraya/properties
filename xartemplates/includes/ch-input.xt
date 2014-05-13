@@ -16,7 +16,7 @@
             <div class="xar-col">
                 <label for="#$name#_city">
                     <xar:if condition="empty($labels[$fieldname])"><xar:var name="label">Street</xar:var><xar:set name="labels[$fieldname]">$label</xar:set></xar:if>
-                    #$labels[$fieldname]#
+                    <xar:var name="labels.$fieldname"/>
                 </label>
             </div>
             <div class="xar-col">
@@ -29,7 +29,7 @@
         <div class="xar-row">
             <div class="xar-col">
                 <label for="#$name#_postal_code">
-                    #$labels['postal_code']#
+                    <xar:var name="labels.postal_code"/>
                 </label>
             </div>
             <div class="xar-col">
@@ -42,7 +42,7 @@
         <div class="xar-row">
             <div class="xar-col">
                 <label for="#$name#_city">
-                    #$labels['city']#
+                    <xar:var name="labels.city"/>
                 </label>
             </div>
             <div class="xar-col">
@@ -58,7 +58,7 @@
         <div class="xar-row">
             <div class="xar-col">
                 <label for="#$name#_country">
-                    #$labels['country']#
+                    <xar:var name="labels.country"/>
                 </label>
             </div>
             <div class="xar-col">
