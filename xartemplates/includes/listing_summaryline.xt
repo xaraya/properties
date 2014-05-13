@@ -37,7 +37,7 @@
                 <xar:mlvar>#$total#</xar:mlvar>
               </xar:ml>
             <xar:else />
-               Total selected: #$total#
+               Total selected: <xar:var name="total"/>
             </xar:if>
         </div>
     <xar:else />
@@ -49,7 +49,7 @@
                 <xar:mlvar>#$total#</xar:mlvar>
               </xar:ml>
             <xar:else />
-               Total selected: #$total#
+               Total selected: <xar:var name="total"/>
             </xar:if>
         </div>
         <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
