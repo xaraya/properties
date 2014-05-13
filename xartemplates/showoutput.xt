@@ -3,5 +3,5 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
     <!-- #xarLocaleFormatDate('short',$value)# -->
-    #$value#
+    <xar:var name="value."/>
 </xar:template>
