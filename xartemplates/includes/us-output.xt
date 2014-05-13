@@ -9,7 +9,7 @@
             <xar:if condition="!isset($value[$fieldname])">
                 <xar:break />
             </xar:if>
-            <span class="street-address">#$value[$fieldname]#</span>
+            <span class="street-address"><xar:var name="value.$fieldname"/></span>
         </xar:while>
 
         <xar:set name="newline">1</xar:set>
@@ -19,7 +19,7 @@
                 <br/>
                 <xar:set name="newline">0</xar:set>
             </xar:if>
-            <span class="locality">#$value['city']#</span>
+            <span class="locality"><xar:var name="value.city"/></span>
         </xar:if>
 
         <xar:if condition="!empty($show_province)">
@@ -35,8 +35,8 @@
             <xar:if condition="$newline">
                 <br/>
                 <xar:set name="newline">0</xar:set>
-            </xar:if>
-            <span class="postal-code">#$value['postal_code']#</span>
+            </xar:if>&#160;
+            <span class="postal-code"><xar:var name="value.postal_code"/></span>
         </xar:if>
 
         <xar:if condition="!empty($show_country)">
