@@ -23,6 +23,8 @@ class TimeFrameProperty extends DataProperty
 
     private $default;
     
+    public $display_timeframe_displays = array("calendar");
+    
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
@@ -89,7 +91,7 @@ class TimeFrameProperty extends DataProperty
         if (!isset($data['value'])) $data['value'] = $this->getValue();
         
         // The display widgets to show
-        if (empty($data['show'])) $data['show'] = array('calendar');
+        if (empty($data['show'])) $data['show'] = $this->display_timeframe_displays;
         if (!empty($data['show']) && !is_array($data['show'])) $data['show'] = explode(',',$data['show']);
 
         // Remove any stray blanks, etc.

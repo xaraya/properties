@@ -1,0 +1,11 @@
+<items>
+  <configurations itemid="566">
+    <id>566</id>
+    <name>display_timeframe_displays</name>
+    <label>Display Type</label>
+    <description>Whether the calendar, dropdown or both are displayed</description>
+    <property_id>2</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
+</items>
