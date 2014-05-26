@@ -4,7 +4,10 @@
         <h2>Province Property</h2>
             <h3>Description</h3>
             <p>
-                The Province dataproperty is a dropdown widget that displays a list of provinces of a specific country.
+                The Province dataproperty is a dropdown widget that displays a list of provinces of one or more countries.
+            </p>
+            <p>
+                If the property does not have a list of provinces corresponding to the country or countries specified, it will default to a text input field.
             </p>
             <h3>Usage</h3>
             <h4>Standalone</h4>

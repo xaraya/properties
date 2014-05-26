@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="!empty($options)">
+        <xar:var name="firstline">Choose a region</xar:var>
+        <xar:set name="firstline">"0,$firstline"</xar:set>
+        <xar:data-input type="dropdown" name="$name" id="$name" value="$value" options="$options" firstline="$firstline"/>
+    <xar:else/>
+        <xar:data-input type="textbox" name="$name" id="$name" value="$value"/>
+    </xar:if>
+    <xar:template file="dataproperty_additions" module="base"/>
+</xar:template>

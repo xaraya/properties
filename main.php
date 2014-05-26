@@ -10,14 +10,14 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <mfl@netspan.ch>
  */
-sys::import('modules.base.xarproperties.dropdown');
+sys::import('modules.dynamicdata.class.properties.base');
 
 /**
  * Handle the Province property
  *
  * Show a dropdown of provinces for a given country
  */
-class ProvinceProperty extends SelectProperty
+class ProvinceProperty extends DataProperty
 {
     public $id         = 30105;
     public $name       = 'province';
@@ -30,14 +30,16 @@ class ProvinceProperty extends SelectProperty
     {
         parent::__construct($descriptor);
 
+        $this->tplmodule = 'auto';
+        $this->template =  'province';
         $this->filepath   = 'auto';
     }
 
     public function showInput(Array $data = array())
     {
         if (empty($data['country'])) $data['country'] = $this->initialization_province_country;
-        $data['options'] = $this->getFirstline();
         $countries = explode(',',$data['country']);
+        $data['options'] = array();
         foreach ($countries as $country) {
             try {
                 sys::import('properties.province.data.' . $country);
@@ -46,7 +48,6 @@ class ProvinceProperty extends SelectProperty
                     $data['options'] = array_merge($data['options'], $func());
             } catch (Exception $e) {}
         }
-        
         return parent::showInput($data);
     }
  }
