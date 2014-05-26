@@ -1,87 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:if condition="empty($labels['city'])"><xar:var name="label">City</xar:var><xar:set name="labels['city']">$label</xar:set></xar:if>
-    <xar:if condition="empty($labels['province'])"><xar:var name="label">State</xar:var><xar:set name="labels['province']">$label</xar:set></xar:if>
-    <xar:if condition="empty($labels['postal_code'])"><xar:var name="label">Postal Code</xar:var><xar:set name="labels['postal_code']">$label</xar:set></xar:if>
-    <xar:if condition="empty($labels['country'])"><xar:var name="label">Country</xar:var><xar:set name="labels['country']">$label</xar:set></xar:if>
-
-    <xar:set name="lineindex">0</xar:set>
-    <xar:while condition="1">
-        <xar:set name="lineindex">$lineindex + 1</xar:set>
-        <xar:set name="fieldname">'line_'. $lineindex</xar:set>
-        <xar:if condition="!isset($value[$fieldname])">
-            <xar:break />
-        </xar:if>
+    <xar:if condition="!empty($value['street'])">
         <div class="xar-row">
             <div class="xar-col">
-                <label for="#$name#_city">
-                    <xar:if condition="empty($labels[$fieldname])"><xar:var name="label">Street</xar:var><xar:set name="labels[$fieldname]">$label</xar:set></xar:if>
-                    <xar:var name="labels.$fieldname"/>
+                <label for="#$name#_street">
+                    <xar:var name="value.street.label"/>
                 </label>
             </div>
             <div class="xar-col">
-                <input type="text" name="#$name#_line_#$lineindex#" id="#$id#_line_#$lineindex#" value="#$value[$fieldname]#"/>
+                <input type="text" name="#$name#_street" id="#$id#_street" value="#$value['street']['value']#"/>
             </div>
         </div>
-    </xar:while>
+    </xar:if>
 
-    <xar:if condition="!empty($show_postal_code)">
+    <xar:if condition="!empty($value['postal_code'])">
         <div class="xar-row">
             <div class="xar-col">
                 <label for="#$name#_postal_code">
-                    <xar:var name="labels.postal_code"/>
+                    <xar:var name="value.postal_code.label"/>
                 </label>
             </div>
             <div class="xar-col">
-                <input type="text" name="#$name#_postal_code" id="#$id#_postal_code" value="#$value['postal_code']#"/>
+                <input type="text" name="#$name#_postal_code" id="#$id#_postal_code" value="#$value['postal_code']['value']#"/>
             </div>
         </div>
     </xar:if>
     
-    <xar:if condition="!empty($show_city)">
+    <xar:if condition="!empty($value['city'])">
         <div class="xar-row">
             <div class="xar-col">
                 <label for="#$name#_city">
-                    <xar:var name="labels.city"/>
+                    <xar:var name="value.city.label"/>
                 </label>
             </div>
             <div class="xar-col">
-                <input type="text" name="#$name#_city" id="#$id#_city" value="#$value['city']#"/>
+                <input type="text" name="#$name#_city" id="#$id#_city" value="#$value['city']['value']#"/>
             </div>
         </div>
     </xar:if>
     
-    <!-- Don't show the canton dropdown -->
-    <input type="text" name="#$name#_show_province" id="#$id#_show_province" value="0" hidden="hidden"/>
-    
-    <xar:if condition="!empty($show_country)">
+    <xar:if condition="!empty($value['region'])">
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="#$name#_region">
+                    Canton
+                </label>
+            </div>
+            <div class="xar-col">
+                <xar:var name="firstline">Choose a canton</xar:var>
+                <xar:set name="firstline">"0,$firstline"</xar:set>
+                <xar:set name="regionname">$name . '_region'</xar:set>
+                <xar:data-input type="province" name="$regionname" value="$value['region']['value']" country="$value['country']['value']" firstline="$firstline"/>
+            </div>
+        </div>
+    </xar:if>
+
+    <xar:if condition="!empty($value['country'])">
         <div class="xar-row">
             <div class="xar-col">
                 <label for="#$name#_country">
-                    <xar:var name="labels.country"/>
+                    <xar:var name="value.country.label"/>
                 </label>
             </div>
             <div class="xar-col">
                 <xar:var name="firstline">Choose a country</xar:var>
                 <xar:set name="firstline">"0,$firstline"</xar:set>
                 <xar:set name="countryname">$name . '_country'</xar:set>
-                <xar:data-input type="countrylisting" name="$countryname" value="$value['country']" firstline="$firstline"/>
+                <xar:data-input type="countrylisting" name="$countryname" value="$value['country']['value']" firstline="$firstline"/>
             </div>
-        </div>
-    </xar:if>
-    
-    <xar:if condition="!empty($invalid)">
-        <xar:set name="keys">var_dump($invalid)</xar:set>
-        <xar:set name="keys">explode(',',$invalid)</xar:set>
-        <xar:set name="badlabels">array()</xar:set>
-        <xar:foreach in="$keys" value="$key">
-            <xar:set name="dummy">1;$badlabels[] = $labels[$key]</xar:set>
-        </xar:foreach>
-        <div>
-            <xar:set name="invalid">implode(', ',$badlabels)</xar:set>        
-            <span class="xar-error">
-                The following fields are not filled out correctly::#$invalid#
-            </span>
         </div>
     </xar:if>
 </xar:template>

@@ -9,6 +9,10 @@
         <xar:set name="style">''</xar:set>
     </xar:if>
 
-    <xar:set name="filename">$country_layout . '-output'</xar:set>
-    <xar:template file="$filename"/>
+    <xar:if condition="$layout eq 'default' OR $layout eq ''">
+        <xar:var name="value"/>
+    <xar:elseif condition="$layout eq 'country'"/>
+        <xar:template file="$country_template"/>
+    <xar:else/>
+    </xar:if>
 </xar:template>

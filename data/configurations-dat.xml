@@ -1,26 +1,14 @@
 <items>
   <configurations>
-    <name>display_show_city</name>
-    <label>Display City</label>
-    <description>Display the city part of the address</description>
-    <property_id>14</property_id>
+    <name>display_address_components</name>
+    <label>Address Components</label>
+    <description>The components and their display labels of this property</description>
+    <property_id>3</property_id>
   </configurations>
   <configurations>
-    <name>display_show_province</name>
-    <label>Display State/Province</label>
-    <description>Display the state/province part of the address</description>
-    <property_id>14</property_id>
-  </configurations>
-  <configurations>
-    <name>display_show_postal_code</name>
-    <label>Display Postal Code</label>
-    <description>Display the postal code part of the address</description>
-    <property_id>14</property_id>
-  </configurations>
-  <configurations>
-    <name>display_show_country</name>
-    <label>Display Country</label>
-    <description>Display the country part of the address</description>
-    <property_id>14</property_id>
+    <name>display_address_default_country</name>
+    <label>Default Country</label>
+    <description>The country to display as default in the country listing</description>
+    <property_id>42</property_id>
   </configurations>
 </items>

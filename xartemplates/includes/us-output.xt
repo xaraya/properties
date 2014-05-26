@@ -1,51 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <span class="adr">
+        <xar:if condition="!empty($value['street']['value'])">
+            <span class="street-address">#$value['street']['value']#</span>
+            <xar:set name="newline">1</xar:set>
+        </xar:if>
 
-        <xar:set name="lineindex">0</xar:set>
-        <xar:while condition="1">
-            <xar:set name="lineindex">$lineindex + 1</xar:set>
-            <xar:set name="fieldname">'line_'. $lineindex</xar:set>
-            <xar:if condition="!isset($value[$fieldname])">
-                <xar:break />
-            </xar:if>
-            <span class="street-address"><xar:var name="value.$fieldname"/></span>
-        </xar:while>
-
-        <xar:set name="newline">1</xar:set>
-
-        <xar:if condition="!empty($show_city)">
+        <xar:if condition="!empty($value['city']['value'])">
             <xar:if condition="$newline">
                 <br/>
                 <xar:set name="newline">0</xar:set>
             </xar:if>
-            <span class="locality"><xar:var name="value.city"/></span>
+            <span class="locality"><xar:var name="value.city.value"/></span>
         </xar:if>
 
-        <xar:if condition="!empty($show_province)">
+        <xar:if condition="!empty($value['region']['value'])">
             <xar:if condition="$newline">
                 <br/>
                 <xar:set name="newline">0</xar:set>
             </xar:if>
-            <xar:if condition="!empty($show_city)">,&#160;</xar:if>
-            <span class="region"><xar:data-output type="province" value="$value['province']" country="$layout"/></span>
+            <xar:if condition="!empty($value['city']['value'])">,</xar:if>
+            <span class="region"><xar:data-output type="province" value="$value['region']['value']" country="$layout"/></span>
         </xar:if>
 
-        <xar:if condition="!empty($show_postal_code)">
+        <xar:if condition="!empty($value['postal_code']['value'])">
             <xar:if condition="$newline">
                 <br/>
                 <xar:set name="newline">0</xar:set>
-            </xar:if>&#160;
-            <span class="postal-code"><xar:var name="value.postal_code"/></span>
+            </xar:if>
+            <span class="postal-code"><xar:var name="value.postal_code.value"/></span>
         </xar:if>
 
-        <xar:if condition="!empty($show_country)">
+        <xar:if condition="!empty($value['country']['value'])">
             <xar:if condition="!$newline">
                 <br/>
                 <xar:set name="newline">0</xar:set>
             </xar:if>
-            <span class="country"><xar:data-output type="countrylisting" value="$value['country']"/></span>
+            <span class="country"><xar:data-output type="countrylisting" value="$value['country']['value']"/></span>
         </xar:if>
     </span>
-    <xar:template file="dataproperty_additions" module="base"/>
 </xar:template>

@@ -9,6 +9,32 @@
         <xar:set name="style">''</xar:set>
     </xar:if>
 
-    <xar:set name="filename">$country_layout . '-input'</xar:set>
-    <xar:template file="$filename"/>
+    <xar:if condition="$layout eq 'default' OR $layout eq ''">
+        <xar:if condition="!empty($address_components)">
+            <xar:foreach in="$address_components" key="$k" value="$v">
+                <div class="xar-row">
+                    <div class="xar-col">
+                        <xar:data-label label="$v['name']" for="id"/>
+                    </div>
+                    <xar:foreach in="$value" value="$part">
+                        <xar:if condition="$part['id'] eq $v['id']">
+                            <div class="xar-col">
+                                <xar:set name="namestring">$name . '_' . $v['id']</xar:set>
+                                <xar:if condition="$part['id'] eq 'country'">
+                                    <xar:data-input type="countrylisting" name="$namestring" id="$namestring" value="$part['name']"/>
+                                <xar:else/>
+                                    <xar:data-input type="textbox" name="$namestring" id="$namestring" value="$part['name']"/>
+                                </xar:if>
+                                <xar:break/>
+                            </div>
+                        </xar:if>
+                    </xar:foreach>
+                </div>
+            </xar:foreach>
+        </xar:if>
+    <xar:elseif condition="$layout eq 'country'"/>
+        <xar:template file="$country_template"/>
+    <xar:else/>
+    </xar:if>
+    <xar:template file="dataproperty_additions" module="base"/>
 </xar:template>
