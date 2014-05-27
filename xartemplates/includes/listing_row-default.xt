@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <tr>
+    <xar:set name="trid">'row-' . $loopitem[$primaryalias]</xar:set>
+    <tr id="#$trid#">
         <xar:template file="listing_rowprefix" module="$module" property="listing"/>
         <xar:foreach in="$fieldnames" key="$field">
             <xar:set name="formfieldname">$formfieldnames[$field] . '[' . $loopindex . ']'</xar:set>

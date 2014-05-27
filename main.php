@@ -95,7 +95,7 @@ Notes:
         if (!isset($data['show_alphabet'])) $data['show_alphabet'] = $this->display_show_alphabet;
         if (!isset($data['showall_tab'])) $data['showall_tab'] = $this->display_showall_tab;
         if (!isset($data['showother_tab'])) $data['showother_tab'] = $this->display_showother_tab;
-        
+
         // give the template the alphabet chars
         $data['alphabet'] = $this->alphabet;
 
@@ -501,7 +501,7 @@ Notes:
         xarSession::setVar('listing.' . $objectname,serialize($object->dataquery));
         
         // Set the number of lines to display
-        if (!empty($this->display_items_per_page)) $object->dataquery->setrowstodo($this->display_items_per_page);
+        if (!empty($data['items_per_page'])) $object->dataquery->setrowstodo($data['items_per_page']);
 
         // The record to start at needs to come from the template or from the session var
         $object->dataquery->setstartat($startnum);
@@ -529,7 +529,7 @@ Notes:
         // Just force it for now
         $data['total'] = $object->dataquery->getrows();
     } else {
-        if (!empty($this->display_items_per_page)) {
+        if (!empty($data['items_per_page'])) {
             // items were passed, but we need to get the correct subset
             // first get the total
             $data['total'] = count($items);
@@ -603,6 +603,25 @@ Notes:
         return $data;
     }
 
+/*
+ * Checks whether the AJAX request is an update or not
+ * "confirm=1" in the AJAX request signals this is an update
+ */
+    public function ajaxConfirm($flag='confirm')
+    {
+        if (xarController::$request->isAjax()) {
+            if(!xarVarFetch($flag, 'int', $confirm, 0, XARVAR_NOT_REQUIRED)) {return false;}
+            return $confirm;
+        } else {
+            return false;
+        }
+    }
+
+/*
+ * Repopulates the output template and sends the putput to the browser
+ * TODO: allow overrides (module, theme) for the showoutput template.
+ * Right now the template inthe property is used, although included templates cna be overrides
+ */
     public function ajaxRefresh($data=array())
     {
         if (xarController::$request->isAjax()) {
