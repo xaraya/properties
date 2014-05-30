@@ -127,6 +127,14 @@ class AddressProperty extends TextBoxProperty
 
     public function showInput(Array $data = array())
     {
+        if (isset($data['module'])) {
+            $this->module = $data['module'];
+        } else {
+            $info = xarController::$request->getInfo();
+            $this->module = $info[0];
+            $data['module'] = $this->module;
+        }
+
         if (empty($data['address_components'])) $data['address_components'] = $this->display_address_components;
         else $this->display_address_components = $data['address_components'];
         $data['address_components'] = $this->getAddressComponents($data['address_components']);

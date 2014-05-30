@@ -33,7 +33,7 @@
             </xar:foreach>
         </xar:if>
     <xar:elseif condition="$layout eq 'country'"/>
-        <xar:template file="$country_template"/>
+        <xar:template file="$country_template" module="$module" property="address"/>
     <xar:else/>
     </xar:if>
     <xar:template file="dataproperty_additions" module="base"/>
