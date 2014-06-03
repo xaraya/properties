@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:style scope="property" property="name" file="label"/>
+    <xar:javascript filename="label.js" property="name" position="head"/>
+    <xar:style scope="property" property="name" file="label"/>
+
     <xar:if condition="isset($onchange)">
       <xar:set name="evt_change">$onchange</xar:set>
     <xar:else/>
@@ -21,7 +23,7 @@
                         <xar:else/>
                             <label class="input">
                                 <span>#$v['name']#</span>
-                                <xar:data-input type="textbox" name="$namestring" id="$namestring" value="$part['name']"/>&#160;
+                                <xar:data-input type="textbox" name="$namestring" id="$namestring" value="$part['name']" />&#160;
                             </label>
                         </xar:if>
                         <xar:break/>
