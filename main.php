@@ -134,7 +134,6 @@ class AddressProperty extends TextBoxProperty
             $this->module = $info[0];
             $data['module'] = $this->module;
         }
-
         if (empty($data['address_components'])) $data['address_components'] = $this->display_address_components;
         else $this->display_address_components = $data['address_components'];
         $data['address_components'] = $this->getAddressComponents($data['address_components']);
@@ -160,7 +159,9 @@ class AddressProperty extends TextBoxProperty
                 $data['country_template'] = 'default-input';
             }
         }
-        
+
+        if(empty($data['value']['country']['value'])) $data['value']['country']['value'] = $this->display_address_default_country;
+
         return DataProperty::showInput($data);
     }
     
