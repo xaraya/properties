@@ -38,7 +38,7 @@ class AddressProperty extends TextBoxProperty
     public $desc       = 'Address';
     public $reqmodules = array();
 
-    public $display_address_components = 'street,Street;city,City;postal_code,Postal Code;region,Region;country,Country;';
+    public $display_address_components = 'company,Company;street,Street;city,City;postal_code,Postal Code;region,Region;country,Country;';
     public $display_address_default_country = 'us';
     public $validation_ignore_validations;
 
@@ -134,6 +134,7 @@ class AddressProperty extends TextBoxProperty
             $this->module = $info[0];
             $data['module'] = $this->module;
         }
+        
         if (empty($data['address_components'])) $data['address_components'] = $this->display_address_components;
         else $this->display_address_components = $data['address_components'];
         $data['address_components'] = $this->getAddressComponents($data['address_components']);
@@ -167,6 +168,14 @@ class AddressProperty extends TextBoxProperty
     
     public function showOutput(Array $data = array())
     {
+        if (isset($data['module'])) {
+            $this->module = $data['module'];
+        } else {
+            $info = xarController::$request->getInfo();
+            $this->module = $info[0];
+            $data['module'] = $this->module;
+        }
+
         if (empty($data['address_components'])) $data['address_components'] = $this->display_address_components;
         else $this->display_address_components = $data['address_components'];
         $data['address_components'] = $this->getAddressComponents($data['address_components']);

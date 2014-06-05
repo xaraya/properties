@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <span class="adr">
+        <xar:set name="newline">0</xar:set>
+        <xar:if condition="!empty($value['company']['value'])">
+            <span class="company-address">#$value['company']['value']#</span>
+            <xar:set name="newline">1</xar:set>
+        </xar:if>
+
         <xar:if condition="!empty($value['street']['value'])">
+            <xar:if condition="$newline">
+                <br/>
+                <xar:set name="newline">0</xar:set>
+            </xar:if>
             <span class="street-address">#$value['street']['value']#</span>
             <xar:set name="newline">1</xar:set>
         </xar:if>

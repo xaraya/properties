@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="!empty($value['company'])">
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="#$name#_company">
+                    <xar:var name="value.company.label"/>
+                </label>
+            </div>
+            <div class="xar-col">
+                <input type="text" name="#$name#_company" id="#$id#_company" value="#$value['company']['value']#"/>
+            </div>
+        </div>
+    </xar:if>
+
     <xar:if condition="!empty($value['street'])">
         <div class="xar-row">
             <div class="xar-col">
