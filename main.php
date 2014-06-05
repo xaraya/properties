@@ -106,7 +106,7 @@ Notes:
     //--- 0. Local parameters
         $tablename = 'ft';
         $baddatastores = array('_dynamic_data_','_dummy_');
-        $baddatasources = array('dynamic_data','dummy','modulevars','');
+        $baddatasources = array('dynamic_data','dummy','modulevars');
 
     //--- 1. Get the args passed to this function
 
@@ -235,6 +235,10 @@ Notes:
             // Ignore fields with "bad" data sources for now
             if (in_array($property->source, $baddatasources)) continue;
 
+            // if the property source is "None", then only include it if an $items param was passed
+            // We don't want to run a query with such property
+            if (empty($property->source) && empty($data['items'])) continue;
+            
             // Special treatment if this is the primary key
             if ($property->type == 21) {
                 if ($fieldname == $object->primary) {
