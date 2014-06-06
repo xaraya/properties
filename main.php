@@ -202,7 +202,7 @@ class AddressProperty extends TextBoxProperty
             }
         } else {
             $data['value'] = $this->getValue();
-        }//var_dump($data['value']);
+        }
         
         return DataProperty::showOutput($data);
     }
@@ -216,7 +216,7 @@ class AddressProperty extends TextBoxProperty
         foreach ($components as $v) {
             $found = false;
             foreach ($value as $part) {
-                if ($part['id'] == $v['id']) {
+                if (isset($part['id']) && isset($v['id']) && ($part['id'] == $v['id'])) {
                     $valuearray[] = array('id' => $v['id'], 'name' => $part['name']);
                     $found = true;
                     break;
