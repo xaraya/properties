@@ -38,7 +38,7 @@ class AddressProperty extends TextBoxProperty
     public $desc       = 'Address';
     public $reqmodules = array();
 
-    public $display_address_components = 'company,Company;street,Street;city,City;postal_code,Postal Code;region,Region;country,Country;';
+    public $display_address_components = 'street,Street;city,City;postal_code,Postal Code;region,Region;country,Country;';
     public $display_address_default_country = 'us';
     public $validation_ignore_validations;
 
@@ -134,7 +134,6 @@ class AddressProperty extends TextBoxProperty
             $this->module = $info[0];
             $data['module'] = $this->module;
         }
-        
         if (empty($data['address_components'])) $data['address_components'] = $this->display_address_components;
         else $this->display_address_components = $data['address_components'];
         $data['address_components'] = $this->getAddressComponents($data['address_components']);
@@ -160,9 +159,7 @@ class AddressProperty extends TextBoxProperty
                 $data['country_template'] = 'default-input';
             }
         }
-
         if(empty($data['value']['country']['value'])) $data['value']['country']['value'] = $this->display_address_default_country;
-
         return DataProperty::showInput($data);
     }
     
@@ -175,7 +172,6 @@ class AddressProperty extends TextBoxProperty
             $this->module = $info[0];
             $data['module'] = $this->module;
         }
-
         if (empty($data['address_components'])) $data['address_components'] = $this->display_address_components;
         else $this->display_address_components = $data['address_components'];
         $data['address_components'] = $this->getAddressComponents($data['address_components']);
@@ -202,7 +198,7 @@ class AddressProperty extends TextBoxProperty
             }
         } else {
             $data['value'] = $this->getValue();
-        }
+        }//var_dump($data['value']);
         
         return DataProperty::showOutput($data);
     }
@@ -216,7 +212,7 @@ class AddressProperty extends TextBoxProperty
         foreach ($components as $v) {
             $found = false;
             foreach ($value as $part) {
-                if (isset($part['id']) && isset($v['id']) && ($part['id'] == $v['id'])) {
+                if ($part['id'] == $v['id']) {
                     $valuearray[] = array('id' => $v['id'], 'name' => $part['name']);
                     $found = true;
                     break;
