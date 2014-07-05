@@ -30,7 +30,7 @@
  * value of the country field, or fall back to the default display if no such display exists.
  *
  * The difference between the value arrays for country specific and default layouts stems primarily from the fact that
- * in the case of the latter, the sequence of fields is given by the oder in which they appear in the configuration.
+ * in the case of the latter, the sequence of fields is given by the order in which they appear in the configuration.
  */
 
 sys::import('modules.base.xarproperties.textbox');
