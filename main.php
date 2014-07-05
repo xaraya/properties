@@ -14,9 +14,13 @@
 /**
  * The property's value is stored as a serialized array of the form
  * array(
- *     [array('id' => <fieldname>, 'value' => <field value>)]      (one or more elements)
+ *     [array('id' => <field name>, 'value' => <field value>)]      (one or more elements)
  *
- * Default fields displayed are: street, city, region, postal_code, country
+ * The components the property can have are of the form
+ * array(
+ *     [array('id' => <component name>, 'name' => <component label>)]      (one or more elements)
+ * Default components displayed are: street, city, region, postal_code, country
+ * These are given by $this->display_address_components and can be configured
  *
  * The property has a notion of country and will display a country listing  when it encounters a field called "country"
  * The default layout displays all the fields in a column one below the other in the order configured
@@ -203,7 +207,7 @@ class AddressProperty extends TextBoxProperty
             }
         } else {
             $data['value'] = $this->getValue();
-        }//var_dump($data['value']);
+        }
         
         return DataProperty::showOutput($data);
     }
