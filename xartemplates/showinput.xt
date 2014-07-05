@@ -21,9 +21,9 @@
                             <div class="xar-col">
                                 <xar:set name="namestring">$name . '_' . $v['id']</xar:set>
                                 <xar:if condition="$part['id'] eq 'country'">
-                                    <xar:data-input type="countrylisting" name="$namestring" id="$namestring" value="$part['name']"/>
+                                    <xar:data-input type="countrylisting" name="$namestring" id="$namestring" value="$part['value']"/>
                                 <xar:else/>
-                                    <xar:data-input type="textbox" name="$namestring" id="$namestring" value="$part['name']"/>
+                                    <xar:data-input type="textbox" name="$namestring" id="$namestring" value="$part['value']"/>
                                 </xar:if>
                                 <xar:break/>
                             </div>
