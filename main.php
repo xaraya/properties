@@ -12,7 +12,7 @@
  */
 
 /**
- * The property is stored as a serialized array of the form
+ * The property's value is stored as a serialized array of the form
  * array(
  *     [array('id' => <fieldname>, 'name' => <field value>)]      (one or more elements)
  *
@@ -141,6 +141,11 @@ class AddressProperty extends TextBoxProperty
         if (isset($data['value'])) $this->value = $data['value'];
         $data['value'] = $this->getValueArray();
 
+        // Cater to values as simple strings (errors, old versions etc.)
+        if (!is_array($data['value'])) {
+            $data['value'] = array('id' => 'street', 'name' => $data['value']);
+        }
+        
         // For country specific layouts we need to reformat the value array
         if (empty($data['layout'])) $data['layout'] = $this->display_layout;
         else $this->display_layout = $data['layout'];
@@ -212,7 +217,7 @@ class AddressProperty extends TextBoxProperty
         foreach ($components as $v) {
             $found = false;
             foreach ($value as $part) {
-                if ($part['id'] == $v['id']) {
+                if (isset($part['id']) && ($part['id'] == $v['id'])) {
                     $valuearray[] = array('id' => $v['id'], 'name' => $part['name']);
                     $found = true;
                     break;
