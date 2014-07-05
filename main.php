@@ -14,7 +14,7 @@
 /**
  * The property's value is stored as a serialized array of the form
  * array(
- *     [array('id' => <fieldname>, 'name' => <field value>)]      (one or more elements)
+ *     [array('id' => <fieldname>, 'value' => <field value>)]      (one or more elements)
  *
  * Default fields displayed are: street, city, region, postal_code, country
  *
@@ -69,7 +69,7 @@ class AddressProperty extends TextBoxProperty
                 $isvalid = $textbox->checkInput($name . '_' . $field['id']);
                 $valid = $valid && $isvalid;
                 if ($isvalid) {
-                    $value[] = array('id' => $field['id'], 'name' => $textbox->value);
+                    $value[] = array('id' => $field['id'], 'value' => $textbox->value);
                 } else {
                     $invalid[] = strtolower($field['name']);
                 }
@@ -107,12 +107,12 @@ class AddressProperty extends TextBoxProperty
                 if ($part['id'] == 'country') {
                     $country = DataPropertyMaster::getProperty(array('name' => 'countrylisting'));
                     $country->validation_override = true;
-                    $country->value = $part['name'];
-                    $part['name'] = $country->getOption();
+                    $country->value = $part['value'];
+                    $part['value'] = $country->getOption();
                 }
-                $name = trim($part['name']);
-                if (empty($name)) continue;
-                if (empty($value)) $value = $name;
+                $tempvalue = trim($part['value']);
+                if (empty($tempvalue)) continue;
+                if (empty($value)) $value = $tempvalue;
                 else $value .= ', ' . $name;
             } catch (Exception $e) {}
         }
@@ -143,7 +143,7 @@ class AddressProperty extends TextBoxProperty
 
         // Cater to values as simple strings (errors, old versions etc.)
         if (!is_array($data['value'])) {
-            $data['value'] = array('id' => 'street', 'name' => $data['value']);
+            $data['value'] = array('id' => 'street', 'value' => $data['value']);
         }
         
         // For country specific layouts we need to reformat the value array
@@ -152,7 +152,7 @@ class AddressProperty extends TextBoxProperty
         if ($data['layout'] == 'country') {
             $newvalue = array();
             foreach ($data['value'] as $value) {
-                $newvalue[$value['id']]['value'] = $value['name'];
+                $newvalue[$value['id']]['value'] = $value['value'];
             }
             foreach ($data['address_components'] as $component) {
                 $newvalue[$component['id']]['label'] = $component['name'];
@@ -190,7 +190,7 @@ class AddressProperty extends TextBoxProperty
             $data['value'] = $this->getValueArray();
             $newvalue = array();
             foreach ($data['value'] as $value) {
-                $newvalue[$value['id']]['value'] = $value['name'];
+                $newvalue[$value['id']]['value'] = $value['value'];
             }
             foreach ($data['address_components'] as $component) {
                 $newvalue[$component['id']]['label'] = $component['name'];
@@ -218,12 +218,12 @@ class AddressProperty extends TextBoxProperty
             $found = false;
             foreach ($value as $part) {
                 if (isset($part['id']) && ($part['id'] == $v['id'])) {
-                    $valuearray[] = array('id' => $v['id'], 'name' => $part['name']);
+                    $valuearray[] = array('id' => $v['id'], 'value' => $part['value']);
                     $found = true;
                     break;
                 }
             }
-            if (!$found) $valuearray[] = array('id' => $v['id'], 'name' => '');
+            if (!$found) $valuearray[] = array('id' => $v['id'], 'value' => '');
         }
         return $valuearray;
     }
