@@ -11,8 +11,20 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
+/**
+ * The property's value is stored as a serialized array of the form
+ * array(
+ *     [array('id' => <field name>, 'value' => <field value>)]      (one or more elements)
+ *
+ * The components the property can have are of the form
+ * array(
+ *     [array('id' => <component name>, 'name' => <component label>)]      (one or more elements)
+ * Default components displayed are: salutation, first_name, last_name
+ * These are given by $this->display_name_components and can be configured
+ *
+ */
+
 sys::import('modules.base.xarproperties.textbox');
-sys::import('modules.dynamicdata.class.properties.interfaces');
 
 class NameProperty extends TextBoxProperty
 {
@@ -52,7 +64,7 @@ class NameProperty extends TextBoxProperty
                 $isvalid = $textbox->checkInput($name . '_' . $field['id']);
                 $valid = $valid && $isvalid;
                 if ($isvalid) {
-                    $value[] = array('id' => $field['id'], 'name' => $textbox->value);
+                    $value[] = array('id' => $field['id'], 'value' => $textbox->value);
                 } else {
                     $invalid[] = strtolower($field['name']);
                 }
@@ -78,6 +90,21 @@ class NameProperty extends TextBoxProperty
 
     public function showInput(Array $data = array())
     {
+        if (isset($data['value'])) $this->value = $data['value'];
+        $data['value'] = $this->getValueArray();
+
+        // Cater to values as simple strings (errors, old versions etc.)
+        if (!is_array($data['value'])) {
+            $data['value'] = array(array('id' => 'last_name', 'value' => $data['value']));
+        }
+
+        // Rework the arrays to put the id in the index
+        $newarray = array();
+        foreach($data['value'] as $value) {
+            $newarray[$value['id']] = $value;
+        }
+        $data['value'] = $newarray;
+
         if (empty($data['name_components'])) $data['name_components'] = $this->display_name_components;
         else $this->display_name_components = $data['name_components'];
         $data['name_components'] = $this->getNameComponents($data['name_components']);
@@ -85,65 +112,86 @@ class NameProperty extends TextBoxProperty
         if (empty($data['salutation_options'])) $data['salutation_options'] = $this->display_salutation_options;
         else $this->display_salutation_options = $data['salutation_options'];
         $data['salutation_options'] = $this->getSalutationOptions($data['salutation_options']);
-        
-        if (isset($data['value'])) $this->value = $data['value'];
-        $data['value'] = $this->getValueArray();
+
         return DataProperty::showInput($data);
     }
 
     public function showOutput(Array $data = array())
     {
+        if (isset($data['value'])) $this->value = $data['value'];
+        $data['value'] = $this->getValueArray();
+        
+        // Cater to values as simple strings (errors, old versions etc.)
+        if (!is_array($data['value'])) {
+            $this->display_name_components = 'last_name,Last Name;';
+            $data['value'] = array(array('id' => 'last_name', 'value' => $data['value']));
+        }
+
         if (empty($data['name_components'])) $data['name_components'] = $this->display_name_components;
         else $this->display_name_components = $data['name_components'];
         $data['name_components'] = $this->getNameComponents($data['name_components']);
 
+        // Rework the arrays to put the id in the index
+        $newarray = array();
+        foreach($data['name_components'] as $component) {
+            $newarray[$component['id']] = $component;
+        }
+        $data['name_components'] = $newarray;
+        
+        $newarray = array();
+        foreach($data['value'] as $value) {
+            $newarray[$value['id']] = $value;
+        }
+        $data['value'] = $newarray;
+
         if (empty($data['salutation_options'])) $data['salutation_options'] = $this->display_salutation_options;
         else $this->display_salutation_options = $data['salutation_options'];
         $data['salutation_options'] = $this->getSalutationOptions($data['salutation_options']);
-        
-        if (isset($data['value'])) $this->value = $data['value'];
-        $data['value'] = $this->getValue();
+
         return DataProperty::showOutput($data);
     }
 
     public function getValue()
     {
         $valuearray = $this->getValueArray();
+
         $value = '';
         foreach ($valuearray as $part) {
             try {
-                $name = trim($part['name']);
+                $name = trim($part['value']);
                 if (empty($name)) continue;
                 if (empty($value)) $value = $name;
                 else $value .= ' ' . $name;
             } catch (Exception $e) {}
-        }
+        }var_dump($value);exit;
         return $value;
     }
 
     function getValueArray()
     {
         $value = @unserialize($this->value);
-        if (!is_array($value)) $value = array();
+        if (!is_array($value)) return $this->value;
 
         $components = $this->getNameComponents($this->display_name_components);
         foreach ($components as $v) {
             $found = false;
             foreach ($value as $part) {
                 if ($part['id'] == $v['id']) {
-                    $valuearray[] = array('id' => $v['id'], 'name' => $part['name']);
+                    $valuearray[] = array('id' => $v['id'], 'value' => $part['value']);
                     $found = true;
                     break;
                 }
             }
-            if (!$found) $valuearray[] = array('id' => $v['id'], 'name' => '');
+            if (!$found) $valuearray[] = array('id' => $v['id'], 'value' => '');
         }
+        
         return $valuearray;
     }
     
     function getNameComponents($componentstring)
     {
         $components = explode(';', $componentstring);
+        
         // remove the last (empty) element
         array_pop($components);
         $componentarray = array();
