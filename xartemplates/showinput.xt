@@ -19,6 +19,8 @@
                     <xar:foreach in="$value" value="$part">
                         <xar:if condition="$part['id'] eq $v['id']">
                             <div class="xar-col">
+                                <!-- Display the raw value for debugging -->
+                                <!-- <xar:set name="dummy">var_dump($rawvalue)</xar:set> -->
                                 <xar:set name="namestring">$name . '_' . $v['id']</xar:set>
                                 <xar:if condition="$part['id'] eq 'country'">
                                     <xar:data-input type="countrylisting" name="$namestring" id="$namestring" value="$part['value']"/>

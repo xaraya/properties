@@ -145,9 +145,12 @@ class AddressProperty extends TextBoxProperty
         if (isset($data['value'])) $this->value = $data['value'];
         $data['value'] = $this->getValueArray();
 
+        // Pass the raw value in case we need to debug
+        $data['rawvalue'] = $this->value;
+        
         // Cater to values as simple strings (errors, old versions etc.)
         if (!is_array($data['value'])) {
-            $data['value'] = array('id' => 'street', 'value' => $data['value']);
+            $data['value'] = array(array('id' => 'street', 'value' => $data['value']));
         }
         
         // For country specific layouts we need to reformat the value array
@@ -229,6 +232,7 @@ class AddressProperty extends TextBoxProperty
             }
             if (!$found) $valuearray[] = array('id' => $v['id'], 'value' => '');
         }
+
         return $valuearray;
     }
     
