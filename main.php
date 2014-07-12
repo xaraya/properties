@@ -163,11 +163,11 @@ class NameProperty extends TextBoxProperty
                 if (empty($value)) $value = $name;
                 else $value .= ' ' . $name;
             } catch (Exception $e) {}
-        }var_dump($value);exit;
+        }
         return $value;
     }
 
-    function getValueArray()
+    function getValueArray($index=false)
     {
         $value = @unserialize($this->value);
         if (!is_array($value)) return $this->value;
@@ -177,7 +177,11 @@ class NameProperty extends TextBoxProperty
             $found = false;
             foreach ($value as $part) {
                 if ($part['id'] == $v['id']) {
-                    $valuearray[] = array('id' => $v['id'], 'value' => $part['value']);
+                    if ($index) {
+                        $valuearray[$part['id']] = $part['value'];
+                    } else {
+                        $valuearray[] = array('id' => $v['id'], 'value' => $part['value']);
+                    }
                     $found = true;
                     break;
                 }
@@ -187,7 +191,7 @@ class NameProperty extends TextBoxProperty
         
         return $valuearray;
     }
-    
+
     function getNameComponents($componentstring)
     {
         $components = explode(';', $componentstring);

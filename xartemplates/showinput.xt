@@ -12,32 +12,7 @@
         <xar:set name="style">''</xar:set>
     </xar:if>
 
-    <xar:if condition="$layout eq 'horizontal' OR $layout eq 'default' OR $layout eq ''">
-        <xar:if condition="!empty($name_components)">
-            <xar:foreach in="$name_components" key="$k" value="$v">
-                <xar:set name="namestring">$name . '_' . $v['id']</xar:set>
-                <xar:if condition="isset($value[$v['id']])">
-                    <xar:if condition="$v['id'] eq 'salutation'">
-                        <xar:data-input type="dropdown" name="$namestring" id="$namestring" value="$value[$v['id']]['value']" options="$salutation_options"/>&#160;
-                    <xar:else/>
-                        <label class="input">
-                            <span>#$v['name']#</span>
-                            <xar:data-input type="textbox" name="$namestring" id="$namestring" value="$value[$v['id']]['value']" />&#160;
-                        </label>
-                    </xar:if>
-                <xar:else/>
-                    <xar:if condition="$v['id'] eq 'salutation'">
-                        <xar:data-input type="dropdown" name="$namestring" id="$namestring" options="$salutation_options"/>&#160;
-                    <xar:else/>
-                        <label class="input">
-                            <span>#$v['name']#</span>
-                            <xar:data-input type="textbox" name="$namestring" id="$namestring"/>&#160;
-                        </label>
-                    </xar:if>
-                </xar:if>
-            </xar:foreach>
-        </xar:if>
-    <xar:elseif condition="$layout eq 'vertical'"/>
+    <xar:if condition="$layout eq 'vertical'">
         <xar:if condition="!empty($name_components)">
             <xar:foreach in="$name_components" key="$k" value="$v">
                 <xar:set name="namestring">$name . '_' . $v['id']</xar:set>
@@ -61,6 +36,31 @@
                         </xar:if>
                     </div>
                 </div>
+            </xar:foreach>
+        </xar:if>
+    <xar:else/>
+        <xar:if condition="!empty($name_components)">
+            <xar:foreach in="$name_components" key="$k" value="$v">
+                <xar:set name="namestring">$name . '_' . $v['id']</xar:set>
+                <xar:if condition="isset($value[$v['id']])">
+                    <xar:if condition="$v['id'] eq 'salutation'">
+                        <xar:data-input type="dropdown" name="$namestring" id="$namestring" value="$value[$v['id']]['value']" options="$salutation_options"/>&#160;
+                    <xar:else/>
+                        <label class="input">
+                            <span>#$v['name']#</span>
+                            <xar:data-input type="textbox" name="$namestring" id="$namestring" value="$value[$v['id']]['value']" />&#160;
+                        </label>
+                    </xar:if>
+                <xar:else/>
+                    <xar:if condition="$v['id'] eq 'salutation'">
+                        <xar:data-input type="dropdown" name="$namestring" id="$namestring" options="$salutation_options"/>&#160;
+                    <xar:else/>
+                        <label class="input">
+                            <span>#$v['name']#</span>
+                            <xar:data-input type="textbox" name="$namestring" id="$namestring"/>&#160;
+                        </label>
+                    </xar:if>
+                </xar:if>
             </xar:foreach>
         </xar:if>
     </xar:if>
