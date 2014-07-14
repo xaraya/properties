@@ -58,7 +58,7 @@ class NameProperty extends TextBoxProperty
             $textbox = DataPropertyMaster::getProperty(array('name' => 'textbox'));
             $name_components = $this->getNameComponents($this->display_name_components);
             if (!$this->validation_ignore_validations) {
-                $textbox->validation_min_length = 3;
+                $textbox->validation_min_length = 2;
             }
             foreach ($name_components as $field) {
                 $isvalid = $textbox->checkInput($name . '_' . $field['id']);
@@ -154,6 +154,7 @@ class NameProperty extends TextBoxProperty
     public function getValue()
     {
         $valuearray = $this->getValueArray();
+        if (!is_array($valuearray)) return $valuearray;
 
         $value = '';
         foreach ($valuearray as $part) {
