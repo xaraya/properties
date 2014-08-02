@@ -81,24 +81,20 @@ class DateProperty extends DataProperty
         } else {
             $value = $data['value'];
         }
-        if (empty($value)) {
-            $data['value'] = array();
-            $data['value']['date'] = "";
+        if (empty($value)) $value = time();
+        if (is_array($value)) {
+            $timestamp = mktime(0,0,0,$value['month'],$value['day'],$value['year']);
+            $value['date'] = $this->format($timestamp);
+            $data['value'] = $value;
         } else {
             sys::import('xaraya.structures.datetime');
             $date = new XarDateTime();
-            if (is_array($value)) {
-                $timestamp = mktime(0,0,0,$value['month'],$value['day'],$value['year']);
-                $value['date'] = $this->format($timestamp);
-                $data['value'] = $value;
-            } else {
-                $date->settimestamp($value);
-                $valuearray['day'] = $date->getDay();
-                $valuearray['month'] = $date->getMonth();
-                $valuearray['year'] = $date->getYear();
-                $valuearray['date'] = $this->format($value);
-                $data['value'] = $valuearray;
-            }
+            $date->settimestamp($value);
+            $valuearray['day'] = $date->getDay();
+            $valuearray['month'] = $date->getMonth();
+            $valuearray['year'] = $date->getYear();
+            $valuearray['date'] = $this->format($value);
+            $data['value'] = $valuearray;
         }
 
         return DataProperty::showOutput($data);
