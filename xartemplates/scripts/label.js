@@ -29,7 +29,8 @@
     $(document).on('change', 'input', toggleLabel);
 
     $(document).on('focusin', 'input', function() {
-        $(this).prev('span').css('color', '#ccc');
+        //$(this).prev('span').css('color', '#ccc');
+        $(this).prev('span').css('visibility', 'hidden');
     });
     $(document).on('focusout', 'input', function() {
         $(this).prev('span').css('color', '#999');
