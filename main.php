@@ -225,6 +225,7 @@ class AddressProperty extends TextBoxProperty
             $found = false;
             foreach ($value as $part) {
                 if (isset($part['id']) && ($part['id'] == $v['id'])) {
+                    if (isset($part['value'])) $part['value'] = '';
                     $valuearray[] = array('id' => $v['id'], 'value' => $part['value']);
                     $found = true;
                     break;
