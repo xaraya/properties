@@ -33,7 +33,7 @@ class NameProperty extends TextBoxProperty
     public $desc       = 'Name';
     public $reqmodules = array();
 
-    public $display_name_components = 'salutation,Salutation;first_name,First Name;last_name,Last Name;';
+    public $display_name_components;
     public $display_salutation_options = 'Mr.,Mrs.,Ms.';
     public $validation_ignore_validations;
 
@@ -43,6 +43,8 @@ class NameProperty extends TextBoxProperty
         $this->tplmodule = 'auto';
         $this->template =  'name';
         $this->filepath   = 'auto';
+        
+        $this->display_name_components = 'salutation,' . xarML('Salutation') . ';first_name,' . xarML('First Name') . ';last_name,' . xarML('Last Name') . ';';
     }
 
     public function checkInput($name = '', $value = null)
@@ -168,6 +170,13 @@ class NameProperty extends TextBoxProperty
         return $value;
     }
 
+/**
+ * Get an array of the name property's components
+ * 
+ * @param index if true return an indexed array of values where the id is the index
+ *              otherwise return an array of id and name sutiable for dropdowns
+ * return array
+ */
     function getValueArray($index=false)
     {
         $value = @unserialize($this->value);
