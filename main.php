@@ -42,7 +42,7 @@ class AddressProperty extends TextBoxProperty
     public $desc       = 'Address';
     public $reqmodules = array();
 
-    public $display_address_components = 'street,Street;city,City;postal_code,Postal Code;region,Region;country,Country;';
+    public $display_address_components;
     public $display_address_default_country = 'us';
     public $validation_ignore_validations;
 
@@ -54,6 +54,8 @@ class AddressProperty extends TextBoxProperty
         $this->tplmodule = 'auto';
         $this->template =  'address';
         $this->filepath   = 'auto';
+        
+        $this->display_address_components = 'street,' . xarML('Street') . ';city,' . xarML('City') . ';postal_code,' . xarML('Postal Code') . ';region,' . xarML('Region') . ';country,' . xarML('Country') . ';';
     }
 
     public function checkInput($name = '', $value = null)
