@@ -149,17 +149,10 @@ Notes:
 
     //--- 2. Retrieve session vars we work with
 
-        $params = xarSession::getVar('listing.' . $objectname . '.params');
-        $lastsearch   = isset($params['lastsearch']) ? $params['lastsearch'] : null;
-        $lastmsg      = isset($params['lastmsg']) ? $params['lastmsg'] : '';
-        $lastsort     = isset($params['lastsort']) ? $params['lastsort'] : 'ASC';
-        $lastorder    = isset($params['lastorder']) ? $params['lastorder'] : '';
-        $laststartnum = isset($params['laststartnum']) ? $params['laststartnum'] : 1;
         $q = xarSession::getVar('listing.' . $objectname . '.currentquery');
         
         $thissearch = md5($object->dataquery->tostring());                      // create a unique ID for this query
         $settings = xarSession::getVar('listing.settings');
-        if (xarUser::getVar('uname') == 'admin') {
         if (!empty($settings)) {
             if (isset($settings[$thissearch])) {
                 // Get the settings of this search or add any parameters that are missing
@@ -175,7 +168,6 @@ Notes:
                 $lastorder    = '';
                 $laststartnum = 1;
             }
-        }
         }
 
     //--- 3. Get all the parameters we need from the form. These can override the sessionvar settings
@@ -610,13 +602,6 @@ Notes:
         $data['object'] = $object;
 
         // Set the session vars to the latest state
-        $params['lastsearch']     = $thissearch;
-        $params['lastmsg']        = $data['msg'];
-        $params['lastsort']       = $sort;
-        $params['lastorder']      = $order;
-        $params['laststartnum']   = $startnum;
-        xarSession::setVar('listing.' . $objectname . '.params', $params);
-
         $thesesettings['lastmsg']            = $data['msg'];
         $thesesettings['lastsort']           = $sort;
         $thesesettings['lastorder']          = $order;
