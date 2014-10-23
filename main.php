@@ -391,25 +391,11 @@ Notes:
 
     //--- 9. First time visit to this page; empty the sessionvars and reset the categories
             case "newsearch":
-                // Only reset everything if we are starting with a new object
-                if ($firsttime) {
-                    if (!empty($conditions)) {
-                        $q = new Query();
-                        $q->addconditions($conditions);
-                        $object->dataquery->addconditions($conditions);
-                        $object->dataquery->addsorts($conditions);
-                    }
-
-                    // Get any odering from the object's data query if possible
-                    if (!empty($object->dataquery->sorts)) {
-                        $setting = reset($object->dataquery->sorts);
-                        $order = $setting['name'];
-                        $sort = $setting['order'];
-                    } else {
-                        $order = '';
-                        $sort = 'ASC';
-                    }
-                }
+                // Take the persistent settings or set defaults
+                $msg      = isset($thesesettings['lastmsg'])      ? $thesesettings['lastmsg'] : '';
+                $sort     = isset($thesesettings['lastsort'])     ? $thesesettings['lastsort'] : 'ASC';
+                $order    = isset($thesesettings['lastorder'])    ? $thesesettings['lastorder'] : '';
+                $startnum = isset($thesesettings['laststartnum']) ? $thesesettings['laststartnum'] : 1;
             break;
 
     //--- 10. Any other operation:get the query if it was passed as conditions, or create a new one
