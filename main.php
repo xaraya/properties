@@ -151,23 +151,21 @@ Notes:
 
         $q = xarSession::getVar('listing.' . $objectname . '.currentquery');
         
+        // Default values for a first time search; possibly overridden below
+        $lastmsg      = '';
+        $lastsort     = 'ASC';
+        $lastorder    = '';
+        $laststartnum = 1;
+            
         $thissearch = md5($object->dataquery->tostring());                      // create a unique ID for this query
         $settings = xarSession::getVar('listing.settings');
-        if (!empty($settings)) {
-            if (isset($settings[$thissearch])) {
-                // Get the settings of this search or add any parameters that are missing
-                $thesesettings = $settings[$thissearch];
-                $lastmsg      = isset($thesesettings['lastmsg'])      ? $thesesettings['lastmsg'] : '';
-                $lastsort     = isset($thesesettings['lastsort'])     ? $thesesettings['lastsort'] : 'ASC';
-                $lastorder    = isset($thesesettings['lastorder'])    ? $thesesettings['lastorder'] : '';
-                $laststartnum = isset($thesesettings['laststartnum']) ? $thesesettings['laststartnum'] : 1;
-            } else {
-                // First time for this search: set default values
-                $lastmsg      = '';
-                $lastsort     = 'ASC';
-                $lastorder    = '';
-                $laststartnum = 1;
-            }
+        if (!empty($settings) && isset($settings[$thissearch])) {
+            // Get the settings of this search or add any parameters that are missing
+            $thesesettings = $settings[$thissearch];
+            $lastmsg      = isset($thesesettings['lastmsg'])      ? $thesesettings['lastmsg'] : '';
+            $lastsort     = isset($thesesettings['lastsort'])     ? $thesesettings['lastsort'] : 'ASC';
+            $lastorder    = isset($thesesettings['lastorder'])    ? $thesesettings['lastorder'] : '';
+            $laststartnum = isset($thesesettings['laststartnum']) ? $thesesettings['laststartnum'] : 1;
         }
 
     //--- 3. Get all the parameters we need from the form. These can override the sessionvar settings
