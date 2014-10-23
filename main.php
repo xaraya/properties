@@ -328,7 +328,7 @@ Notes:
 
         // Debug display
         if (xarModVars::get('dynamicdata','debugmode') && 
-        in_array(xarUserGetVar('uname'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+        in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
             echo "Operation: " . $operation;
             echo "<br />";
             echo "Start at: " . $startnum;
@@ -518,7 +518,7 @@ Notes:
 
         // Debug display
         if (xarModVars::get('dynamicdata','debugmode') && 
-        in_array(xarUserGetVar('uname'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+        in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
             echo "Query: "; $object->dataquery->qecho();
             echo "<br />";
         }
