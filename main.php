@@ -363,10 +363,6 @@ Notes:
             echo "<br />";
             echo "Sort: " . $sort;
             echo "<br />";
-            echo "Settings: "; 
-            echo "<br />";
-            echo "<pre>";var_dump($settings);
-            echo "<br />";
         }
 
         $data['params'] = array();
