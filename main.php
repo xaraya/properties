@@ -357,7 +357,7 @@ Notes:
             echo "<br />";
             echo "Start at: " . $startnum;
             echo "<br />";
-            echo "Items per page: " . $sort;
+            echo "Items per page: " . $data['items_per_page'];
             echo "<br />";
             echo "Order: " . $order;
             echo "<br />";
