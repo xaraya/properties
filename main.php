@@ -132,7 +132,7 @@ Notes:
         } else {
             throw new Exception('No object passed to the listing property');
         }
-        
+
         // itemtype 0 means all itemtypes
         $itemtype = isset($itemtype) ? $itemtype : 0;
 
@@ -150,7 +150,7 @@ Notes:
     //--- 2. Retrieve session vars we work with
 
         $params = xarSession::getVar('listing.' . $objectname . '.params');
-        $lastobject   = isset($params['lastsearch']) ? $params['lastsearch'] : null;
+        $lastsearch   = isset($params['lastsearch']) ? $params['lastsearch'] : null;
         $lastmsg      = isset($params['lastmsg']) ? $params['lastmsg'] : '';
         $lastsort     = isset($params['lastsort']) ? $params['lastsort'] : 'ASC';
         $lastorder    = isset($params['lastorder']) ? $params['lastorder'] : '';
@@ -317,7 +317,8 @@ Notes:
 
     //--- 7. Figure out the operation we are performing
 
-        $firsttime = !isset($lastobject) || ($objectname != $lastobject);       // criterium for first time display
+        $thissearch = md5($object->dataquery->tostring());                      // create a unique ID for this query
+        $firsttime = !isset($lastsearch) || ($thissearch != $lastsearch);       // criterium for first time display
         if ($op == 'column') $operation = 'columnclick';                        // a  column header was clicked
         elseif ($op == 'letter') $operation = 'lettersearch';                   // an alphabet link was clicked
         elseif ($op == 'submit') $operation = 'textsearch';                     // a string was entered into the text field
@@ -547,8 +548,7 @@ Notes:
             $items = $tempitems;
         }
     }
-    
-    
+
 /*
     $parts = explode('.',$primarysource);
     $primarytable = "**MISSING**";
@@ -594,7 +594,7 @@ Notes:
         $data['object'] = $object;
 
         // Set the session vars to the latest state
-        $params['lastsearch']     = $objectname;
+        $params['lastsearch']     = $thissearch;
         $params['lastmsg']        = $data['msg'];
         $params['lastsort']       = $sort;
         $params['lastorder']      = $order;
