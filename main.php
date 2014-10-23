@@ -89,12 +89,12 @@ Notes:
 
         // Send any config settings not overwritten to the template
         if (!isset($data['show_items_per_page'])) $data['show_items_per_page'] = $this->display_show_items_per_page;
-        if (!isset($data['items_per_page'])) $data['items_per_page'] = $this->display_items_per_page;
-        if (!isset($data['show_primary'])) $data['show_primary'] = $this->display_show_primary;
-        if (!isset($data['show_search'])) $data['show_search'] = $this->display_show_search;
-        if (!isset($data['show_alphabet'])) $data['show_alphabet'] = $this->display_show_alphabet;
-        if (!isset($data['showall_tab'])) $data['showall_tab'] = $this->display_showall_tab;
-        if (!isset($data['showother_tab'])) $data['showother_tab'] = $this->display_showother_tab;
+        if (!isset($data['items_per_page']))      $data['items_per_page'] = $this->display_items_per_page;
+        if (!isset($data['show_primary']))        $data['show_primary'] = $this->display_show_primary;
+        if (!isset($data['show_search']))         $data['show_search'] = $this->display_show_search;
+        if (!isset($data['show_alphabet']))       $data['show_alphabet'] = $this->display_show_alphabet;
+        if (!isset($data['showall_tab']))         $data['showall_tab'] = $this->display_showall_tab;
+        if (!isset($data['showother_tab']))       $data['showother_tab'] = $this->display_showother_tab;
 
         // give the template the alphabet chars
         $data['alphabet'] = $this->alphabet;
@@ -156,17 +156,38 @@ Notes:
         $lastorder    = isset($params['lastorder']) ? $params['lastorder'] : '';
         $laststartnum = isset($params['laststartnum']) ? $params['laststartnum'] : 1;
         $q = xarSession::getVar('listing.' . $objectname . '.currentquery');
+        
+        $thissearch = md5($object->dataquery->tostring());                      // create a unique ID for this query
+        $settings = xarSession::getVar('listing.settings');
+        if (xarUser::getVar('uname') == 'admin') {
+        if (!empty($settings)) {
+            if (isset($settings[$thissearch])) {
+                // Get the settings of this search or add any parameters that are missing
+                $thesesettings = $settings[$thissearch];
+                $lastmsg      = isset($thesesettings['lastmsg'])      ? $thesesettings['lastmsg'] : '';
+                $lastsort     = isset($thesesettings['lastsort'])     ? $thesesettings['lastsort'] : 'ASC';
+                $lastorder    = isset($thesesettings['lastorder'])    ? $thesesettings['lastorder'] : '';
+                $laststartnum = isset($thesesettings['laststartnum']) ? $thesesettings['laststartnum'] : 1;
+            } else {
+                // First time for this search: set default values
+                $lastmsg      = '';
+                $lastsort     = 'ASC';
+                $lastorder    = '';
+                $laststartnum = 1;
+            }
+        }
+        }
 
-    //--- 3. Get all the parameters we need from the form
+    //--- 3. Get all the parameters we need from the form. These can override the sessionvar settings
 
-        if(!xarVarFetch('startnum',      'str:1', $startnum, $laststartnum, XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('letter',        'str:1', $letter, '', XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('search',        'str:1:100', $search, '', XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('order',         'str', $order, $lastorder, XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('sort',          'str', $sort, $lastsort, XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('submit',        'str', $submit, '', XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('op',            'str', $op, '', XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('conditions',    'isset', $conditions, NULL, XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('startnum',      'str:1',     $startnum,   $laststartnum, XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('letter',        'str:1',     $letter,     '', XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('search',        'str:1:100', $search,     '', XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('order',         'str',       $order,      $lastorder, XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('sort',          'str',       $sort,       $lastsort, XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('submit',        'str',       $submit,     '', XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('op',            'str',       $op,         '', XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('conditions',    'isset',     $conditions, NULL, XARVAR_NOT_REQUIRED)) {return;}
     
     //--- 4. Get configuration settings from modvars and tag attributes
 
@@ -317,7 +338,6 @@ Notes:
 
     //--- 7. Figure out the operation we are performing
 
-        $thissearch = md5($object->dataquery->tostring());                      // create a unique ID for this query
         $firsttime = !isset($lastsearch) || ($thissearch != $lastsearch);       // criterium for first time display
         if ($firsttime) $op = 'pagejump';                                       // Override if we moved to a new page with a different query
 
@@ -331,9 +351,21 @@ Notes:
         // Debug display
         if (xarModVars::get('dynamicdata','debugmode') && 
         in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+            echo "ID: " . $thissearch;
+            echo "<br />";
             echo "Operation: " . $operation;
             echo "<br />";
             echo "Start at: " . $startnum;
+            echo "<br />";
+            echo "Items per page: " . $sort;
+            echo "<br />";
+            echo "Order: " . $order;
+            echo "<br />";
+            echo "Sort: " . $sort;
+            echo "<br />";
+            echo "Settings: "; 
+            echo "<br />";
+            echo "<pre>";var_dump($settings);
             echo "<br />";
         }
 
@@ -602,6 +634,14 @@ Notes:
         $params['lastorder']      = $order;
         $params['laststartnum']   = $startnum;
         xarSession::setVar('listing.' . $objectname . '.params', $params);
+
+        $thesesettings['lastmsg']            = $data['msg'];
+        $thesesettings['lastsort']           = $sort;
+        $thesesettings['lastorder']          = $order;
+        $thesesettings['laststartnum']       = $startnum;
+        $thesesettings['lastitemsperpage']   = $items_per_page;
+        $settings[$thissearch] = $thesesettings;
+        xarSession::setVar('listing.settings', $settings);
 
         // Sort of ugly. How can we do better?
         unset($q->dbconn);unset($q->output);unset($q->result);
