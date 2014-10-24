@@ -343,7 +343,7 @@ Notes:
         in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
             echo "ID: " . $thissearch;
             echo "<br />";
-            echo "Operation: " . $operation;
+            echo "Operation: " . $operation . " [" . $op . "]";
             echo "<br />";
             echo "Start at: " . $startnum;
             echo "<br />";
