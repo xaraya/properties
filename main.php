@@ -328,8 +328,9 @@ Notes:
 
     //--- 7. Figure out the operation we are performing
 
-        $firsttime = !isset($lastsearch) || ($thissearch != $lastsearch);       // criterium for first time display
-        if ($firsttime) $op = 'pagejump';                                       // Override if we moved to a new page with a different query
+        $lastsearch = xarSession::getVar('listing.lastsearch');                 // get the ID of the last search
+        $firsttime = empty($lastsearch) || ($thissearch != $lastsearch);       // criterium for first time display
+        if ($firsttime) $op = 'pagejump';                                       // override if we moved to a new page with a different query
 
         if ($op == 'column') $operation = 'columnclick';                        // a  column header was clicked
         elseif ($op == 'letter') $operation = 'lettersearch';                   // an alphabet link was clicked
@@ -607,6 +608,7 @@ Notes:
         $thesesettings['lastitemsperpage']   = $items_per_page;
         $settings[$thissearch] = $thesesettings;
         xarSession::setVar('listing.settings', $settings);
+        xarSession::setVar('listing.lastsearch', $thissearch);
 
         // Sort of ugly. How can we do better?
         unset($q->dbconn);unset($q->output);unset($q->result);
