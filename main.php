@@ -76,6 +76,9 @@ class DateProperty extends DataProperty
 
     public function showOutput(Array $data = array())
     {
+        if (isset($data['format_type'])) $this->display_date_format_type = $data['format_type'];
+        if (isset($data['format_predef'])) $this->display_date_format_predef = $data['format_predef'];
+        if (isset($data['format_custom'])) $this->display_date_format_custom = $data['format_custom'];
         if (!isset($data['value'])) {
             $value = $this->value;
         } else {
