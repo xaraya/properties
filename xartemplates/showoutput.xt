@@ -6,7 +6,7 @@
         <xar:set name="value">$value</xar:set>
     <xar:elseif condition="$rawvalue eq 0"/>
         <xar:if condition="$show_zeros">
-            <xar:set name="value">'0'</xar:set>
+            <xar:set name="value">$value</xar:set>
         <xar:else/>
             <xar:set name="value">'&#160;'</xar:set>
         </xar:if>
