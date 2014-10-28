@@ -29,6 +29,7 @@ class NumberProperty extends FloatBoxProperty
     protected $numbertype  = 'numeric';
     public $currencyformat = null;
 
+    public $display_show_zeros = 1;
     public $display_numberpattern = '#,##0.00';
 
     public function __construct(ObjectDescriptor $descriptor)
@@ -79,6 +80,7 @@ class NumberProperty extends FloatBoxProperty
     public function showOutput(Array $data = array())
     {
         extract($data);
+        if (isset($data['show_zeros'])) $this->display_show_zeros = $data['show_zeros'];
 
         if ($this->isOO) {
             if (isset($data['pattern'])) $this->display_numberpattern = $data['pattern'];

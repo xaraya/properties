@@ -8,4 +8,13 @@
     <ignore_empty>1</ignore_empty>
     <configuration>a:1:{s:14:"display_layout";s:7:"default";}</configuration>
   </configurations>
+  <configurations itemid="567">
+    <id>567</id>
+    <name>display_show_zeros</name>
+    <label>Show zeros</label>
+    <description>Whether zeros are shown as blanks or 0</description>
+    <property_id>14</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration>a:1:{s:14:"display_layout";s:7:"default";}</configuration>
+  </configurations>
 </items>
