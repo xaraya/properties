@@ -511,16 +511,18 @@ Notes:
     //--- 19. Save the dd object in a sessionvar for reuse (if called)
 
         // Save the dd object in a sessionvar for reuse
-        if ($data['export']) {
+        if (1) {
             // Get the raw values of the items
             $items = $object->getItems();
             // First get the labels
-            $values[0] = array($object->getDisplayValues());
-            $rows = count($items);
-            $columns = array_keys($object->getFieldList());
-            foreach ($rows as $row) {
+            $columns = $object->getFieldList();
+            $labels = array();
+            foreach ($columns as $column) $labels[$column] = $object->properties[$column]->label;
+            $values = array($labels);
+            foreach ($items as $row) {
                 $fields = array();
                 foreach ($columns as $column) {
+                    $object->properties[$column]->setValue($row[$column]);
                     $fields[$column] = $object->properties[$column]->getValue();
                 }
                 $values[] = $fields;
