@@ -518,26 +518,26 @@ Notes:
             
             // Proceed if we have data
             if (is_array(current($items))) {
-                $firstrow = current($items);
+                $firstrow = array_keys(current($items));
 
                 // First get the labels
                 $labels = array();
-                foreach ($firstrow as $field) {
-                    $labels[$field] = $object->properties[$field]->label;
+                foreach ($firstrow as $column) {
+                    $labels[$column] = $object->properties[$column]->label;
                 }
                 $values = array($labels);
                 
                 // Now add the data
                 foreach ($items as $row) {
                     $fields = array();
-                    foreach ($columns as $column) {
+                    foreach ($firstrow as $column) {
                         $object->properties[$column]->setValue($row[$column]);
                         $fields[$column] = $object->properties[$column]->getValue();
                     }
                     $values[] = $fields;
                 }
-                // Store it all in a session var
             }
+            // Store it all in a session var
             xarSession::setVar('listing.' . $objectname,serialize($values));
         }
         
