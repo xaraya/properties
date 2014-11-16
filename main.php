@@ -514,21 +514,30 @@ Notes:
         if ($export) {
             // Get the raw values of the items
             $items = $object->getItems();
-            // First get the labels
-            $columns = $object->getFieldList();
-            $labels = array();
-            foreach ($columns as $column) $labels[$column] = $object->properties[$column]->label;
-            $values = array($labels);
-            // Now add the data
-            foreach ($items as $row) {
-                $fields = array();
-                foreach ($columns as $column) {
-                    $object->properties[$column]->setValue($row[$column]);
-                    $fields[$column] = $object->properties[$column]->getValue();
+            $values = array();
+            
+            // Proceed if we have data
+            if (is_array(current($items))) {
+                $firstrow = current($items);
+
+                // First get the labels
+                $labels = array();
+                foreach ($firstrow as $field) {
+                    $labels[$field] = $object->properties[$field]->label;
                 }
-                $values[] = $fields;
+                $values = array($labels);
+                
+                // Now add the data
+                foreach ($items as $row) {
+                    $fields = array();
+                    foreach ($columns as $column) {
+                        $object->properties[$column]->setValue($row[$column]);
+                        $fields[$column] = $object->properties[$column]->getValue();
+                    }
+                    $values[] = $fields;
+                }
+                // Store it all in a session var
             }
-            // Store it all in a session var
             xarSession::setVar('listing.' . $objectname,serialize($values));
         }
         
