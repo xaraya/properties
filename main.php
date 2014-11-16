@@ -544,6 +544,7 @@ Notes:
         }
         
     //--- 20. Set the number of rows to display and the starting point
+    
         if (!empty($data['items_per_page'])) $object->dataquery->setrowstodo($data['items_per_page']);
 
         // The record to start at needs to come from the template or from the session var
@@ -664,7 +665,7 @@ Notes:
 /*
  * Repopulates the output template and sends the putput to the browser
  * TODO: allow overrides (module, theme) for the showoutput template.
- * Right now the template inthe property is used, although included templates cna be overrides
+ * Right now the template in the property is used, although included templates cna be overrides
  */
     public function ajaxRefresh($data=array())
     {
