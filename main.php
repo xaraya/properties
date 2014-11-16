@@ -520,7 +520,7 @@ Notes:
             
             // Proceed if we have data
             if (is_array(current($exportitems))) {
-                $firstrow = array_keys(current($items));
+                $firstrow = array_keys(current($exportitems));
 
                 // First get the labels
                 $labels = array();
@@ -530,7 +530,7 @@ Notes:
                 $values = array($labels);
                 
                 // Now add the data
-                foreach ($items as $row) {
+                foreach ($exportitems as $row) {
                     $fields = array();
                     foreach ($firstrow as $column) {
                         $object->properties[$column]->setValue($row[$column]);
