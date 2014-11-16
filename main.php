@@ -178,6 +178,7 @@ Notes:
         if(!xarVarFetch('submit',        'str',       $submit,     '', XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('op',            'str',       $op,         '', XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('conditions',    'isset',     $conditions, NULL, XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('export',        'int',       $export,     0, XARVAR_NOT_REQUIRED)) {return;}
     
     //--- 4. Get configuration settings from modvars and tag attributes
 
@@ -507,12 +508,27 @@ Notes:
             break;
         }
 
-    //--- 19. Set the number of rows to display and the starting point
+    //--- 19. Save the dd object in a sessionvar for reuse (if called)
 
-        // Save the query in a sessionvar for reuse
-        xarSession::setVar('listing.' . $objectname,serialize($object->dataquery));
+        // Save the dd object in a sessionvar for reuse
+        if ($data['export']) {
+            // Get the raw values of the items
+            $items = $object->getItems();
+            // First get the labels
+            $values[0] = array($object->getDisplayValues());
+            $rows = count($items);
+            $columns = array_keys($object->getFieldList());
+            foreach ($rows as $row) {
+                $fields = array();
+                foreach ($columns as $column) {
+                    $fields[$column] = $object->properties[$column]->getValue();
+                }
+                values[] = $fields;
+            }
+            xarSession::setVar('listing.' . $objectname,serialize($values));
+        }
         
-        // Set the number of lines to display
+    //--- 20. Set the number of rows to display and the starting point
         if (!empty($data['items_per_page'])) $object->dataquery->setrowstodo($data['items_per_page']);
 
         // The record to start at needs to come from the template or from the session var
