@@ -511,7 +511,7 @@ Notes:
     //--- 19. Save the dd object in a sessionvar for reuse (if called)
 
         // Save the dd object in a sessionvar for reuse
-        if (1) {
+        if ($export) {
             // Get the raw values of the items
             $items = $object->getItems();
             // First get the labels
