@@ -206,7 +206,6 @@ Notes:
 
         // We'll put fields into the output of the query that have status active or list
         $object->properties[$object->primary]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
-//        $object->setFieldlist($fieldlist,array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY));
 
         $data['fieldlabels'] = array();
         $data['fieldnames'] = array();
@@ -326,6 +325,9 @@ Notes:
         if (empty($defaultkey)) {
             throw new Exception(xarML("The listing cannot be displayed, because no select key was found"));
         }
+        
+        // Pass the vetted fieldlist back to the object
+        $object->fieldlist = $data['fieldnames'];
 
     //--- 7. Figure out the operation we are performing
 
@@ -513,11 +515,11 @@ Notes:
         // Save the dd object in a sessionvar for reuse
         if ($export) {
             // Get the raw values of the items
-            $items = $object->getItems();
+            $exportitems = $object->getItems();
             $values = array();
             
             // Proceed if we have data
-            if (is_array(current($items))) {
+            if (is_array(current($exportitems))) {
                 $firstrow = array_keys(current($items));
 
                 // First get the labels
