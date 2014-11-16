@@ -523,7 +523,7 @@ Notes:
                 foreach ($columns as $column) {
                     $fields[$column] = $object->properties[$column]->getValue();
                 }
-                values[] = $fields;
+                $values[] = $fields;
             }
             xarSession::setVar('listing.' . $objectname,serialize($values));
         }
