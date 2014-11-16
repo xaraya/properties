@@ -519,6 +519,7 @@ Notes:
             $labels = array();
             foreach ($columns as $column) $labels[$column] = $object->properties[$column]->label;
             $values = array($labels);
+            // Now add the data
             foreach ($items as $row) {
                 $fields = array();
                 foreach ($columns as $column) {
@@ -527,6 +528,7 @@ Notes:
                 }
                 $values[] = $fields;
             }
+            // Store it all in a session var
             xarSession::setVar('listing.' . $objectname,serialize($values));
         }
         
