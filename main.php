@@ -562,32 +562,38 @@ Notes:
             echo "<br />";
         }
 
-    // Now we run the query, if that is required
-    // Use isset here to check whether a $items param was even passed
-    if (!isset($items)) {
-        // add conditions if they were passed
-        if (!empty($conditions)) $object->dataquery->addconditions($conditions);
-        // Get the records to be displayed
-        $items = $object->getItems();
-        // We may need to recalculate the total if we have linked tables
-        // Just force it for now
-        $data['total'] = $object->dataquery->getrows();
-    } else {
-        if (!empty($data['items_per_page'])) {
-            // items were passed, but we need to get the correct subset
-            // first get the total
-            $data['total'] = count($items);
-            $tempitems = array();
-            $startat = $object->dataquery->startat-1;
-            $endat = $startat + $object->dataquery->rowstodo;
-            for ($i=$startat;$i<$endat;$i++)  {
-                if (!isset($items[$i])) break;
-                $tempitems[] = $items[$i];
+        // Now we run the query, if that is required
+        // Use isset here to check whether a $items param was even passed
+        if (!isset($items)) {
+            // add conditions if they were passed
+            if (!empty($conditions)) $object->dataquery->addconditions($conditions);
+            // Get the records to be displayed
+            $items = $object->getItems();
+            // We may need to recalculate the total if we have linked tables
+            // Just force it for now
+            $data['total'] = $object->dataquery->getrows();
+        } else {
+            if (!empty($data['items_per_page'])) {
+                // items were passed, but we need to get the correct subset
+                // first get the total
+                $data['total'] = count($items);
+                $tempitems = array();
+                $startat = $object->dataquery->startat-1;
+                $endat = $startat + $object->dataquery->rowstodo;
+                for ($i=$startat;$i<$endat;$i++)  {
+                    if (!isset($items[$i])) break;
+                    $tempitems[] = $items[$i];
+                }
+                $items = $tempitems;
             }
-            $items = $tempitems;
         }
-    }
 
+        // Debug display
+        if (xarModVars::get('dynamicdata','debugmode') && 
+        in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+            echo "Total rows: "; $data['total'];
+            echo "<br />";
+        }
 /*
     $parts = explode('.',$primarysource);
     $primarytable = "**MISSING**";
