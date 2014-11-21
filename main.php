@@ -104,8 +104,6 @@ Notes:
         sys::import('modules.dynamicdata.class.properties.master');
 
     //--- 0. Local parameters
-        $tablename = 'ft';
-        $baddatastores = array('_dynamic_data_','_dummy_');
         $baddatasources = array('dynamic_data','dummy','modulevars');
 
     //--- 1. Get the args passed to this function
