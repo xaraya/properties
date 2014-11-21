@@ -573,10 +573,10 @@ Notes:
             // Just force it for now
             $data['total'] = $object->dataquery->getrows();
         } else {
+            $data['total'] = count($items);
             if (!empty($data['items_per_page'])) {
                 // items were passed, but we need to get the correct subset
                 // first get the total
-                $data['total'] = count($items);
                 $tempitems = array();
                 $startat = $object->dataquery->startat-1;
                 $endat = $startat + $object->dataquery->rowstodo;
