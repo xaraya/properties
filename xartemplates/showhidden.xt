@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="!empty($name_components)">
+        <xar:foreach in="$name_components" key="$k" value="$v">
+            <xar:set name="namestring">$name . '_' . $v['id']</xar:set>
+            <xar:if condition="isset($value[$v['id']])">
+                <xar:if condition="$v['id'] eq 'salutation'">
+                    <xar:data-input type="dropdown" name="$namestring" id="$namestring" value="$value[$v['id']]['value']" options="$salutation_options" hidden="hidden"/>
+                <xar:else/>
+                    <xar:data-input type="textbox" name="$namestring" id="$namestring" value="$value[$v['id']]['value']" hidden="hidden"/>
+                </xar:if>
+            <xar:else/>
+                <xar:if condition="$v['id'] eq 'salutation'">
+                    <xar:data-input type="dropdown" name="$namestring" id="$namestring" options="$salutation_options" hidden="hidden"/>
+                <xar:else/>
+                    <xar:data-input type="textbox" name="$namestring" id="$namestring" hidden="hidden"/>
+                </xar:if>
+            </xar:if>
+        </xar:foreach>
+    </xar:if>
+    <xar:template file="dataproperty_additions" module="base"/>
+</xar:template>

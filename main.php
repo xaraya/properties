@@ -55,8 +55,7 @@ class NameProperty extends TextBoxProperty
         $value = array();   // We don't allow a value to be passed to this method
 
         if (!empty($this->display_name_components)) {
-            //$salutation = DataPropertyMaster::getProperty(array('name' => 'dropdown'));
-            //$salutation->validation_override = true;
+            // Use a textbox property for the component values
             $textbox = DataPropertyMaster::getProperty(array('name' => 'textbox'));
             $name_components = $this->getNameComponents($this->display_name_components);
             if (!$this->validation_ignore_validations) {
@@ -151,6 +150,40 @@ class NameProperty extends TextBoxProperty
         $data['salutation_options'] = $this->getSalutationOptions($data['salutation_options']);
 
         return DataProperty::showOutput($data);
+    }
+
+    function showHidden(Array $data = array())
+    {
+        $data['name']     = !empty($data['name']) ? $data['name'] : 'dd_'.$this->id;
+        $data['id']       = !empty($data['id'])   ? $data['id']   : 'dd_'.$this->id;
+
+        $data['invalid']  = !empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) :'';
+        $data['value'] = $this->getValueArray();
+
+        // Cater to values as simple strings (errors, old versions etc.)
+        if (!is_array($data['value'])) {
+            $data['value'] = array(array('id' => 'last_name', 'value' => $data['value']));
+        }
+
+        // Rework the arrays to put the id in the index
+        $newarray = array();
+        foreach($data['value'] as $value) {
+            $newarray[$value['id']] = $value;
+        }
+        $data['value'] = $newarray;
+
+        if (empty($data['name_components'])) $data['name_components'] = $this->display_name_components;
+        else $this->display_name_components = $data['name_components'];
+        $data['name_components'] = $this->getNameComponents($data['name_components']);
+
+        if (empty($data['salutation_options'])) $data['salutation_options'] = $this->display_salutation_options;
+        else $this->display_salutation_options = $data['salutation_options'];
+        $data['salutation_options'] = $this->getSalutationOptions($data['salutation_options']);
+        if(!isset($data['module']))   $data['module']   = $this->tplmodule;
+        if(!isset($data['template'])) $data['template'] = $this->template;
+        if(!isset($data['layout']))   $data['layout']   = $this->layout;
+
+        return DataProperty::showHidden($data);
     }
 
     public function getValue()
