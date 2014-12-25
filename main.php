@@ -45,6 +45,7 @@ class AddressProperty extends TextBoxProperty
     public $display_address_components;
     public $display_address_default_country = 'us';
     public $validation_ignore_validations;
+    public $validation_allowempty = true;
 
     public $specified_countries       = array('ch','us');   // The countries that have non-default layout templates in this property
 
@@ -67,6 +68,7 @@ class AddressProperty extends TextBoxProperty
 
         if (!empty($this->display_address_components)) {
             $textbox = DataPropertyMaster::getProperty(array('name' => 'textbox'));
+            $textbox->validation_allowempty = $this->validation_allowempty;
             $address_components = $this->getAddressComponents($this->display_address_components);
             if (!$this->validation_ignore_validations) {
                 $textbox->validation_min_length = 2;
