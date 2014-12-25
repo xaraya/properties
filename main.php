@@ -36,6 +36,7 @@ class NameProperty extends TextBoxProperty
     public $display_name_components;
     public $display_salutation_options = 'Mr.,Mrs.,Ms.';
     public $validation_ignore_validations;
+    public $validation_allowempty = true;
 
     function __construct(ObjectDescriptor $descriptor)
     {
