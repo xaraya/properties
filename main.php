@@ -58,6 +58,7 @@ class NameProperty extends TextBoxProperty
         if (!empty($this->display_name_components)) {
             // Use a textbox property for the component values
             $textbox = DataPropertyMaster::getProperty(array('name' => 'textbox'));
+            $textbox->validation_allowempty = $this->validation_allowempty;
             $name_components = $this->getNameComponents($this->display_name_components);
             if (!$this->validation_ignore_validations) {
                 $textbox->validation_min_length = 2;
