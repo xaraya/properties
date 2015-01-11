@@ -51,12 +51,12 @@ class AddressProperty extends TextBoxProperty
 
     function __construct(ObjectDescriptor $descriptor)
     {
+        $this->display_address_components = 'street,' . xarML('Street') . ';city,' . xarML('City') . ';postal_code,' . xarML('Postal Code') . ';region,' . xarML('Region') . ';country,' . xarML('Country') . ';';
+
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
         $this->template =  'address';
         $this->filepath   = 'auto';
-        
-        $this->display_address_components = 'street,' . xarML('Street') . ';city,' . xarML('City') . ';postal_code,' . xarML('Postal Code') . ';region,' . xarML('Region') . ';country,' . xarML('Country') . ';';
     }
 
     public function checkInput($name = '', $value = null)
@@ -141,7 +141,7 @@ class AddressProperty extends TextBoxProperty
             $info = xarController::$request->getInfo();
             $this->module = $info[0];
             $data['module'] = $this->module;
-        }
+        }var_dump($this->display_address_components);
         if (empty($data['address_components'])) $data['address_components'] = $this->display_address_components;
         else $this->display_address_components = $data['address_components'];
         $data['address_components'] = $this->getAddressComponents($data['address_components']);
@@ -168,14 +168,20 @@ class AddressProperty extends TextBoxProperty
             foreach ($data['address_components'] as $component) {
                 $newvalue[$component['id']]['label'] = $component['name'];
             }
-            $data['value'] = $newvalue;
+            $data['value'] = $newvalue;echo "<pre>";var_dump($data['value']);
             if (!empty($data['value']['country']['value']) && file_exists(sys::code() . 'properties/address/xartemplates/includes/' . $data['value']['country']['value'] . '-input.xt')) {
                 $data['country_template'] = $data['value']['country']['value'] . '-input';
             } else {
                 $data['country_template'] = 'default-input';
             }
         }
-        if(empty($data['value']['country']['value'])) $data['value']['country']['value'] = $this->display_address_default_country;
+        if (!empty($this->display_address_default_country)) {
+            foreach ($data['value'] as $key => $value) {
+                if ($value['id'] == 'country') {
+                    $data['value'][$key]['value'] = $this->display_address_default_country;
+                }
+            }
+        }
         return DataProperty::showInput($data);
     }
     

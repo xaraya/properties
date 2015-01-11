@@ -13,9 +13,11 @@
         <xar:if condition="!empty($address_components)">
             <xar:foreach in="$address_components" key="$k" value="$v">
                 <div class="xar-row">
-                    <div class="xar-col">
-                        <xar:data-label label="$v['name']" for="id"/>
-                    </div>
+                    <xar:if condition="!empty($v['name'])">
+                        <div class="xar-col">
+                            <xar:data-label label="$v['name']" for="id"/>
+                        </div>
+                    </xar:if>
                     <xar:foreach in="$value" value="$part">
                         <xar:if condition="$part['id'] eq $v['id']">
                             <div class="xar-col">
@@ -27,7 +29,6 @@
                                 <xar:else/>
                                     <xar:data-input type="textbox" name="$namestring" id="$namestring" value="$part['value']"/>
                                 </xar:if>
-                                <xar:break/>
                             </div>
                         </xar:if>
                     </xar:foreach>
