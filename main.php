@@ -141,7 +141,7 @@ class AddressProperty extends TextBoxProperty
             $info = xarController::$request->getInfo();
             $this->module = $info[0];
             $data['module'] = $this->module;
-        }var_dump($this->display_address_components);
+        }
         if (empty($data['address_components'])) $data['address_components'] = $this->display_address_components;
         else $this->display_address_components = $data['address_components'];
         $data['address_components'] = $this->getAddressComponents($data['address_components']);
