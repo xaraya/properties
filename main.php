@@ -85,7 +85,7 @@ class AddressProperty extends TextBoxProperty
         }
 
         if ($valid) {
-            $this->value = serialize($value);
+            $this->setValue($value);
         } else {
             $this->value = null;
             $count = count($invalid);
@@ -177,7 +177,7 @@ class AddressProperty extends TextBoxProperty
         }
         if (!empty($this->display_address_default_country)) {
             foreach ($data['value'] as $key => $value) {
-                if ($value['id'] == 'country') {
+                if (($value['id'] == 'country') && empty($value['value'])) {
                     $data['value'][$key]['value'] = $this->display_address_default_country;
                 }
             }
