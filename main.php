@@ -168,7 +168,7 @@ class AddressProperty extends TextBoxProperty
             foreach ($data['address_components'] as $component) {
                 $newvalue[$component['id']]['label'] = $component['name'];
             }
-            $data['value'] = $newvalue;echo "<pre>";var_dump($data['value']);
+            $data['value'] = $newvalue;
             if (!empty($data['value']['country']['value']) && file_exists(sys::code() . 'properties/address/xartemplates/includes/' . $data['value']['country']['value'] . '-input.xt')) {
                 $data['country_template'] = $data['value']['country']['value'] . '-input';
             } else {
