@@ -162,8 +162,8 @@ class AddressProperty extends TextBoxProperty
         else $this->display_layout = $data['layout'];
         if ($data['layout'] == 'country') {
             $newvalue = array();
-            foreach ($data['value'] as $value) {
-                $newvalue[$value['id']]['value'] = $value['value'];
+            foreach ($data['value'] as $key => $value) {
+                $newvalue[$value]['id'] = $value;
             }
             foreach ($data['address_components'] as $component) {
                 $newvalue[$component['id']]['label'] = $component['name'];
