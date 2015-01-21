@@ -184,6 +184,14 @@ Notes:
 
     //--- 6. Assemble the fields to be displayed
 
+        // Check if the object has a primary key
+        if (empty($object->primary)) {
+            throw new Exception(xarML("The listing cannot be displayed, because this object has no primary key"));
+        }
+
+        // We'll put fields into the output of the query that have status active or list
+        $object->properties[$object->primary]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
+
         // Check if someone passed a fieldlist attribute or take the one defined in the object
         $nofieldlist = false;
         if (empty($fieldlist)) {
@@ -194,16 +202,15 @@ Notes:
             $fieldlist = explode(',',$fieldlist);
         }
 
-        // Someone passed a keyfield attribute
-        if (!empty($keyfield)) $defaultkey = $keyfield;
+        // Check if we had the primary index in the list of fields. Otherwise add it.
+        // Its display will be steered by the $show_primary variable
 
-        // Check if the object has a primary key
-        if (empty($object->primary)) {
-            throw new Exception(xarML("The listing cannot be displayed, because this object has no primary key"));
+        if (!in_array($object->primary, $fieldlist)) {
+            $fieldlist[] = $object->primary;
         }
 
-        // We'll put fields into the output of the query that have status active or list
-        $object->properties[$object->primary]->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE);
+        // Someone passed a keyfield attribute
+        if (!empty($keyfield)) $defaultkey = $keyfield;
 
         $data['fieldlabels'] = array();
         $data['fieldnames'] = array();
@@ -221,7 +228,6 @@ Notes:
         $keyfieldalias = '';
 
         $properties =& $object->getProperties(array('status' => array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY)));
-        $noprimary = true;
         foreach ($fieldlist as $fielditem) {
         
             // Explode the single item in the fieldlist
@@ -251,7 +257,6 @@ Notes:
             // Special treatment if this is the primary key
             if ($property->type == 21) {
                 if ($fieldname == $object->primary) {
-                    $noprimary = false;
                     $primarysource = $source;
                     $primaryalias = $alias;
                 } else {
@@ -301,24 +306,7 @@ Notes:
                 $keyfieldalias = $alias;
             }
         }
-
-        // Check if we had the primary index in the list of fields. Otherwise add it.
-        // Its display will be steered by the $show_primary variable
-        if ($noprimary) {
-            $property = $properties[$object->primary];
-            $source = $property->source;
-            $alias = $property->name;
-            $primarysource = $source;
-            $primaryalias = $alias;
-            $data['fieldlabels'][$alias] = $property->label;
-            $data['fieldnames'][] = $property->name;
-            $data['formfieldnames'][] = $alias;
-            $data['formfieldstates'][] = 'output';
-            $data['fields'][$alias] = $property->label;                  // Deprecated - remove from templates!!!
-            $data['columns'][$alias] = $property->name;                  // Deprecated - remove from templates!!!
-            $sourcefields[$alias] = $source;
-        }
-
+var_dump($fieldlist);exit;
         // Sanity check to make sure we got a key
         if (empty($defaultkey)) {
             throw new Exception(xarML("The listing cannot be displayed, because no select key was found"));
@@ -330,7 +318,7 @@ Notes:
     //--- 7. Figure out the operation we are performing
 
         $lastsearch = xarSession::getVar('listing.lastsearch');                 // get the ID of the last search
-        $firsttime = empty($lastsearch) || ($thissearch != $lastsearch);       // criterium for first time display
+        $firsttime = empty($lastsearch) || ($thissearch != $lastsearch);        // criterium for first time display
         if ($firsttime) $op = 'pagejump';                                       // override if we moved to a new page with a different query
 
         if ($op == 'column') $operation = 'columnclick';                        // a  column header was clicked
