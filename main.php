@@ -306,7 +306,7 @@ Notes:
                 $keyfieldalias = $alias;
             }
         }
-var_dump($fieldlist);exit;
+
         // Sanity check to make sure we got a key
         if (empty($defaultkey)) {
             throw new Exception(xarML("The listing cannot be displayed, because no select key was found"));
