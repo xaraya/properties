@@ -312,9 +312,6 @@ Notes:
             throw new Exception(xarML("The listing cannot be displayed, because no select key was found"));
         }
         
-        // Pass the vetted fieldlist back to the object
-        $object->fieldlist = $data['fieldnames'];
-
     //--- 7. Figure out the operation we are performing
 
         $lastsearch = xarSession::getVar('listing.lastsearch');                 // get the ID of the last search
@@ -500,8 +497,8 @@ Notes:
 
         // Save the dd object in a sessionvar for reuse
         if ($export) {
-            // Get the raw values of the items
-            $exportitems = $object->getItems();
+            // Add the fieldlist defined above and get the raw values of the items
+            $exportitems = $object->getItems(array('fieldlist' => $data['fieldnames']));
             $values = array();
             
             // Proceed if we have data
@@ -553,8 +550,8 @@ Notes:
         if (!isset($items)) {
             // add conditions if they were passed
             if (!empty($conditions)) $object->dataquery->addconditions($conditions);
-            // Get the records to be displayed
-            $items = $object->getItems();
+            // Add the fieldlist defined above and get the records to be displayed
+            $items = $object->getItems(array('fieldlist' => $data['fieldnames']));
             // We may need to recalculate the total if we have linked tables
             // Just force it for now
             $data['total'] = $object->dataquery->getrows();
