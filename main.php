@@ -571,23 +571,15 @@ Notes:
             }
         }
 
+        // Save the sequence of items for whoever
+        xarSession::setVar('listing.lastkeys', array_keys($items));
+
         // Debug display
         if (xarModVars::get('dynamicdata','debugmode') && 
         in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
             echo "Total rows: "; echo $data['total'];
             echo "<br />";
         }
-/*
-    $parts = explode('.',$primarysource);
-    $primarytable = "**MISSING**";
-    foreach ($object->dataquery->tables as $table) {
-        if ($parts[0] == $table['alias']) {
-            $primarytable = $table;
-            break;
-        }
-    }
-    $object->dataquery->addfield('COUNT(' . $primarytable['alias'] . '.id) AS total');
-*/
     
         // Add the filter variable to show a filter form
         if (!isset($data['filter'])) $data['filter'] = 0;
