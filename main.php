@@ -541,6 +541,8 @@ Notes:
         // Debug display
         if (xarModVars::get('dynamicdata','debugmode') && 
         in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+            echo "Object: "; $object->name;
+            echo "<br />";
             echo "Query: "; $object->dataquery->qecho();
             echo "<br />";
         }
