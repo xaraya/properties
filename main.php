@@ -64,7 +64,13 @@ Notes:
 - Text searches and alphabet searches are mutually exclusive 
 - Sorting direction, ordering field is preserved across the search types
 - The itemtype is fundamental in determining if we are in an existing context (and have a current query) or a new context
-- As a general rule we try to pass everything that has not changed via session vars
+- As a general rule we try to pass everything that has not changed via session vars.
+- The sessionvar listing.settings contains an associative array which contains the settings of every listing the session encounters
+- The sessionvar 'listing.' . $objectname contains a serialized array of the items of the last listing displayed.
+    This sessionvar is only created when we are exporting (attribute export="1"
+- The sessionvar listing.lastkeys contains an associative array of the IDs of the last query of each listing the user has encountered.
+  The keys are stored by listing ID.
+    This sessionvar is only created when the listing is given an ID: id="somenumberorstring"
 
 */
     function runquery($data)
@@ -155,7 +161,7 @@ Notes:
         $lastorder    = '';
         $laststartnum = 1;
             
-        $thissearch = md5($object->dataquery->tostring());                      // create a unique ID for this query
+        $thissearch = md5($object->dataquery->tostring());               // create a unique internal ID for this query
         $settings = xarSession::getVar('listing.settings');
         if (!empty($settings) && isset($settings[$thissearch])) {
             // Get the settings of this search or add any parameters that are missing
@@ -573,8 +579,15 @@ Notes:
             }
         }
 
-        // Save the sequence of items for whoever
-        xarSession::setVar('listing.lastkeys', array_keys($items));
+        // Save the sequence of items for whoever. Do this only when an ID parameter was passed
+        // We save both the keys and the query object, in case we need to recreate the query
+        if (isset($data['id'])) {
+            $keys = xarSession::getVar('listing.lastkeys');
+            if (empty($keys)) $keys = array();
+            $thissearch = serialize($object->dataquery);
+            $keys[$data['id']] = array('keys' => array_keys($items), 'query' => $thissearch);
+            xarSession::setVar('listing.lastkeys', $keys);
+        }
 
         // Debug display
         if (xarModVars::get('dynamicdata','debugmode') && 
