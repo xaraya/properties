@@ -584,8 +584,8 @@ Notes:
         if (isset($data['id'])) {
             $keys = xarSession::getVar('listing.lastkeys');
             if (empty($keys)) $keys = array();
-            $thissearch = serialize($object->dataquery);
-            $keys[$data['id']] = array('keys' => array_keys($items), 'query' => $thissearch);
+            $thisquerystring = serialize($object->dataquery->qecho());
+            $keys[$data['id']] = array('keys' => array_keys($items), 'query' => $thisquerystring);
             xarSession::setVar('listing.lastkeys', $keys);
         }
 
