@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<title>Xaraya Flags Pack Readme</title>
+</head>
+
+<body>
+<h1>XARAYA TERRITORIAL FLAGS PACK</h1>
+<h4> Version 1.0 [22-Oct-05]<br />
+  By <a href="http://www.pedroinnecco.com">Pedro Innecco</a></h4>
+<p> &#160;</p>
+<p> &#160;</p>
+<h3><strong>ABOUT</strong></h3>
+<p align="left">These flags has been compiled by Pedro Innecco (that's me!). I am a flag-lover (a hobbyist
+<a href="http://en.wikipedia.org/wiki/Vexillology">vexillologist</a>, the one who study flags) and I've been studying flags since I was four years old. I guess the
+colourful pictures just captivated me as a child.</p>
+<p>The flags contained in this package are territorial flags. Meaning that this package contain not only the flags for all countries (up to the release date of this pack), but also for other related regions, such as autonomous states. The rule followed is that if a territory is listed in the  <a href="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html">ISO3166</a> list, we will include its respective flag in this pack. </p>
+<p>&#160;</p>
+<h3><strong>USAGE</strong></h3>
+<p>  These flags were designed to be used with the Country List property within <a href="http://www.xaraya.com">Xaraya</a>. By using these flags and the proper templates, a Xaraya-powered site could display the flag of the country/region selected from the Country List property. Here are some examples for its usage:</p>
+<ul>
+  <li>Display a user's flags in the user's profile</li>
+  <li>Display users' flags in the Members List of a site</li>
+</ul>
+<ol>
+  <li>Unpack these flags under the <code><strong>modules/base/images</strong></code> directory of your Xaraya installation. Alternatively, you could also unpack these flags under the <code><strong>modules/base/images</code></strong> directory of your theme
+    (i.e.: <code><strong>themes/&lt;your-theme-dir&gt;/modules/base/images</strong></code>) however, this would limit the flags usage for the given theme only.</li>
+  <li>Now you must update the templates <code><strong>showinput-countrylist.xd</strong></code> and <code><strong>showoutput-countrylist.xd</strong></code> for the flags to be displayed.
+    These templates should go under the <code><strong>modules/base/xarproperties</strong></code>
+    directory of your Xaraya installation. Alternatively, you could also place
+    these templates under the <strong> <code>modules/base/xartemplates/properties</code></strong> directory of your theme (i.e.: <code><strong>themes/&lt;your-theme-dir&gt;/modules/base/properties</strong></code>) however,
+    you should rename replace the extension of these files from <code><strong>xd </strong></code>
+    to <code><strong>xt</strong></code>. Also, this would limit the
+    user of these templates for the given theme only.
+    <a href="http://xaraya.athomeandabout.com">Jojodee</a> has created the
+    following templates that one could use as a
+    kick-start:</li>
+</ol>
+<blockquote>
+    <fieldset>
+    <legend align="left">File showinput-countrylist.xd</legend><code>&lt;!---
+    License: GPL http://www.gnu.org/copyleft/gpl.html ---&gt;<br>
+    &lt;xar:set name=&quot;imagedir&quot;&gt;xarTplGetThemeDir().'/modules/base/images'&lt;/xar:set&gt;<br>
+    <br>
+    &lt;xar:set name=&quot;countryname&quot;&gt;''&lt;/xar:set&gt;<br>
+    &lt;select name=&quot;#$name#&quot; id=&quot;#$id#&quot; tabindex=&quot;#$tabindex#&quot; onChange='document.getElementById(&quot;#$id#image&quot;).src<br>
+    = &quot;#$imagedir#&quot; +&quot;/&quot;+<br>
+    document.getElementById(&quot;#$id#&quot;).options[document.getElementById(&quot;#$id#&quot;).selectedIndex].value
+    +&quot;-flag.png&quot;;'&gt;<br>
+    <br>
+    &lt;xar:foreach in=&quot;$coptions&quot; value=&quot;$coption&quot; &gt;<br>
+    &lt;xar:if condition=&quot;$value eq $coption['id']&quot; &gt;<br>
+    &lt;option value=&quot;#$coption['id']#&quot; selected=&quot;selected&quot;&gt;#$coption['name']#&lt;/option&gt;<br>
+    &lt;xar:set name=&quot;countryname&quot;&gt;#$coption['name']#&lt;/xar:set&gt;<br>
+    &lt;xar:else /&gt;<br>
+    &lt;option value=&quot;#$coption['id']#&quot;&gt;#$coption['name']#&lt;/option&gt;<br>
+    &lt;/xar:if&gt;<br>
+    &lt;/xar:foreach&gt;<br>
+    &lt;/select&gt;<br>
+    <br>
+    &lt;img id=&quot;#$id#image&quot; xsrc=&quot;#xarTplGetImage($value.'-flag.png','base')#&quot; /&gt;<br>
+    &lt;xar:if condition=&quot;!empty($invalid)&quot;&gt;<br>
+    &lt;span class=&quot;xar-error&quot;&gt;#$invalid#&lt;/span&gt;<br>
+    &lt;/xar:if&gt;</code></fieldset>
+<p>There above template is used when the user is editing the country list
+property (that is, making a selection from the country drop-down list). It will
+modify the drop-down list containing the country names, so when the user selects
+a country, the country flag will appear on the right side of the drop-down list.</p>
+    <p><b>Note:</b> If you place the flag images in your system directory
+    instead of using override directory in your theme you should adjust the $imagedir
+    variable in line 2 above and set to <strong><code>/modules/base/images/</code></strong> only.</p><fieldset><legend align="left">File showoutput-countrylist.xd</legend><code>&lt;xar:comment&gt; License: GPL http://www.gnu.org/copyleft/gpl.html &lt;/xar:comment&gt;<br>&lt;xar:if condition=&quot;!empty($value)&quot; &gt;<br>&lt;xar:comment&gt;Set the country code to uppercase&lt;/xar:comment&gt;<br>&lt;xar:set name=&quot;formattedcode&quot;&gt;strtoupper($value)&lt;/xar:set&gt;<br>
+    <br>&lt;xar:comment&gt;For those that want UK instead of GB&lt;/xar:comment&gt;<br>&lt;xar:if condition=&quot;$value eq 'gb'&quot;&gt;<br>&lt;xar:set name=&quot;formattedcode&quot;&gt;'UK'&lt;/xar:set&gt;<br>&lt;/xar:if&gt;<br>
+    <br>&lt;img src=&quot;#xarTplGetImage($value.'-flag.png','base')#&quot; alt=&quot;#$countryname# flag&quot;
+/&gt; #$countryname# (#$formattedcode#)<br>&lt;/xar:if&gt;</code>
+    </fieldset>
+    <p>The above template is used when a user is viewing the country list
+    property (for example, viewing a user's profile that contains the country
+    list property). It will modify the output so the country flag is displayed
+    before the country name and code.</p>
+    <p>The 11th line of the above code is what formats and display the country
+    name and flag. You can see that the first bit to be displayed is the country
+    flag by using the function <code><b>xarTplGetImage()</b></code>. In this
+    function, <code><b>$value.'-flag.png'</b></code>&#160; looks for the
+    filename where <b><code>$value</code></b> is the  <a href="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html">ISO3166</a>
+    code of the given
+    country. The <code><b>'base'</b> </code>bit basically tells the <code><b>xarTplGetImage() </b></code>function to look
+    for the flag file in within the <i>Base</i> module. Still looking at the
+    flag, you can see that the <b><code>&lt;img&gt;</code></b> tag is has an <b><code>alt</code></b>
+    attribute that says <b><code>#$countryname# flag</code></b>. This would
+    output an <b><code>alt</code></b> value such as <i>&quot;Brazil flag&quot;</i>, <i>
+    &quot;United Kingdom flag&quot;</i>, <i>&quot;Uruguay flag&quot;</i> and so on depending of the
+    country name - so we keep on the XHTML standard which requests all images to
+    have <b><code>alt</code></b> tags.</p>
+    <p>Still on the 11th line of the above code, you can see that after the img
+    tag is closed we have <b><code>#$countryname# (#$formattedcode#)</code></b>.
+    This would output the country name followed by it's  <a href="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html">ISO3166</a>
+    code between parenthesis. For example: <i>Brazil (BR)</i>, <i>Uruguay (UY)</i>,
+    <i>Israel (IL)</i> and so on.</p>
+    <p>There are two last things I would like to comment on this template:</p>
+    <ul>
+        <li>By following the standards, the country codes should be in lowercase
+        (such as <b>br</b>, <b>uy</b> or <b>il</b>).
+        However, for aesthetics purposes, we would prefer to display them in
+        upper-case. See the 4th line of the above code? That is what converts
+        the country codes to uppercase (therefore <b>BR</b>, <b>UY</b> or <b>IL</b>).</li>
+        <li>On the 6th line of the above code there is a condition <b> <code>&lt;xar:if&gt;</code></b> - can you
+    see it? What it dos is quite simple: According to the  <a href="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html">ISO3166</a>,
+    the code for <a href="http://en.wikipedia.org/wiki/United_Kingdom">United
+    Kingdom</a> is GB (as in &quot;Great Britain&quot;). However, this doesn't
+        coincide with the UK's <i>
+    Internet's Top Level Domain Code</i>. But the ISO is the ISO, and we wanted
+        to keep with the standard. So what this <b> <code>&lt;xar:if&gt;</code></b> statement does is to make
+    sure that if the code to be displayed is GB, to output UK instead.</li>
+    </ul>
+    </blockquote>
+<p>&#160;</p>
+<h3><strong>POLITICS</strong></h3>
+<p>If you feel that a given flag is not appropriate, feel free to replace it by following the guidelines below. But please bear in mind that the developers at Xaraya are not interested in engage in politics and they would like to stay as neutral as possible about flags and territorial disputes. Moreover, if you would like to make any <strong>POLITE</strong> suggestions, please contact Pedro Innecco directly.</p>
+<p>&#160;</p>
+<h3><strong>FLAGS GUIDELINES</strong></h3>
+<ul>
+  <li>All flags must be on its original scale, and 16 pixels in height.</li>
+  <li>All flags must be on <a href="http://en.wikipedia.org/wiki/PNG">PNG</a> format.</li>
+  <li>All files must be named as <b> <code>xx-flag.png</code></b>, where <b> <code>
+    xx</code></b> is the <a href="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html">ISO3166</a> code for the country or region. For example,
+    <b><code>ch-flag.png</code></b> for Switzerland and <b><code>br-flag.png</code></b> for Brazil
+    and so on. Additionally, a file called <b><code>---flag.png</code></b> is
+    included so you can use for when there is no Country selected fro a given
+    Country list.</li>
+</ul>
+<p>&#160;</p>
+<h3><strong>LICENSE</strong></h3>
+<p>As I have created this pack for <a href="http://www.xaraya.com">Xaraya</a>, which is an Open Source <a href="http://www.gnu.org">GNU software</a>, I hereby release these flags under the GNU license, and anyone can use it providing that they <strong>ABIDE by the GNU license policies</strong> (that includes any users/admins/developers of *nuke-based platforms).
+In particular, I would like to stress the fact that anyone using these graphics
+in other projects should give the appropriate credits.</p>
+<p>&#160;</p>
+<h3><strong>SOURCES</strong></h3>
+<ul>
+  <li><a href="http://www.pedroinnecco.com">Pedro Innecco</a> (loads of annotations, books and
+    the brain)</li>
+  <li><a href="http://en.wikipedia.org">Wikipedia</a></li>
+  <li><a href="http://www.crwflags.com/fotw/flags/">Flags of the World</a></li>
+  <li><a href="http://www.flags.net">The World's Flag Database</a></li>
+</ul>
+<p>&#160;</p>
+</body>
+</html>

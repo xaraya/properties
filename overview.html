@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../themes/installer/style/style.css"/>
+    </head>
+    <body>
+        <div style="margin-top: 20px">
+        <div id="contentouter">
+            <div id="contentwrap">
+                <div id="contentmain">
+                    <div id="contentmain_inner"><div id="contentmain_tlcorner"><div id="contentmain_trcorner">&#160;</div></div>
+                        <div id="contentmain_core">
+            <h2>Country Property</h2>
+                <h3>Description</h3>
+                <p>
+                    The Country dataproperty displays a dropdown of country names, optionally with the selected country's flag.. 
+                </p>
+                <h3>Usage</h3>
+                <h4>Standalone</h4>
+                    <pre>
+    &lt;xar:data-input type="country" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output type="country" <i>[attr1="value1",...]</i> /&gt;
+                    </pre>
+            <h4>Bound</h4>
+                <pre>
+    &lt;xar:data-input property="$properties['country']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output property="$properties['country']" <i>[attr1="value1",...]</i> /&gt;
+                </pre>
+            <h3> Configuration Values</h3>
+            <ul>
+                <li>
+                    <strong>layout</strong>: string [default="default}"]&#160;A string defining the display layout for the property. Valid strings are "text", "image", "imagetext".
+                </li>
+            </ul>
+        </div>
+                        </div>
+                        <div id="contentmain_blcorner"><div id="contentmain_brcorner">&#160;</div></div>
+                    </div>
+                </div>
+            </div>
+            <br class="xar-clearboth"/>
+        </div>
+    </body>
+</xar:template>
