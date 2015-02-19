@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:javascript filename="calendar_stripped.js" property="jscalendardate" position="head"/>
+    <xar:javascript filename="lang/calendar-en.js" property="jscalendardate" position="head"/>
+    <xar:javascript filename="calendar-setup_stripped.js" property="jscalendardate" position="head"/>
+
+    <xar:if condition="!isset($class)">
+        <xar:set name="class">'xar-jscalendardate'</xar:set>
+    <xar:else/>
+        <xar:set name="class">'xar-jscalendardate ' . $class</xar:set>
+    </xar:if>
+
+    <xar:if condition="!isset($style)">
+        <xar:set name="style">''</xar:set>
+    </xar:if>
+
+    <xar:style method="link" scope="property" property="jscalendardate" file="$calendartheme" />
+    <input type="text" name="#$name#" id="#$link['id']#" value="#xarLocaleFormatDate($dateformat,$value)#" maxlength="19" tabindex="#$tabindex#" class="#$class#" style="#$style#"/>
+
+    <xar:var name="alttext">Click here to pick a date</xar:var>
+    <a href="#" id="#$link['trigger']#">
+    <img src="#xarTpl::getImage('calendar.gif', 'property', 'jscalendardate')#" width="16" height="16" border="0" alt="#$alttext#" />
+    </a>
+    <script type="text/javascript">Calendar.setup({#$js_options#});</script>
+</xar:template>
