@@ -42,11 +42,11 @@ class JQDateTimeProperty extends DataProperty
     {
         if(!isset($value)) $value = $this->getValue();
         else $this->setValue($value);
-
         if (!parent::validateValue($value)) return false;
-
         try {
+
         	$this->value = strtotime($this->value)+ $this->calculateTimeOffset();
+        	
         } catch (Exception $e) {
             $this->invalid = xarML('#(1) cannot have the value #(2)', $this->name,$value);
             xarLog::message($this->invalid, XARLOG_LEVEL_ERROR);
@@ -105,22 +105,22 @@ class JQDateTimeProperty extends DataProperty
     }
     
     public function calculateTimeOffset(){
-    	$currentTZ = xarSystemVars::get(sys::CONFIG, 'SystemTimeZone');
+    	$siteTZ = xarConfigVars::get(null, 'Site.Core.TimeZone');
 
-    	// Create two timezone objects, one for GMT and one for selected sitetimezone
+    	// Create two timezone objects, one for GMT and one for Site Time Zone
 		$dateTimeZoneGMT = new DateTimeZone("GMT");
-		$dateTimeZoneSiteTZ = new DateTimeZone($currentTZ);
+		$dateTimeZoneSiteTZ = new DateTimeZone($siteTZ);
 		
 		// Create two DateTime objects that will contain the same Unix timestamp, but
 		// have different timezones attached to them.
 		$dateTimeGMT = new DateTime($this->value, $dateTimeZoneGMT);
-		$dateTimeSiteTZ = new DateTime($this->value, $dateTimeZoneSiteTZ);
+		$dateTime = new DateTime($this->value, $dateTimeZoneSiteTZ);
 		
 		// Calculate the GMT offset for the date/time contained in the $dateTimeZoneGMT
-		// object, but using the timezone rules as defined for Selected SiteTZ
-		$timeOffset = $dateTimeSiteTZ->getOffset($dateTimeGMT);
+		// object, but using the timezone rules as defined for Site Time Zone
+		$timeOffset = $dateTimeZoneSiteTZ->getOffset($dateTimeGMT);
 
-		// Should calculate approx. difference ().
+		// Should calculate the timezone differnce with GMT (for dates after Sat Sep 8 01:00:00 1951 JST).
 		return $timeOffset;
     }
 }
