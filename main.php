@@ -47,7 +47,7 @@ class JQDateTimeProperty extends DataProperty
         $this->value = strtotime($this->value); //var_dump($this->value);exit;
         	
         if ($this->value === false) {
-            $this->invalid = xarML('#(1) cannot have the value #(2)', $this->name,$value);
+            $this->invalid = xarML('#(1) date could not be resolved', $this->name);
             xarLog::message($this->invalid, XARLOG_LEVEL_ERROR);
             $this->value = null;
             return false;
