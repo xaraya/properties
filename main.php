@@ -43,11 +43,10 @@ class JQDateTimeProperty extends DataProperty
         if(!isset($value)) $value = $this->getValue();
         else $this->setValue($value);
         if (!parent::validateValue($value)) return false;
-        try {
 
-        	$this->value = strtotime($this->value)+ $this->calculateTimeOffset();
+        $this->value = strtotime($this->value)+ $this->calculateTimeOffset();
         	
-        } catch (Exception $e) {
+        if ($this->value === false) {
             $this->invalid = xarML('#(1) cannot have the value #(2)', $this->name,$value);
             xarLog::message($this->invalid, XARLOG_LEVEL_ERROR);
             $this->value = null;
