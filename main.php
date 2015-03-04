@@ -102,26 +102,6 @@ class JQDateTimeProperty extends DataProperty
         }
         return $value;
     }
-    
-    public function calculateTimeOffset(){
-    	$siteTZ = xarConfigVars::get(null, 'Site.Core.TimeZone');
-
-    	// Create two timezone objects, one for GMT and one for Site Time Zone
-		$dateTimeZoneGMT = new DateTimeZone("GMT");
-		$dateTimeZoneSiteTZ = new DateTimeZone($siteTZ);
-		
-		// Create two DateTime objects that will contain the same Unix timestamp, but
-		// have different timezones attached to them.
-		$dateTimeGMT = new DateTime($this->value, $dateTimeZoneGMT);
-		$dateTime = new DateTime($this->value, $dateTimeZoneSiteTZ);
-		
-		// Calculate the GMT offset for the date/time contained in the $dateTimeZoneGMT
-		// object, but using the timezone rules as defined for Site Time Zone
-		$timeOffset = $dateTimeZoneSiteTZ->getOffset($dateTimeGMT);
-
-		// Should calculate the timezone differnce with GMT (for dates after Sat Sep 8 01:00:00 1951 JST).
-		return $timeOffset;
-    }
 }
 
 ?>
