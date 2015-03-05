@@ -4,7 +4,7 @@
     <table class="xar-norm">
       <tr>
         <td>
-          <xar:mlstring>Store as</xar:mlstring>
+          Store as
         </td>
         <td>
           <select name="#$name#[dbformat]" id="#$id#_dbformat" tabindex="#$tabindex#">

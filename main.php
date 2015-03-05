@@ -22,10 +22,11 @@ class JQDateTimeProperty extends DataProperty
     public $desc       = 'JQDateTime';
     public $reqmodules = array();
 
-    public $initialization_include_time = 0;
-    public $display_jqdatetime_format_type = 1;
-    public $display_jqdatetime_format_predef = 0;
-    public $display_jqdatetime_format_custom = 'c';
+    public $initialization_include_time      = 0;       // Include time sliders in the UI
+    public $display_jqdatetime_format_type   = 1;       // Whether to use format from site locale, predefined or custom format
+    public $display_jqdatetime_format_predef = 0;       // The predefined format chosen
+    public $display_jqdatetime_format_custom = 'c';     // The type of custom format chosen
+    public $initialization_add_offset        = false;   // Whether to honor the timezone offset
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -44,7 +45,7 @@ class JQDateTimeProperty extends DataProperty
         else $this->setValue($value);
         if (!parent::validateValue($value)) return false;
 
-        $this->value = strtotime($this->value);
+        $this->value = strtotime($this->value);var_dump($this->value);exit;
         	
         if ($this->value === false) {
             $this->invalid = xarML('#(1) date could not be resolved', $this->name);
@@ -59,6 +60,7 @@ class JQDateTimeProperty extends DataProperty
     {
         $name = empty($data['name']) ? 'dd_'.$this->id : $data['name'];
 
+        if (!empty($data['add_offset']))   $this->initialization_add_offset = $data['add_offset'];
         if (!empty($data['include_time'])) $this->initialization_include_time = $data['include_time'];
         if (empty($data['value'])) $data['value'] = $this->value;
 
@@ -70,6 +72,7 @@ class JQDateTimeProperty extends DataProperty
 
     public function showOutput(Array $data = array())
     {
+        if (!empty($data['add_offset']))   $this->initialization_add_offset = $data['add_offset'];
         if (!empty($data['include_time'])) $this->initialization_include_time = $data['include_time'];
         if (empty($data['value'])) $data['value'] = $this->value;
 
@@ -79,7 +82,11 @@ class JQDateTimeProperty extends DataProperty
     }
 
     function format($value)
-    {
+    {   
+        // Add TZ offset here
+        if ($this->initialization_add_offset) {
+            $value += xarConfigVars::get(null, 'Site.MLS.DefaultTimeOffset');
+        }
         try {
             switch($this->display_jqdatetime_format_type) {
                 case 1:

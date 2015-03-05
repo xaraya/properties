@@ -35,4 +35,13 @@
     <ignore_empty>1</ignore_empty>
     <configuration>a:0:{}</configuration>
   </configurations>
+  <configurations itemid="570">
+    <id>570</id>
+    <name>initialization_add_offset</name>
+    <label>Add TZ Offset</label>
+    <description>Add time zone offset to the times?</description>
+    <property_id>14</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration>a:0:{}</configuration>
+  </configurations>
 </items>
