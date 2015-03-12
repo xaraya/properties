@@ -27,27 +27,30 @@
                 array(9,13)
             ); $data = json_encode($data);
         </xar:set>
+    <xar:elseif condition="is_array($data)"/>
+        <!-- Make sure the data has been encoded -->
+        <xar:set name="data">
+            json_encode($data)
+        </xar:set>
     </xar:if>
 
+    <!-- Make sure we have some options -->
+    <xar:if condition="empty($options)">
+        <xar:set name="options">'{}'</xar:set>
+    </xar:if>
+    
     <!-- Let the XSL transformer ignore the JS code -->
     <![CDATA[
-    <!-- The code for this plot -->
+        <!-- The code for this plot -->
         <script type="text/javascript">
+            var options = #$options#;
+            
             $(function() {
                 var plotname = "#$name#";
 
-                var d1 = [];
-                for (var i = 0; i < 14; i += 0.5) {
-                    d1.push([i, Math.sin(i)]);
-                }
+                var d = #$data#;
 
-                var d2 = #$data#;
-
-                // A null signifies separate line segments
-
-                var d3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
-
-                $.plot("##" + plotname, [ d1, d2, d3 ]);
+                $.plot("##" + plotname, [ d ], options);
             });
         </script>
     ]]>
