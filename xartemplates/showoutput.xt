@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+    <!-- Load JQuery -->
+    <xar:javascript type="lib" lib="jquery" position="head"/>
+    <!-- Load Flot JS -->
+    <xar:javascript type="plugin" plugin="flot" lib="jquery" file="jquery.flot" position="head"/>
+    <xar:javascript type="plugin" plugin="flot" lib="jquery" file="jquery.flot.categories" position="head"/>
+    <!-- Add some CSS -->
+    <xar:style scope="property" property="flot" file="flot"/>
+    
+    <xar:if condition="empty($width)">
+        <xar:set name="width">'400px'</xar:set>
+    </xar:if>
+    <xar:if condition="empty($height)">
+        <xar:set name="height">'200px'</xar:set>
+    </xar:if>
+    
+    <!-- Make sure we have some data to display -->
+    <xar:if condition="empty($data)">
+        <xar:set name="data">
+            array(
+                array(0,3),
+                array(4,8),
+                array(8,5),
+                array(9,13)
+            ); $data = json_encode($data);
+        </xar:set>
+    </xar:if>
+
+    <!-- Let the XSL transformer ignore the JS code -->
+    <![CDATA[
+    <!-- The code for this plot -->
+        <script type="text/javascript">
+            $(function() {
+                var plotname = "#$name#";
+
+                var d1 = [];
+                for (var i = 0; i < 14; i += 0.5) {
+                    d1.push([i, Math.sin(i)]);
+                }
+
+                var d2 = #$data#;
+
+                // A null signifies separate line segments
+
+                var d3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
+
+                $.plot("##" + plotname, [ d1, d2, d3 ]);
+            });
+        </script>
+    ]]>
+	    
+    <!-- The plot goes here-->
+		<div class="flot-container" style="width: #$width#; height: #$height#">
+		    <div id="#$name#" class="flot-placeholder"></div>
+		</div>
+</xar:template>
