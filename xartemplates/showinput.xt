@@ -21,6 +21,6 @@
     <input type="text" name="#$name#_time" id="#$name#_time" value="#$value['duration']#" class="xar-form-textshort" style="text-align: right;"/>
     &#160;
     <xar:set name="unitname">$name . "_unit"</xar:set>
-    <xar:data-input type="dropdown" name="$unitname" id="$unitname" value="$value['unit']" options="$options" style="#$style#" class="#$class#"/>
+    <xar:data-input type="dropdown" name="$unitname" id="$unitname" value="$value['unit']" options="$options" style="$style" class="$class"/>
     <xar:template file="dataproperty_additions" module="base"/>
 </xar:template>
