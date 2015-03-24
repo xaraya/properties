@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="!isset($class)">
+        <xar:set name="class">'xar-dropdown-date'</xar:set>
+    <xar:else/>
+        <xar:set name="class">'xar-dropdown-date ' . $class</xar:set>
+    </xar:if>
+    <xar:if condition="!isset($style)">
+        <xar:set name="style">''</xar:set>
+    </xar:if>
     <xar:set name="options">
         array(
             array('id' => 's', 'name' => xarML('seconds')),
@@ -13,5 +21,6 @@
     <input type="text" name="#$name#_time" id="#$name#_time" value="#$value['duration']#" class="xar-form-textshort" style="text-align: right;"/>
     &#160;
     <xar:set name="unitname">$name . "_unit"</xar:set>
-    <xar:data-input type="dropdown" name="$unitname" id="$unitname" value="$value['unit']" options="$options"/>
+    <xar:data-input type="dropdown" name="$unitname" id="$unitname" value="$value['unit']" options="$options" style="#$style#" class="#$class#"/>
+    <xar:template file="dataproperty_additions" module="base"/>
 </xar:template>

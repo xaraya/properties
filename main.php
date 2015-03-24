@@ -20,7 +20,6 @@ class TimePeriodProperty extends DataProperty
     public $desc = 'Time Period';
     public $reqmodules = array();
 
-
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
