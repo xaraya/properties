@@ -523,7 +523,17 @@ Notes:
                     $fields = array();
                     foreach ($firstrow as $column) {
                         $object->properties[$column]->setValue($row[$column]);
-                        $fields[$column] = $object->properties[$column]->getValue();
+                        
+                        // Let formatting of numbers happen downstream
+                        switch ($object->properties[$column]->basetype) {
+                            case 'integer':
+                            case 'numeric':
+                            case 'decimal':
+                                $fields[$column] = $object->properties[$column]->value;
+                            break;
+                            default:
+                                $fields[$column] = $object->properties[$column]->getValue();
+                        }
                     }
                     $values[] = $fields;
                 }
