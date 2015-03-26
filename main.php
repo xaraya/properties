@@ -121,7 +121,7 @@ class AddressProperty extends TextBoxProperty
                 $tempvalue = trim($part['value']);
                 if (empty($tempvalue)) continue;
                 if (empty($value)) $value = $tempvalue;
-                else $value .= ', ' . $name;
+                else $value .= ', ' . $tempvalue;
             } catch (Exception $e) {}
         }
         return $value;
