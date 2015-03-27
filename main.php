@@ -171,12 +171,12 @@ Notes:
         $thissearch = md5($object->dataquery->tostring());               // create a unique internal ID for this query
         $settings = xarSession::getVar('listing.settings');
         if (!empty($settings) && isset($settings[$thissearch])) {
-            // Get the settings of this search or add any parameters that are missing
+            // Get the settings of this search if they exist, overriding the above
             $thesesettings = $settings[$thissearch];
-            $lastmsg      = isset($thesesettings['lastmsg'])      ? $thesesettings['lastmsg'] : '';
-            $lastsort     = isset($thesesettings['lastsort'])     ? $thesesettings['lastsort'] : 'ASC';
-            $lastorder    = isset($thesesettings['lastorder'])    ? $thesesettings['lastorder'] : '';
-            $laststartnum = isset($thesesettings['laststartnum']) ? $thesesettings['laststartnum'] : 1;
+            if (isset($thesesettings['lastmsg']))      $lastmsg = $thesesettings['lastmsg'];
+            if (isset($thesesettings['lastorder']))    $lastorder = $thesesettings['lastorder'];
+            if (isset($thesesettings['lastsort']))     $lastsort = $thesesettings['lastsort'];
+            if (isset($thesesettings['laststartnum'])) $laststartnum = $thesesettings['laststartnum'];
         }
 
     //--- 3. Get all the parameters we need from the form. These can override the sessionvar settings
