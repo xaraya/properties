@@ -168,7 +168,9 @@ Notes:
             $lastsort     = 'ASC';
         }
             
-        $thissearch = md5($object->dataquery->tostring());               // create a unique internal ID for this query
+        // Create a unique internal ID for this query
+        $thissearch = md5($object->dataquery->tostring());
+        
         $settings = xarSession::getVar('listing.settings');
         if (!empty($settings) && isset($settings[$thissearch])) {
             // Get the settings of this search if they exist, overriding the above
@@ -377,11 +379,11 @@ Notes:
 
     //--- 9. First time visit to this page; empty the sessionvars and reset the categories
             case "newsearch":
-                // Take the persistent settings or set defaults
-                $msg      = isset($thesesettings['lastmsg'])      ? $thesesettings['lastmsg'] : '';
-                $sort     = isset($thesesettings['lastsort'])     ? $thesesettings['lastsort'] : 'ASC';
-                $order    = isset($thesesettings['lastorder'])    ? $thesesettings['lastorder'] : '';
-                $startnum = isset($thesesettings['laststartnum']) ? $thesesettings['laststartnum'] : 1;
+                // Go back to the persistent settings
+                if (isset($thesesettings['lastmsg']))      $msg = $thesesettings['lastmsg'];
+                if (isset($thesesettings['lastorder']))    $order = $thesesettings['lastorder'];
+                if (isset($thesesettings['lastsort']))     $sort = $thesesettings['lastsort'];
+                if (isset($thesesettings['laststartnum'])) $startnum = $thesesettings['laststartnum'];
             break;
 
     //--- 10. Any other operation:get the query if it was passed as conditions, or create a new one
