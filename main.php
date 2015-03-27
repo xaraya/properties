@@ -340,23 +340,6 @@ Notes:
         elseif (!empty($submit) && !$firsttime) $operation = 'categorysearch';  // the submit button was clicked (= any other search)
         else $operation = 'newsearch';                                          // any other operation: we fall back to new search
 
-        // Debug display
-        if (xarModVars::get('dynamicdata','debugmode') && 
-        in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
-            echo "ID: " . $thissearch;
-            echo "<br />";
-            echo "Operation: " . $operation . " [" . $op . "]";
-            echo "<br />";
-            echo "Start at: " . $startnum;
-            echo "<br />";
-            echo "Items per page: " . $data['items_per_page'];
-            echo "<br />";
-            echo "Order: " . $order;
-            echo "<br />";
-            echo "Sort: " . $sort;
-            echo "<br />";
-        }
-
         $data['params'] = array();
 
         switch ($operation) {
@@ -417,7 +400,7 @@ Notes:
         // but only if the column name is the same so it acts like a toggle for that field
         // only change sort if column name is clicked, not a letter which will retain the current settings
         if ($operation == "columnclick") {
-            if (isset($order) && $startnum == $startnum){
+            if (isset($order)){
                 if ($order == $lastorder) {
                     if($lastsort == 'ASC') $sort = 'DESC';
                        else $sort = 'ASC';
@@ -566,6 +549,18 @@ Notes:
         // Debug display
         if (xarModVars::get('dynamicdata','debugmode') && 
         in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+            echo "ID: " . $thissearch;
+            echo "<br />";
+            echo "Operation: " . $operation . " [" . $op . "]";
+            echo "<br />";
+            echo "Start at: " . $startnum;
+            echo "<br />";
+            echo "Items per page: " . $data['items_per_page'];
+            echo "<br />";
+            echo "Order: " . $order;
+            echo "<br />";
+            echo "Sort: " . $sort;
+            echo "<br />";
             echo "Object: "; $object->name;
             echo "<br />";
             echo "Query: "; $object->dataquery->qecho();
