@@ -156,10 +156,17 @@ Notes:
         $q = xarSession::getVar('listing.' . $objectname . '.currentquery');
         
         // Default values for a first time search; possibly overridden below
+        // We check for settings from the object's dataquery or just hardcode
         $lastmsg      = '';
-        $lastsort     = 'ASC';
-        $lastorder    = '';
         $laststartnum = 1;
+        if (!empty($object->dataquery->sorts)) {
+            $firstsort = reset($object->dataquery->sorts);
+            $lastorder    = $firstsort['name'];
+            $lastsort     = $firstsort['order'];
+        } else {
+            $lastorder    = '';
+            $lastsort     = 'ASC';
+        }
             
         $thissearch = md5($object->dataquery->tostring());               // create a unique internal ID for this query
         $settings = xarSession::getVar('listing.settings');
