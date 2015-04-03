@@ -49,15 +49,15 @@ class CounterProperty extends TextBoxProperty
         }
 
         // The module the counter belongs to; default is DD module
-        if (empty($this->initialization_counter_module)) $this->initialization_counter_module = 'dynamicdata';
-        $module = $this->initialization_counter_module;
+        if (empty($this->initialization_counter_module)) $this->initialization_counter_module = xarMod::getRegId('dynamicdata');
+        $module = (int)$this->initialization_counter_module;
         
         // The variable the counter is stored in
         $store  = $this->initialization_counter_store;
         // Might have a variable or function, so evaluate it
         eval("\$store = \"$store\";");
         // We add a prefix to make it more human readable
-        $store  = 'counter_' . $this->initialization_counter_store;
+        $store  = 'counter_' . $store;
         
         // Get the currently stored counter value in the (assumed) current store
         $value = xarModVars::get($module, $store);//var_dump($module);die("X");
