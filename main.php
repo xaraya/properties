@@ -11,6 +11,14 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
+/**
+ * Args:
+ * 
+ * int initialization_counter_module the module this counter belongs to
+ * string initialization_counter_store the variable the counter value is stored in
+ * string initialization_counter_value a comma delimited string consisting of prefix and numeric value of the counter
+ * int initialization_counter_allow_prefix_change defines whether the prefix can be changed
+ */
 sys::import('modules.base.xarproperties.textbox');
 
 class CounterProperty extends TextBoxProperty
@@ -20,6 +28,10 @@ class CounterProperty extends TextBoxProperty
     public $desc = 'Counter';
     public $reqmodules = array();
 
+    private $counter_module;
+    private $counter_store;
+
+    public $initialization_counter_module;
     public $initialization_counter_store;
     public $initialization_counter_value                  = ',0';
     public $initialization_counter_allow_prefix_change    = 0;
@@ -35,23 +47,32 @@ class CounterProperty extends TextBoxProperty
         if (!empty($args['configuration'])) {
             $this->parseConfiguration($args['configuration']);
         }
-        // Get the currently stored counter value in the (assumed) current store
-        try {
-            $parts = explode(',',$this->initialization_counter_store);
-            $value = xarModVars::get($parts[0],$parts[1]);
-        } catch (Exception $e) {
-            $this->initialization_counter_store = 'dynamicdata,' . $this->id;
-            $value = xarModVars::get('dynamicdata,',$this->id);
-        }
+
+        // The module the counter belongs to; default is DD module
+        if (empty($this->initialization_counter_module)) $this->initialization_counter_module = 'dynamicdata';
+        $module = $this->initialization_counter_module;
         
-        // If the ID is the value of the property's type, it means we are configuring the property.
+        // The variable the counter is stored in
+        $store  = $this->initialization_counter_store;
+        // Might have a variable or function, so evaluate it
+        eval("\$store = \"$store\";");
+        // We add a prefix to make it more human readable
+        $store  = 'counter_' . $this->initialization_counter_store;
+        
+        // Get the currently stored counter value in the (assumed) current store
+        $value = xarModVars::get($module, $store);//var_dump($module);die("X");
+        
         // If the value is empty it means the modvar doesn't exist. So we create it.
-        if (empty($value) && $this->id != 30108) {
+        if ((NULL == $value)) {
             $parts = explode(',',$this->initialization_counter_store);
             $counterparts = explode(',',$this->initialization_counter_value);
-            xarModVars::set($parts[0],$parts[1],serialize($counterparts));
-        }        
-
+            xarModVars::set($module,$store,serialize($counterparts));
+        }
+        
+        // Store the module and store var for reuse
+        $this->counter_module = $module;
+        $this->counter_store = $store;
+        
         // When no $args['value'] is present, this would make the value the default value,
         // but we cannot use the default value here.
         // We get around this by populating the value directly and so avoid that standard 
@@ -92,12 +113,11 @@ class CounterProperty extends TextBoxProperty
 
     private function setCounter()
     {
-        if (empty($this->initialization_counter_store)) {
+        if (empty($this->counter_module)) {
             $this->counter = array('',1);
         } else {
-            $parts = explode(',',$this->initialization_counter_store);
             try {
-                $counter = unserialize(xarModVars::get($parts[0],$parts[1]));
+                $counter = unserialize(xarModVars::get($this->counter_module,$this->counter_store));
             } catch (Exception $e) {
                 throw new Exception(xarML('Missing a proper store for counter property default value'));
             }
@@ -144,11 +164,8 @@ class CounterProperty extends TextBoxProperty
             $counterprefix = $counterparts[0];
         }
         
-        // Get the parts of the store
-        $parts = explode(',',$this->initialization_counter_store);
-        
         // Save the counter
-        xarModVars::set($parts[0],$parts[1],serialize(array($counterprefix,$counternumber)));
+        xarModVars::set($this->counter_module,$pthis->counter_store,serialize(array($counterprefix,$counternumber)));
     }
 }
 ?>

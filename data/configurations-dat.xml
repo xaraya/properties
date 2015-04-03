@@ -1,19 +1,37 @@
 <items>
   <configurations itemid="1">
     <id>1</id>
-    <name>initialization_icon_directory</name>
-    <label>Icon Directory</label>
-    <description>What directory the icons are in</description>
+    <name>initialization_counter_module</name>
+    <label>Module</label>
+    <description>What module the counter belongs to</description>
+    <property_id>19</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration>a:4:{s:24:"initialization_refobject";s:7:"modules";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";s:24:"initialization_firstline";s:17:"0,Choose a module";}</configuration>
+  </configurations>
+  <configurations itemid="2">
+    <id>2</id>
+    <name>initialization_counter_store</name>
+    <label>Counter Store</label>
+    <description>The name of the storage variable the counter's value is stored in</description>
     <property_id>2</property_id>
     <ignore_empty>1</ignore_empty>
     <configuration></configuration>
   </configurations>
-  <configurations itemid="2">
+  <configurations itemid="3">
     <id>2</id>
-    <name>initialization_icon_options</name>
-    <label>Icon Options</label>
-    <description>Which values point to which icons</description>
-    <property_id>3</property_id>
+    <name>initialization_counter_value</name>
+    <label>Counter Value</label>
+    <description>The initial value of the counter</description>
+    <property_id>2</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
+  <configurations itemid="4">
+    <id>2</id>
+    <name>initialization_counter_allow_prefix_change</name>
+    <label>Allow Prefix Change</label>
+    <description>Can the counter's prefix be changed?</description>
+    <property_id>2</property_id>
     <ignore_empty>1</ignore_empty>
     <configuration></configuration>
   </configurations>
