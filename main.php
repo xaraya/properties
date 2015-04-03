@@ -165,7 +165,7 @@ class CounterProperty extends TextBoxProperty
         }
         
         // Save the counter
-        xarModVars::set($this->counter_module,$pthis->counter_store,serialize(array($counterprefix,$counternumber)));
+        xarModVars::set($this->counter_module,$this->counter_store,serialize(array($counterprefix,$counternumber)));
     }
 }
 ?>
