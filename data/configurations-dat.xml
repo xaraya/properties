@@ -31,7 +31,7 @@
     <name>initialization_counter_allow_prefix_change</name>
     <label>Allow Prefix Change</label>
     <description>Can the counter's prefix be changed?</description>
-    <property_id>2</property_id>
+    <property_id>14</property_id>
     <ignore_empty>1</ignore_empty>
     <configuration></configuration>
   </configurations>
