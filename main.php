@@ -89,22 +89,6 @@ class CounterProperty extends TextBoxProperty
         $this->filepath   = 'auto';
     }
 
-    public function showInput(Array $data = array())
-    {
-        if(isset($data['counter_store'])) $this->initialization_counter_store = $data['counter_store'];
-        if(!isset($data['value'])) $data['value'] = $this->getCounterValue();
-
-        return parent::showInput($data);
-    }
-
-    public function showOutput(Array $data = array())
-    {
-        if(isset($data['counter_store'])) $this->initialization_counter_store = $data['counter_store'];
-        if(!isset($data['value'])) $data['value'] = $this->getCounterValue();
-
-        return parent::showOutput($data);
-    }
-
     public function createValue($itemid)
     {
         // With this we update the counter store to contain the latest value
