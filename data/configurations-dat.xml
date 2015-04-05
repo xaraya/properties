@@ -6,7 +6,7 @@
     <description>What module the counter belongs to</description>
     <property_id>19</property_id>
     <ignore_empty>1</ignore_empty>
-    <configuration>a:4:{s:24:"initialization_refobject";s:7:"modules";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";s:24:"initialization_firstline";s:17:"0,Choose a module";}</configuration>
+    <configuration>a:4:{s:24:"initialization_refobject";s:7:"modules";s:25:"initialization_store_prop";s:4:"name";s:27:"initialization_display_prop";s:4:"name";s:24:"initialization_firstline";s:17:"0,Choose a module";}</configuration>
   </configurations>
   <configurations itemid="2">
     <id>2</id>

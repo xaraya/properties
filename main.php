@@ -61,7 +61,7 @@ class CounterProperty extends TextBoxProperty
         $store  = 'counter_' . $store;
         
         // Get the currently stored counter value in the (assumed) current store
-        $value = xarModVars::get($module, $store);//var_dump($module);die("X");
+        $value = xarModVars::get($module, $store);
         
         // If the value is empty it means the modvar doesn't exist. So we create it.
         if ((NULL == $value)) {
