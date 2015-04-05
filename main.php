@@ -96,6 +96,12 @@ class CounterProperty extends TextBoxProperty
         $this->setCounterValue($this->value);
     }
 
+    public function updateValue($itemid)
+    {
+        // With this we update the counter store to contain the latest value
+        $this->setCounterValue($this->value);
+    }
+
     private function setCounter()
     {
         if (empty($this->counter_module)) {
