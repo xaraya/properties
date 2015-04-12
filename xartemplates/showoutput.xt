@@ -10,9 +10,9 @@
     </xar:if>
 
     <xar:if condition="$layout eq 'default' OR $layout eq ''">
-<xar:var name="value"/>
+        <xar:var name="value"/>
     <xar:elseif condition="$layout eq 'country'"/>
-<xar:template file="$country_template" module="$module" property="address"/>
+        <xar:template file="$country_template" module="$module" property="address"/>
     <xar:else/>
     </xar:if>
 </xar:template>
