@@ -34,7 +34,7 @@ class NameProperty extends TextBoxProperty
     public $reqmodules = array();
 
     public $display_name_components;
-    public $display_salutation_options = 'Mr.,Mrs.,Ms.';
+    public $display_salutation_options = xarML('Mr.,Mrs.,Ms.');
     public $validation_ignore_validations;
     public $validation_allowempty = true;
 
