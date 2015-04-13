@@ -35,11 +35,11 @@ class ListingProperty extends DataProperty
         'Y', 'Z'
     );
 
-    public $display_show_primary   = false;
-    public $display_show_search    = true;
-    public $display_show_alphabet  = true;
-    public $display_showall_tab    = true;
-    public $display_showother_tab    = true;
+    public $display_show_primary        = false;
+    public $display_show_search         = true;
+    public $display_show_alphabet       = true;
+    public $display_showall_tab         = true;
+    public $display_showother_tab       = true;
     public $display_show_items_per_page = false;
     public $display_items_per_page = 20;
 
@@ -95,12 +95,12 @@ Notes:
 
         // Send any config settings not overwritten to the template
         if (!isset($data['show_items_per_page'])) $data['show_items_per_page'] = $this->display_show_items_per_page;
-        if (!isset($data['items_per_page']))      $data['items_per_page'] = $this->display_items_per_page;
-        if (!isset($data['show_primary']))        $data['show_primary'] = $this->display_show_primary;
-        if (!isset($data['show_search']))         $data['show_search'] = $this->display_show_search;
-        if (!isset($data['show_alphabet']))       $data['show_alphabet'] = $this->display_show_alphabet;
-        if (!isset($data['showall_tab']))         $data['showall_tab'] = $this->display_showall_tab;
-        if (!isset($data['showother_tab']))       $data['showother_tab'] = $this->display_showother_tab;
+        if (!isset($data['items_per_page']))      $data['items_per_page']      = $this->display_items_per_page;
+        if (!isset($data['show_primary']))        $data['show_primary']        = $this->display_show_primary;
+        if (!isset($data['show_search']))         $data['show_search']         = $this->display_show_search;
+        if (!isset($data['show_alphabet']))       $data['show_alphabet']       = $this->display_show_alphabet;
+        if (!isset($data['showall_tab']))         $data['showall_tab']         = $this->display_showall_tab;
+        if (!isset($data['showother_tab']))       $data['showother_tab']       = $this->display_showother_tab;
 
         // give the template the alphabet chars
         $data['alphabet'] = $this->alphabet;
