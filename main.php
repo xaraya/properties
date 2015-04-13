@@ -34,7 +34,7 @@ class NameProperty extends TextBoxProperty
     public $reqmodules = array();
 
     public $display_name_components;
-    public $display_salutation_options = xarML('Mr.,Mrs.,Ms.');
+    public $display_salutation_options;
     public $validation_ignore_validations;
     public $validation_allowempty = true;
 
@@ -46,6 +46,7 @@ class NameProperty extends TextBoxProperty
         $this->filepath   = 'auto';
         
         $this->display_name_components = 'salutation,' . xarML('Salutation') . ';first_name,' . xarML('First Name') . ';last_name,' . xarML('Last Name') . ';';
+        $this->display_salutation_options = xarML('Mr.,Mrs.,Ms.');
     }
 
     public function checkInput($name = '', $value = null)
