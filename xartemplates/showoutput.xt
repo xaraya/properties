@@ -16,6 +16,10 @@
     <xar:if condition="empty($height)">
         <xar:set name="height">'200px'</xar:set>
     </xar:if>
+    <xar:if condition="empty($style)">
+        <xar:set name="style">''</xar:set>
+    </xar:if>
+    <xar:set name="style">$style . '; width: '$width . '; height: ' . $height . ';'</xar:set>
     
     <!-- Make sure we have some data to display -->
     <xar:if condition="empty($data)">
@@ -56,7 +60,7 @@
     ]]>
 	    
     <!-- The plot goes here-->
-		<div class="flot-container" style="width: #$width#; height: #$height#">
+		<div class="flot-container" style="#$style#">
 		    <div id="#$name#" class="flot-placeholder"></div>
 		</div>
 </xar:template>
