@@ -54,7 +54,7 @@
 
                 var d = #$data#;
 
-                $.plot("##" + plotname, [ {data:[["2",5],["2.5",3],["3",3],["3.5",2],["4",4]],bar:{show:true,fill:true} ], options);
+                $.plot("##" + plotname, [ d ], options);
             });
         </script>
     ]]>
