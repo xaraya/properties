@@ -54,7 +54,7 @@
 
                 var d = #$data#;
 
-                $.plot("##" + plotname, [ d ], options);
+                $.plot("##" + plotname, d , options);
             });
         </script>
     ]]>
