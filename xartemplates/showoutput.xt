@@ -54,13 +54,13 @@
 
                 var d = #$data#;
 
-                $.plot("##" + plotname, [ d ], options);
+                $.plot("##" + plotname, [ {data:[["2",5],["2.5",3],["3",3],["3.5",2],["4",4]],bar:{show:true,fill:true} ], options);
             });
         </script>
     ]]>
 	    
     <!-- The plot goes here-->
-		<div class="flot-container" style="#$style#">
-		    <div id="#$name#" class="flot-placeholder"></div>
-		</div>
+    <div class="flot-container" style="#$style#">
+        <div id="#$name#" class="flot-placeholder"></div>
+    </div>
 </xar:template>
