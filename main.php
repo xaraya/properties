@@ -199,6 +199,19 @@ class NumberProperty extends FloatBoxProperty
             return array_pop($result);
         }
     }
+	function showHidden(Array $data = array())
+    {
+        $data['name']     = !empty($data['name']) ? $data['name'] : 'dd_'.$this->id;
+        $data['id']       = !empty($data['id'])   ? $data['id']   : 'dd_'.$this->id;
+
+        $data['invalid']  = !empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) :'';
+        $data['value'] = $this->getValue();
+        if(!isset($data['module']))   $data['module']   = $this->tplmodule;
+        if(!isset($data['template'])) $data['template'] = $this->template;
+        if(!isset($data['layout']))   $data['layout']   = $this->layout;
+        
+        return parent::showHidden($data);
+    }    
 }
 
 ?>
