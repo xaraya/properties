@@ -53,7 +53,7 @@ class NumberProperty extends FloatBoxProperty
 
     public function validateValue($value = null)
     {
-        $this->setValue($value);
+        $this->setValue(trim($value));
         return parent::validateValue($this->value);
     }
 
