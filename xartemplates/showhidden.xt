@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="$layout eq 'default' OR $layout eq ''">
+        <xar:if condition="!empty($address_components)">
+            <xar:foreach in="$address_components" key="$k" value="$v">
+                <xar:foreach in="$value" value="$part">
+                    <xar:if condition="$part['id'] eq $v['id']">
+                        <!-- Display the raw value for debugging -->
+                        <!-- <xar:set name="dummy">var_dump($rawvalue)</xar:set> -->
+                        <xar:set name="namestring">$name . '_' . $v['id']</xar:set>
+                        <xar:if condition="$part['id'] eq 'country'">
+                            <xar:data-input type="countrylisting" name="$namestring" id="$namestring" value="$part['value']" hidden="hidden"/>
+                        <xar:else/>
+                            <xar:data-input type="textbox" name="$namestring" id="$namestring" value="$part['value']" hidden="hidden"/>
+                        </xar:if>
+                    </xar:if>
+                </xar:foreach>
+            </xar:foreach>
+        </xar:if>
+    <xar:elseif condition="$layout eq 'country'"/>
+        <xar:template file="$country_template" module="$module" property="address" hidden="hidden"/>
+    <xar:else/>
+    </xar:if>
+    <xar:template file="dataproperty_additions" module="base"/>
+</xar:template>

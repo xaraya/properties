@@ -162,7 +162,7 @@ class AddressProperty extends TextBoxProperty
         else $this->display_layout = $data['layout'];
         if ($data['layout'] == 'country') {
             $newvalue = array();
-            foreach ($data['value'] as $key => $value) {
+            foreach ($data['value'] as $value) {
                 $newvalue[$value['id']] = $value;
             }
             foreach ($data['address_components'] as $component) {
@@ -269,6 +269,58 @@ class AddressProperty extends TextBoxProperty
             }
         }
         return $componentarray;
+    }
+
+	function showHidden(Array $data = array())
+    {
+        if (isset($data['module'])) {
+            $this->module = $data['module'];
+        } else {
+            $info = xarController::$request->getInfo();
+            $this->module = $info[0];
+            $data['module'] = $this->module;
+        }
+        if (empty($data['address_components'])) $data['address_components'] = $this->display_address_components;
+        else $this->display_address_components = $data['address_components'];
+        $data['address_components'] = $this->getAddressComponents($data['address_components']);
+
+        if (isset($data['value'])) $this->value = $data['value'];
+        $data['value'] = $this->getValueArray();
+
+        // Pass the raw value in case we need to debug
+        $data['rawvalue'] = $this->value;
+        
+        // Cater to values as simple strings (errors, old versions etc.)
+        if (!is_array($data['value'])) {
+            $data['value'] = array(array('id' => 'street', 'value' => $data['value']));
+        }
+        
+        // For country specific layouts we need to reformat the value array
+        if (empty($data['layout'])) $data['layout'] = $this->display_layout;
+        else $this->display_layout = $data['layout'];
+        if ($data['layout'] == 'country') {
+            $newvalue = array();
+            foreach ($data['value'] as $value) {
+                $newvalue[$value['id']] = $value;
+            }
+            foreach ($data['address_components'] as $component) {
+                $newvalue[$component['id']]['label'] = $component['name'];
+            }
+            $data['value'] = $newvalue;
+            if (!empty($data['value']['country']['value']) && file_exists(sys::code() . 'properties/address/xartemplates/includes/' . $data['value']['country']['value'] . '-input.xt')) {
+                $data['country_template'] = $data['value']['country']['value'] . '-input';
+            } else {
+                $data['country_template'] = 'default-input';
+            }
+        }
+        if (!empty($this->display_address_default_country)) {
+            foreach ($data['value'] as $key => $value) {
+                if (($value['id'] == 'country') && empty($value['value'])) {
+                    $data['value'][$key]['value'] = $this->display_address_default_country;
+                }
+            }
+        }
+        return DataProperty::showHidden($data);
     }
 }
 
