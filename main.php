@@ -334,8 +334,8 @@ Notes:
         if ($firsttime) $op = 'pagejump';                                       // override if we moved to a new page with a different query
 
         if ($op == 'column') $operation = 'columnclick';                        // a  column header was clicked
-        elseif ($op == 'letter') $operation = 'lettersearch';                   // an alphabet link was clicked
-        elseif ($op == 'submit') $operation = 'textsearch';                     // a string was entered into the text field
+        elseif ($op == 'letter') { $startnum =1; $operation = 'lettersearch'; }                   // an alphabet link was clicked
+        elseif ($op == 'submit') { $startnum =1; $operation = 'textsearch'; }                    // a string was entered into the text field
         elseif ($op == 'page')   $operation = 'pagerclick';                     // the pager was clicked
         elseif (!empty($submit) && !$firsttime) $operation = 'categorysearch';  // the submit button was clicked (= any other search)
         else $operation = 'newsearch';                                          // any other operation: we fall back to new search
