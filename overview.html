@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../themes/installer/style/style.css"/>
+    </head>
+    <body>
+        <div style="margin-top: 20px">
+        <div id="contentouter">
+            <div id="contentwrap">
+                <div id="contentmain">
+                    <div id="contentmain_inner"><div id="contentmain_tlcorner"><div id="contentmain_trcorner">&#160;</div></div>
+                        <div id="contentmain_core">
+            <h2>LinkTrail Property</h2>
+                <h3>Description</h3>
+                <p>
+                    The LinkTrail dataproperty displays a series of links of recently visited pages. It saves a list of the last 20 pages visited and displays the last 5 of these by default.  
+                </p>
+                <p>
+                    The number of pages to be displayed can be configured. 
+                </p>
+                <p>
+                    This property is meant to be used standalone. The input and output displays are the same.
+                </p>
+                <h3>Usage</h3>
+                <h4>Standalone</h4>
+                    <pre>
+    &lt;xar:data-input type="linktrail" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output type="linktrail" <i>[attr1="value1",...]</i> /&gt;
+                    </pre>
+            <h3>Examples</h3>
+                    <pre>
+    &lt;xar:data-output type="linktrail" links_to_show="3" /&gt;
+                    </pre>
+            <h3>Attributes</h3>
+            <ul>
+                <li>
+                    <strong>links_to_show</strong>: number [default=5]&#160;The number of recently visited pages to display.
+                </li>
+            </ul>
+        </div>
+                        </div>
+                        <div id="contentmain_blcorner"><div id="contentmain_brcorner">&#160;</div></div>
+                    </div>
+                </div>
+            </div>
+            <br class="xar-clearboth"/>
+        </div>
+    </body>
+</xar:template>
