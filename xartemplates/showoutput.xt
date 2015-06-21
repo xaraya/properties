@@ -1,83 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:javascript type="lib" lib="jquery" position="head"/>
-<xar:javascript type="src" src="http://code.jquery.com/jquery-1.7.2.min.js" position="head"/>
-<xar:style scope="property" property="socialmediaicons" file="socialmediaicons-popup" />
+    <xar:javascript type="lib" lib="jquery" position="head"/>
+    <xar:javascript type="src" src="http://code.jquery.com/jquery-1.7.2.min.js" position="head"/>
+    <xar:style scope="property" property="socialmediaicons" file="socialmediaicons-popup" />
 
-<style type="text/css">
-        .share-btn-wrp {
-            list-style: none;
-            display: block;
-            margin: 0px;
-            padding: 0px;
-            width: 32px;
-            left: 0px;
-            position: fixed;
-        }
-        .share-btn-wrp .button-wrap{
-            text-indent:-100000px;
-            width:32px;
-            height: 32px;
-            cursor:pointer;
-            transition: width 0.1s ease-in-out;
-        }
+    <style type="text/css">
+            .share-btn-wrp {
+                list-style: none;
+                display: block;
+                margin: 0px;
+                padding: 0px;
+                width: 32px;
+                left: 0px;
+                position: fixed;
+            }
+            .share-btn-wrp .button-wrap{
+                text-indent:-100000px;
+                width:32px;
+                height: 32px;
+                cursor:pointer;
+                transition: width 0.1s ease-in-out;
+            }
        
-        .share-btn-wrp  .facebook{
-            background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px 0px;
-        }
-        .share-btn-wrp  .facebook:hover{
-            background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -0px;
-            width:38px;
-        }
-        .share-btn-wrp  .twitter{
-            background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -34px;
-        }
-        .share-btn-wrp  .twitter:hover{
-            background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -34px;
-            width:38px;
-        }
-        .share-btn-wrp  .digg{
-            background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -68px;
-        }
-        .share-btn-wrp  .digg:hover{
-            background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -68px;
-            width:38px;
-        }
-        .share-btn-wrp  .stumbleupon{
-            background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -102px;
-        }
-        .share-btn-wrp  .stumbleupon:hover{
-            background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -102px;
-            width:38px;
-        }
-        .share-btn-wrp  .delicious{
-            background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -136px;
-        }
-        .share-btn-wrp  .delicious:hover{
-            background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -136px;
-            width:38px;
-        }
-        .share-btn-wrp  .gplus{
-            background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -170px;
-        }
-        .share-btn-wrp  .gplus:hover{
-            background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -170px;
-            width:38px;
-        }
-        .share-btn-wrp  .email{
-            background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -408px;
-        }
-        .share-btn-wrp  .email:hover{
-            background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -408px;
-            width:38px;
-        }
+            .share-btn-wrp  .facebook{
+                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px 0px;
+            }
+            .share-btn-wrp  .facebook:hover{
+                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -0px;
+                width:38px;
+            }
+            .share-btn-wrp  .twitter{
+                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -34px;
+            }
+            .share-btn-wrp  .twitter:hover{
+                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -34px;
+                width:38px;
+            }
+            .share-btn-wrp  .digg{
+                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -68px;
+            }
+            .share-btn-wrp  .digg:hover{
+                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -68px;
+                width:38px;
+            }
+            .share-btn-wrp  .stumbleupon{
+                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -102px;
+            }
+            .share-btn-wrp  .stumbleupon:hover{
+                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -102px;
+                width:38px;
+            }
+            .share-btn-wrp  .delicious{
+                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -136px;
+            }
+            .share-btn-wrp  .delicious:hover{
+                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -136px;
+                width:38px;
+            }
+            .share-btn-wrp  .gplus{
+                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -170px;
+            }
+            .share-btn-wrp  .gplus:hover{
+                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -170px;
+                width:38px;
+            }
+            .share-btn-wrp  .email{
+                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -408px;
+            }
+            .share-btn-wrp  .email:hover{
+                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -408px;
+                width:38px;
+            }
   
-		.et_social_all_button{
-			text-indent:10px!important;
-			font-weight:bold!important;
-			font-size:15px!important;	
-		} 
-</style>
+            .et_social_all_button{
+                text-indent:10px!important;
+                font-weight:bold!important;
+                font-size:15px!important;	
+            } 
+    </style>
 
     <script type="text/javascript">
         <![CDATA[
@@ -176,39 +176,39 @@
 		});
 	</script>
 	
-<div class="social-links-wrp">
-	<ul class="share-btn-wrp">
-	        <li class="facebook button-wrap">Facebook</li>
-	        <li class="twitter button-wrap">Tweet</li>
-	        <li class="digg button-wrap">Digg it</li>
-	        <li class="stumbleupon button-wrap">Stumbleupon</li>
-	        <li class="delicious button-wrap">Delicious</li>
-	        <li class="gplus button-wrap">Google Share</li>
-	        <li class="email button-wrap">Email</li>
-	        <li class="et_social_all_button button-wrap"><a href="#" class="cd-popup-trigger" >...</a></li>
-	</ul>
-	<div class="cd-popup" role="alert">
-	<div class="cd-popup-container">
-		<p></p>
-		<ul class="cd-buttons">
-		    <li class="facebook popup-link">facebook</li>
-			<li class="twitter popup-link">twitter</li>
-	        <li class="digg popup-link">digg</li>
-	        <li class="stumbleupon popup-link">stumbleupon</li>
-	        <li class="delicious popup-link">delicious</li>
-	        <li class="gplus popup-link">googleplus</li>
-	        <li class="email popup-link">email</li>
-		    <li class="hackernews popup-link">hackernews</li>
-		   	<li class="gmail popup-link">gmail</li>
-	        <li class="myspace popup-link">myspace</li>
-	        <li class="linkedin popup-link">linkedin</li>
-	      	<li class="blogger popup-link">blogger</li>
-	       	<li class="amazon popup-link">amazon</li>
-	        <li class="yahoomail popup-link">yahoomail</li>
-	        <li class="evernote popup-link">evernote</li>
-		</ul>
-			<a href="#0" class="cd-popup-close img-replace" style="font-weight:bold; text-decoration:none;">X</a>
-		</div> 
-	</div> 
-</div>
+    <div class="social-links-wrp">
+        <ul class="share-btn-wrp">
+                <li class="facebook button-wrap">Facebook</li>
+                <li class="twitter button-wrap">Tweet</li>
+                <li class="digg button-wrap">Digg it</li>
+                <li class="stumbleupon button-wrap">Stumbleupon</li>
+                <li class="delicious button-wrap">Delicious</li>
+                <li class="gplus button-wrap">Google Share</li>
+                <li class="email button-wrap">Email</li>
+                <li class="et_social_all_button button-wrap"><a href="#" class="cd-popup-trigger" >...</a></li>
+        </ul>
+        <div class="cd-popup" role="alert">
+        <div class="cd-popup-container">
+            <p></p>
+            <ul class="cd-buttons">
+                <li class="facebook popup-link">facebook</li>
+                <li class="twitter popup-link">twitter</li>
+                <li class="digg popup-link">digg</li>
+                <li class="stumbleupon popup-link">stumbleupon</li>
+                <li class="delicious popup-link">delicious</li>
+                <li class="gplus popup-link">googleplus</li>
+                <li class="email popup-link">email</li>
+                <li class="hackernews popup-link">hackernews</li>
+                <li class="gmail popup-link">gmail</li>
+                <li class="myspace popup-link">myspace</li>
+                <li class="linkedin popup-link">linkedin</li>
+                <li class="blogger popup-link">blogger</li>
+                <li class="amazon popup-link">amazon</li>
+                <li class="yahoomail popup-link">yahoomail</li>
+                <li class="evernote popup-link">evernote</li>
+            </ul>
+                <a href="#0" class="cd-popup-close img-replace" style="font-weight:bold; text-decoration:none;">X</a>
+            </div> 
+        </div> 
+    </div>
 </xar:template>
