@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:style method="link" source="http://fonts.googleapis.com/css?family=Noto+Serif:400italic"/>
+    <xar:style method="link" source="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700"/>
+    <xar:style method="link" source="http://fonts.googleapis.com/css?family=Grand+Hotel"/>
+    <xar:style scope="property" property="subscribeform" file="subscribe-better" />
+
+    <xar:javascript type="lib" lib="jquery" position="head"/>
+    <xar:javascript type="src" src="http://code.jquery.com/jquery-1.7.2.min.js" position="head"/>
+    <xar:javascript filename="jquery.subscribe-better.js" property="subscribeform" position="head"/>
+
+    <style type="text/css">
+        .subscribeform:not( .subscribeform--active ) input[type='submit']
+        {
+            display: none;
+        }
+    </style>
+
+    <![CDATA[
+        <script type="text/javascript">
+        
+            $(document).ready(function(){
+                $(".subscribebox").subscribeBetter({
+                    animation: "flyInUp",
+                    autoClose: true,
+                    delay: 1000,
+                    showOnce: false
+                });
+            });
+        
+            ;( function( $, window, document, undefined )
+            {
+                'use strict';
+ 
+                var form        = '.subscribeform',
+                    className   = 'subscribeform--active',
+                    email       = 'input[type="email"]';
+ 
+                $( form ).each( function()
+                {
+                    var $form   = $( this ),
+                        $email  = $form.find( email ),
+                        val     = '';
+ 
+                    $email.on( 'keyup.addClassWhenEmail', function()
+                    {
+                        val = $email.val();
+                        $form.toggleClass( className, val != '' && /^([\w-\.]+@([\w-]+\.)+[\w-]{2,12})?$/.test( val ) );
+                    });
+                });
+            })( jQuery, window, document );
+        </script>
+    ]]>
+    
+    <div class="subscribebox">
+        <h2>Subscribe our Newsletter</h2>
+        <a href="##close" class="sb-close-btn">x</a>
+        <p>Subscribe to our mailing list to get updates to your email inbox</p>
+        <form class="subscribeform">
+            <input type="email" placeholder="Email Address"/>
+            <input type="submit" value="Sign up"/>
+        </form>
+    </div>
+    
+	
+</xar:template>
