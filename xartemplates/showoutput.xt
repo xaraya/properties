@@ -1,214 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:style method="link" source="http://fonts.googleapis.com/css?family=Noto+Serif:400italic"/>
+    <xar:style method="link" source="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700"/>
+    <xar:style method="link" source="http://fonts.googleapis.com/css?family=Grand+Hotel"/>
+    <xar:style scope="property" property="subscribeform" file="subscribe-better" />
+
     <xar:javascript type="lib" lib="jquery" position="head"/>
     <xar:javascript type="src" src="http://code.jquery.com/jquery-1.7.2.min.js" position="head"/>
-    <xar:style scope="property" property="socialmediaicons" file="socialmediaicons-popup" />
+    <xar:javascript filename="jquery.subscribe-better.js" property="subscribeform" position="head"/>
 
     <style type="text/css">
-            .share-btn-wrp {
-                list-style: none;
-                display: block;
-                margin: 0px;
-                padding: 0px;
-                width: 32px;
-                left: 0px;
-                position: fixed;
-            }
-            .share-btn-wrp .button-wrap{
-                text-indent:-100000px;
-                width:32px;
-                height: 32px;
-                cursor:pointer;
-                transition: width 0.1s ease-in-out;
-            }
-       
-            .share-btn-wrp  .facebook{
-                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px 0px;
-            }
-            .share-btn-wrp  .facebook:hover{
-                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -0px;
-                width:38px;
-            }
-            .share-btn-wrp  .twitter{
-                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -34px;
-            }
-            .share-btn-wrp  .twitter:hover{
-                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -34px;
-                width:38px;
-            }
-            .share-btn-wrp  .digg{
-                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -68px;
-            }
-            .share-btn-wrp  .digg:hover{
-                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -68px;
-                width:38px;
-            }
-            .share-btn-wrp  .stumbleupon{
-                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -102px;
-            }
-            .share-btn-wrp  .stumbleupon:hover{
-                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -102px;
-                width:38px;
-            }
-            .share-btn-wrp  .delicious{
-                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -136px;
-            }
-            .share-btn-wrp  .delicious:hover{
-                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -136px;
-                width:38px;
-            }
-            .share-btn-wrp  .gplus{
-                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -170px;
-            }
-            .share-btn-wrp  .gplus:hover{
-                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -170px;
-                width:38px;
-            }
-            .share-btn-wrp  .email{
-                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -42px -408px;
-            }
-            .share-btn-wrp  .email:hover{
-                background: url(code/properties/socialmediaicons/images/share-icons.png) no-repeat -4px -408px;
-                width:38px;
-            }
-  
-            .et_social_all_button{
-                text-indent:10px!important;
-                font-weight:bold!important;
-                font-size:15px!important;	
-            } 
+        .subscribeform:not( .subscribeform--active ) input[type='submit']
+        {
+            display: none;
+        }
     </style>
 
-    <script type="text/javascript">
-        <![CDATA[
-        $(document).ready(function(){
-            var pageTitle	= document.title; //HTML page title
-            var pageUrl		= location.href; //Location of this page
-    
-            $('.social-links-wrp li').click(function(event){
-                var shareName = $(this).attr('class').split(' ')[0]; //get the first class name of clicked element
-                switch(shareName) //switch to different links based on different social name
-                {
-                    case 'facebook':
-                        OpenShareUrl('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(pageUrl) + '&amp;title=' + encodeURIComponent(pageTitle));
-                        break;
-                    case 'twitter':
-                        OpenShareUrl('http://twitter.com/home?status=' + encodeURIComponent(pageTitle + ' ' + pageUrl));
-                        break;
-                    case 'digg':
-                        OpenShareUrl('http://www.digg.com/submit?phase=2&amp;url=' + encodeURIComponent(pageUrl) + '&amp;title=' + encodeURIComponent(pageTitle));
-                        break;
-                    case 'stumbleupon':
-                        OpenShareUrl('http://www.stumbleupon.com/submit?url=' + encodeURIComponent(pageUrl) + '&amp;title=' + encodeURIComponent(pageTitle));
-                        break;
-                    case 'delicious':
-                        OpenShareUrl('http://del.icio.us/post?url=' + encodeURIComponent(pageUrl) + '&amp;title=' + encodeURIComponent(pageTitle));
-                        break;
-                    case 'gplus':
-                        OpenShareUrl('https://plus.google.com/share?url=' + encodeURIComponent(pageUrl) + '&amp;title=' + encodeURIComponent(pageTitle));
-                        break;
-                    case 'email':
-                    	OpenShareUrl('mailto:?subject=' + pageTitle + '&body=Found this useful link for you : ' + pageUrl);
-                        break;
-                    case 'hackernews':
-                        OpenShareUrl('https://news.ycombinator.com/submitlink?u=' + encodeURIComponent(pageUrl) + '&amp;title=' + encodeURIComponent(pageTitle));
-                        break;
-                    case 'gmail':
-                        OpenShareUrl('https://mail.google.com/mail/u/0/?view=cm&fs=1&su=' + encodeURIComponent(pageUrl) + '&amp;title=' + encodeURIComponent(pageTitle));
-                        break;
-                    case 'linkedin':
-                        OpenShareUrl('http://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(pageUrl) + '&amp;title=' + encodeURIComponent(pageTitle));
-                        break;
-                    case 'blogger':
-                        OpenShareUrl('https://www.blogger.com/blog_this.pyra?t&u=' + encodeURIComponent(pageUrl) + '&amp;title=' + encodeURIComponent(pageTitle));
-                        break;
-                    case 'amazon':
-                        OpenShareUrl('http://www.amazon.com/gp/wishlist/static-add?u=' + encodeURIComponent(pageUrl) + '&amp;title=' + encodeURIComponent(pageTitle));
-                        break;
-                    case 'yahoomail':
-                        OpenShareUrl('http://compose.mail.yahoo.com/?body=' + encodeURIComponent(pageUrl) + '&amp;title=' + encodeURIComponent(pageTitle));
-                        break;
-                    case 'evernote':
-                        OpenShareUrl('http://www.evernote.com/clip.action?url=' + encodeURIComponent(pageUrl) + '&amp;title=' + encodeURIComponent(pageTitle));
-                        break;
-                    case 'myspace':
-                        OpenShareUrl('https://myspace.com/post?u=' + encodeURIComponent(pageUrl) + '&amp;title=' + encodeURIComponent(pageTitle));
-                        break;
-                }
+    <![CDATA[
+        <script type="text/javascript">
         
+            $(document).ready(function(){
+                $(".subscribebox").subscribeBetter({
+                    animation: "flyInUp",
+                    autoClose: true,
+                    delay: 1000,
+                    showOnce: false
+                });
             });
         
-            function OpenShareUrl(openLink){
-                //Parameters for the Popup window
-                winWidth    = 650; 
-                winHeight   = 450;
-                winLeft     = ($(window).width()  - winWidth)  / 2,
-                winTop      = ($(window).height() - winHeight) / 2,
-                winOptions   = 'width='  + winWidth  + ',height=' + winHeight + ',top='    + winTop    + ',left='   + winLeft;
-                window.open(openLink,'Share This Link',winOptions); //open Popup window to share website.
-                return false;
-            }
-        });
-        ]]>
-    </script>
-    <!-- function for popup display -->
-	<script type="text/javascript">
-		$(document).ready(function($){
-			//open popup
-			$('.cd-popup-trigger').on('click', function(event){
-				event.preventDefault();
-				$('.cd-popup').addClass('is-visible');
-			});
-			
-			//close popup
-			$('.cd-popup').on('click', function(event){
-				if( $(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup') ) {
-					event.preventDefault();
-					$(this).removeClass('is-visible');
-				}
-			});
-			//close popup when clicking the esc keyboard button
-			$(document).keyup(function(event){
-		    	if(event.which=='27'){
-		    		$('.cd-popup').removeClass('is-visible');
-			    }
-		    });
-		});
-	</script>
-	
-    <div class="social-links-wrp">
-        <ul class="share-btn-wrp">
-                <li class="facebook button-wrap">Facebook</li>
-                <li class="twitter button-wrap">Tweet</li>
-                <li class="digg button-wrap">Digg it</li>
-                <li class="stumbleupon button-wrap">Stumbleupon</li>
-                <li class="delicious button-wrap">Delicious</li>
-                <li class="gplus button-wrap">Google Share</li>
-                <li class="email button-wrap">Email</li>
-                <li class="et_social_all_button button-wrap"><a href="#" class="cd-popup-trigger" >...</a></li>
-        </ul>
-        <div class="cd-popup" role="alert">
-        <div class="cd-popup-container">
-            <p></p>
-            <ul class="cd-buttons">
-                <li class="facebook popup-link">facebook</li>
-                <li class="twitter popup-link">twitter</li>
-                <li class="digg popup-link">digg</li>
-                <li class="stumbleupon popup-link">stumbleupon</li>
-                <li class="delicious popup-link">delicious</li>
-                <li class="gplus popup-link">googleplus</li>
-                <li class="email popup-link">email</li>
-                <li class="hackernews popup-link">hackernews</li>
-                <li class="gmail popup-link">gmail</li>
-                <li class="myspace popup-link">myspace</li>
-                <li class="linkedin popup-link">linkedin</li>
-                <li class="blogger popup-link">blogger</li>
-                <li class="amazon popup-link">amazon</li>
-                <li class="yahoomail popup-link">yahoomail</li>
-                <li class="evernote popup-link">evernote</li>
-            </ul>
-                <a href="#0" class="cd-popup-close img-replace" style="font-weight:bold; text-decoration:none;">X</a>
-            </div> 
-        </div> 
+            ;( function( $, window, document, undefined )
+            {
+                'use strict';
+ 
+                var form        = '.subscribeform',
+                    className   = 'subscribeform--active',
+                    email       = 'input[type="email"]';
+ 
+                $( form ).each( function()
+                {
+                    var $form   = $( this ),
+                        $email  = $form.find( email ),
+                        val     = '';
+ 
+                    $email.on( 'keyup.addClassWhenEmail', function()
+                    {
+                        val = $email.val();
+                        $form.toggleClass( className, val != '' && /^([\w-\.]+@([\w-]+\.)+[\w-]{2,12})?$/.test( val ) );
+                    });
+                });
+            })( jQuery, window, document );
+        </script>
+    ]]>
+    
+    <div class="subscribebox">
+        <h2>Subscribe our Newsletter</h2>
+        <a href="##close" class="sb-close-btn">x</a>
+        <p>Subscribe to our mailing list to get updates to your email inbox</p>
+        <form class="subscribeform">
+            <input type="email" placeholder="Email Address"/>
+            <input type="submit" value="Sign up"/>
+        </form>
     </div>
+    
+	
 </xar:template>

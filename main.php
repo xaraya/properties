@@ -1,9 +1,9 @@
 <?php
 /**
- * SocialMediaIcons Property
+ * SubscribeForm Property
  *
  * @package properties
- * @subpackage socialmediaicons property
+ * @subpackage subscribeform property
  * @category Third Party Xaraya Property
  * @version 1.0.0
  * @copyright (C) 2015 Netspan AG
@@ -13,11 +13,11 @@
 
 sys::import('modules.dynamicdata.class.properties.base');
 
-class SocialMediaIconsProperty extends DataProperty
+class SubscribeFormProperty extends DataProperty
 {
-    public $id   = 30137;
-    public $name = 'socialmediaicons';
-    public $desc = 'SocialMediaIcons';
+    public $id   = 30138;
+    public $name = 'subscribeform';
+    public $desc = 'subscribeform';
     public $reqmodules = array();
 
     function __construct(ObjectDescriptor $descriptor)
@@ -25,7 +25,7 @@ class SocialMediaIconsProperty extends DataProperty
         parent::__construct($descriptor);
 
         $this->tplmodule = 'auto';
-        $this->template  = 'socialmediaicons';
+        $this->template  = 'subscribeform';
         $this->filepath  = 'auto';
     }
 }
