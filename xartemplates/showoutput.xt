@@ -17,17 +17,31 @@
     </style>
 
     <![CDATA[
-        <script type="text/javascript">
+       <script type="text/javascript">
         
-            $(document).ready(function(){
+         $(document).ready(function(){
                 $(".subscribebox").subscribeBetter({
                     animation: "flyInUp",
                     autoClose: true,
                     delay: 1000,
                     showOnce: false
                 });
-            });
-        
+			$(".subscribebox input[type='email']").first().keyup(function(){
+	    			$email = $(this).val();// use val here to get value of input
+	    			validateEmail($email);
+				});
+	   			function validateEmail($email) {
+	          		var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+	         		 if( !emailReg.test( $email ) ) {
+	    				$(".subscribebox input[type='submit']").css("display", "none");
+	         		} else {
+	          			$(".subscribebox input[type='submit']").css("display", "inline");
+	         		}
+       			 }	
+   		});
+         /*
+		   });
+         
             ;( function( $, window, document, undefined )
             {
                 'use strict';
@@ -48,7 +62,9 @@
                         $form.toggleClass( className, val != '' && /^([\w-\.]+@([\w-]+\.)+[\w-]{2,12})?$/.test( val ) );
                     });
                 });
-            })( jQuery, window, document );
+            })
+	( jQuery, window, document );
+		*/
         </script>
     ]]>
     
