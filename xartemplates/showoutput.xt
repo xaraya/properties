@@ -111,6 +111,7 @@
          width: 32px;
          left: 0px;
          position: fixed;
+         top:30%;
      }
      .share-btn-wrp .button-wrap{
          text-indent:-100000px;
