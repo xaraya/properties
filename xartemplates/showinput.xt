@@ -73,10 +73,12 @@
         <h2>Subscribe our Newsletter</h2>
         <a href="##close" class="sb-close-btn">x</a>
         <p>Subscribe to our mailing list to get updates to your email inbox</p>
-        <form method="post" id="subscribeform" class="subscribeform" action="#xarModURL('pubsub', 'user', 'submit_form')#">
-            <input type="email" placeholder="Email Address"/>
+
+        <form method="post" id="subscribeform" class="subscribeform" action="#xarModURL('pubsub','user','submit_form')#">
+            <input name="email" type="email" placeholder="Email Address"/>
             <xar:var name="label">Sign up</xar:var>
             <xar:button type="submit" label="$label"/>
+
         </form>
     </div>
     
