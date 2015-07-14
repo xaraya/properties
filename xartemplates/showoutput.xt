@@ -73,7 +73,7 @@
         <a href="##close" class="sb-close-btn">x</a>
         <p>Subscribe to our mailing list to get updates to your email inbox</p>
         <form class="subscribeform" action="#xarModURL('pubsub','user','submit_form')#" method="post">
-            <input type="email" placeholder="Email Address"/>
+            <input type="email" placeholder="Email Address" name="email"/>
             <input type="submit" value="Sign up"/>
         </form>
     </div>
