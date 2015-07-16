@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:javascript type="lib" lib="jquery" position="head"/>
-    <xar:javascript type="src" src="http://code.jquery.com/jquery-1.7.2.min.js" position="head"/>
+    <xar:if condition="!empty(xarMod::apiFunc('themes','admin','get_js_libs',array('scope' => 'remote', 'lib' => 'jquery')))">
+        <xar:javascript type="lib" lib="jquery" position="head"/>
+    <xar:else/>
+        <xar:javascript type="src" src="http://code.jquery.com/jquery-1.7.2.min.js" position="head"/>
+    </xar:if>
     <xar:style scope="property" property="socialmediaicons" file="socialmediaicons-popup" />
 
     <style type="text/css">
