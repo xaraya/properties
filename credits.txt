@@ -12,3 +12,5 @@
 
 7. Third party code:
     - http://www.designrazor.net/20-stunning-jquery-social-share-plugins/
+    - http://www.sanwebe.com/2013/09/responsive-share-buttons-css-and-jquery
+    - http://www.sanwebe.com/assets/responsive-share-buttons/
