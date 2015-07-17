@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:if condition="!empty(xarMod::apiFunc('themes','admin','get_js_libs',array('scope' => 'remote', 'lib' => 'jquery')))">
+    <xar:set name="remote_libs">
+        xarMod::apiFunc('themes','admin','get_js_libs',array('scope' => 'remote', 'lib' => 'jquery'))
+    </xar:set>
+    <xar:if condition="!empty($remote_libs)">
         <xar:javascript type="lib" lib="jquery" position="head"/>
     <xar:else/>
         <xar:javascript type="src" src="http://code.jquery.com/jquery-1.7.2.min.js" position="head"/>
