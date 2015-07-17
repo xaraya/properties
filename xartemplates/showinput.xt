@@ -78,7 +78,7 @@
             <input name="email" type="email" placeholder="Email Address"/>
             <xar:var name="label">Sign up</xar:var>
             <xar:button type="submit" label="$label"/>
-
+	    <input type="hidden" name="returnurl" id="returnurl" value="#xarServer::getCurrentURL()#"/>
         </form>
     </div>
     
