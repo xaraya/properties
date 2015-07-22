@@ -69,13 +69,14 @@
         </script>
     ]]>
     
-    <xar:ajax-form form="subscribeform"/>
+    <xar:set name="action">xarModURL('pubsub','user','submit_form')</xar:set>
+    <xar:ajax-form url="#$action#" form="subscribeform"/>
     <div class="subscribebox">
         <h2>Subscribe our Newsletter</h2>
         <a href="##close" class="sb-close-btn">x</a>
         <p>Subscribe to our mailing list to get updates to your email inbox</p>
 
-        <form method="post" id="subscribeform" class="subscribeform" action="#xarModURL('pubsub','user','submit_form')#">
+        <form method="post" id="subscribeform" class="subscribeform" action="#$action#">
             <input name="email" type="email" placeholder="Email Address"/>
             <xar:var name="label">Sign up</xar:var>
             <xar:button type="submit" label="$label"/>
