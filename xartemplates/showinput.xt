@@ -28,45 +28,32 @@
                     delay: 1000,
                     showOnce: false
                 });
-			$(".subscribebox input[type='email']").first().keyup(function(){
-	    			$email = $(this).val();// use val here to get value of input
-	    			validateEmail($email);
-				});
-	   			function validateEmail($email) {
-	          		var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-	         		 if( !emailReg.test( $email ) ) {
-	    				$(".subscribebox input[type='submit']").css("display", "none");
-	         		} else {
-	          			$(".subscribebox input[type='submit']").css("display", "inline");
-	         		}
-       			 }	
+                
+                $(".subscribebox input[type='submit']").click(function(){
+			setTimeout(function(){
+				$(".sb.sb-withoverlay").hide();
+				$("body").removeClass("sb-open sb-open-with-overlay");
+				setTimeout(function() {
+					$(".sb-overlay").remove();
+					$(".subscribebox").css("display", "none");
+				}, 500);
+			}, 500);
+	        });
+	        
+		$(".subscribebox input[type='email']").first().keyup(function(){
+		    	$email = $(this).val();// use val here to get value of input
+		    	validateEmail($email);
+		});
+	   	function validateEmail($email) {
+		        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+		        if( !emailReg.test( $email ) ) {
+			    	$(".subscribebox input[type='submit']").css("display", "none");
+		        } else {
+			        $(".subscribebox input[type='submit']").css("display", "inline");
+		        }
+       		}	
    		});
-         /*
-		   });
-         
-            ;( function( $, window, document, undefined )
-            {
-                'use strict';
- 
-                var form        = '.subscribeform',
-                    className   = 'subscribeform--active',
-                    email       = 'input[type="email"]';
- 
-                $( form ).each( function()
-                {
-                    var $form   = $( this ),
-                        $email  = $form.find( email ),
-                        val     = '';
- 
-                    $email.on( 'keyup.addClassWhenEmail', function()
-                    {
-                        val = $email.val();
-                        $form.toggleClass( className, val != '' && /^([\w-\.]+@([\w-]+\.)+[\w-]{2,12})?$/.test( val ) );
-                    });
-                });
-            })
-	( jQuery, window, document );
-		*/
+   		
         </script>
     ]]>
     
