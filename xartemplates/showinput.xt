@@ -60,9 +60,9 @@
     <xar:set name="action">xarModURL('pubsub','user','submit_form')</xar:set>
     <xar:ajax-form url="#$action#" form="subscribeform"/>
     <div class="subscribebox">
-        <h2>Stay on top of events</h2>
-        <a href="##close" class="sb-close-btn">x</a>
-        <p>Enter an email address to receive weekly updates of new events in Sacramento</p>
+        <h2>Subscribe</h2>
+        <a href="##close" class="sb-close-btn">X</a>
+        <p>Get notifications from our site</p>
 
         <form method="post" id="subscribeform" class="subscribeform" action="#$action#">
             <input name="email" type="email" placeholder="Email Address"/>
