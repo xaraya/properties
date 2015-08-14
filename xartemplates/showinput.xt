@@ -62,7 +62,8 @@
     <div class="subscribebox">
         <h2>Subscribe</h2>
         <a href="##close" class="sb-close-btn">X</a>
-        <p>Get notifications from our site</p>
+        <!-- <p>Get notifications from our site</p> -->
+        <p>Never miss out on an event again. See all the best Sacramento events in our weekly email when you signup below.</p>
 
         <form method="post" id="subscribeform" class="subscribeform" action="#$action#">
             <input name="email" type="email" placeholder="Email Address"/>
