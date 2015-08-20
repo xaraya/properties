@@ -1,9 +1,9 @@
 <?php
 /**
- * Dynamic Property
+ * Mimic Property
  *
  * @package properties
- * @subpackage dynamic property
+ * @subpackage mimic property
  * @category Third Party Xaraya Property
  * @version 1.0.0
  * @copyright (C) 2015 Netspan AG

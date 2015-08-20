@@ -84,12 +84,12 @@ class MimicProperty extends DataProperty
         return $this->container->showOutput($data);
     }
 
-    public function setDecorator()
+    public function getDecorator()
     {
         $decorator = $this->decorator;
         return $decorator;
     }
-    public function getDecorator($x)
+    public function setDecorator($x)
     {
         $this->decorator = $x;
         return 1;
