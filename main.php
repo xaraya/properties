@@ -35,10 +35,9 @@ class MimicProperty extends DataProperty
         $this->tplmodule = 'auto';
         $this->filepath   = 'auto';
         $this->reload();
-
     }
 
-    private function reload()
+    public function reload()
     {
         try {
             $this->container = DataPropertyMaster::getProperty(array('name' => $this->decorator));
