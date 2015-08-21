@@ -66,9 +66,9 @@ class MimicProperty extends DataProperty
     {
         $container_verify = $this->container->validateValue($value);
         if ($container_verify) {
-            $this-value = $this->container->value;
+            $this->value = $this->container->value;
         } else {
-            $this-value = null;
+            $this->value = null;
         }
         return $container_verify;
     }
