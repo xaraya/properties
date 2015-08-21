@@ -56,7 +56,10 @@ class MimicProperty extends DataProperty
 
     public function checkInput($name = '', $value = null)
     {
-        return $this->container->checkInput($name, $value);
+        $container_check = $this->container->checkInput($name, $value);
+        $this->previous_value = $this->container->previous_value;
+        $this->invalid = $this->container->invalid;
+        return $container_check;
     }
     
     public function validateValue($value = null)
