@@ -61,7 +61,13 @@ class MimicProperty extends DataProperty
     
     public function validateValue($value = null)
     {
-        return $this->container->validateValue($value);
+        $container_verify = $this->container->validateValue($value);
+        if ($container_verify) {
+            $this-value = $this->container->value;
+        } else {
+            $this-value = null;
+        }
+        return $container_verify;
     }
     
     public function showInput(Array $data = array())
