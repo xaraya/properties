@@ -41,7 +41,8 @@ class MimicProperty extends DataProperty
     {
         // Support both name and id
         if (is_numeric($this->decorator)) {
-            $types = DataPropertyMaster::Retrieve();
+            //$types = DataPropertyMaster::Retrieve();
+            $types = DataPropertyMaster::getPropertyTypes();
             if (isset($types[$this->decorator])) 
                 $this->decorator = $types[$this->decorator]['name'];
         }
