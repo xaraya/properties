@@ -59,8 +59,8 @@ class MimicProperty extends DataProperty
         $this->container->layout        = $this->layout;
         $this->container->tplmodule     = $this->tplmodule;
         $this->container->configuration = $this->configuration;
-        $this->container->value 		= $this->value;
-       	$this->container->id 			= $this->id;
+       	$this->container->id 		    = $this->id;
+        $this->container->value 	    = $this->value;
         return 1;
     }
 
@@ -69,7 +69,7 @@ class MimicProperty extends DataProperty
         $container_check = $this->container->checkInput($name, $value);
         $this->previous_value = $this->container->previous_value;
         $this->invalid = $this->container->invalid;
-        $this->setValue($this->container->value);
+        $this->value = $this->container->value;
         return $container_check;
     }
     
