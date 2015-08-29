@@ -4,8 +4,8 @@
     <tr id="#$trid#">
         <xar:template file="listing_rowprefix" module="$module" property="listing"/>
         <xar:foreach in="$fieldnames" key="$field">
-            <xar:set name="formfieldname">$formfieldnames[$field] . '[' . $loopindex . ']'</xar:set>
-            <xar:set name="formfieldid">$formfieldnames[$field] . '_' . $loopindex</xar:set>
+            <xar:set name="formfieldname">$formfieldnames[$field] . '[' . $loopitem[$primaryalias] . ']'</xar:set>
+            <xar:set name="formfieldid">$formfieldnames[$field] . '_' . $loopitem[$primaryalias]</xar:set>
             <xar:set name="formfieldstate">$formfieldstates[$field]</xar:set>
             <xar:set name="column">$fieldnames[$field]</xar:set>
             <xar:set name="value">$loopitem[$column]</xar:set>
