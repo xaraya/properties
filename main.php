@@ -116,6 +116,7 @@ Notes:
 
         extract($data);
 
+    //--- 2. Get the object for this listing
         // if no object name is passed, bail
         if (!isset($object) && !isset($objectname)) throw new Exception('No object passed to the listing property');
 
@@ -141,7 +142,7 @@ Notes:
         $itemtype = isset($itemtype) ? $itemtype : 0;
 
         $module = isset($module) ? $module : xarModGetName();
-        xarModAPILoad($module);
+        xarMod::apiLoad($module);
         $regid = xarMod::getRegID($module);
 
     /*    $searchandor = xarModVars::get('listing','searchandor'); //toggle for AND /OR logic in category query, default AND for categories
@@ -151,7 +152,7 @@ Notes:
             $searchop = 'or';
         }*/
 
-    //--- 2. Retrieve session vars we work with
+    //--- 3. Retrieve session vars we work with
 
         $q = xarSession::getVar('listing.' . $objectname . '.currentquery');
         
@@ -181,9 +182,9 @@ Notes:
             if (isset($thesesettings['laststartnum'])) $laststartnum = $thesesettings['laststartnum'];
         }
 
-    //--- 3. Get all the parameters we need from the form. These can override the sessionvar settings
+    //--- 4. Get all the parameters we need from the form. These can override the sessionvar settings
 
-        if(!xarVarFetch('startnum',      'str:1',     $startnum,   $laststartnum, XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('startnum',      'int',       $startnum,   $laststartnum, XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('letter',        'str:1',     $letter,     '', XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('search',        'str:1:100', $search,     '', XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('order',         'str',       $order,      $lastorder, XARVAR_NOT_REQUIRED)) {return;}
@@ -193,9 +194,7 @@ Notes:
         if(!xarVarFetch('conditions',    'isset',     $conditions, NULL, XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('export',        'int',       $export,     0, XARVAR_NOT_REQUIRED)) {return;}
     
-    //--- 4. Get configuration settings from modvars and tag attributes
-
-    //--- 5. Assemble the data sources (data tables)
+    //--- 5. Get configuration settings from modvars and tag attributes
 
     //--- 6. Assemble the fields to be displayed
 
@@ -219,10 +218,7 @@ Notes:
 
         // Check if we had the primary index in the list of fields. Otherwise add it.
         // Its display will be steered by the $show_primary variable
-
-        if (!in_array($object->primary, $fieldlist)) {
-            $fieldlist[] = $object->primary;
-        }
+        if (!in_array($object->primary, $fieldlist)) $fieldlist[] = $object->primary;
 
         // Someone passed a keyfield attribute
         if (!empty($keyfield)) $defaultkey = $keyfield;
@@ -243,6 +239,8 @@ Notes:
         $keyfieldalias = '';
 
         $properties =& $object->getProperties(array('status' => array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY)));
+        // fieldlists attributes in templates have the form
+        // fieldlist="field1[formfieldname1:fieldstate1:fieldstate1][,field2[formfieldname2::fieldstate2]]"
         foreach ($fieldlist as $fielditem) {
         
             // Explode the single item in the fieldlist
@@ -250,7 +248,7 @@ Notes:
             // The name of the field/property
             $fieldname = trim($parts[0]);
             // The name the field will be given on the listing template
-            $formfieldname = (isset($parts[1])) ? trim($parts[1]) : $fieldname;
+            $formfieldname = (!empty($parts[1])) ? trim($parts[1]) : $fieldname;
             // The state of the field on the listing template: input/output/hidden
             $formfieldstate = (isset($parts[2])) ? trim($parts[2]) : 'output';
 
