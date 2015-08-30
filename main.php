@@ -216,10 +216,6 @@ Notes:
             $fieldlist = explode(',',$fieldlist);
         }
 
-        // Check if we had the primary index in the list of fields. Otherwise add it.
-        // Its display will be steered by the $show_primary variable
-        if (!in_array($object->primary, $fieldlist)) $fieldlist[] = $object->primary;
-
         // Someone passed a keyfield attribute
         if (!empty($keyfield)) $defaultkey = $keyfield;
 
@@ -241,6 +237,7 @@ Notes:
         $properties =& $object->getProperties(array('status' => array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY)));
         // fieldlists attributes in templates have the form
         // fieldlist="field1[formfieldname1:fieldstate1:fieldstate1][,field2[formfieldname2::fieldstate2]]"
+        $has_primary = false;
         foreach ($fieldlist as $fielditem) {
         
             // Explode the single item in the fieldlist
@@ -272,14 +269,15 @@ Notes:
                 if ($fieldname == $object->primary) {
                     $primarysource = $source;
                     $primaryalias = $alias;
+                    $has_primary = true;
                 } else {
                     $indices[] = $source;
                 }
                 // save the field names for later use
                 $data['fieldlabels'][$alias] = $property->label;
-                $data['fieldnames'][] = $property->name;
-                $data['formfieldnames'][] = $formfieldname;
-                $data['formfieldstates'][] = 'output';
+                $data['fieldnames'][$alias] = $property->name;
+                $data['formfieldnames'][$alias] = $formfieldname;
+                $data['formfieldstates'][$alias] = $formfieldstate;
                 $data['fields'][$alias] = $property->label;                  // Deprecated - remove from templates!!!
                 $data['columns'][$alias] = $property->name;                  // Deprecated - remove from templates!!!
                 $sourcefields[$alias] = $source;
@@ -299,9 +297,9 @@ Notes:
             if ($alias != $primaryalias) {
                 // save the field names for later use
                 $data['fieldlabels'][$alias] = $property->label;
-                $data['fieldnames'][] = $property->name;
-                $data['formfieldnames'][] = $formfieldname;
-                $data['formfieldstates'][] = $formfieldstate;
+                $data['fieldnames'][$alias] = $property->name;
+                $data['formfieldnames'][$alias] = $formfieldname;
+                $data['formfieldstates'][$alias] = $formfieldstate;
                 $data['fields'][$alias] = $property->label;                  // Deprecated - remove from templates!!!
                 $data['columns'][$alias] = $property->name;                  // Deprecated - remove from templates!!!
                 $sourcefields[$alias] = $source;
@@ -316,6 +314,29 @@ Notes:
                 $defaultkey = $property->name;
                 $defaultkeyname = $property->label;
                 $tablekeyfield = $source;
+                $keyfieldalias = $alias;
+            }
+        }
+
+        // Check if we had the primary index in the list of fields. Otherwise add it.
+        // Its display will be steered by the $show_primary variable
+        if (!$has_primary) {
+            $property = $properties[$object->primary];
+            $alias = $property->name;
+            // save the field names for later use
+            $data['fieldlabels'][$alias] = $property->label;
+            $data['fieldnames'][$alias] = $property->name;
+            $data['formfieldnames'][$alias] = $property->name;
+            $data['formfieldstates'][$alias] = 'output';
+            $data['fields'][$alias] = $property->label;                  // Deprecated - remove from templates!!!
+            $data['columns'][$alias] = $property->name;                  // Deprecated - remove from templates!!!
+            $sourcefields[$alias] = $property->source;
+            
+            // If we got here, then we need to check for a default key
+            if (empty($defaultkey) && $this->display_show_primary) {
+                $defaultkey = $property->name;
+                $defaultkeyname = $property->label;
+                $tablekeyfield = $property->source;
                 $keyfieldalias = $alias;
             }
         }
