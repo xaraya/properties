@@ -323,6 +323,13 @@ Notes:
         if (!$has_primary) {
             $property = $properties[$object->primary];
             $alias = $property->name;
+            if ($fieldname == $object->primary) {
+                $primarysource = $source;
+                $primaryalias = $alias;
+                $has_primary = true;
+            } else {
+                $indices[] = $source;
+            }
             // save the field names for later use
             $data['fieldlabels'][$alias] = $property->label;
             $data['fieldnames'][$alias] = $property->name;
