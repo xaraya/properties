@@ -24,15 +24,15 @@ class DateProperty extends DataProperty
     public $display_date_format_predef = 0;
     public $display_date_format_custom = 'c';
     public $initialization_encrypt     = false;
-    public $initialization_start_year;
-    public $initialization_end_year;
+    public $display_start_year;
+    public $display_end_year;
 
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
-        $this->template =  'date';
-        $this->filepath   = 'auto';
+        $this->template  = 'date';
+        $this->filepath  = 'auto';
 
         // Import the predefined display formats here
         sys::import('properties.date.data.formats');
@@ -62,14 +62,14 @@ class DateProperty extends DataProperty
         if(!isset($data['onchange'])) $data['onchange'] = null; // let tpl decide what to do
         $data['extraparams'] =!empty($extraparams) ? $extraparams : "";
         
-        if($this->initialization_start_year == null)            
-            $this->initialization_start_year =  min($data['value']['year'], date("Y")) - 5;
+        if($this->display_start_year == null)            
+            $this->display_start_year =  min($data['value']['year'], date("Y")) - 5;
         
-        if($this->initialization_end_year == null)          
-            $this->initialization_end_year = max($data['value']['year'], date("Y")) + 5;
+        if($this->display_end_year == null)          
+            $this->display_end_year = max($data['value']['year'], date("Y")) + 5;
             
-        $data['start_year'] = isset($data['start_year'])? $data['start_year'] : $this->initialization_start_year;
-        $data['end_year'] = isset($data['end_year'])? $data['end_year'] : $this->initialization_end_year;
+        $data['start_year'] = isset($data['start_year'])? $data['start_year'] : $this->display_start_year;
+        $data['end_year'] = isset($data['end_year'])? $data['end_year'] : $this->display_end_year;
                 
         return DataProperty::showInput($data);
     }

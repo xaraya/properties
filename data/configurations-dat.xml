@@ -26,4 +26,22 @@
     <ignore_empty>1</ignore_empty>
     <configuration>a:4:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_firstline";s:17:"0,Choose a format";s:23:"initialization_function";s:14:"date_formats()";}</configuration>
   </configurations>
+  <configurations itemid="568">
+    <id>568</id>
+    <name>display_start_year</name>
+    <label>Start Year</label>
+    <description>The year dropdown's beginning year</description>
+    <property_id>15</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
+  <configurations itemid="568">
+    <id>568</id>
+    <name>display_end_year</name>
+    <label>End Year</label>
+    <description>The year dropdown's beginning year</description>
+    <property_id>15</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
 </items>
