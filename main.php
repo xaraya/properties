@@ -15,10 +15,11 @@ sys::import('modules.dynamicdata.class.properties.base');
 
 class DateProperty extends DataProperty
 {
-    public $id   = 30022;
-    public $name = 'date';
-    public $desc = 'Date';
+    public $id         = 30022;
+    public $name       = 'date';
+    public $desc       = 'Date';
     public $reqmodules = array();
+    public $basetype   = 'integer';
 
     public $display_date_format_type = 1;
     public $display_date_format_predef = 0;
