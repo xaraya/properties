@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="!isset($class)">
+        <xar:set name="class">'xar-dropdown-date'</xar:set>
+    <xar:else/>
+        <xar:set name="class">'xar-dropdown-date ' . $class</xar:set>
+    </xar:if>
     <xar:if condition="!isset($style)">
         <xar:set name="style">''</xar:set>
-    </xar:if>
-    <xar:if condition="!isset($class)">
-        <xar:set name="class">''</xar:set>
     </xar:if>
 
     <select name="#$name#_day" id="#$id#_day" tabindex="#$tabindex#" onchange="#$evt_change#" class="#$class#" style="#$style#">
@@ -16,7 +18,7 @@
             </xar:if>
         </xar:for>
     </select>
-    &#160;
+
     <select name="#$name#_month" id="#$id#_month" tabindex="#$tabindex#" onchange="#$evt_change#" class="#$class#" style="#$style#">
         <xar:for start="$i =1" test="$i le 12" iter="$i++">
             <xar:set name="m">
@@ -29,7 +31,7 @@
             </xar:if>
         </xar:for>
     </select>
-    &#160;
+
     <select name="#$name#_year" id="#$id#_year" tabindex="#$tabindex#" onchange="#$evt_change#" class="#$class#" style="#$style#">
         <xar:for start="$i = $start_year" test="$i le $end_year" iter="$i++">
             <xar:if condition="$i eq $value['year']">
