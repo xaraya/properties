@@ -193,6 +193,7 @@ Notes:
         if(!xarVarFetch('op',            'str',       $op,         '', XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('conditions',    'isset',     $conditions, NULL, XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('export',        'int',       $export,     0, XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('store',         'str:1',     $store,      'session', XARVAR_NOT_REQUIRED)) {return;}
     
     //--- 5. Get configuration settings from modvars and tag attributes
 
@@ -551,8 +552,14 @@ Notes:
                     $values[] = $fields;
                 }
             }
-            // Store it all in a session var
-            xarSession::setVar('listing.' . $objectname,serialize($values));
+            if ($store == 'session') {
+                // Store it all in a session var
+                xarSession::detVar('listing.' . $objectname);
+                xarSession::setVar('listing.' . $objectname, serialize($values));
+            } else {
+                if (xarVariableCache::isCached('listing.' . $objectname)) xarVariableCache::delCached('listing.' . $objectname);
+                xarVariableCache::setCached('listing.' . $objectname, serialize($values));
+            }
         }
         
     //--- 20. Set the number of rows to display and the starting point
