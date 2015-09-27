@@ -554,7 +554,7 @@ Notes:
             }
             if ($store == 'session') {
                 // Store it all in a session var
-                xarSession::detVar('listing.' . $objectname);
+                xarSession::delVar('listing.' . $objectname);
                 xarSession::setVar('listing.' . $objectname, serialize($values));
             } else {
                 if (xarVariableCache::isCached('listing.' . $objectname)) xarVariableCache::delCached('listing.' . $objectname);
