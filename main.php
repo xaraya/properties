@@ -64,7 +64,7 @@ class IconDropdownProperty extends SelectProperty
         return parent::showOutput($data);
     }
 
-    function getIconOptions()
+    function getOptions()
     {
         $options = array();
         $lines = explode(';',$this->initialization_icon_options);
