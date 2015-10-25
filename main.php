@@ -263,7 +263,8 @@ Notes:
 
             // if the property source is "None", then only include it if an $items param was passed
             // We don't want to run a query with such property
-            if (empty($property->source) && !isset($data['items'])) continue;
+            // CHECKEME: preList method now takes care of this
+            // if (empty($property->source) && !isset($data['items'])) continue;
             
             // Special treatment if this is the primary key
             if ($property->type == 21) {
