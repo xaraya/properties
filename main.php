@@ -481,12 +481,14 @@ Notes:
                     $i = 0;
                     $msg = '';
                     foreach ($sourcefields as $sourcefield => $value) {
-                        if ($i >0) {
-                            $msg .= ' or';
-                        }
-                        $c[$i]= $object->dataquery->plike($value, $qsearch);
-                        $msg .= ' '.$data['fieldlabels'][$sourcefield].' ';
-                        $i++;
+                    	if (!empty($value)) {
+	                        if ($i >0) {
+	                            $msg .= ' or';
+	                        }
+	                        $c[$i]= $object->dataquery->plike($value, $qsearch);
+	                        $msg .= ' '.$data['fieldlabels'][$sourcefield].' ';
+	                        $i++;
+                    	}
                     }
                     if (!empty($msg) && $i>0) {
                         if (empty($data['msg'])) $data['msg'] = xarML('Listing where #(1) contain "#(2)"',$msg,$search);
