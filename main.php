@@ -516,9 +516,8 @@ Notes:
             break;
         }
 
-    //--- 19. Save the dd object in a sessionvar for reuse (if called)
+    //--- 19. Cache the dd object for reuse (if called)
 
-        // Save the dd object in a sessionvar for reuse
         if ($export) {
             // Add the fieldlist defined above and get the raw values of the items
             $exportitems = $object->getItems(array('fieldlist' => $data['fieldnames']));
@@ -639,6 +638,14 @@ Notes:
         in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
             echo "Total rows: "; echo $data['total'];
             echo "<br />";
+            echo "First 10 rows: ";
+            $index = 0;
+            foreach ($items as $item) {
+            var_dump($item);
+            echo "<br />";
+            if ($index >= 10) break;
+            $index++;
+            }
         }
     
         // Add the filter variable to show a filter form
