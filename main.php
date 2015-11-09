@@ -583,6 +583,8 @@ Notes:
             echo "<br />";
             echo "Operation: " . $operation . " [" . $op . "]";
             echo "<br />";
+            echo "Properties: " . implode(',', $data['fieldnames']);
+            echo "<br />";
             echo "Start at: " . $startnum;
             echo "<br />";
             echo "Items per page: " . $data['items_per_page'];
