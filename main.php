@@ -122,6 +122,7 @@ Notes:
 
         // We accept both object names and objects, but objectname overrides
         if (isset($objectname)) {
+            if (is_object($object)) throw new Exception('Object passed to the listing property instead of name');
             sys::import('modules.dynamicdata.class.objects.master');
             $object = DataObjectMaster::getObjectList(array('name' => $objectname));
         } elseif (isset($object)) {
