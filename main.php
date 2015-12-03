@@ -693,8 +693,10 @@ Notes:
 
         // Set the session vars to the latest state
         $thesesettings['lastmsg']            = $data['msg'];
-        $thesesettings['lastsort']           = $sort;
+        if (is_array($order)) $order = $order[0];
         $thesesettings['lastorder']          = $order;
+        if (is_array($sort)) $sort = $sort[0];
+        $thesesettings['lastsort']           = $sort;
         $thesesettings['laststartnum']       = $startnum;
         $thesesettings['lastitemsperpage']   = $items_per_page;
         $settings[$thissearch] = $thesesettings;
