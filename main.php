@@ -439,10 +439,18 @@ Notes:
             }
             $data['msg'] = '';
         }
+
+    //--- 14. Save the order and sort parameters
         if (isset($sourcefields[$order])) {
             $object->dataquery->setorder($sourcefields[$order],$sort);
         } else {
-            $object->dataquery->setorder($order,$sort);
+            // Support multiple orders/sort
+            $order = explode(',', $order);
+            $sort = explode(',', $sort);
+            for ($i=0;$i<count($order);$i++) {
+                if (!isset($sort[$i])) $sort[$i] = 'ASC';
+                $object->dataquery->addorder($order,$sort);
+            }
         }
 
         switch ($operation) {
