@@ -449,7 +449,7 @@ Notes:
             $sort = explode(',', $sort);
             for ($i=0;$i<count($order);$i++) {
                 if (!isset($sort[$i])) $sort[$i] = 'ASC';
-                $object->dataquery->addorder($order,$sort);
+                $object->dataquery->addorder($order[$i], $sort[$i]);
             }
         }
 
