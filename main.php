@@ -441,8 +441,8 @@ Notes:
         }
 
     //--- 14. Add the order and sort parameters to the query
-        if (is_array($order)) $order = $order[0];
-        if (is_array($sort)) $sort = $sort[0];
+        if (is_array($order)) $order = trim($order[0]);
+        if (is_array($sort)) $sort = trim($sort[0]);
         if (isset($sourcefields[$order])) {
             $object->dataquery->setorder($sourcefields[$order],$sort);
         } else {
@@ -451,7 +451,7 @@ Notes:
             $sort = explode(',', $sort);
             for ($i=0;$i<count($order);$i++) {
                 if (!isset($sort[$i])) $sort[$i] = 'ASC';
-                $object->dataquery->addorder($order[$i], $sort[$i]);
+                $object->dataquery->addorder(trim($order[$i]), trim($sort[$i]));
             }
         }
 
