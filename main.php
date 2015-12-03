@@ -440,7 +440,9 @@ Notes:
             $data['msg'] = '';
         }
 
-    //--- 14. Save the order and sort parameters
+    //--- 14. Add the order and sort parameters to the query
+        if (is_array($order)) $order = $order[0];
+        if (is_array($sort)) $sort = $sort[0];
         if (isset($sourcefields[$order])) {
             $object->dataquery->setorder($sourcefields[$order],$sort);
         } else {
