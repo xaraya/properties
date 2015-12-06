@@ -600,9 +600,9 @@ Notes:
             echo "<br />";
             echo "Items per page: " . $data['items_per_page'];
             echo "<br />";
-            echo "Order: " . $order;
+            echo "Order: " . var_dump($order);
             echo "<br />";
-            echo "Sort: " . $sort;
+            echo "Sort: " . var_dump($sort);
             echo "<br />";
             echo "Object: "; $object->name;
             echo "<br />";
