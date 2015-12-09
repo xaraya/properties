@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:style method="link" scope="property" property="date" file="style" />
     <xar:if condition="!isset($class)">
         <xar:set name="class">'xar-dropdown-date'</xar:set>
     <xar:else/>
@@ -9,7 +10,7 @@
         <xar:set name="style">''</xar:set>
     </xar:if>
     <input type="hidden" name="#$name#_day" id="#$id#_day" value="01"/>
-    <select name="#$name#_month" id="#$id#_month" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#" class="#$class#">
+    <select name="#$name#_month" id="#$id#_month" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#" class="#$class#-month">
         <xar:for start="$i =1" test="$i le 12" iter="$i++">
             <xar:set name="m">
                 strftime('%b', mktime(0, 0, 0, $i, 1, $value['year']))
@@ -22,7 +23,7 @@
         </xar:for>
     </select>
 
-    <select name="#$name#_year" id="#$id#_year" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#" class="#$class#">
+    <select name="#$name#_year" id="#$id#_year" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#" class="#$class#-year">
         <xar:for start="$i = $start_year" test="$i le $end_year" iter="$i++">
             <xar:if condition="$i eq $value['year']">
                 <option value="#$i#" selected="selected">#$i#</option>
