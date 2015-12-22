@@ -120,8 +120,7 @@ class TimeFrameProperty extends DataProperty
     public function showOutput(Array $data = array())
     {
         if (!isset($data['name'])) $data['name'] = 'dd_' . $this->id;
-        if (!isset($data['value'])) $data['value'] = $this->default;
-        if (!is_array($data['value'])) $data['value'] = @unserialize($data['value']);
+        if (!isset($data['value'])) $data['value'] = $this->getValue();
         return parent::showOutput($data);
     }
 
