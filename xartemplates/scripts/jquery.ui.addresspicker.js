@@ -295,7 +295,7 @@
     version: "@VERSION"
   });
 
-  // make IE think it doesn't suck
+  // make IE think it is not a problem
   if(!Array.indexOf){
     Array.prototype.indexOf = function(obj){
       for(var i=0; i<this.length; i++){
