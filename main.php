@@ -20,7 +20,7 @@ class DateTimeProperty extends DataProperty
     public $name       = 'datetime';
     public $desc       = 'DateTime';
     public $reqmodules = array();
-    public $basetype   = 'integer';
+    public $basetype   = 'time';
 
     public $display_datetime_format_type   = 1;
     public $display_datetime_format_predef = 0;
