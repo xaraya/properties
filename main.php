@@ -19,7 +19,7 @@ class DateProperty extends DataProperty
     public $name       = 'date';
     public $desc       = 'Date';
     public $reqmodules = array();
-    public $basetype   = 'integer';
+    public $basetype   = 'date';
 
     public $display_date_format_type = 1;
     public $display_date_format_predef = 0;
