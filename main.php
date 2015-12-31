@@ -20,6 +20,7 @@ class TimeProperty extends DataProperty
     public $name       = 'time';
     public $desc       = 'Time';
     public $reqmodules = array();
+    public $basetype   = 'time';
 
     public $display_time_format_type = 1;
     public $display_time_format_predef = 0;
