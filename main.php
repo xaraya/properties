@@ -26,7 +26,7 @@ class TimeProperty extends DataProperty
     public $display_time_format_predef = 0;
     public $display_time_format_custom = 'c';
     public $display_dropdown = 0;
-    public $display_seconds = 1;
+    public $display_hours = 1;
     public $display_minutes = 1;
     public $display_seconds = 1;
 
