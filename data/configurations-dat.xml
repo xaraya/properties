@@ -62,13 +62,4 @@
     <ignore_empty>1</ignore_empty>
     <configuration></configuration>
   </configurations>
-  <configurations itemid="572">
-    <id>572</id>
-    <name>display_ampm</name>
-    <label>Display AM/PM</label>
-    <description>Whether to use 12 or 24 hour display</description>
-    <property_id>14</property_id>
-    <ignore_empty>1</ignore_empty>
-    <configuration></configuration>
-  </configurations>
 </items>
