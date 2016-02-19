@@ -25,6 +25,10 @@ class TimeProperty extends DataProperty
     public $display_time_format_type = 1;
     public $display_time_format_predef = 0;
     public $display_time_format_custom = 'c';
+    public $display_dropdown = 0;
+    public $display_seconds = 1;
+    public $display_minutes = 1;
+    public $display_seconds = 1;
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -61,6 +65,11 @@ class TimeProperty extends DataProperty
     {
         $data['value'] = $this->getvaluearray($data);
 
+        if(isset($data['dropdown'])) $this->display_dropdown = $data['dropdown'];
+        if(isset($data['hours'])) $this->display_hours = $data['hours'];
+        if(isset($data['minutes'])) $this->display_minutes = $data['minutes'];
+        if(isset($data['seconds'])) $this->display_seconds = $data['seconds'];
+
         if(!isset($data['onchange'])) $data['onchange'] = null; // let tpl decide what to do
         $data['extraparams'] =!empty($extraparams) ? $extraparams : "";
         return DataProperty::showInput($data);
@@ -87,6 +96,11 @@ class TimeProperty extends DataProperty
                 $data['value']['time'] = $time;
             }
         }
+
+        if(isset($data['dropdown'])) $this->display_dropdown = $data['dropdown'];
+        if(isset($data['hours'])) $this->display_hours = $data['hours'];
+        if(isset($data['minutes'])) $this->display_minutes = $data['minutes'];
+        if(isset($data['seconds'])) $this->display_seconds = $data['seconds'];
 
         return DataProperty::showOutput($data);
     }

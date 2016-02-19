@@ -26,4 +26,49 @@
     <ignore_empty>1</ignore_empty>
     <configuration>a:4:{s:12:"display_rows";s:1:"0";s:14:"display_layout";s:7:"default";s:24:"initialization_firstline";s:17:"0,Choose a format";s:23:"initialization_function";s:14:"time_formats()";}</configuration>
   </configurations>
+  <configurations itemid="569">
+    <id>569</id>
+    <name>display_dropdown</name>
+    <label>Use dropdowns</label>
+    <description>Whether data is entered as text or chosen from dropdowns</description>
+    <property_id>14</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
+  <configurations itemid="570">
+    <id>570</id>
+    <name>display_hours</name>
+    <label>Display hours</label>
+    <description>Whether hours are to be displayed</description>
+    <property_id>14</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
+  <configurations itemid="571">
+    <id>571</id>
+    <name>display_minutes</name>
+    <label>Display minutes</label>
+    <description>Whether minutes are to be displayed</description>
+    <property_id>14</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
+  <configurations itemid="572">
+    <id>572</id>
+    <name>display_seconds</name>
+    <label>Display seconds</label>
+    <description>Whether seconds are to be displayed</description>
+    <property_id>14</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
+  <configurations itemid="572">
+    <id>572</id>
+    <name>display_ampm</name>
+    <label>Display AM/PM</label>
+    <description>Whether to use 12 or 24 hour display</description>
+    <property_id>14</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
 </items>
