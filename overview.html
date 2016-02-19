@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../themes/installer/style/style.css"/>
+    </head>
+    <body>
+        <div style="margin-top: 20px">
+        <div id="contentouter">
+            <div id="contentwrap">
+                <div id="contentmain">
+                    <div id="contentmain_inner"><div id="contentmain_tlcorner"><div id="contentmain_trcorner">&#160;</div></div>
+                        <div id="contentmain_core">
+            <h2>Weeklist Property</h2>
+                <h3>Description</h3>
+                <p>
+                    The Weeklist dataproperty displays a checkbox list of weekdays.
+                    The days are indicated (for now) by their starting letter (M, T, W, ...) 
+                </p>
+                <h3>Usage</h3>
+                <h4>Standalone</h4>
+                    <pre>
+    &lt;xar:data-input type="weeklist" /&gt;
+    &lt;xar:data-output type="weeklist" /&gt;
+                    </pre>
+            <h4>Bound</h4>
+                <pre>
+    &lt;xar:data-input property="$properties['weeklist']" /&gt;
+    &lt;xar:data-output property="$properties['weeklist']" /&gt;
+                </pre>
+            <h3> Configuration Values</h3>
+            <ul>
+                <li>
+                    <strong>Monday first</strong>: integer [default=1]&#160;This defines which day of the week the checkbox list starts with. When this is set to 0, the first day in the week is Sunday.
+                </li>
+            </ul>
+                        </div>
+                        <div id="contentmain_blcorner"><div id="contentmain_brcorner">&#160;</div></div>
+                    </div>
+                </div>
+            </div>
+            <br class="xar-clearboth"/>
+        </div>
+    </body>
+</xar:template>

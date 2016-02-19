@@ -1,0 +1,11 @@
+<items>
+  <configurations itemid="1">
+    <id>1</id>
+    <name>initialization_monday_first</name>
+    <label>Monday First</label>
+    <description>Which day the week should start with</description>
+    <property_id>14</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
+</items>
