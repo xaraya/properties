@@ -51,7 +51,7 @@ class JQAddressPickerProperty extends DataProperty
         }
 
         // Get the GPS coordinates
-        $gps = get_gps_coordinates($fields['address']);
+        $gps = $this->get_gps_coordinates($fields['address']);
         $fields['lat'] = $gps[0];
         $fields['lng'] = $gps[1];
 
@@ -103,7 +103,6 @@ class JQAddressPickerProperty extends DataProperty
  
         return array($lat, $lng);
     }
-
 }
 
 ?>
