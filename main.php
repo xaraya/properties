@@ -1,9 +1,9 @@
 <?php
 /**
- * JQDateTime Property
+ * JQAddressPicker Property
  *
  * @package properties
- * @subpackage jqdatetime property
+ * @subpackage jqaddresspicker property
  * @category Third Party Xaraya Property
  * @version 1.0.0
  * @copyright (C) 2012 Netspan AG
@@ -13,7 +13,7 @@
 sys::import('modules.dynamicdata.class.properties.base');
 
 /**
- * Handle dynamic jqdatetime property
+ * Handle dynamic jqaddresspicker property
  */
 class JQAddressPickerProperty extends DataProperty
 {
@@ -49,6 +49,12 @@ class JQAddressPickerProperty extends DataProperty
             $this->objectref->missingfields[] = $this->name;
             return null;
         }
+
+        // Get the GPS coordinates
+        $gps = get_gps_coordinates($fields['address']);
+        $fields['lat'] = $gps[0];
+        $fields['lng'] = $gps[1];
+
         $value = serialize($fields);
         return $this->validateValue($value);
     }
@@ -81,6 +87,21 @@ class JQAddressPickerProperty extends DataProperty
             );
         }
         return $value;
+    }
+
+    public function get_gps_coordinates($address='')
+    {
+        $address = urlencode($address);
+        $url = "http://maps.google.com/maps/api/geocode/json?sensor=false&address=" . $address;
+        $response = file_get_contents($url);
+        $json = json_decode($response,true);
+ 
+        if (!isset($json['results'][0]['geometry']['location']['lat'])) return false;
+        if (!isset($json['results'][0]['geometry']['location']['lng'])) return false;
+        $lat = $json['results'][0]['geometry']['location']['lat'];
+        $lng = $json['results'][0]['geometry']['location']['lng'];
+ 
+        return array($lat, $lng);
     }
 
 }
