@@ -3,12 +3,12 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="header"/>
 
-    <div class="xar-row">
+    <div class="xar-row" style="margin-left:5px;">
         <div class="xar-col">
             <div id="map"></div>
         </div>
     </div>
-    <div class="xar-row">
+    <div class="xar-row" style="margin-left:5px;">
         <div class="xar-col">
             <input name="#$id#_address" id="addresspicker_map_#$id#" value="#$value['address']#"/>
             <input name="#$id#_locality" id="locality_#$id#" hidden="hidden" value="#$value['locality']#" type="hidden"/>
