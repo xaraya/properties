@@ -45,7 +45,7 @@ class JQDateTimeProperty extends DataProperty
         else $this->setValue($value);
         if (!parent::validateValue($value)) return false;
 
-        $this->value = strtotime($this->value); //var_dump($this->value);exit;
+        $this->value = strtotime($this->value);
         	
         if ($this->value === false) {
             $this->invalid = xarML('#(1) date could not be resolved', $this->name);
@@ -74,10 +74,10 @@ class JQDateTimeProperty extends DataProperty
     {
         if (!empty($data['add_offset']))   $this->initialization_add_offset = $data['add_offset'];
         if (!empty($data['include_time'])) $this->initialization_include_time = $data['include_time'];
-        if (empty($data['value'])) $data['value'] = $this->value;
+        if (!empty($data['value']))  $this->value = $data['value'];
 
         if (empty($data['value'])) $data['value'] = time();
-        $data['value'] = $this->format($data['value']);
+        $data['value'] = $this->format($this->value);
         return parent::showOutput($data);
     }
 
@@ -97,7 +97,7 @@ class JQDateTimeProperty extends DataProperty
                     // If no format chosen, just return the raw value
                     if (!empty($this->display_jqdatetime_format_predef)) {
                         $formats = jqdatetime_formats();
-                        $value = date($formats[$this->display_date_format_predef]['format'], $value);
+                        $value = date($formats[$this->display_jqdatetime_format_predef]['format'], $value);
                     }
                 break;
                 case 3:
