@@ -27,7 +27,7 @@ class JQDateTimeProperty extends DataProperty
     public $display_jqdatetime_format_predef = 0;       // The predefined format chosen
     public $display_jqdatetime_format_custom = 'c';     // The type of custom format chosen
     public $initialization_add_offset        = false;   // Whether to honor the timezone offset
-	
+
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
@@ -41,27 +41,12 @@ class JQDateTimeProperty extends DataProperty
 
     public function validateValue($value = null)
     {
-    	
         if(!isset($value)) $value = $this->getValue();
         else $this->setValue($value);
-        
         if (!parent::validateValue($value)) return false;
-        
-		if($this->initialization_add_offset == false) {
-	        /* TODO - Faced issue while try to call calculateTimeOffset function from event.php
-			sys::import('modules.eventhub.class.event');
-			sys::import('modules.eventhub.class.event');
-	        require_once CALENDAR_ROOT.'Hour.php';
-	        $Day = new Calendar_Day(2000,1,1); 
-	    	$offset = new Event($Day); 
-	        $this->value = strtotime($this->value) + $offset->calculateTimeOffset($this->value); //var_dump($this->value);exit;
-			*/
-			$this->value = strtotime($this->value) + $this->calculateTimeOffset($this->value); //var_dump($this->value);exit;
-		}
-		else {
-			$this->value = strtotime($this->value); //var_dump($this->value);exit;	
-		}
-		
+
+        $this->value = strtotime($this->value); //var_dump($this->value);exit;
+        	
         if ($this->value === false) {
             $this->invalid = xarML('#(1) date could not be resolved', $this->name);
             xarLog::message($this->invalid, XARLOG_LEVEL_ERROR);
@@ -123,27 +108,6 @@ class JQDateTimeProperty extends DataProperty
             $value = 0;
         }
         return $value;
-    }
-
-    public function calculateTimeOffset($time)
-    {
-    	$siteTZ = xarConfigVars::get(null, 'Site.Core.TimeZone');
-
-    	// Create two timezone objects, one for GMT and one for Site Time Zone
-		$dateTimeZoneGMT = new DateTimeZone("GMT");
-		$dateTimeZoneSiteTZ = new DateTimeZone($siteTZ);
-		
-		// Create two DateTime objects that will contain the same Unix timestamp, but
-		// have different timezones attached to them.
-		$dateTimeGMT = new DateTime($time, $dateTimeZoneGMT);
-		$dateTime = new DateTime($time, $dateTimeZoneSiteTZ);
-		
-		// Calculate the GMT offset for the date/time contained in the $dateTimeZoneGMT
-		// object, but using the timezone rules as defined for Site Time Zone
-		$timeOffset = $dateTimeZoneSiteTZ->getOffset($dateTimeGMT);
-
-		// Should calculate the timezone differnce with GMT (for dates after Sat Sep 8 01:00:00 1951 JST).
-		return $timeOffset;
     }
 }
 
