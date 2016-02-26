@@ -1,47 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div>
-            <h2>Language Property</h2>
+            <h2>JQDateTime Property</h2>
                 <h3>Description</h3>
                 <p>
-                    The Language dataproperty consists of a dropdown showing the languages available. The property can be used standalone or as bound to a dataobject.
-                </p>
-                <p>
-                    The available languages are given by the items of the <i>languages</i> dataobject, which is created when the language property is installed. The dataobject stores its items in dynamic storage. Items can be added, changed or deleted via the dynamicdata admin interface.
-                </p>
-                <p>
-                    The <i>languages</i> dataobject has the following properties: ID, name, locale, 3-letter code, 2-letter code, image path, directory, sort order and character set. The code fields refer to 3 and 2 letter ISO codes (e.g. deu, eng, ru, fr). The locale field refers to standard notation, e.g. en_US. These 3 fields contain partially redundant information and are included to give the developer and site administrator choices for the storage property of the language dataproperty.
-                </p>
-                <p>
-                    The language dataproperty presently does not have its own templates, but uses those of the parent dropdown property.
-                </p>
-                <p>
-                    The language dataproperty is distinct from the <i>language list</i> dataproperty that comes with Xaraya. The latter includes only the languages available in the locales present on the site, while the former includes any language that figures as an item of the languages dataobject mentioned above.
+                    The JQDateTime dataproperty is similar to the DateTime property, except that it uses a JQuery plugin for input. 
+                    See the DateTime property for details.
                 </p>
                 <h3>Usage</h3>
                 <h4>Standalone</h4>
                     <pre>
-    &lt;xar:data-input type="language" <i>[attr1="value1",...]</i> /&gt;
-    &lt;xar:data-output type="language" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-input type="jqdatetime" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output type="jqdatetime" <i>[attr1="value1",...]</i> /&gt;
                     </pre>
             <h4>Bound</h4>
                 <pre>
-    &lt;xar:data-input property="$properties['language']" <i>[attr1="value1",...]</i> /&gt;
-    &lt;xar:data-output property="$properties['language']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-input property="$properties['jqdatetime']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output property="$properties['jqdatetime']" <i>[attr1="value1",...]</i> /&gt;
                 </pre>
-            <h3>Examples</h3>
-                    <pre>
-    &lt;xar:data-input type="language" display_prop="code_3" /&gt;
-    &lt;xar:data-input type="language" store_prop="name" /&gt;
-                    </pre>
-            <h3>Attributes</h3>
-            <ul>
-                <li>
-                    <strong>display_prop</strong>: string [default='name']&#160;Defines the object property to be displayed in the dropdown.
-                </li>
-                <li>
-                    <strong>store_prop</strong>: string [default='locale']&#160;Defines the object property to be used in the dropdown values.
-                </li>
-            </ul>
         </div>
 </xar:template>
