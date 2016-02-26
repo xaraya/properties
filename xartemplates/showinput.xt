@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-	<link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.8.21/themes/ui-lightness/jquery-ui.css" />
+	<link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/ui-lightness/jquery-ui.css" />
     <xar:javascript type="lib" lib="jquery" position="head"/>
-    <xar:javascript type="src" src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js" position="head"/>
+    <xar:javascript type="src" src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" position="head"/>
 
     <style type="text/css"> 
         ##ui-datepicker-div, .ui-datepicker{ font-size: 100%; }			
@@ -41,4 +41,5 @@
             });
         </script>
     </xar:if>
+ <xar:template file="dataproperty_additions" module="base"/>
 </xar:template>
