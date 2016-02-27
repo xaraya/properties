@@ -29,7 +29,8 @@ class WeekListProperty extends CheckboxListProperty
     {
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
-        $this->filepath   = 'auto';
+        $this->template  =  'weeklist';
+        $this->filepath  = 'auto';
     }
 
     public function showInput(Array $data = array())
