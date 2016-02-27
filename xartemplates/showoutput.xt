@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!--  License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:if condition="empty($layout) or $layout eq 'default' or $layout eq 'horizontal'">
+        <xar:if condition="count($options) gt 0">
+            <xar:foreach in="$options" value="$option" key="$key">
+                <div style="float: left;margin-right: 5px;">
+                    <xar:if condition="in_array($option['id'],$value)">
+                        <b>#$option['name']#</b>
+                    <xar:else/>
+                        #$option['name']#
+                    </xar:if>
+                </div>
+            </xar:foreach>
+        </xar:if>
+    <xar:elseif condition="$layout eq 'vertical'"/>
+        <xar:if condition="count($options) gt 0">
+            <xar:foreach in="$options" value="$option" key="$key">
+                <div>
+                    <xar:if condition="in_array($option['id'],$value)">
+                        <b>#$option['name']#</b>
+                    <xar:else/>
+                        #$option['name']#
+                    </xar:if>
+                </div>
+            </xar:foreach>
+        </xar:if>
+    <xar:else />
+        <p>
+          Specify your own layout '#$layout#' here...
+        </p>
+        <p>
+          You can also specify a separate template, e.g. if you want to handle individual fields differently for a particular module / itemtype
+        </p>
+    </xar:if>
+
+    <xar:template file="dataproperty_additions" module="base"/>
+    <br class="xar-clearall"/>
+</xar:template>
