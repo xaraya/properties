@@ -71,7 +71,7 @@ class WeekListProperty extends CheckboxListProperty
         }
 
         $options = array();
-        $i = 0;
+        $i = 1;
         foreach ($days as $day) {
             $options[] = array('id' => $i, 'name' => $days[$i]);
             $i++;
