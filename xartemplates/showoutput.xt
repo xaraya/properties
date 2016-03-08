@@ -11,7 +11,12 @@
 <!-- <xar:style scope="property" property="socialmediaicons" file="socialmediaicons-popup" /> -->
 <style type="text/css">
 	/*three dot pop up css*/	
-	ol, ul {
+	.social-ul {
+		list-style: none;
+		margin: 10px;
+		margin-bottom: 8px;
+	}
+	.social-ol {
 		list-style: none;
 		margin: 10px;
 		margin-bottom: 8px;
@@ -281,7 +286,7 @@
 	</script>
 	
 <div class="social-links-wrp">
-	<ul class="share-btn-wrp">
+	<ul class="share-btn-wrp social-ul">
 	        <li class="facebook button-wrap">Facebook</li>
 	        <li class="twitter button-wrap">Tweet</li>
 	        <li class="digg button-wrap">Digg it</li>
@@ -294,7 +299,7 @@
 	<div class="cd-popup" role="alert">
 	<div class="cd-popup-container">
 		<p></p>
-		<ul class="cd-buttons">
+		<ul class="cd-buttons social-ul">
 		    <li class="facebook popup-link">facebook</li>
 			<li class="twitter popup-link">twitter</li>
 	        <li class="digg popup-link">digg</li>
