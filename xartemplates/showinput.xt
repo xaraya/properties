@@ -7,7 +7,6 @@
 
 
     <xar:javascript type="lib" lib="jquery" position="head"/>
-    <xar:javascript type="src" src="http://code.jquery.com/jquery-1.7.2.min.js" position="head"/>
     <xar:javascript type="src" src="http://code.jquery.com/ui/1.11.4/jquery-ui.js" position="head"/>
     <xar:javascript filename="jquery.subscribe-better.js" property="subscribeform" position="head"/>
 
@@ -26,7 +25,7 @@
                     animation: "flyInUp",
                     autoClose: true,
                     delay: 1000,
-                    showOnce: false
+                    showOnce: true
                 });
                 
                 $(".subscribebox input[type='submit']").click(function(){
