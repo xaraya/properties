@@ -626,11 +626,12 @@ Notes:
                 // items were passed, but we need to get the correct subset
                 // first get the total
                 $tempitems = array();
+                $item_values = array_values($items);
                 $startat = $object->dataquery->startat-1;
                 $endat = $startat + $object->dataquery->rowstodo;
                 for ($i=$startat;$i<$endat;$i++)  {
-                    if (!isset($items[$i])) break;
-                    $tempitems[] = $items[$i];
+                    if (!isset($item_values[$i])) break;
+                    $tempitems[] = $item_values[$i];
                 }
                 $items = $tempitems;
             }
