@@ -634,14 +634,14 @@ Notes:
                     $tempitems[] = $item_values[$i];
                 }
                 $items = $tempitems;
-            }
+            }var_dump($items);
             // Now sort the items according to whatever sort column was defined
             $temp = array();
 			foreach ($items as $key => $row) {
 				$temp[$key]  = $row[$order];
 			}
 			array_multisort($temp, $sort, $items);
-        }
+        }var_dump($items);
 
         // Save the sequence of items for whoever. Do this only when an ID parameter was passed
         // We save both the keys and the query object, in case we need to recreate the query
