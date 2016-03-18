@@ -635,6 +635,12 @@ Notes:
                 }
                 $items = $tempitems;
             }
+            // Now sort the items according to whatever sort column was defined
+            $temp = array();
+			foreach ($items as $key => $row) {
+				$temp[$key]  = $row[$order];
+			}
+			array_multisort($temp, $sort, $items);
         }
 
         // Save the sequence of items for whoever. Do this only when an ID parameter was passed
