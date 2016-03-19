@@ -637,10 +637,12 @@ Notes:
             }var_dump($items);
             // Now sort the items according to whatever sort column was defined
             $temp = array();
+            if ($sort == 'ASC') $sort_order = SORT_ASC;
+            else $sort_order = SORT_DESC;
 			foreach ($items as $key => $row) {
 				$temp[$key]  = $row[$order];
 			}
-			array_multisort($temp, $sort, $items);
+			array_multisort($temp, $sort_order, $items);
         }var_dump($items);
 
         // Save the sequence of items for whoever. Do this only when an ID parameter was passed
