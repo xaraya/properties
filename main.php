@@ -634,7 +634,7 @@ Notes:
                     $tempitems[] = $item_values[$i];
                 }
                 $items = $tempitems;
-            }var_dump($items);
+            }
             // Now sort the items according to whatever sort column was defined
             $temp = array();
             if ($sort == 'ASC') $sort_order = SORT_ASC;
@@ -643,7 +643,7 @@ Notes:
 				$temp[$key]  = $row[$order];
 			}
 			array_multisort($temp, $sort_order, $items);
-        }var_dump($items);
+        }
 
         // Save the sequence of items for whoever. Do this only when an ID parameter was passed
         // We save both the keys and the query object, in case we need to recreate the query
