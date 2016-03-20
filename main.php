@@ -238,7 +238,7 @@ Notes:
 
         // Get the properties we can display
         $allowedproperties = array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE, DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY);
-        foreach ($object->properties as $key => $value) {
+        foreach ($object->properties as $key => $value)
             if (in_array($value->getDisplayStatus(), $allowedproperties)) unset($object->properties[$key]);
         $properties =& $object->properties;
         
