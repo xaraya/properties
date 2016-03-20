@@ -236,7 +236,12 @@ Notes:
         $tablekeyfield = '';
         $keyfieldalias = '';
 
-        $properties =& $object->getProperties(array('status' => array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY)));
+        // Get the properties we can display
+        $allowedproperties = array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE, DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY);
+        foreach ($object->properties as $key => $value) {
+            if (in_array($value->getDisplayStatus(), $allowedproperties)) unset($object->properties[$key]);
+        $properties =& $object->properties;
+        
         // fieldlists attributes in templates have the form
         // fieldlist="field1[formfieldname1:fieldstate1:fieldstate1][,field2[formfieldname2::fieldstate2]]"
         $has_primary = false;
