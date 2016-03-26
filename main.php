@@ -637,8 +637,9 @@ Notes:
             }
             // Now sort the items according to whatever sort column was defined
             // In this case we need to make sure that the $order var is not compound table + field
-            $orderparts = explode('.', $order);
+            $orderparts = explode('.', current($order));
             if (isset($orderparts[1])) $order = $orderparts[1];
+            else $order = $orderparts[0];
             $temp = array();
             if ($sort == 'ASC') $sort_order = SORT_ASC;
             else $sort_order = SORT_DESC;
