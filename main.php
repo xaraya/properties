@@ -637,14 +637,16 @@ Notes:
             }
             // Now sort the items according to whatever sort column was defined
             // In this case we need to make sure that the $order var is not compound table + field
-            $orderparts = explode('.', current($order));
+            if (is_array($order)) $currentorder = current($order);
+            else $currentorder = $order;
+            $orderparts = explode('.', $currentorder);
             if (isset($orderparts[1])) $order = $orderparts[1];
             else $order = $orderparts[0];
             $temp = array();
             if ($sort == 'ASC') $sort_order = SORT_ASC;
             else $sort_order = SORT_DESC;
 			foreach ($items as $key => $row) {
-				$temp[$key]  = $row[$order];
+				$temp[$key]  = $row[$currentorder];
 			}
 			array_multisort($temp, $sort_order, $items);
         }
