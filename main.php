@@ -640,13 +640,13 @@ Notes:
             if (is_array($order)) $currentorder = current($order);
             else $currentorder = $order;
             $orderparts = explode('.', $currentorder);
-            if (isset($orderparts[1])) $order = $orderparts[1];
-            else $order = $orderparts[0];
+            if (isset($orderparts[1])) $thisorder = $orderparts[1];
+            else $thisorder = $orderparts[0];
             $temp = array();
             if ($sort == 'ASC') $sort_order = SORT_ASC;
             else $sort_order = SORT_DESC;
 			foreach ($items as $key => $row) {
-				$temp[$key]  = $row[$currentorder];
+				$temp[$key]  = $row[$thisorder];
 			}
 			array_multisort($temp, $sort_order, $items);
         }
