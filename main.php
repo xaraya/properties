@@ -540,13 +540,16 @@ Notes:
             $values = array();
             
             // Proceed if we have data
-            if (is_array(current($exportitems))) {
-                $firstrow = array_keys(current($exportitems));
+            if (is_array(reset($exportitems))) {
+                $firstrow = array_keys(reset($exportitems));
 
                 // First get the labels
                 $labels = array();
                 foreach ($firstrow as $column) {
-                    $labels[$column] = $object->properties[$column]->label;
+                    // We allow any column that is a valid property here, regardless of the fieldlist
+                    // This is because we may want to pass values via $items that are not in the fieldlist
+                    if (!isset($properties[$column])) continue;
+                    $labels[$column] = $properties[$column]->label;
                 }
                 $values = array($labels);
                 
@@ -554,17 +557,20 @@ Notes:
                 foreach ($exportitems as $row) {
                     $fields = array();
                     foreach ($firstrow as $column) {
-                        $object->properties[$column]->setValue($row[$column]);
+                        // We allow any column that is a valid property here, regardless of the fieldlist
+                        // This is because we may want to pass values via $items that are not in the fieldlist
+                        if (!isset($properties[$column])) continue;
+                        $properties[$column]->setValue($row[$column]);
                         
                         // Let formatting of numbers happen downstream
-                        switch ($object->properties[$column]->basetype) {
+                        switch ($properties[$column]->basetype) {
                             case 'integer':
                             case 'numeric':
                             case 'decimal':
-                                $fields[$column] = $object->properties[$column]->value;
+                                $fields[$column] = $properties[$column]->value;
                             break;
                             default:
-                                $fields[$column] = $object->properties[$column]->getValue();
+                                $fields[$column] = $properties[$column]->getValue();
                         }
                     }
                     $values[] = $fields;
