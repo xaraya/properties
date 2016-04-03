@@ -530,8 +530,13 @@ Notes:
     //--- 19. Cache the dd object for reuse (if called)
 
         if ($export) {
-            // Add the fieldlist defined above and get the raw values of the items
-            $exportitems = $object->getItems(array('fieldlist' => $data['fieldnames']));
+            // Use isset here to check whether a $items param was passed
+            if (!isset($items)) {
+                // Add the fieldlist defined above and get the raw values of the items
+                $exportitems = $object->getItems(array('fieldlist' => $data['fieldnames']));
+            } else {
+                $exportitems = $items;
+            }
             $values = array();
             
             // Proceed if we have data
