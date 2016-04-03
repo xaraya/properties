@@ -650,15 +650,23 @@ Notes:
             // In this case we need to make sure that the $order var is not compound table + field
             if (is_array($order)) $currentorder = current($order);
             else $currentorder = $order;
-            $orderparts = explode('.', $currentorder);
-            if (isset($orderparts[1])) $thisorder = $orderparts[1];
-            else $thisorder = $orderparts[0];
+            
+            // Check if the order is a table field (first time) or a property name 
+            $flipped = array_flip($sourcefields);
+            if (isset($flipped[$currentorder])) $thisorder = $flipped[$currentorder];
+            else $thisorder = $currentorder;
+            
+            // Prepare to reorder the array
             $temp = array();
-            if ($sort == 'ASC') $sort_order = SORT_ASC;
-            else $sort_order = SORT_DESC;
 			foreach ($items as $key => $row) {
 				$temp[$key]  = $row[$thisorder];
 			}
+            
+            // Add the sort
+            if ($sort == 'DESC') $sort_order = SORT_DESC;
+            else $sort_order = SORT_ASC;
+            
+			// Reorder
 			array_multisort($temp, $sort_order, $items);
         }
 
