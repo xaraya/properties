@@ -164,7 +164,6 @@
     <xar:javascript type="src" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js" position="head"/>
 </xar:if>
 
-<script src="#sys::code()#properties/jsupload/uploader/js/jquery.min.js"></script>
 <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
 <script src="#sys::code()#properties/jsupload/uploader/js/jquery.ui.widget.js"></script>
 <!-- The Templates plugin is included to render the upload/download listings -->
