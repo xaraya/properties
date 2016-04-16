@@ -2,8 +2,24 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 	<link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/ui-lightness/jquery-ui.css" />
-    <xar:javascript type="lib" lib="jquery" position="head"/>
-    <xar:javascript type="src" src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" position="head"/>
+
+    <!-- jQuery and jQuery UI -->
+    <xar:set name="remote_libs">
+        xarMod::apiFunc('themes','admin','get_js_libs',array('scope' => 'remote', 'lib' => 'jquery'))
+    </xar:set>
+    <xar:if condition="!empty($remote_libs)">
+        <xar:javascript type="lib" lib="jquery" position="head"/>
+    <xar:else/>
+        <xar:javascript type="src" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js" position="head"/>
+    </xar:if>
+    <xar:set name="remote_libs">
+        xarMod::apiFunc('themes','admin','get_js_libs',array('scope' => 'remote', 'lib' => 'jquery-ui'))
+    </xar:set>
+    <xar:if condition="!empty($remote_libs)">
+        <xar:javascript type="lib" lib="jquery-ui" position="head"/>
+    <xar:else/>
+        <xar:javascript type="src" src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" position="head"/>
+    </xar:if>
 
     <style type="text/css"> 
         ##ui-datepicker-div, .ui-datepicker{ font-size: 100%; }			
