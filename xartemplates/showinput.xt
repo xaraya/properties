@@ -154,7 +154,15 @@
 ]]>
 
 
-<xar:javascript type="lib" lib="jquery" position="head"/>
+<!-- jQuery -->
+<xar:set name="remote_libs">
+    xarMod::apiFunc('themes','admin','get_js_libs',array('scope' => 'remote', 'lib' => 'jquery'))
+</xar:set>
+<xar:if condition="!empty($remote_libs)">
+    <xar:javascript type="lib" lib="jquery" position="head"/>
+<xar:else/>
+    <xar:javascript type="src" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js" position="head"/>
+</xar:if>
 
 <script src="#sys::code()#properties/jsupload/uploader/js/jquery.min.js"></script>
 <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
