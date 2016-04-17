@@ -154,7 +154,7 @@
 ]]>
 
 
-<!-- jQuery -->
+<!-- jQuery and jQuery UI -->
 <xar:set name="remote_libs">
     xarMod::apiFunc('themes','admin','get_js_libs',array('scope' => 'remote', 'lib' => 'jquery'))
 </xar:set>
@@ -163,9 +163,15 @@
 <xar:else/>
     <xar:javascript type="src" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js" position="head"/>
 </xar:if>
+<xar:set name="remote_libs">
+    xarMod::apiFunc('themes','admin','get_js_libs',array('scope' => 'remote', 'lib' => 'jquery-ui'))
+</xar:set>
+<xar:if condition="!empty($remote_libs)">
+    <xar:javascript type="lib" lib="jquery-ui" position="head"/>
+<xar:else/>
+    <xar:javascript type="src" src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" position="head"/>
+</xar:if>
 
-<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
-<script src="#sys::code()#properties/jsupload/uploader/js/jquery.ui.widget.js"></script>
 <!-- The Templates plugin is included to render the upload/download listings -->
 <script src="#sys::code()#properties/jsupload/uploader/js/tmpl.min.js"></script>
 <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
