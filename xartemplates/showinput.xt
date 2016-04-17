@@ -10,6 +10,7 @@
     </div>
     <div class="xar-row" style="margin-left:8px;">
         <div class="xar-col">
+            <!-- Note Google maps now has much more info than we are showing here -->
             <input name="#$id#_address" id="addresspicker_map_#$id#" value="#$value['address']#"/>
             <input name="#$id#_locality" id="locality_#$id#" hidden="hidden" value="#$value['locality']#" type="hidden"/>
             <input name="#$id#_country" id="country_#$id#" hidden="hidden" value="#$value['country']#" type="hidden"/>

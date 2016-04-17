@@ -5,7 +5,7 @@
     <xar:style scope="property" property="jqaddresspicker" file="jquery.ui.all"/>
     <xar:style scope="property" property="jqaddresspicker" file="demo"/>
 
-    <xar:javascript type="src" src="http://maps.google.com/maps/api/js?sensor=false" position="head"/>  
+    <xar:javascript type="src" src="http://maps.google.com/maps/api/js?sensor=false" position="head"/>
 
     <!-- jQuery and jQuery UI -->
     <xar:set name="remote_libs">
@@ -26,28 +26,54 @@
     </xar:if>
 
     <xar:javascript filename="jquery.ui.addresspicker.js" scope="property" property="jqaddresspicker" position="head"/>
+
     <script>
-    jQuery(function($) {
+      $(function() {
+        var addresspicker = $( "##addresspicker_#$id#" ).addresspicker({
+          componentsFilter: 'country:#$country#'
+        });
         var addresspickerMap = $( "##addresspicker_map_#$id#" ).addresspicker({
-            regionBias: "ch",
-            mapOptions: {
-                zoom: 5, 
-                center: new google.maps.LatLng(38.550313,-121.033859), 
-                scrollwheel: false,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            },
-            elements: {
-                map:      "##map",
-                lat:      "##lat_#$id#",
-                lng:      "##lng_#$id#",
-                locality: '##locality_#$id#',
-                country:  '##country_#$id#',
-                type:    '##type_#$id#' 
-            }
+          regionBias: "#$region#",
+          language: "#$language#",
+          updateCallback: showCallback,
+          mapOptions: {
+            zoom: #$zoom#,
+            center: new google.maps.LatLng(#$lat#, #$lng#),
+            scrollwheel: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          },
+          elements: {
+            map:      "##map",
+            lat:      "##lat_#$id#",
+            lng:      "##lng_#$id#",
+            street_number: '##street_number_#$id#',
+            route: '##route_#$id#',
+            locality: '##locality_#$id#',
+            sublocality: '##sublocality_#$id#',
+            administrative_area_level_3: '##administrative_area_level_3_#$id#',
+            administrative_area_level_2: '##administrative_area_level_2_#$id#',
+            administrative_area_level_1: '##administrative_area_level_1_#$id#',
+            country:  '##country_#$id#',
+            postal_code: '##postal_code_#$id#',
+            type:    '##type_#$id#'
+          }
         });
         var gmarker = addresspickerMap.addresspicker( "marker");
         gmarker.setVisible(true);
         addresspickerMap.addresspicker( "updatePosition");
-    });
+
+        $('##reverseGeocode').change(function(){
+          $("##addresspicker_map").addresspicker("option", "reverseGeocode", ($(this).val() === 'true'));
+        });
+
+        function showCallback(geocodeResult, parsedGeocodeResult){
+          $('##callback_result').text(JSON.stringify(parsedGeocodeResult, null, 4));
+        }
+        // Update zoom field
+        var map = $("##addresspicker_map_#$id#").addresspicker("map");
+        google.maps.event.addListener(map, 'idle', function(){
+          $('##zoom').val(map.getZoom());
+        });
+      });
     </script>
 </xar:template>
