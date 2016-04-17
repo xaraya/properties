@@ -28,7 +28,8 @@
     <xar:javascript filename="jquery.ui.addresspicker.js" scope="property" property="jqaddresspicker" position="head"/>
 
     <script>
-      $(function() {
+      $.noConflict();
+      jQuery(function($){
         var addresspicker = $( "##addresspicker_#$id#" ).addresspicker({
           componentsFilter: 'country:#$country#'
         });
