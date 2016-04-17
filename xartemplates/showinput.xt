@@ -179,52 +179,34 @@
 <!-- The Canvas to Blob plugin is included for image resizing functionality -->
 <script src="#sys::code()#properties/jsupload/uploader/js/canvas-to-blob.min.js"></script>
 <!-- Bootstrap JS and Bootstrap Image Gallery are not required, but included for the demo -->
-<script src="#sys::code()#properties/jsupload/uploader/js/bootstrap.min.js"></script>
-<script src="#sys::code()#properties/jsupload/uploader/js/bootstrap-image-gallery.min.js"></script>
+<script src="#sys::code()#properties/jsupload/uploader/js/jquery.blueimp-gallery.min.js"></script>
+
 <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
 <script src="#sys::code()#properties/jsupload/uploader/js/jquery.iframe-transport.js"></script>
 <!-- The basic File Upload plugin -->
 <script src="#sys::code()#properties/jsupload/uploader/js/jquery.fileupload.js"></script>
 <!-- The File Upload file processing plugin -->
-<script src="#sys::code()#properties/jsupload/uploader/js/jquery.fileupload-fp.js"></script>
+<script src="#sys::code()#properties/jsupload/uploader/js/jquery.fileupload-process.js"></script>
+<!-- The File Upload image preview & resize plugin -->
+<script src="#sys::code()#properties/jsupload/uploader/js/jquery.fileupload-image.js"></script>
+<!-- The File Upload audio preview plugin -->
+<script src="#sys::code()#properties/jsupload/uploader/js/jquery.fileupload-audio.js"></script>
+<!-- The File Upload video preview plugin -->
+<script src="#sys::code()#properties/jsupload/uploader/js/jquery.fileupload-video.js"></script>
+<!-- The File Upload validation plugin -->
+<script src="#sys::code()#properties/jsupload/uploader/js/jquery.fileupload-validate.js"></script>
 <!-- The File Upload user interface plugin -->
 <script src="#sys::code()#properties/jsupload/uploader/js/jquery.fileupload-ui.js"></script>
+<!-- The File Upload jQuery UI plugin -->
+<script src="#sys::code()#properties/jsupload/uploader/js/jquery.fileupload-jquery-ui.js"></script>
 <!-- The localization script -->
 <script src="#sys::code()#properties/jsupload/uploader/js/locale.js"></script>
-
 <!-- The main application script -->
-<![CDATA[
-<script type="text/javascript">
-    jQuery(function ($) {
-        'use strict';
-    
-        // Initialize the jQuery File Upload widget:
-        $('##fileupload').fileupload();
-    
-        // Enable iframe cross-domain access via redirect option:
-        $('##fileupload').fileupload(
-            'option',
-            'redirect',
-            window.location.href.replace(
-                /\/[^\/]*$/,
-                '/cors/result.html?%s'
-            )
-        );
-    
-        // Load existing files:
-        $('##fileupload').each(function () {
-            var that = this;
-            $.getJSON(this.action, function (result) {
-                if (result && result.length) {
-                    $(that).fileupload('option', 'done')
-                        .call(that, null, {result: result});
-                }
-            });
-        });
-    });
-</script>
-]]>
+<script src="js/main.js"></script>
 
-<!-- The XDomainRequest Transport is included for cross-domain file deletion for IE8+ -->
-<!--[if gte IE 8]><script src="js/cors/jquery.xdr-transport.js"></script><![endif]-->
+
+<!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
+<!--[if (gte IE 8)&(lt IE 10)]>
+<script src="js/cors/jquery.xdr-transport.js"></script>
+<![endif]-->
 </xar:template>
