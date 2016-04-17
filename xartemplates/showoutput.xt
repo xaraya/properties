@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- jQuery -->
     <xar:set name="remote_libs">
         xarMod::apiFunc('themes','admin','get_js_libs',array('scope' => 'remote', 'lib' => 'jquery'))
     </xar:set>
     <xar:if condition="!empty($remote_libs)">
         <xar:javascript type="lib" lib="jquery" position="head"/>
     <xar:else/>
-        <xar:javascript type="src" src="http://code.jquery.com/jquery-1.9.1.min.js" position="head"/>
+        <xar:javascript type="src" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js" position="head"/>
     </xar:if>
 <!-- <xar:style scope="property" property="socialmediaicons" file="socialmediaicons-popup" /> -->
 <style type="text/css">
@@ -262,8 +263,8 @@
     </script>
     <!-- function for popup display -->
 	<script type="text/javascript">
-		$(document).ready(function($){
-			//open popup
+        $.noConflict();
+        jQuery(document).ready(function($){			//open popup
 			$('.cd-popup-trigger').on('click', function(event){
 				event.preventDefault();
 				$('.cd-popup').addClass('is-visible');
