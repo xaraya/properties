@@ -189,7 +189,7 @@
 <!-- The main application script -->
 <![CDATA[
 <script type="text/javascript">
-    $(function () {
+    jQuery(function ($) {
         'use strict';
     
         // Initialize the jQuery File Upload widget:
