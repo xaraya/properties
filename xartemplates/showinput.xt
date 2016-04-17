@@ -43,7 +43,7 @@
 
     <xar:if condition="$include_time">
         <script type="text/javascript">
-            $('###$name#').datetimepicker({
+            jQuery('###$name#').datetimepicker({
                 showSecond: false,
                 timeFormat: 'hh:mm',
                 stepHour: 1,
@@ -53,7 +53,7 @@
         </script>
     <xar:else/>
         <script type="text/javascript">
-            $('###$name#').datepicker({
+            jQuery('###$name#').datepicker({
             });
         </script>
     </xar:if>
