@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:style method="link" source="http://code.jquery.com/ui/1.11.4/themes/ui-lightness/jquery-ui"/>
+    <xar:style method="link" source="http://code.jquery.com/ui/1.11.4/themes/ui-lightness/jquery-ui.css"/>
 
     <!-- jQuery and jQuery UI -->
     <xar:set name="remote_libs">
