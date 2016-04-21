@@ -14,7 +14,7 @@ class UploadHandler
 {
 
 /* Begin Xaraya adaptation */
-    protected $debug = true;
+    protected $debug = false;
     protected $url;
     protected $offset = '';
 /* End Xaraya adaptation */
