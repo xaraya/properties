@@ -11,13 +11,27 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-// sys::import('modules.base.xarproperties.fileupload');
  sys::import('modules.dynamicdata.class.properties.base');
 
 /**
  * Upload property using JS
  */
-//class JSUploadProperty extends FileUploadProperty
+
+/**
+ * This code:
+ * - Displays the uploader in a template
+ * - Creates the necessary directories and subdirectories to store uploads as per defintions
+ * - Creates a entry i nthe ajax cache for uploads from this property
+ */
+/**
+ * Notes:
+ * - The ajax cache holds encrypted cache defintions. Each of these gives us the information
+ *   as to where the uploads from a given jsupload property are stored
+ * - The actually storage directories look to be files and thumbnails subirectories of a given
+ *   base directory
+ * - None of the code in this file does any uploading. That is done by xarUploadHandler.php
+ */
+
 class JSUploadProperty extends DataProperty
 {
     protected $debug   = false;
@@ -45,18 +59,31 @@ class JSUploadProperty extends DataProperty
     
     function showInput(Array $data=array())
     {
+        // Check for a base directory if passed
         if (!empty($data['basedirectory'])) $this->initialization_basedirectory = $data['basedirectory'];
-        if (!empty($data['debug'])) $this->initialization_debug = $data['debug'];
+        // Check for a debug flag if passed
+        if (!empty($data['debug'])) $this->debug = $data['debug'];
+        
+        // If they don't yet exist, then create the base directory and any subdirectories defined above
         $this->createdirs();
+        
+        // The context is just some string setting a scope for the uploads
+        // This can default to something like the template name the property lives on, and so on
         if (empty($data['context'])) $data['context'] = ' ';
+        // Make the ID of this property part of the context string
         if (empty($data['id'])) $data['id'] = $this->id;
+        // Concatenate the two
         $data['config'] = md5($data['context'] . "-" . $data['id']);
+        
+        // Get the set of directories based on our definitions
+        // CHECKME: This sort of assumes files nd thumbnails subdirectories are given
         $configs = array(
             'upload_dir' => realpath($this->initialization_basedirectory .'/files') . "/",
             'upload_url' => xarServer::getBaseURL() . $this->initialization_basedirectory .'/files/',
             'thumbnail_upload_dir' => realpath($this->initialization_basedirectory .'/thumbnails') . "/",
             'thumbnail_upload_url' => xarServer::getBaseURL() . $this->initialization_basedirectory .'/thumbnails/',
         );
+        // Create an encrypted string from it
         $data['property_configs'] = $this->encrypt($configs);
         
         // Cache the configuration if it is not already done
@@ -66,8 +93,10 @@ class JSUploadProperty extends DataProperty
             'cachedir' => sys::varpath() . '/cache',
             'type' => 'ajax',
         ));
+        // The key contains the context and property ID as per above
         $cacheKey = $data['config'];
         
+        // store it in the ajax cache
         if (!$fileCache->isCached($cacheKey)) {
             $fileCache->setCached($cacheKey,$data['property_configs']);
         }
@@ -88,6 +117,7 @@ class JSUploadProperty extends DataProperty
         if (!$this->debug) {
             $string = $encryptor->encrypt($string);
         } else {
+            // with debug set to true the following file will be placed in the web root
             file_put_contents("Sent_" . time() . ".txt", $string);
         }
         return $string;

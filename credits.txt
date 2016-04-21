@@ -1,0 +1,14 @@
+1. Designation: JSUpload property
+
+2. Author: Marc Lutolf <marc@luetolf-carroll.com>
+
+3. Copyright: (C) 2015 Luetolf-Carroll GmbH
+
+4. License: GPL {@link http://www.gnu.org/licenses/gpl.html}
+
+5. Contributors:
+
+6. Antecedents: based on the Xaraya framework
+
+7. Third party code:
+    - https://github.com/blueimp/jQuery-File-Upload
