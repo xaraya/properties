@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.table {
+.files tbody{
     width: 80%; !important
     max-width: 86%; !important
 }
