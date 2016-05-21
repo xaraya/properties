@@ -24,7 +24,7 @@
         <xar:set name="url">xarServer::getCurrentURL($params)</xar:set>
 
         <xar:if condition="!isset($show_bulk)">
-            <xar:set name="show_bulk">1</xar:set>
+            <xar:set name="show_bulk">true</xar:set>
         </xar:if>
 
         <xar:style scope="module" module="base" file="navtabs"/>
@@ -48,7 +48,7 @@
         <xar:if condition="empty($total)">
             <p class="xar-align-center">There are no items selected</p>
         </xar:if>
-        <xar:if condition="!empty($show_bulk)">
+        <xar:if condition="$show_bulk eq 'true'">
             <form  action="#xarModURL('dynamicdata','user','property',array('prop' => 'listing','act' => 'bulk_action'))#" method="post" enctype="application/x-www-form-urlencoded" onsubmit = "listing_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;">
                 <xar:template file="listing_footerline" module="$module" property="listing" />
                 <input type="hidden" name="returnurl" id="returnurl" value="#xarServer::getCurrentURL()#"/>
