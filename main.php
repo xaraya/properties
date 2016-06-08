@@ -76,20 +76,6 @@ class ESRProperty extends TextBoxProperty
 
         return (10 - $next) % 10;
     }
-/*
-        $referenznummer = 5020;
-
-        // Ergebnis Modulo = 9
-        echo modulo10($referenznummer);
-        echo '<br>';
-
-         // ESR-Referenznummer = 000000000000000000000050209
-        echo str_pad($referenznummer.modulo10($referenznummer), 27 ,'0', STR_PAD_LEFT);
-        echo '<br>';
-
-        // Formatiert = 00 00000 00000 00000 00000 50209
-        echo strrev(chunk_split(strrev(str_pad($referenznummer.modulo10($referenznummer), 27 ,'0', STR_PAD_LEFT)), 5, ' ')); 
-*/
 }
 
 ?>
