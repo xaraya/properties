@@ -36,7 +36,8 @@ class IBANProperty extends TextBoxProperty
     {
         if (!parent::validateValue($value)) return false;
 
-        if (!$this->iban->Verify($value)) {
+        $iban_compressed = str_replace(' ', '', $value);
+        if (!$this->iban->Verify($iban_compressed)) {
             if (!empty($this->validation_max_length_invalid)) {
                 $this->invalid = xarML($this->validation_max_length_invalid);
             } else {
