@@ -55,6 +55,11 @@ function listing_bulk_action()
                 if (!$listing->deleteItem(array('itemid' => $val))) return;
             }
             break;
+        default: /* custom function */
+            if(!xarVarFetch('funcurl',   'str', $funcurl,  '', XARVAR_NOT_REQUIRED)) {return;}
+            $callparts = explode('_', $funcurl);
+            xarModURL($callparts[0], $callparts[1], $callparts[2], array('operation' => $operation));
+            break;
     } // end switch
     xarController::redirect($returnurl);
     return true;
