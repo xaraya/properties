@@ -67,7 +67,7 @@ class ESRProperty extends TextBoxProperty
 
         // Postal accounts with 8 digits are post accounts
         $account_array = explode('-', $value);
-        $account_array[1] = str_pad($account_array[1], 9, "0", STR_PAD_LEFT);
+        $account_array[1] = str_pad($account_array[1], 6, "0", STR_PAD_LEFT);
         
         $value = implode($account_array);
         return $value;
