@@ -63,7 +63,7 @@ class ESRProperty extends TextBoxProperty
 
     public function transformAccount($value = null)
     {
-        if (empty($value)) $value = $this->value;
+        if (empty($value)) throw new Exception(xarML('Missing parameter for transformAccount method'));
 
         // Postal accounts with 8 digits are post accounts
         $account_array = explode('-', $value);
