@@ -61,11 +61,23 @@ class ESRProperty extends TextBoxProperty
         }
     }
 
+    public function transformAccount($value = null)
+    {
+        if (empty($value)) $value = $this->value;
+
+        // Postal accounts with 8 digits are post accounts
+        $account_array = explode('-', $value);
+        $account_array[1] = str_pad($account_array[1], 9, "0", STR_PAD_LEFT);
+        
+        $value = implode($account_array);
+        return $value;
+    }
+
 /**
  * From https://www.mf1.ch/technik-und-programmierung/353-esr-pruefziffer-mit-php-berechnen.html
  *
  */
-    function modulo10($nummer)
+    private function modulo10($nummer)
     {
         $zahlen = array(0,9,4,6,8,2,7,1,3,5);
         $next = 0;
