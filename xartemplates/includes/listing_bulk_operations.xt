@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="$show_bulk AND ($show_bulk != 'true')">
+        <form  action="#xarModURL('dynamicdata','user','property',array('prop' => 'listing','act' => 'bulk_action'))#" method="post" enctype="application/x-www-form-urlencoded" onsubmit = "listing_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;">
+            <xar:template file="listing_footerline" module="$module" property="listing" />
+            <input type="hidden" name="returnurl" id="returnurl" value="#xarServer::getCurrentURL()#"/>
+            <input type="hidden" name="objectname" id="objectname" value="#$objectname#"/>
+            <input type="hidden" name="localmodule" id="localmodule" value="#$module#"/>
+        </form>
+    </xar:if>
+</xar:template>
