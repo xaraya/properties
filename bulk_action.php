@@ -30,14 +30,9 @@ function listing_bulk_action()
     // Must have an operation defined
     if (empty($operation)) xarController::redirect($returnurl);
 
-    $ids = explode(',',$idlist);
-    $totalids = count($ids);
-    if (($totalids <=0)) xarController::redirect($returnurl);
-
     $listing = DataObjectMaster::getObject(array('name' => $objectname));
     if (!empty($listing->filepath) && $listing->filepath != 'auto') include_once(sys::code() . $listing->filepath);
     switch ($operation) {
-        case 0: /* virtually delete item */
         case 1: /* reject item */
         case 2: /* processed */
         case 3: /* item is active, ready */
@@ -56,9 +51,40 @@ function listing_bulk_action()
             }
             break;
         default: /* custom function */
-            if(!xarVarFetch('funcurl',   'str', $funcurl,  '', XARVAR_NOT_REQUIRED)) {return;}
+            // Get the URL corresponding to this custom function
+            $urlstring = 'funcurl_' . $operation;
+            xarVarFetch($urlstring,   'str', $funcurl,  '', XARVAR_NOT_REQUIRED);
+
+            // If the URL is empty, bail
+            if (empty($funcurl)) {
+                xarController::redirect($returnurl);
+                return true;
+            }
+            
+            // Dissect the passed URL
             $callparts = explode('_', $funcurl);
-            xarModURL($callparts[0], $callparts[1], $callparts[2], array('operation' => $operation));
+            $modpart = $callparts[0];
+            unset($callparts[0]);
+            if (isset($callparts[1])) {
+                $typepart = $callparts[1];
+                // Remove "api" if it's there
+                $api = false;
+                if (substr($typepart, -3, 3) == 'api') {
+                    $typepart = substr($typepart, 0, -3);
+                    $api = true;
+                }
+                if (empty($typepart)) $typepart = '';
+                unset($callparts[1]);
+            } else {
+                $typepart = '';
+            }
+            $funcpart = implode('_', $callparts);
+
+            if ($api) {
+                xarMod::apiFunc($modpart, $typepart, $funcpart, array('operation' => $operation));
+            } else {
+                xarMod::guiFunc($modpart, $typepart, $funcpart, array('operation' => $operation));
+            }
             break;
     } // end switch
     xarController::redirect($returnurl);
