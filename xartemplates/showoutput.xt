@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:if condition="$layout eq 'lf'">
+    <xar:if condition="($layout eq 'lf') OR ($layout eq 'default') OR empty($layout)">
         <xar:if condition="isset($name_components['last_name'])">#$value['last_name']['value']#</xar:if><xar:if condition="isset($name_components['first_name'])">,&#160;#$value['first_name']['value']#</xar:if>
     <xar:elseif condition="$layout eq 'sfl'"/>
         <xar:if condition="isset($name_components['salutation'])">#$value['salutation']['value']#&#160;</xar:if><xar:if condition="isset($name_components['first_name'])">#$value['first_name']['value']#&#160;</xar:if><xar:if condition="isset($name_components['last_name'])">#$value['last_name']['value']#</xar:if>
