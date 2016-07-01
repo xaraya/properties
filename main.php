@@ -114,7 +114,12 @@ class JQAddressPickerProperty extends DataProperty
     {
         $address = urlencode($address);
         $url = "http://maps.google.com/maps/api/geocode/json?sensor=false&address=" . $address;
-        $response = file_get_contents($url);
+        try {
+            $response = file_get_contents($url);
+        } catch (Exception $e) {
+            $respones = xarML('Connection to Google maps failed');
+            die($response);
+        }
         $json = json_decode($response,true);
  
         if (!isset($json['results'][0]['geometry']['location']['lat'])) return false;
