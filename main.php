@@ -37,15 +37,17 @@ class ESRProperty extends TextBoxProperty
     {
         if (!parent::validateValue($value)) return false;
         
-        // Remove the spaces
+        // Remove any spaces
         $compressed_value = str_replace(' ', '', $value);
+        // Remove the dashes
+        $compressed_value = str_replace('-', '', $value);
         // Pad to 27 digits
         $compressed_value = str_pad($compressed_value, 27 ,'0', STR_PAD_LEFT);
         
         // Remove the last (control) digit
         $stripped_value = substr($compressed_value, 0, strlen($compressed_value)-1);
         $control_digit = $this->modulo10($stripped_value);
-
+var_dump($stripped_value);
         $reconstructed_value = $stripped_value . $control_digit;
         if ($compressed_value != $reconstructed_value) {
             
