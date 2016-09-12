@@ -219,6 +219,7 @@ class NameProperty extends TextBoxProperty
         if (!is_array($value)) return $this->value;
 
         $components = $this->getNameComponents($this->display_name_components);
+        $valuearray = array();
         foreach ($components as $v) {
             $found = false;
             foreach ($value as $part) {
