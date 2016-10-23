@@ -79,6 +79,11 @@ class DateTimeProperty extends DataProperty
         return DataProperty::showInput($data);
     }
 
+/*
+ *  This function outputs the following:
+ *  date: The formated output string for display
+ *  time: an array containing seconds, minutes, hours etc. of this date/time for further manipulation
+ */
     public function showOutput(Array $data = array())
     {
         if (isset($data['format_type']))   $this->display_datetime_format_type   = $data['format_type'];
@@ -89,7 +94,7 @@ class DateTimeProperty extends DataProperty
         } else {
             $value = $data['value'];
         }
-        if (empty($value)) $value = 0;
+        if (empty($value)) $value = time();
         if (!is_array($value)) {
             $valuearray['date'] = $this->format($value);
             $valuearray['time'] = $this->getvaluearray(array('value' => $value));
