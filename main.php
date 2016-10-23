@@ -125,12 +125,12 @@ class DateTimeProperty extends DataProperty
         if (empty($value)) $value = 0;
         $date = new XarDateTime();
         $date->settimestamp($value);
-        $valuearray['second'] = $date->getSecond();
-        $valuearray['minute'] = $date->getMinute();
-        $valuearray['hour'] = $date->getHour();
-        $valuearray['day'] = $date->getDay();
-        $valuearray['month'] = $date->getMonth();
-        $valuearray['year'] = $date->getYear();
+        $valuearray['second']    = $date->getSecond();
+        $valuearray['minute']    = $date->getMinute();
+        $valuearray['hour']      = $date->getHour();
+        $valuearray['day']       = $date->getDay();
+        $valuearray['month']     = $date->getMonth();
+        $valuearray['year']      = $date->getYear();
         $valuearray['timestamp'] = $value;
 
         return $valuearray;
