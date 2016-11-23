@@ -71,8 +71,7 @@ class TimeFrameProperty extends DataProperty
     {
         try {
             $value = unserialize($this->value);
-            if(!is_array($value))
-                $value = $this->default;
+            if(!is_array($value)) $value = $this->default;
         } catch (Exception $e) {
             $value = $this->default;
         }
@@ -120,7 +119,17 @@ class TimeFrameProperty extends DataProperty
     public function showOutput(Array $data = array())
     {
         if (!isset($data['name'])) $data['name'] = 'dd_' . $this->id;
-        if (!isset($data['value'])) $data['value'] = $this->getValue();
+        
+        if (isset($data['value'])) {
+            // Support for an array
+            if (is_array($data['value'])) {
+                $this->setValue($data['value']);
+            } else {
+            // Support for a serialized array
+                $this->value = $data['value'];
+            }
+        }
+        $data['value'] = $this->getValue();
         return parent::showOutput($data);
     }
 
