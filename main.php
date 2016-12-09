@@ -49,7 +49,7 @@ class ESRProperty extends TextBoxProperty
         $control_digit = $this->modulo10($stripped_value);
 
         $reconstructed_value = $stripped_value . $control_digit;
-        if ($compressed_value != $reconstructed_value) {
+        if (!($compressed_value === $reconstructed_value)) {
             
             // Reformat the compressed value. This will help show up any errors
             $error_value = strrev(chunk_split(strrev(str_pad($compressed_value, 27 ,'0', STR_PAD_LEFT)), 5, ' ')); 
