@@ -16,7 +16,6 @@ sys::import('modules.dynamicdata.class.properties.interfaces');
 
 class NumberPropertyInstall extends NumberProperty implements iDataPropertyInstall
 {
-
     public function install(Array $data=array())
     {
         if (!DataObjectMaster::isObject(array('name' => 'numbers'))) {

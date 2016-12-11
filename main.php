@@ -205,6 +205,12 @@ class NumberProperty extends FloatBoxProperty
         $data['value'] = $this->getValue();
         return parent::showHidden($data);
     }    
+
+    function setPattern($pattern="")
+    {
+        if ($pattern == '') return true;
+        $this->display_numberpattern = $pattern;
+    }    
 }
 
 ?>
