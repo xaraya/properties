@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div>
+            <h2>BIC Property</h2>
+                <h3>Description</h3>
+                <p>
+                    The BIC dataproperty is a textbox property for BIC codes. It lets you verify that the code entered is a correct BIXC code
+                </p>
+                <h3>Usage</h3>
+                <h4>Standalone</h4>
+                    <pre>
+    &lt;xar:data-input type="bic" /&gt;
+    &lt;xar:data-output type="bic" /&gt;
+                    </pre>
+            <h4>Bound</h4>
+                <pre>
+    &lt;xar:data-input property="$properties['bic']" /&gt;
+    &lt;xar:data-output property="$properties['bic']" /&gt;
+                </pre>
+            <h3>Attributes</h3>
+            <ul>
+                <li>
+                    None
+                </li>
+            </ul>
+            <h3>Attributes</h3>
+            <div>
+                The property is basically an extension of textbox with a validation for BIC codes.
+            </div>
+        </div>
+</xar:template>
