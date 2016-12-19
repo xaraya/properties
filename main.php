@@ -21,7 +21,7 @@ class BICProperty extends TextBoxProperty
 {
     public $id         = 30145;
     public $name       = 'bic';
-    public $desc       = 'NIC';
+    public $desc       = 'BIC';
     public $reqmodules = array();
 
     public $validation_min_length           = 8;
@@ -33,8 +33,8 @@ class BICProperty extends TextBoxProperty
         $this->tplmodule =  'auto';
         $this->filepath  =  'auto';
         
-        $this->validation_min_length_invalid = xarML('A BIC code must have at least 8 characters.')
-        $this->validation_max_length_invalid = xarML('A BIC code cannot have more than 11 characters.')
+        $this->validation_min_length_invalid = xarML('A BIC code must have at least 8 characters.');
+        $this->validation_max_length_invalid = xarML('A BIC code cannot have more than 11 characters.');
     }
 
     public function validateValue($value = null)
