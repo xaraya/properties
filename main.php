@@ -72,6 +72,11 @@ Notes:
   The keys are stored by listing ID.
     This sessionvar is only created when the listing is given an ID: id="somenumberorstring"
 
+    fieldlists attributes in templates have the form
+    fieldlist="field1[formfieldname1:fieldlabel1:fieldstate1][,field2[formfieldname2:fieldlabel2:fieldstate2]]"
+    The first part of the name is the name of the field
+    The second part of the name is the Label it will be given in the column header
+    The third part of the name can have the values input / output (default) / hidden
 */
     function runquery($data)
     {
@@ -237,8 +242,6 @@ Notes:
         $keyfieldalias = '';
 
         $properties =& $object->getProperties(array('status' => array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY)));
-        // fieldlists attributes in templates have the form
-        // fieldlist="field1[formfieldname1:fieldstate1:fieldstate1][,field2[formfieldname2::fieldstate2]]"
         $has_primary = false;
         foreach ($fieldlist as $fielditem) {
         
