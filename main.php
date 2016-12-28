@@ -244,7 +244,12 @@ Notes:
         $properties =& $object->getProperties(array('status' => array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY)));
         $has_primary = false;
         foreach ($fieldlist as $fielditem) {
-        
+
+            // Explode the single item in the fieldlist
+            $parts = explode(':',$fielditem);
+            // The name of the field/property
+            $fieldname = trim($parts[0]);
+            
             // Ignore items in the fieldlist that don't corresond to properties
             if (!isset($properties[$fieldname])) continue;
             
@@ -253,10 +258,6 @@ Notes:
             $source = $property->source;
             $alias = $property->name;
 
-            // Explode the single item in the fieldlist
-            $parts = explode(':',$fielditem);
-            // The name of the field/property
-            $fieldname = trim($parts[0]);
             // The name the field will be given on the listing template
             $formfieldname = (!empty($parts[1])) ? trim($parts[1]) : $property->label;
             // The state of the field on the listing template: input/output/hidden
