@@ -3,7 +3,7 @@
  * IBAN Property
  *
  * @package properties
- * @subpackage textbox property
+ * @subpackage iban property
  * @category Third Party Xaraya Property
  * @version 1.0.0
  * @copyright (C) 2016 Luetolf-Carroll GmbH
