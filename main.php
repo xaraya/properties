@@ -73,7 +73,7 @@ Notes:
     This sessionvar is only created when the listing is given an ID: id="somenumberorstring"
 
     fieldlists attributes in templates have the form
-    fieldlist="field1[formfieldname1:fieldlabel1:fieldstate1][,field2[formfieldname2:fieldlabel2:fieldstate2]]"
+    fieldlist="field1[formfieldname1:fieldstate1][,field2[formfieldname2:fieldstate2]]"
     The first part of the name is the name of the field
     The second part of the name is the Label it will be given in the column header
     The third part of the name can have the values input / output (default) / hidden
@@ -245,15 +245,6 @@ Notes:
         $has_primary = false;
         foreach ($fieldlist as $fielditem) {
         
-            // Explode the single item in the fieldlist
-            $parts = explode(':',$fielditem);
-            // The name of the field/property
-            $fieldname = trim($parts[0]);
-            // The name the field will be given on the listing template
-            $formfieldname = (!empty($parts[1])) ? trim($parts[1]) : $fieldname;
-            // The state of the field on the listing template: input/output/hidden
-            $formfieldstate = (isset($parts[2])) ? trim($parts[2]) : 'output';
-
             // Ignore items in the fieldlist that don't corresond to properties
             if (!isset($properties[$fieldname])) continue;
             
@@ -261,6 +252,15 @@ Notes:
             $property = $properties[$fieldname];
             $source = $property->source;
             $alias = $property->name;
+
+            // Explode the single item in the fieldlist
+            $parts = explode(':',$fielditem);
+            // The name of the field/property
+            $fieldname = trim($parts[0]);
+            // The name the field will be given on the listing template
+            $formfieldname = (!empty($parts[1])) ? trim($parts[1]) : $property->label;
+            // The state of the field on the listing template: input/output/hidden
+            $formfieldstate = (isset($parts[2])) ? trim($parts[2]) : 'output';
 
             // Ignore fields with "bad" data sources for now
             if (in_array($property->source, $baddatasources)) continue;
