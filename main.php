@@ -762,9 +762,9 @@ Notes:
     }
 
 /*
- * Repopulates the output template and sends the putput to the browser
+ * Repopulates the output template and sends the output to the browser
  * TODO: allow overrides (module, theme) for the showoutput template.
- * Right now the template in the property is used, although included templates cna be overrides
+ * Right now the template in the property is used, although included templates can be overrides
  */
     public function ajaxRefresh($data=array())
     {
