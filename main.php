@@ -218,8 +218,8 @@ class NameProperty extends TextBoxProperty
         $value = @unserialize($this->value);
         if (!is_array($value)) return $this->value;
 
-        $components = $this->getNameComponents($this->display_name_components);
         $valuearray = array();
+        $components = $this->getNameComponents($this->display_name_components);
         foreach ($components as $v) {
             $found = false;
             foreach ($value as $part) {
@@ -242,9 +242,10 @@ class NameProperty extends TextBoxProperty
     function getNameComponents($componentstring)
     {
         $components = explode(';', $componentstring);
-        
-        // remove the last (empty) element
-        array_pop($components);
+
+        // Remove the last (empty) element
+        $last = array_pop($components);
+        if (!empty($last)) array_push($components, $last);
         $componentarray = array();
         foreach ($components as $component)
         {
