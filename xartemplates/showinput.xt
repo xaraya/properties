@@ -1,0 +1,101 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    
+    <!-- Load jQuery -->
+    <xar:set name="remote_libs">
+        xarMod::apiFunc('themes','admin','get_js_libs',array('scope' => 'remote', 'lib' => 'jquery'))
+    </xar:set>
+    <xar:if condition="!empty($remote_libs)">
+        <xar:javascript type="lib" lib="jquery" position="head"/>
+    <xar:else/>
+        <xar:javascript type="src" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js" position="head"/>
+    </xar:if>
+
+    <!-- Load the autocomplete JS -->
+    <xar:javascript filename="jquery.autocomplete.min.js" property="autocomplete" position="head"/>
+    
+    <!-- Load the autocomplete CSS -->
+    <style>
+        .autocomplete-suggestions { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px solid ##999; background: ##FFF; cursor: default; overflow: auto; -webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); -moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); }
+        .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+        .autocomplete-no-suggestion { padding: 2px 5px;}
+        .autocomplete-selected { background: ##F0F0F0; }
+        .autocomplete-suggestions strong { font-weight: bold; color: ##000; }
+        .autocomplete-group { padding: 2px 5px; }
+        .autocomplete-group strong { font-weight: bold; font-size: 16px; color: ##000; display: block; border-bottom: 1px solid ##000; }
+    </style>
+    
+    <xar:if condition="empty($target_url)">
+        Don't have a valid target URL
+    <xar:else/>
+        <!-- The autocomplete script -->
+        <![CDATA[
+            <script>    
+                $(function () {
+                    'use strict';
+
+//                    var filter = {};
+//                    filter['filter'] = $('###$id#').val();
+                    
+                    var url = "#$target_url#";
+                    url = url.replace(/&amp;/g,'&');
+
+                    $('###$id#').autocomplete({
+                        serviceUrl: url,
+                        method: 'GET',
+                        dataType: 'json',
+                        minChars: 2,
+                        onSelect: function(suggestion) {
+                            $('##selection-ajax').html('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                        },
+                        onHint: function (hint) {
+                            $('##autocomplete-ajax-x').val(hint);
+                        },
+                        onInvalidateSelection: function() {
+                            $('##selection-ajax').html('You selected: none');
+                        }
+                    });
+
+                });
+            </script> 
+        ]]>
+        
+        <!-- Formatting, display, behavior stuff -->
+        <xar:if condition="empty($size)">
+            <xar:set name="size">10</xar:set>
+        </xar:if>
+        <xar:if condition="!empty($class)">
+        <xar:elseif condition="$size gt 48"/>
+            <xar:set name="class">'xar-form-textxlong'</xar:set>
+        <xar:elseif condition="$size lt 12"/>
+            <xar:set name="class">'xar-form-textshort'</xar:set>
+        <xar:elseif condition="$size lt 30"/>
+            <xar:set name="class">'xar-form-textmedium'</xar:set>
+        <xar:else />
+            <xar:set name="class">'xar-form-textlong'</xar:set>
+        </xar:if>
+        <xar:if condition="empty($maxlength)">
+            <xar:set name="maxlength">100</xar:set>
+        </xar:if>
+        <xar:if condition="empty($style)">
+            <xar:set name="style">''</xar:set>
+        </xar:if>
+        <!-- On focus event -->
+        <xar:if condition="!isset($onfocus)">
+            <xar:set name="onfocus">'return true;'</xar:set>
+        </xar:if>
+        <!-- On change event -->
+        <xar:if condition="!isset($onchange)">
+            <xar:set name="onchange">'return true;'</xar:set>
+        </xar:if>
+        <xar:if condition="!isset($placeholder)">
+            <xar:set name="placeholder">''</xar:set>
+        </xar:if>
+        
+        <!-- The input field -->
+        <input type="text" id="#$id#" name="#$name#" placeholder="#$placeholder#" onfocus="#$onfocus#" size="#$size#" style="#$style#" class="#$class#"/>
+        <div id="selection-ajax-x"></div>
+    
+    </xar:if>
+
+    <xar:template file="dataproperty_additions" module="base" />
+</xar:template>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div>
+        <h2>Autocomplete Property</h2>
+            <h3>Description</h3>
+            <p>
+                The Autocomplete dataproperty is a text field that displays dropdown values from a database table. 
+                As the user types characters into the field, hints that match the characters are displayed as a dropdown.
+            </p>
+            <p>
+                This property extends the textbox property and is based on the Devbridge autocomplete jquery plugin. (see the code included in this property's folder.)
+            </p>
+            <p>
+                <ul>
+                <li>The property uses AJAX calls to query the database for hints. It does this by calling a module function using ws.php.
+                The module function must be of the type [module_name]_wsapi_[function_name].</li>
+                <li>The returned data from the database is an associative array modelling a dropdown following the usual convention. The conventional store and display fields are the fields <i>id</i> and <i>name</i>.
+                Alternate field names can be defined in the call as <i>store</i> and <i>display</i> attributes respectively.</li>
+                </ul>
+            </p>
+
+            <h3>Usage</h3>
+            <h4>Unbound</h4>
+                <pre>
+    &lt;xar:data-output type="autocomplete" modurl="value1" modfunc="value1" [store="value3"] [display="value4"]/&gt;
+                </pre>
+            <h3>Attributes</h3>
+            <ul>
+                <li>
+                    <strong>urlmod</strong>: string &#160;The name of the module of the call function
+                </li>
+                <li>
+                    <strong>urlfunc</strong>: string &#160;The name of the function of the call function
+                </li>
+                <li>
+                    <strong>store</strong>: string &#160;The name of database field holding the value of the dropdown items
+                </li>
+                <li>
+                    <strong>display</strong>: string &#160;The name of database field holding the display value of the dropdown items
+                </li>
+            </ul>
+        </div>
+</xar:template>
