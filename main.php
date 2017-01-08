@@ -27,6 +27,9 @@ class AutocompleteProperty extends TextboxProperty
     public $desc       = 'Autocomplete';
     public $reqmodules = array();
 
+    public $initialization_urlmod = 'roles';
+    public $initialization_urlfunc = 'getall';
+
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);

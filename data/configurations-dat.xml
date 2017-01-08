@@ -1,0 +1,20 @@
+<items>
+  <configurations itemid="566">
+    <id>566</id>
+    <name>initialization_urlmod</name>
+    <label>URL Module</label>
+    <description>The module the AJAX function belongs to</description>
+    <property_id>2</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
+  <configurations itemid="567">
+    <id>567</id>
+    <name>initialization_urlfunc</name>
+    <label>URL Function</label>
+    <description>The name of the AJAX function to be called</description>
+    <property_id>2</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
+</items>
