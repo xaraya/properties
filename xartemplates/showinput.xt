@@ -93,7 +93,7 @@
         
         <!-- The input field -->
         <input type="text" id="#$id#" name="#$name#" placeholder="#$placeholder#" onfocus="#$onfocus#" size="#$size#" style="#$style#" class="#$class#"/>
-        <div id="selection-ajax-x"></div>
+<!--        <div id="selection-ajax-x"></div> -->
     
     </xar:if>
 
