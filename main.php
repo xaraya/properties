@@ -27,8 +27,8 @@ class AutocompleteProperty extends TextboxProperty
     public $desc       = 'Autocomplete';
     public $reqmodules = array();
 
-    public $initialization_urlmod = 'roles';
-    public $initialization_urlfunc = 'getall';
+    public $initialization_urlmod;
+    public $initialization_urlfunc;
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -41,9 +41,9 @@ class AutocompleteProperty extends TextboxProperty
     public function showInput(Array $data = array())
     {
         // Assemble the function call we use to get the data
-        if (!isset($data['urlmod']))      $data['urlmod'] = '';
+        if (!isset($data['urlmod']))      $data['urlmod'] = $this->initialization_urlmod;
         if (!isset($data['urltype']))     $data['urltype'] = 'ws';
-        if (!isset($data['urlfunc']))     $data['urlfunc'] = '';
+        if (!isset($data['urlfunc']))     $data['urlfunc'] = $this->initialization_urlfunc;
         if (!isset($data['urlargs']))     $data['urlargs'] = '';
 
         
