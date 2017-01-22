@@ -27,8 +27,10 @@ class AutocompleteProperty extends TextboxProperty
     public $desc       = 'Autocomplete';
     public $reqmodules = array();
 
-    public $initialization_urlmod;
-    public $initialization_urlfunc;
+    public $initialization_urlmod;                    // Name of the module the dropdon function is in
+    public $initialization_urlfunc;                   // Name of the dropdon function (note: type is always 'native'
+    public $initialization_store_field   = 'id';      // Name of the field we want to use for storage
+    public $initialization_display_field = 'name';    // Name of the field we want to use for displaying.
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -51,7 +53,11 @@ class AutocompleteProperty extends TextboxProperty
             $data['target_url'] = '';
         } else {
             xarController::$entryPoint = 'ws.php';
-            $data['target_url'] = xarController::URL($data['urlmod'], 'native', $data['urlfunc']);
+            $args = array(
+                'store_field'   => $this->initialization_store_field,
+                'display_field' => $this->initialization_display_field,
+            );
+            $data['target_url'] = xarController::URL($data['urlmod'], 'native', $data['urlfunc'], $args);
         }
 
         // Check if the file for this URL exists

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     
     <!-- Load jQuery -->
@@ -12,7 +13,7 @@
 
     <!-- Load the autocomplete JS -->
     <xar:javascript filename="jquery.autocomplete.min.js" property="autocomplete" position="head"/>
-    
+     
     <!-- Load the autocomplete CSS -->
     <style>
         .autocomplete-suggestions { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px solid ##999; background: ##FFF; cursor: default; overflow: auto; -webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); -moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); }
@@ -39,20 +40,15 @@
                     var url = "#$target_url#";
                     url = url.replace(/&amp;/g,'&');
 
-                    $('###$id#').autocomplete({
+                    $('###$id#_hints').autocomplete({
                         serviceUrl: url,
                         method: 'GET',
                         dataType: 'json',
                         minChars: 2,
                         onSelect: function(suggestion) {
                             $('##selection-ajax').html('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                            $('###$id#').val(suggestion.data);
                         },
-                        onHint: function (hint) {
-                            $('##autocomplete-ajax-x').val(hint);
-                        },
-                        onInvalidateSelection: function() {
-                            $('##selection-ajax').html('You selected: none');
-                        }
                     });
 
                 });
@@ -91,9 +87,10 @@
             <xar:set name="placeholder">''</xar:set>
         </xar:if>
         
-        <!-- The input field -->
-        <input type="text" id="#$id#" name="#$name#" placeholder="#$placeholder#" onfocus="#$onfocus#" size="#$size#" style="#$style#" class="#$class#"/>
-<!--        <div id="selection-ajax-x"></div> -->
+        <!-- This shows the hints -->
+        <input type="text" id="#$id#_hints" name="#$name#" placeholder="#$placeholder#" onfocus="#$onfocus#" size="#$size#" style="#$style#" class="#$class#"/>
+        <!-- This holds the value -->
+        <input type="hidden" id="#$id#" name="#$name#"/>
     
     </xar:if>
 

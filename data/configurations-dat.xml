@@ -17,4 +17,22 @@
     <ignore_empty>1</ignore_empty>
     <configuration></configuration>
   </configurations>
+  <configurations itemid="568">
+    <id>567</id>
+    <name>initialization_store_field</name>
+    <label>Storage Field</label>
+    <description>The field that gets stored when an item in the dropdown is chosen</description>
+    <property_id>2</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
+  <configurations itemid="569">
+    <id>567</id>
+    <name>initialization_display_field</name>
+    <label>Display Field</label>
+    <description>The field that gets displayed in the dropdown</description>
+    <property_id>2</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
 </items>
