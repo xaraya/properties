@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:style method="link" scope="property" property="date" file="style" />
+    <xar:style method="link" scope="property" property="datetime" file="style" />
     <xar:if condition="!isset($class)">
         <xar:set name="class">'xar-dropdown-date'</xar:set>
     <xar:else/>
