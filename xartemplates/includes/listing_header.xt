@@ -13,11 +13,8 @@
             <xar:if condition="($column eq $primaryalias) AND !$show_primary">
                 <xar:continue />
             </xar:if>
-            <th>
-                <xar:if condition="$formfieldstate eq 'hidden'">
-                    <!-- Hidden field -->
-                    <!-- skip -->
-                <xar:else />
+            <xar:if condition="$formfieldstate ne 'hidden'">
+                <th>
                     <!-- Output field -->
                     <xar:set name="url">xarServer::getCurrentURL($paramarray)</xar:set>
                     <a href="#$url#" class="refresh_listing" alt="Click to order by this field" title="Order by #$column#">
@@ -25,8 +22,8 @@
                     </a>
                     <xar:set name="subdata">array_merge($params,array('column' => $column))</xar:set>
                     <xar:template file="sortarrows" subdata="$subdata" module="$module" property="listing"/>
-                </xar:if>
-            </th>
+                </th>
+            </xar:if>
         </xar:foreach>
         <xar:template file="listing_headersuffix" module="$module" property="listing"/>
     </tr>
