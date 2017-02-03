@@ -12,24 +12,26 @@
             <xar:if condition="$column eq $primaryalias AND !$show_primary">
                 <xar:continue />
             </xar:if>
-            <td class="#$item_class#">
-                <xar:if condition="$formfieldstate eq 'hidden'">
-                    <!-- Hidden field -->
-                    <xar:data-input property="$properties[$column]" name="$formfieldname" id="$formfieldid" value="$value" hidden="hidden"/>                    
-                <xar:elseif condition="$formfieldstate eq 'input'"/>
-                    <!-- Input field -->
-                    <xar:data-input property="$properties[$column]" name="$formfieldname" id="$formfieldid" value="$value"/>                    
-                <xar:else />
-                    <!-- Output field -->
-                    <xar:if condition="$field eq $keyfieldalias">
-                        <a href="#xarModURL($module,'user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
-                            <xar:data-output property="$properties[$column]" value="$value"/>
-                        </a>
+            <xar:if condition="$formfieldstate eq 'hidden'">
+                <!-- Hidden field -->
+                <xar:data-input property="$properties[$column]" name="$formfieldname" id="$formfieldid" value="$value" hidden="hidden"/>                    
+            <xar:else/>
+                <td class="#$item_class#">
+                    <xar:if condition="$formfieldstate eq 'input'">
+                        <!-- Input field -->
+                        <xar:data-input property="$properties[$column]" name="$formfieldname" id="$formfieldid" value="$value"/>                    
                     <xar:else />
-                        <xar:data-output property="$properties[$column]" value="$value"/>
+                        <!-- Output field -->
+                        <xar:if condition="$field eq $keyfieldalias">
+                            <a href="#xarModURL($module,'user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
+                                <xar:data-output property="$properties[$column]" value="$value"/>
+                            </a>
+                        <xar:else />
+                            <xar:data-output property="$properties[$column]" value="$value"/>
+                        </xar:if>
                     </xar:if>
-                </xar:if>
-            </td>
+                </td>
+            </xar:if>
         </xar:foreach>
         <xar:template file="listing_rowsuffix" module="$module" property="listing"/>
     </tr>
