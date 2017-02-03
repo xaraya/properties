@@ -8,17 +8,24 @@
         <xar:template file="listing_headerprefix" module="$module" property="listing"/>
         <xar:foreach in="$fieldnames" key="$field">
             <xar:set name="column">$fieldnames[$field]</xar:set>
+            <xar:set name="formfieldstate">$formfieldstates[$field]</xar:set>
             <xar:set name="dummy">1;$paramarray['order'] = $column</xar:set>
             <xar:if condition="($column eq $primaryalias) AND !$show_primary">
                 <xar:continue />
             </xar:if>
             <th>
-                <xar:set name="url">xarServer::getCurrentURL($paramarray)</xar:set>
-                <a href="#$url#" class="refresh_listing" alt="Click to order by this field" title="Order by #$column#">
-                    <xar:var name="formfieldnames.$column"/>
-                </a>
-                <xar:set name="subdata">array_merge($params,array('column' => $column))</xar:set>
-                <xar:template file="sortarrows" subdata="$subdata" module="$module" property="listing"/>
+                <xar:if condition="$formfieldstate eq 'hidden'">
+                    <!-- Hidden field -->
+                    <!-- skip -->
+                <xar:else />
+                    <!-- Output field -->
+                    <xar:set name="url">xarServer::getCurrentURL($paramarray)</xar:set>
+                    <a href="#$url#" class="refresh_listing" alt="Click to order by this field" title="Order by #$column#">
+                        <xar:var name="fieldlabels.$column"/>
+                    </a>
+                    <xar:set name="subdata">array_merge($params,array('column' => $column))</xar:set>
+                    <xar:template file="sortarrows" subdata="$subdata" module="$module" property="listing"/>
+                </xar:if>
             </th>
         </xar:foreach>
         <xar:template file="listing_headersuffix" module="$module" property="listing"/>
