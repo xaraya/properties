@@ -42,6 +42,7 @@ class MimicProperty extends DataProperty
         // Support both name and id
         if (is_numeric($this->decorator)) {
             //$types = DataPropertyMaster::Retrieve();
+            sys::import('modules.dynamicdata.class.properties.master');
             $types = DataPropertyMaster::getPropertyTypes();
             if (isset($types[$this->decorator])) 
                 $this->decorator = $types[$this->decorator]['name'];
@@ -88,8 +89,8 @@ class MimicProperty extends DataProperty
     {
         if (isset($data['decorator'])) {
             $this->setDecorator($data['decorator']);
-            $this->reload();
         }
+        $this->reload();
         $this->container->value = $this->value;
         return $this->container->showInput($data);
     }
@@ -98,8 +99,8 @@ class MimicProperty extends DataProperty
     {
         if (isset($data['decorator'])) {
             $this->setDecorator($data['decorator']);
-            $this->reload();
         }
+        $this->reload();
         $this->container->value = $this->value;
         return $this->container->showOutput($data);
     }
