@@ -34,7 +34,10 @@ class MimicProperty extends DataProperty
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
         $this->filepath   = 'auto';
-        $this->reload();
+        
+        // Don't load any decorator while we are installing Xaraya
+        if(!xarCoreCache::getCached('installer', 'installing'))
+            $this->reload();
     }
 
     public function reload()
