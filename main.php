@@ -45,8 +45,13 @@ class JQDateTimeProperty extends DataProperty
         else $this->setValue($value);
         if (!parent::validateValue($value)) return false;
 
-        $this->value = strtotime($this->value);
-        	
+        // Check if this is already a timestamp (case of a hidden field)
+        if (is_numeric($value)) {
+            $this->value = (int)$value;
+        } else {
+            $this->value = strtotime($value);
+        }
+                	
         if ($this->value === false) {
             $this->invalid = xarML('#(1) date could not be resolved', $this->name);
             xarLog::message($this->invalid, XARLOG_LEVEL_ERROR);
