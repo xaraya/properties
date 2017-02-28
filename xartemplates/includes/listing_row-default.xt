@@ -14,7 +14,7 @@
             </xar:if>
             <xar:if condition="$formfieldstate eq 'hidden'">
                 <!-- Hidden field -->
-                <xar:data-input property="$properties[$column]" name="$formfieldname" id="$formfieldid" value="$value" hidden="hidden"/>                    
+                <xar:data-input property="$properties[$column]" name="$field" id="$formfieldid" value="$value" hidden="hidden"/>                    
             <xar:else/>
                 <td class="#$item_class#">
                     <xar:if condition="$formfieldstate eq 'input'">
