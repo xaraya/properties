@@ -4,9 +4,9 @@
     <tr id="#$trid#">
         <xar:template file="listing_rowprefix" module="$module" property="listing"/>
         <xar:foreach in="$fieldnames" key="$field">
-            <xar:set name="formfieldname">$fieldnames[$field] . '[' . $loopitem[$primaryalias] . ']'</xar:set>
-            <xar:set name="formfieldid">$fieldnames[$field] . '_' . $loopitem[$primaryalias]</xar:set>
-            <xar:set name="formfieldstate">$fieldnames[$field]</xar:set>
+            <xar:set name="formfieldname">$field . '[' . $loopitem[$primaryalias] . ']'</xar:set>
+            <xar:set name="formfieldid">$field . '_' . $loopitem[$primaryalias]</xar:set>
+            <xar:set name="formfieldstate">$formfieldstates[$field]</xar:set>
             <xar:set name="column">$fieldnames[$field]</xar:set>
             <xar:set name="value">$loopitem[$column]</xar:set>
             <xar:if condition="$column eq $primaryalias AND !$show_primary">
@@ -14,7 +14,7 @@
             </xar:if>
             <xar:if condition="$formfieldstate eq 'hidden'">
                 <!-- Hidden field -->
-                <xar:data-input property="$properties[$column]" name="$formfieldname" id="$formfieldid" value="$value" hidden="hidden"/>                    
+                <xar:data-input property="$properties[$column]" name="$field" id="$formfieldid" value="$value" hidden="hidden"/>                    
             <xar:else/>
                 <td class="#$item_class#">
                     <xar:if condition="$formfieldstate eq 'input'">
