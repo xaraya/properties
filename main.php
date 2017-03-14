@@ -355,6 +355,13 @@ Notes:
             throw new Exception(xarML("The listing cannot be displayed, because no select key was found"));
         }
         
+        // Check whether the order which may have been passed is still valid (we may have changed the display settings
+        if (!isset($sourcefields[$order])) {
+            // It's either empty of not being displayed, so get a new order
+            $order = reset($data['fieldnames']);
+            $thesesettings['lastorder'] = $order;
+        }
+        
     //--- 7. Figure out the operation we are performing
 
         $lastsearch = xarSession::getVar('listing.lastsearch');                 // get the ID of the last search
