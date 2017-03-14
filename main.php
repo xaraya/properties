@@ -783,7 +783,7 @@ Notes:
             $data = $this->runquery($data);
             $output = xarTpl::string($output,$data);
             echo $output;
-            xarController::$request->exitAjax();
+            exit;
         } else {
             return true;
         }
