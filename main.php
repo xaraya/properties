@@ -216,7 +216,7 @@ class NameProperty extends TextBoxProperty
     function getValueArray($index=false)
     {
         $value = @unserialize($this->value);
-        if (!is_array($value)) return $this->value;
+        if (!is_array($value)) return array();
 
         $valuearray = array();
         $components = $this->getNameComponents($this->display_name_components);
