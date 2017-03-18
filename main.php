@@ -35,7 +35,6 @@ class NameProperty extends TextBoxProperty
 
     public $display_name_components;
     public $display_salutation_options;
-    public $validation_ignore_validations;
     public $validation_allowempty = true;
 
     function __construct(ObjectDescriptor $descriptor)
@@ -61,9 +60,7 @@ class NameProperty extends TextBoxProperty
             $textbox = DataPropertyMaster::getProperty(array('name' => 'textbox'));
             $textbox->validation_allowempty = $this->validation_allowempty;
             $name_components = $this->getNameComponents($this->display_name_components);
-            if (!$this->validation_ignore_validations) {
-                $textbox->validation_min_length = 2;
-            }
+            $textbox->validation_min_length = 0;
             foreach ($name_components as $field) {
                 $isvalid = $textbox->checkInput($name . '_' . $field['id']);
                 $valid = $valid && $isvalid;
