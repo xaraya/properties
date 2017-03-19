@@ -88,10 +88,12 @@ class DateProperty extends DataProperty
         }
         if (empty($value)) $value = time();
         if (is_array($value)) {
+            // An array was passed
             $timestamp = mktime(0,0,0,$value['month'],$value['day'],$value['year']);
             $value['date'] = $this->format($timestamp);
             $data['value'] = $value;
         } else {
+            // A timestamp was passed
             sys::import('xaraya.structures.datetime');
             $date = new XarDateTime();
             $date->settimestamp($value);
