@@ -22,10 +22,10 @@ class DateProperty extends DataProperty
     public $basetype   = 'date';
 
     // The default display is short uniersal display
-    public $display_datetime_format_type   = 2;
-    public $display_datetime_format_predef = 1;
-    public $display_date_format_custom     = 'c';
-    public $initialization_encrypt         = false;
+    public $display_date_format_type   = 2;
+    public $display_date_format_predef = 1;
+    public $display_date_format_custom = 'c';
+    public $initialization_encrypt     = false;
     public $display_start_year;
     public $display_end_year;
 
