@@ -22,8 +22,9 @@ class DateTimeProperty extends DataProperty
     public $reqmodules = array();
     public $basetype   = 'time';
 
-    public $display_datetime_format_type   = 1;
-    public $display_datetime_format_predef = 0;
+    // The default display is short uniersal display
+    public $display_datetime_format_type   = 2;
+    public $display_datetime_format_predef = 1;
     public $display_datetime_format_custom = 'c';
     public $initialization_encrypt         = false;
     public $initialization_start_year;
