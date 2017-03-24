@@ -2,6 +2,13 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:javascript filename="label.js" property="name" position="head"/>
     <xar:style scope="property" property="name" file="label"/>
+    <xar:style scope="property" property="name" file="style" />
+    
+    <xar:if condition="!isset($class)">
+        <xar:set name="class">'xar-name'</xar:set>
+    <xar:else/>
+        <xar:set name="class">'xar-name-' . $class</xar:set>
+    </xar:if>
 
     <xar:if condition="isset($onchange)">
       <xar:set name="evt_change">$onchange</xar:set>
@@ -23,9 +30,14 @@
                     <div class="xar-col">
                         <xar:if condition="isset($value[$v['id']])">
                             <xar:if condition="$v['id'] eq 'salutation'">
-                                <xar:data-input type="dropdown" name="$namestring" id="$namestring" value="$value[$v['id']]['value']" options="$salutation_options" style="width: 70px"/>&#160;
-                            <xar:elseif condition="$v['id'] eq 'first_name' or 'last_name'"/>
-                                <xar:data-input type="textbox" name="$namestring" id="$namestring"  placeholder="$v['name']" title="$v['name']"  value="$value[$v['id']]['value']" />
+                                <xar:set name="thisclass">$class . '-salutation'</xar:set>
+                                <xar:data-input type="dropdown" name="$namestring" id="$namestring" value="$value[$v['id']]['value']" options="$salutation_options" class="$thisclass"/>&#160;
+                            <xar:elseif condition="$v['id'] eq 'first_name'"/>
+                                <xar:set name="thisclass">$class . '-firstname'</xar:set>
+                                <xar:data-input type="textbox" name="$namestring" id="$namestring"  placeholder="$v['name']" title="$v['name']" class="$thisclass" value="$value[$v['id']]['value']" />
+                            <xar:elseif condition="$v['id'] eq 'last_name'"/>
+                                <xar:set name="thisclass">$class . '-lastname'</xar:set>
+                                <xar:data-input type="textbox" name="$namestring" id="$namestring"  placeholder="$v['name']" title="$v['name']" class="$thisclass" value="$value[$v['id']]['value']" />
                             <xar:else/>
                                 <label class="input">
                                     <span>#$v['name']#</span>
@@ -34,9 +46,14 @@
                             </xar:if>
                         <xar:else/>
                             <xar:if condition="$v['id'] eq 'salutation'">
-                                <xar:data-input type="dropdown" name="$namestring" id="$namestring" options="$salutation_options" style="width: 70px"/>
-                            <xar:elseif condition="$v['id'] eq 'first_name' or 'last_name'"/> 
-                                <xar:data-input type="textbox" name="$namestring" id="$namestring" placeholder="$v['name']" title="$v['name']" />
+                                <xar:set name="thisclass">$class . '-salutation'</xar:set>
+                                <xar:data-input type="dropdown" name="$namestring" id="$namestring" options="$salutation_options" class="$thisclass"/>
+                            <xar:elseif condition="$v['id'] eq 'first_name'"/> 
+                                <xar:set name="thisclass">$class . '-firstname'</xar:set>
+                                <xar:data-input type="textbox" name="$namestring" id="$namestring" placeholder="$v['name']" title="$v['name']" class="$thisclass" />
+                            <xar:elseif condition="$v['id'] eq 'last_name'"/> 
+                                <xar:set name="thisclass">$class . '-lastname'</xar:set>
+                                <xar:data-input type="textbox" name="$namestring" id="$namestring" placeholder="$v['name']" title="$v['name']" class="$thisclass" />
                             <xar:else/>
                                 <label class="input">
                                     <span>#$v['name']#</span>
@@ -54,9 +71,14 @@
                 <xar:set name="namestring">$name . '_' . $v['id']</xar:set>
                 <xar:if condition="isset($value[$v['id']])">
                     <xar:if condition="$v['id'] eq 'salutation'">
-                        <xar:data-input type="dropdown" name="$namestring" id="$namestring" value="$value[$v['id']]['value']" options="$salutation_options" style="width: 70px"/>&#160;
-                    <xar:elseif condition="$v['id'] eq 'first_name' or 'last_name'"/>
-                    	<xar:data-input type="textbox" name="$namestring" id="$namestring"  placeholder="$v['name']" title="$v['name']"  value="$value[$v['id']]['value']" />
+                        <xar:set name="thisclass">$class . '-salutation'</xar:set>
+                        <xar:data-input type="dropdown" name="$namestring" id="$namestring" value="$value[$v['id']]['value']" options="$salutation_options" class="$thisclass" />&#160;
+                    <xar:elseif condition="$v['id'] eq 'first_name'"/>
+                        <xar:set name="thisclass">$class . '-firstname'</xar:set>
+                    	<xar:data-input type="textbox" name="$namestring" id="$namestring"  placeholder="$v['name']" title="$v['name']"  value="$value[$v['id']]['value']" class="$thisclass" />
+                    <xar:elseif condition="$v['id'] eq 'last_name'"/>
+                        <xar:set name="thisclass">$class . '-lastname'</xar:set>
+                    	<xar:data-input type="textbox" name="$namestring" id="$namestring"  placeholder="$v['name']" title="$v['name']"  value="$value[$v['id']]['value']" class="$thisclass" />
                     <xar:else/>
                         <label class="input">
                             <span>#$v['name']#</span>
@@ -65,9 +87,14 @@
                     </xar:if>
                 <xar:else/>
                     <xar:if condition="$v['id'] eq 'salutation'">
-                        <xar:data-input type="dropdown" name="$namestring" id="$namestring" options="$salutation_options" style="width: 70px"/>
-                  	<xar:elseif condition="$v['id'] eq 'first_name' or 'last_name'"/> 
-                  		<xar:data-input type="textbox" name="$namestring" id="$namestring" placeholder="$v['name']" title="$v['name']" />
+                        <xar:set name="thisclass">$class . '-salutation'</xar:set>
+                        <xar:data-input type="dropdown" name="$namestring" id="$namestring" options="$salutation_options" class="$thisclass"/>
+                  	<xar:elseif condition="$v['id'] eq 'first_name'"/> 
+                        <xar:set name="thisclass">$class . '-firstname'</xar:set>
+                  		<xar:data-input type="textbox" name="$namestring" id="$namestring" placeholder="$v['name']" title="$v['name']" class="$thisclass" />
+                  	<xar:elseif condition="$v['id'] eq 'last_name'"/> 
+                        <xar:set name="thisclass">$class . '-lastname'</xar:set>
+                  		<xar:data-input type="textbox" name="$namestring" id="$namestring" placeholder="$v['name']" title="$v['name']" class="$thisclass" />
                     <xar:else/>
                         <label class="input">
                             <span>#$v['name']#</span>
