@@ -43,7 +43,7 @@ class AddressProperty extends TextBoxProperty
     public $reqmodules = array();
 
     public $display_address_components;
-    public $display_address_default_country = 'us';
+    public $display_address_default_country = '';
     public $validation_ignore_validations;
     public $validation_allowempty = true;
 
@@ -176,6 +176,7 @@ class AddressProperty extends TextBoxProperty
             }
         }
         if (!empty($this->display_address_default_country)) {
+            // Assign the default value to the property's country dropdown
             foreach ($data['value'] as $key => $value) {
                 if (($value['id'] == 'country') && empty($value['value'])) {
                     $data['value'][$key]['value'] = $this->display_address_default_country;

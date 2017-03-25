@@ -25,7 +25,13 @@
                                 <!-- <xar:set name="dummy">var_dump($rawvalue)</xar:set> -->
                                 <xar:set name="namestring">$name . '_' . $v['id']</xar:set>
                                 <xar:if condition="$part['id'] eq 'country'">
-                                    <xar:data-input type="countrylisting" name="$namestring" id="$namestring" value="$part['value']"/>
+                                    <xar:if condition="empty($default_country)">
+                                        <xar:var name="firstline">Choose a country</xar:var>
+                                        <xar:set name="firstline">"0,$firstline"</xar:set>
+                                        <xar:data-input type="countrylisting" name="$namestring" id="$namestring" value="$part['value']" firstline="$firstline"/>
+                                    <xar:else/>
+                                        <xar:data-input type="countrylisting" name="$namestring" id="$namestring" value="$part['value']"/>
+                                    </xar:if>
                                 <xar:else/>
                                     <xar:data-input type="textbox" name="$namestring" id="$namestring" value="$part['value']"/>
                                 </xar:if>

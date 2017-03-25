@@ -8,7 +8,7 @@
   <configurations>
     <name>display_address_default_country</name>
     <label>Default Country</label>
-    <description>The country to display as default in the country listing</description>
-    <property_id>42</property_id>
+    <description>The code of the country to display as default in the country listing</description>
+    <property_id>2</property_id>
   </configurations>
 </items>
