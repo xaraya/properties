@@ -44,7 +44,7 @@ class AddressProperty extends TextBoxProperty
 
     public $display_address_components;
     public $display_address_default_country = '';
-    public $validation_ignore_validations;
+    public $validation_ignore_validations   = true;
     public $validation_allowempty = true;
 
     public $specified_countries       = array('ch','us');   // The countries that have non-default layout templates in this property
