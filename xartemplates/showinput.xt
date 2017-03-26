@@ -28,9 +28,9 @@
                                     <xar:if condition="empty($default_country)">
                                         <xar:var name="firstline">Choose a country</xar:var>
                                         <xar:set name="firstline">"0,$firstline"</xar:set>
-                                        <xar:data-input type="countrylisting" name="$namestring" id="$namestring" value="$part['value']" firstline="$firstline"/>
+                                        <xar:data-input property="$countrylisting" name="$namestring" id="$namestring" value="$part['value']" firstline="$firstline"/>
                                     <xar:else/>
-                                        <xar:data-input type="countrylisting" name="$namestring" id="$namestring" value="$part['value']"/>
+                                        <xar:data-input property="$countrylisting" name="$namestring" id="$namestring" value="$part['value']"/>
                                     </xar:if>
                                 <xar:else/>
                                     <xar:data-input type="textbox" name="$namestring" id="$namestring" value="$part['value']"/>

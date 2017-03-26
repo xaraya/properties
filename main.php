@@ -79,7 +79,11 @@ class AddressProperty extends TextBoxProperty
                 if ($isvalid) {
                     $value[] = array('id' => $field['id'], 'value' => $textbox->value);
                 } else {
-                    $invalid[] = strtolower($field['name']);
+                    if (empty($field['name'])) {
+                        $invalid[] = strtolower($field['id']);
+                    } else {
+                        $invalid[] = strtolower($field['name']);
+                    }
                 }
             }
         }
@@ -175,6 +179,10 @@ class AddressProperty extends TextBoxProperty
                 $data['country_template'] = 'default-input';
             }
         }
+
+        // Get an instance of hte country dropdown for the template
+        $data['countrylisting'] = DataPropertyMaster::getProperty(array('name' => 'countrylisting'));
+        
         if (!empty($this->display_address_default_country)) {
             // Assign the default value to the property's country dropdown
             foreach ($data['value'] as $key => $value) {
@@ -182,7 +190,13 @@ class AddressProperty extends TextBoxProperty
                     $data['value'][$key]['value'] = $this->display_address_default_country;
                 }
             }
+        } else {
+            $data['countrylisting']->validation_override = true;
         }
+
+        // Send this value to the template
+        $data['default_country'] = $this->display_address_default_country;
+        
         return DataProperty::showInput($data);
     }
     
