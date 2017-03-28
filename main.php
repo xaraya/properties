@@ -109,6 +109,7 @@ class DateProperty extends DataProperty
 
     public function getValue()
     {
+        if (empty($this->value)) $this->value = time();
         return $this->format($this->value);
     }
     
