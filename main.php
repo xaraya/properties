@@ -84,7 +84,8 @@ Notes:
         if (!isset($data['object'])) $data['object'] = $this->object;
         if (!isset($data['objectname'])) $data['objectname'] = $this->objectname;
         if (!isset($data['fieldlist'])) $data['fieldlist'] = $this->fieldlist;
-        if (!isset($data['tplmodule'])) $data['tplmodule'] = $this->tplmodule;
+//        if (!isset($data['tplmodule'])) $data['tplmodule'] = $this->tplmodule;
+        if (isset($data['tplmodule'])) $data['module'] = $data['tplmodule'];
         if (!isset($data['layout'])) $data['layout'] = $this->layout;
         if (!isset($data['conditions'])) $data['conditions'] = $this->conditions;
         if (isset($data['module'])) {
