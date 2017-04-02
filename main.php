@@ -73,7 +73,7 @@ Notes:
     This sessionvar is only created when the listing is given an ID: id="somenumberorstring"
 
     fieldlists attributes in templates have the form
-    fieldlist="field1[formfieldname1:fieldstate1][,field2[formfieldname2:fieldstate2]]"
+    fieldlist="field1[:formfieldname1:fieldstate1][,field2[:formfieldname2:fieldstate2]]"
     The first part of the name is the name of the field
     The second part of the name is the Label it will be given in the column header
     The third part of the name can have the values input / output (default) / hidden
