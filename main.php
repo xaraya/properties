@@ -32,6 +32,9 @@ class AutocompleteProperty extends SelectProperty
     public $initialization_store_field   = 'id';      // Name of the field we want to use for storage
     public $initialization_display_field = 'name';    // Name of the field we want to use for displaying.
 
+    // Disable dropdown validations
+    public $validation_override          = true;
+
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
