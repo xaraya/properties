@@ -2,6 +2,10 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     
+    <xar:if condition="empty($id)">
+        <xar:set name="id">'listingid_0'</xar:set>
+    </xar:if>
+
     <xar:ajax-listing id="#$id#">
         <xar:javascript filename="checkall.js" property="listing" position="head"/>
 
