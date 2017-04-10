@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:ajax-listing>
+    
+    <xar:ajax-listing id="#$id#">
         <xar:javascript filename="checkall.js" property="listing" position="head"/>
 
         <style type="text/css">
