@@ -5,7 +5,7 @@
     </xar:if>
     <xar:if condition="in_array('dropdown',$show)">
         <div style="float: left; margin-right: 20px">
-    <xar:template file="dropdown"/>
+    <xar:template file="dropdown" property="timeframe"/>
         </div>
     </xar:if>
     <xar:if condition="in_array('calendar',$show) AND in_array('dropdown',$show)">
@@ -15,7 +15,7 @@
     </xar:if>
     <xar:if condition="in_array('calendar',$show)">
         <div style="float: left;">
-            <xar:template file="calendar"/>
+            <xar:template file="calendar" property="timeframe"/>
         </div>
     </xar:if>
 </xar:template>
