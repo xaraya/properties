@@ -35,10 +35,15 @@
       <xar:set name="evt_change">'return true;'</xar:set>
     </xar:if>
 
+    <!-- Placeholder -->
+    <xar:if condition="!isset($placeholder)">
+        <xar:set name="placeholder">''</xar:set>
+    </xar:if>
+
     <xar:if condition="!isset($disabled)">
-        <input type="text" name="#$name#" value="#$value#" size="#$size#" maxlength="#$maxlength#" id="#$id#" tabindex="#$tabindex#" class="#$class#" onfocus="#$onfocus#" onchange="#$evt_change#" style="#$style#"/>
+        <input type="text" name="#$name#" value="#$value#" size="#$size#" maxlength="#$maxlength#" id="#$id#" tabindex="#$tabindex#" class="#$class#" onfocus="#$onfocus#" onchange="#$evt_change#" style="#$style#" placeholder="#$placeholder#"/>
     <xar:else/>
-        <input type="text" name="#$name#" value="#$value#" size="#$size#" maxlength="#$maxlength#" id="#$id#" tabindex="#$tabindex#" class="#$class#" onfocus="#$onfocus#" onchange="#$evt_change#" style="#$style#" disabled="disabled"/>
+        <input type="text" name="#$name#" value="#$value#" size="#$size#" maxlength="#$maxlength#" id="#$id#" tabindex="#$tabindex#" class="#$class#" onfocus="#$onfocus#" onchange="#$evt_change#" style="#$style#" placeholder="#$placeholder#" disabled="disabled"/>
     </xar:if>
     <xar:template file="dataproperty_additions" module="base"/>
 </xar:template>
