@@ -26,7 +26,6 @@ class MimicProperty extends DataProperty
     public $reqmodules = array();
 
     public $container;
-    public $decorator = 'static';
     public $initialization_decorator     = 'textbox';
 
     public function __construct(ObjectDescriptor $descriptor)
@@ -43,16 +42,16 @@ class MimicProperty extends DataProperty
     public function reload()
     {
         // Support both name and id
-        if (is_numeric($this->decorator)) {
+        if (is_numeric($this->initialization_decorator)) {
             //$types = DataPropertyMaster::Retrieve();
             sys::import('modules.dynamicdata.class.properties.master');
             $types = DataPropertyMaster::getPropertyTypes();
-            if (isset($types[$this->decorator])) 
-                $this->decorator = $types[$this->decorator]['name'];
+            if (isset($types[$this->initialization_decorator])) 
+                $this->initialization_decorator = $types[$this->decorator]['name'];
         }
         
         try {
-            $this->container = DataPropertyMaster::getProperty(array('name' => $this->decorator));
+            $this->container = DataPropertyMaster::getProperty(array('name' => $this->initialization_decorator));
         } catch (Exception $e) {
             $this->container = DataPropertyMaster::getProperty(array('name' => 'textbox'));
         }
@@ -110,13 +109,13 @@ class MimicProperty extends DataProperty
 
     public function getDecorator()
     {
-        $decorator = $this->decorator;
+        $decorator = $this->initialization_decorator;
         return $decorator;
     }
     public function setDecorator($x)
     {
-        $this->decorator = $x;
-        return 1;
+        $this->initialization_decorator = $x;
+        return true;
     }
 }
 ?>
