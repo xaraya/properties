@@ -47,7 +47,7 @@ class MimicProperty extends DataProperty
             sys::import('modules.dynamicdata.class.properties.master');
             $types = DataPropertyMaster::getPropertyTypes();
             if (isset($types[$this->initialization_decorator])) 
-                $this->initialization_decorator = $types[$this->decorator]['name'];
+                $this->initialization_decorator = $types[$this->initialization_decorator]['name'];
         }
         
         try {
