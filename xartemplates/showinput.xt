@@ -8,6 +8,8 @@
 
     <xar:if condition="$layout eq 'monthyear'">
         <xar:template file="monthyeartemplate-input"/>
+    <xar:elseif condition="$layout eq 'daymonth'"/>
+        <xar:template file="daymonthtemplate-input"/>
     <xar:else/>
         <xar:template file="datetemplate-input"/>
     </xar:if>
