@@ -29,7 +29,7 @@ class DateProperty extends DataProperty
     public $display_start_year;
     public $display_end_year;
 
-    function __construct(ObjectDescriptor $descriptor)
+    public function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
@@ -113,7 +113,7 @@ class DateProperty extends DataProperty
         return $this->format($this->value);
     }
     
-    function getvaluearray($data)
+    public function getvaluearray($data)
     {
         if (!isset($data['value'])) $value = $this->value;
         else $value = $data['value'];
@@ -136,7 +136,7 @@ class DateProperty extends DataProperty
         return $valuearray;
     }
 
-    function format($value)
+    public function format($value)
     {
         switch($this->display_date_format_type) {
             case 1:
@@ -157,10 +157,42 @@ class DateProperty extends DataProperty
         return $value;
     }
 
-    function showHidden(Array $data = array())
+    public function showHidden(Array $data = array())
     {
         $data['value'] = $this->getvaluearray($data);
         return parent::showHidden($data);
+    }
+
+    public function daymonth_isgt($timestamp=null)
+    {
+        $this_date = $this->get_daymonth_timestamp();
+        $that_date = $this->get_daymonth_timestamp($timestamp);
+        return $that_date > $this_date;
+    }
+
+    public function daymonth_islt($timestamp=null)
+    {
+        $this_date = $this->get_daymonth_timestamp();
+        $that_date = $this->get_daymonth_timestamp($timestamp);
+        return $that_date < $this_date;
+    }
+
+    public function daymonth_iseq($timestamp=null)
+    {
+        $this_date = $this->get_daymonth_timestamp();
+        $that_date = $this->get_daymonth_timestamp($timestamp);
+        return $that_date == $this_date;
+    }
+
+    private function get_daymonth_timestamp($timestamp=null)
+    {
+        sys::import('xaraya.structures.datetime');
+        $date = new XarDateTime();
+        $this_date = $this->getvaluearray($timestamp);
+        $date->day = $this_date['day'];
+        $date->month = $this_date['month'];
+        $this_timestamp = $date->getTimestamp();
+        return $this_timestamp;
     }
 }
 
