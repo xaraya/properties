@@ -77,12 +77,17 @@ class JSUploadProperty extends DataProperty
         
         // Get the set of directories based on our definitions
         // CHECKME: This sort of assumes files nd thumbnails subdirectories are given
+        $file_dir = realpath($this->initialization_basedirectory .'/files') . "/"
+        $file_url = xarServer::getBaseURL() . $this->initialization_basedirectory .'/files/';
+        $thumbnail_dir = realpath($this->initialization_basedirectory .'/thumbnails') . "/"
+        $thumbnail_url = xarServer::getBaseURL() . $this->initialization_basedirectory .'/thumbnails/';
         $configs = array(
-            'upload_dir' => realpath($this->initialization_basedirectory .'/files') . "/",
-            'upload_url' => xarServer::getBaseURL() . $this->initialization_basedirectory .'/files/',
-            'thumbnail_upload_dir' => realpath($this->initialization_basedirectory .'/thumbnails') . "/",
-            'thumbnail_upload_url' => xarServer::getBaseURL() . $this->initialization_basedirectory .'/thumbnails/',
+            'upload_dir' => $file_dir,
+            'upload_url' => $file_url,
+            'thumbnail_upload_dir' => $thumbnail_dir,
+            'thumbnail_upload_url' => $thumbnail_url,
         );
+
         // Create an encrypted string from it
         $data['property_configs'] = $this->encrypt($configs);
         
@@ -103,6 +108,22 @@ class JSUploadProperty extends DataProperty
         
         // The key to pass to the ajax server file is the URL of the site in question + the name of the file the cached contents are stored in
         $data['key'] = base64_encode(xarServer::getBaseURL() . '::' . $cacheKey);
+
+        // Debug code
+        $isadmin = xarIsParent('Administrators', xarUser::getVar('uname'));
+        if ($isadmin && $this->debug) {
+            echo "File directory: " . $file_dir . "<br/>";
+            echo "File URL: " . $file_url . "<br/>";
+            echo "Thumbnail directory: " . $thumbnail_dir . "<br/>";
+            echo "Thumbnail URL: " . $thumbnail_url . "<br/>";
+            echo "Cache directory: " . sys::varpath() . '/cache' . "<br/>";
+            echo "Context: " . $data['context'] . "<br/>";
+            echo "ID: " . $data['id'] . "<br/>";
+            echo "Cache key: " . $data['config'] . "<br/>";
+            echo "Base URL: " . xarServer::getBaseURL() . "<br/>";
+            echo "AJAX key: " . $data['key'] . "<br/>";
+        }
+        
         return parent::showInput($data);
     }
     
