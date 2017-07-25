@@ -77,9 +77,9 @@ class JSUploadProperty extends DataProperty
         
         // Get the set of directories based on our definitions
         // CHECKME: This sort of assumes files nd thumbnails subdirectories are given
-        $file_dir = realpath($this->initialization_basedirectory .'/files') . "/"
+        $file_dir = realpath($this->initialization_basedirectory .'/files') . "/";
         $file_url = xarServer::getBaseURL() . $this->initialization_basedirectory .'/files/';
-        $thumbnail_dir = realpath($this->initialization_basedirectory .'/thumbnails') . "/"
+        $thumbnail_dir = realpath($this->initialization_basedirectory .'/thumbnails') . "/";
         $thumbnail_url = xarServer::getBaseURL() . $this->initialization_basedirectory .'/thumbnails/';
         $configs = array(
             'upload_dir' => $file_dir,
