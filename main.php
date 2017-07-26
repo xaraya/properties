@@ -123,7 +123,7 @@ class JSUploadProperty extends DataProperty
             echo "Cache key: " . $data['config'] . "<br/>";
             echo "Base URL: " . $base_url . "<br/>";
             echo "AJAX key (encrypted): " . $data['key'] . "<br/>";
-            echo "AJAX key (unencrypted): " . $data['key'] . "<br/>";
+            echo "AJAX key (unencrypted): " . base64_decode($data['key']) . "<br/>";
         }
 
         return parent::showInput($data);
