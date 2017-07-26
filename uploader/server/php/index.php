@@ -36,8 +36,8 @@ $base_url = $unpacked_key[0];
 $upload_handler->seturl($base_url);
 
 // Get the file that contains the configuration of storage directories and URLs
-$directory_array = $unpacked_key[1];
-$directory_array = $upload_handler->decrypt($directory_array);
+$cache_key = $unpacked_key[1];
+$directory_array = $upload_handler->decrypt($cache_key);
 
 // Add the file info to the options we already have
 $upload_handler->setoptions($directory_array);
