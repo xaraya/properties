@@ -124,8 +124,6 @@ class JSUploadProperty extends DataProperty
             echo "Base URL: " . $base_url . "<br/>";
             echo "AJAX key: " . $data['key'] . "<br/>";
         }
-        $hostname = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-        echo $hostname;
 
         return parent::showInput($data);
     }
