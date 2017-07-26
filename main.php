@@ -59,6 +59,9 @@ class JSUploadProperty extends DataProperty
     
     function showInput(Array $data=array())
     {
+        // Debug code
+        $isadmin = xarIsParent('Administrators', xarUser::getVar('uname'));
+
         // Check for a base directory if passed
         if (!empty($data['basedirectory'])) $this->initialization_basedirectory = $data['basedirectory'];
         // Check for a debug flag if passed
@@ -105,13 +108,19 @@ class JSUploadProperty extends DataProperty
         // store it in the ajax cache
         if (!$fileCache->isCached($cacheKey)) {
             $fileCache->setCached($cacheKey,$data['property_configs']);
+            if ($isadmin && $this->debug) {
+                xarLog::message("Properties::jsupload: Cache key did not exist. Created a cache entrx: $cacheKey", xarLog::LEVEL_DEBUG);
+            }
+        } else {
+            if ($isadmin && $this->debug) {
+                xarLog::message("Properties::jsupload: Cache key already exists. Did not cache.", xarLog::LEVEL_DEBUG);
+            }
         }
         
         // The key to pass to the ajax server file is the URL of the site in question + the name of the file the cached contents are stored in
         $data['key'] = base64_encode($base_url . '::' . $cacheKey);
 
         // Debug code
-        $isadmin = xarIsParent('Administrators', xarUser::getVar('uname'));
         if ($isadmin && $this->debug) {
             echo "File directory: " . $file_dir . "<br/>";
             echo "File URL: " . $file_url . "<br/>";
@@ -131,6 +140,9 @@ class JSUploadProperty extends DataProperty
     
     function encrypt(Array $data=array())
     {
+        // Debug code
+        $isadmin = xarIsParent('Administrators', xarUser::getVar('uname'));
+
         // Transform the array into a string
         $string = json_encode($data);
         
@@ -138,10 +150,11 @@ class JSUploadProperty extends DataProperty
         sys::import('xaraya.encryptor');
         $encryptor = xarEncryptor::instance();
         try {$encrypted_string = $encryptor->encrypt($string);} catch (Exception $e) {}
-        if ($this->debug) {
+
+        if ($isadmin && $this->debug) {
             echo "String (unencrypted): " . $string . "<br/>";
             echo "String (encrypted): " . $encrypted_string . "<br/>";
-            echo "String (decrypted): " . $encryptor->encrypt($encrypted_string) . "<br/>";
+            echo "String (decrypted): " . $encryptor->decrypt($encrypted_string) . "<br/>";
             xarLog::message("Properties::jsupload: encrypted $string to $encrypted_string", xarLog::LEVEL_DEBUG);
         }
         return $encrypted_string;
@@ -149,13 +162,26 @@ class JSUploadProperty extends DataProperty
     
     private function createdirs()
     {
+        // Debug code
+        $isadmin = xarIsParent('Administrators', xarUser::getVar('uname'));
+
         if (!file_exists($this->initialization_basedirectory) || !is_dir($this->initialization_basedirectory)) {
             mkdir($this->initialization_basedirectory, 0755, true);
+            if ($isadmin && $this->debug) {
+                xarLog::message("Properties::jsupload: Created a top level directory.", xarLog::LEVEL_DEBUG);
+            }
+        } else {
+            if ($isadmin && $this->debug) {
+                xarLog::message("Properties::jsupload: Top level directory already exists.", xarLog::LEVEL_DEBUG);
+            }
         }
         $subdirs = explode(',',$this->initialization_subdirectories);
         foreach($subdirs as $dir) {
             if (!file_exists($this->initialization_basedirectory . "/" . trim($dir)) || !is_dir($this->initialization_basedirectory . "/" . trim($dir))) {
                 mkdir($this->initialization_basedirectory . "/" . trim($dir), 0755, true);
+                if ($isadmin && $this->debug) {
+                    xarLog::message("Properties::jsupload: Created a directory: $dir", xarLog::LEVEL_DEBUG);
+                }
             }
         }
         return true;
