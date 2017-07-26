@@ -77,10 +77,11 @@ class JSUploadProperty extends DataProperty
         
         // Get the set of directories based on our definitions
         // CHECKME: This sort of assumes files nd thumbnails subdirectories are given
+        $base_url = xarServer::getBaseURL();
         $file_dir = realpath($this->initialization_basedirectory .'/files') . "/";
-        $file_url = xarServer::getBaseURL() . $this->initialization_basedirectory .'/files/';
+        $file_url = $base_url . $this->initialization_basedirectory .'/files/';
         $thumbnail_dir = realpath($this->initialization_basedirectory .'/thumbnails') . "/";
-        $thumbnail_url = xarServer::getBaseURL() . $this->initialization_basedirectory .'/thumbnails/';
+        $thumbnail_url = $base_url . $this->initialization_basedirectory .'/thumbnails/';
         $configs = array(
             'upload_dir' => $file_dir,
             'upload_url' => $file_url,
@@ -107,7 +108,7 @@ class JSUploadProperty extends DataProperty
         }
         
         // The key to pass to the ajax server file is the URL of the site in question + the name of the file the cached contents are stored in
-        $data['key'] = base64_encode(xarServer::getBaseURL() . '::' . $cacheKey);
+        $data['key'] = base64_encode($base_url . '::' . $cacheKey);
 
         // Debug code
         $isadmin = xarIsParent('Administrators', xarUser::getVar('uname'));
@@ -120,10 +121,12 @@ class JSUploadProperty extends DataProperty
             echo "Context: " . $data['context'] . "<br/>";
             echo "ID: " . $data['id'] . "<br/>";
             echo "Cache key: " . $data['config'] . "<br/>";
-            echo "Base URL: " . xarServer::getBaseURL() . "<br/>";
+            echo "Base URL: " . $base_url . "<br/>";
             echo "AJAX key: " . $data['key'] . "<br/>";
         }
-        
+        $hostname = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+        echo $hostname;
+
         return parent::showInput($data);
     }
     
