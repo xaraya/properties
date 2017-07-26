@@ -61,11 +61,25 @@ class JQAddressPickerProperty extends DataProperty
 
         // Get the GPS coordinates
         $gps = $this->get_gps_coordinates($fields['address']);
+        if ($gps == false) return $this->validateValue(false);
+        
         $fields['lat'] = $gps[0];
         $fields['lng'] = $gps[1];
 
         $value = serialize($fields);
         return $this->validateValue($value);
+    }
+
+    public function validateValue($value = null)
+    {
+        if ($value === false) {
+            $this->invalid = xarML('Unreadable or empty address');
+            xarLog::message($this->invalid, xarLog::LEVEL_ERROR);
+            $this->value = null; 
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public function showInput(Array $data = array())
@@ -117,8 +131,8 @@ class JQAddressPickerProperty extends DataProperty
         try {
             $response = file_get_contents($url);
         } catch (Exception $e) {
-            $respones = xarML('Connection to Google maps failed');
-            die($response);
+            $response = xarML('Connection to Google maps failed');
+            return false;
         }
         $json = json_decode($response,true);
  

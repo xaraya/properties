@@ -19,4 +19,5 @@
             <input name="#$id#_type" id="type_#$id#" hidden="hidden" value="#$value['type']#" type="hidden"/>
         </div>
     </div>
+    <xar:template file="dataproperty_additions" module="base"/>
 </xar:template>
