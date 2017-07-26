@@ -20,6 +20,8 @@ include $diroffset . 'var/layout.system.php';
 set_include_path(realpath($diroffset . $systemConfiguration['rootDir']) . PATH_SEPARATOR . get_include_path());
 include $diroffset . 'bootstrap.php';
 
+xarLog::message("Properties::jsupload: Directory offset is $diroffset", xarLog::LEVEL_DEBUG);
+
 require('xarUploadHandler.php');
 // Do not initialize the uploader yet. We want to configure stuff
 $upload_handler = new UploadHandler(array(),$diroffset,false);
@@ -35,9 +37,13 @@ $unpacked_key = explode('::',$unpacked_key);
 $base_url = $unpacked_key[0];
 $upload_handler->seturl($base_url);
 
+xarLog::message("Properties::jsupload: Unpacked key is $unpacked_key", xarLog::LEVEL_DEBUG);
+
 // Get the file that contains the configuration of storage directories and URLs
 $directory_array = $unpacked_key[1];
 $directory_array = $upload_handler->decrypt($directory_array);
+
+xarLog::message("Properties::jsupload: Directory array is $directory_array", xarLog::LEVEL_DEBUG);
 
 // Add the file info to the options we already have
 $upload_handler->setoptions($directory_array);
