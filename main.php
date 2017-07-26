@@ -135,12 +135,13 @@ class JSUploadProperty extends DataProperty
         // Encrypt the string
         sys::import('xaraya.encryptor');
         $encryptor = xarEncryptor::instance();
-        try {$string = $encryptor->encrypt($string);} catch (Exception $e) {}
+        try {$encrypted_string = $encryptor->encrypt($string);} catch (Exception $e) {}
         if ($this->debug) {
             // with debug set to true the following file will be placed in the web root
             file_put_contents("Sent_" . time() . ".txt", $string);
+            xarLog::message("Properties::jsupload: encrypted $string to $encrypted_string", xarLog::LEVEL_DEBUG);
         }
-        return $string;
+        return $encrypted_string;
     }
     
     private function createdirs()
