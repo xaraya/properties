@@ -139,6 +139,9 @@ class JSUploadProperty extends DataProperty
         $encryptor = xarEncryptor::instance();
         try {$encrypted_string = $encryptor->encrypt($string);} catch (Exception $e) {}
         if ($this->debug) {
+            echo "String (unencrypted): " . $string . "<br/>";
+            echo "String (encrypted): " . $encrypted_string . "<br/>";
+            echo "String (decrypted): " . $encryptor->encrypt($encrypted_string) . "<br/>";
             xarLog::message("Properties::jsupload: encrypted $string to $encrypted_string", xarLog::LEVEL_DEBUG);
         }
         return $encrypted_string;
