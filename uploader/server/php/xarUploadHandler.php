@@ -13,3 +13,4 @@ die("X");
 class UploadHandler
 {
 }
+?>
