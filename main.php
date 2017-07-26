@@ -128,7 +128,7 @@ class JSUploadProperty extends DataProperty
             echo "Thumbnail URL: " . $thumbnail_url . "<br/>";
             echo "Cache directory: " . sys::varpath() . '/cache' . "<br/>";
             echo "Context: " . $data['context'] . "<br/>";
-            echo "ID: " . $data['id'] . "<br/>";
+            echo "ID: " . $this->debug . "<br/>";
             echo "Cache key: " . $data['config'] . "<br/>";
             echo "Base URL: " . $base_url . "<br/>";
             echo "AJAX key (encrypted): " . $data['key'] . "<br/>";
