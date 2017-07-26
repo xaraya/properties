@@ -34,7 +34,7 @@
 
 class JSUploadProperty extends DataProperty
 {
-    protected $debug   = false;
+    public $debug   = false;
     
     public $id         = 30125;
     public $name       = 'jsupload';
