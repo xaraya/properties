@@ -35,9 +35,6 @@ class DateProperty extends DataProperty
         $this->tplmodule = 'auto';
         $this->template  = 'date';
         $this->filepath  = 'auto';
-
-        // Import the predefined display formats here
-        sys::import('properties.date.data.formats');
     }
 
     public function checkInput($name = '', $value = null)
@@ -146,6 +143,8 @@ class DateProperty extends DataProperty
             case 2:
                 // If no format chosen, just return the raw value
                 if (!empty($this->display_date_format_predef)) {
+                    // Import the predefined display formats here
+                    sys::import('properties.date.data.formats');
                     $formats = date_formats();
                     $value = date($formats[$this->display_date_format_predef]['format'], $value);
                 }
