@@ -18,7 +18,6 @@ function listing_checkall(value) {
  * <a href="javascript:listing_getchecked(targetId)">....</a>
  */
 function listing_getchecked(targetId) {
-
     var checked = "";
     var checkboxes = document.getElementsByTagName('input');
     for (i = 0; i < checkboxes.length; i++) {
@@ -26,6 +25,7 @@ function listing_getchecked(targetId) {
             if (checkboxes[i].checked) 
                 checked += checkboxes[i].id + ",";
     }
+    if (checked != "") checked = checked.substring(0, checked.length - 1);
     target = document.getElementById(targetId);
     target.value = checked;
 }
