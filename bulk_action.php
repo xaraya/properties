@@ -118,11 +118,12 @@ function listing_bulk_action()
                 }
             }
 
-            // Add this bulk operation results to the URL
+            // Add this bulk operation results to the URLbust
+            // CHECKME: Doesn't seem very robust
             if ($more_exists) {
                 $returnurl .= "&" . $listing_query . "=" . $result;
             } else {
-                $returnurl .= $listing_query . "=" . $result;
+                $returnurl .= "&" . $listing_query . "=" . $result;
             }
             
             xarController::redirect($returnurl);
