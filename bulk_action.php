@@ -81,10 +81,51 @@ function listing_bulk_action()
             $funcpart = implode('_', $callparts);
 
             if ($api) {
-                xarMod::apiFunc($modpart, $typepart, $funcpart, array('operation' => $operation));
+                $result = xarMod::apiFunc($modpart, $typepart, $funcpart, array('operation' => $operation));
             } else {
-                xarMod::guiFunc($modpart, $typepart, $funcpart, array('operation' => $operation));
+                $result = xarMod::guiFunc($modpart, $typepart, $funcpart, array('operation' => $operation));
             }
+            // Reshape the result into something we cna put in a URL
+            $result = serialize($result);
+            $result = base64_encode($result);
+            
+# --------------------------------------------------------
+#
+# Add the bulk results to the URL for display, and remove any previous results
+#
+# We are specifically using straight string replacement, rather than parse_url, 
+# because we don't know what type of URL scheme is being used (Xaraya, short URLs etc.)
+#
+            $listing_query = "from_listing";
+            
+            // Find the part where we have the listing-query string
+            $parts = explode($listing_query . "=", $returnurl);
+            // The part before it (may be the whole URL) is in any case the beggining of our return URL
+            $returnurl = $parts[0];
+            $more_exists = false;
+            // If the part after it is not empty...
+            if (isset($parts[1])) {
+                // We need to remove everything up to the next &
+                $query_elements = explode("&", $parts[1]);
+                // Remove it
+                array_shift($query_elements);
+                // If there is anything left, reassemble
+                if (!empty($query_elements)) {
+                    $more_exists = true;
+                    $query = implode('&', $query_elements);
+                    // Add it to the return URL
+                    $returnurl .= $query;
+                }
+            }
+
+            // Add this bulk operation results to the URL
+            if ($more_exists) {
+                $returnurl .= "&" . $listing_query . "=" . $result;
+            } else {
+                $returnurl .= $listing_query . "=" . $result;
+            }
+            
+            xarController::redirect($returnurl);
             break;
     } // end switch
     xarController::redirect($returnurl);
