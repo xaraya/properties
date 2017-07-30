@@ -147,7 +147,7 @@ class DateTimeProperty extends DataProperty
                 // If no format chosen, just return the raw value
                 if (!empty($this->display_datetime_format_predef)) {        
                     // Import the predefined display formats here
-                    sys::import('properties.datetime.data.datetime_formats');
+                    sys::import('properties.datetime.data.formats');
                     $formats = datetime_formats();
                     $value = date($formats[$this->display_datetime_format_predef]['format'], $value);
                 }
