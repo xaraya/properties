@@ -118,7 +118,7 @@ function listing_bulk_action()
                 }
             }
 
-            // Add this bulk operation results to the URLbust
+            // Add this bulk operation results to the URL
             // CHECKME: Doesn't seem very robust
             if ($more_exists) {
                 $returnurl .= "&" . $listing_query . "=" . $result;
