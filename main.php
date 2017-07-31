@@ -107,7 +107,7 @@ class NumberProperty extends FloatBoxProperty
         }
             try {
                 $this->value = $this->formatter->parse($value);
-            } catch (Exception $e) {
+            } catch (Exception $e) {var_dump($e->getMessage());
                 throw new Exception(xarML('Incorrect value for setValue method of number property #(1)', $this->name));
             }
         } else {
