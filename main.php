@@ -122,7 +122,11 @@ class NumberProperty extends FloatBoxProperty
     public function setValue($value=null)
     {
         if ($this->isOO) {
+        try {
             $this->formatter->setPattern($this->display_numberpattern);
+        } catch (Exception $e) {
+            var_dump($e->getMessage());
+        }
             try {
                 $this->value = $this->formatter->parse($value);
             } catch (Exception $e) {
