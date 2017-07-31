@@ -100,42 +100,29 @@ class NumberProperty extends FloatBoxProperty
     public function getValue()
     {
         if ($this->isOO) {
-        try {
             $this->formatter->setPattern($this->display_numberpattern);
-        } catch (Exception $e) {
-            var_dump($e->getMessage());
-        }
             try {
-                $this->value = $this->formatter->parse($value);
-            } catch (Exception $e) {var_dump($e->getMessage());
-                throw new Exception(xarML('Incorrect value for setValue method of number property #(1)', $this->name));
+                $value = $this->formatter->format($this->value);
+            } catch (Exception $e) {
+                throw new Exception(xarML('Incorrect value for getValue method of number property #(1)', $this->name));
             }
+            return $value;
         } else {
-            if (empty($value)) {
-                $this->value = 0;
+            if (empty($this->display_numberformat)) {
+                $settings =& xarMLSLoadLocaleData();
             } else {
-                if (empty($this->display_numberformat)) {
-                    $settings =& xarMLSLoadLocaleData();
-                } else {
-                    $settings = $this->assembleSettings();
-                }
-                $this->value = $value;
-                if (isset($settings["/$this->numbertype/decimalSeparator"]))
-                    $this->value = str_replace($settings["/$this->numbertype/decimalSeparator"],'.',$this->value);
-                if (isset($settings["/$this->numbertype/groupingSeparator"]))
-                    $this->value = str_replace($settings["/$this->numbertype/groupingSeparator"],'',$this->value);
+                $settings = $this->assembleSettings();
             }
+            $value = xarLocaleFormatNumber(trim($this->value),$settings);
+    
+            return xarVarPrepHTMLDisplay($value);
         }
     }
 
     public function setValue($value=null)
     {
         if ($this->isOO) {
-        try {
             $this->formatter->setPattern($this->display_numberpattern);
-        } catch (Exception $e) {
-            var_dump($e->getMessage());
-        }
             try {
                 $this->value = $this->formatter->parse($value);
             } catch (Exception $e) {
