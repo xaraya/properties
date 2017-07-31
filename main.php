@@ -100,22 +100,31 @@ class NumberProperty extends FloatBoxProperty
     public function getValue()
     {
         if ($this->isOO) {
+        try {
             $this->formatter->setPattern($this->display_numberpattern);
+        } catch (Exception $e) {
+            var_dump($e->getMessage());
+        }
             try {
-                $value = $this->formatter->format($this->value);
+                $this->value = $this->formatter->parse($value);
             } catch (Exception $e) {
-                throw new Exception(xarML('Incorrect value for getValue method of number property #(1)', $this->name));
+                throw new Exception(xarML('Incorrect value for setValue method of number property #(1)', $this->name));
             }
-            return $value;
         } else {
-            if (empty($this->display_numberformat)) {
-                $settings =& xarMLSLoadLocaleData();
+            if (empty($value)) {
+                $this->value = 0;
             } else {
-                $settings = $this->assembleSettings();
+                if (empty($this->display_numberformat)) {
+                    $settings =& xarMLSLoadLocaleData();
+                } else {
+                    $settings = $this->assembleSettings();
+                }
+                $this->value = $value;
+                if (isset($settings["/$this->numbertype/decimalSeparator"]))
+                    $this->value = str_replace($settings["/$this->numbertype/decimalSeparator"],'.',$this->value);
+                if (isset($settings["/$this->numbertype/groupingSeparator"]))
+                    $this->value = str_replace($settings["/$this->numbertype/groupingSeparator"],'',$this->value);
             }
-            $value = xarLocaleFormatNumber(trim($this->value),$settings);
-    
-            return xarVarPrepHTMLDisplay($value);
         }
     }
 
