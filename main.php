@@ -78,6 +78,7 @@ class JQAddressPickerProperty extends DataProperty
             $this->value = null; 
             return false;
         } else {
+            $this->setValue($value);
             return true;
         }
     }
