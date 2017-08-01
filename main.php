@@ -106,6 +106,10 @@ class NumberProperty extends FloatBoxProperty
             } catch (Exception $e) {
                 throw new Exception(xarML('Incorrect value for getValue method of number property #(1)', $this->name));
             }
+            if (xarModVars::get('dynamicdata', 'debugmode') &&
+                in_array(xarUserGetVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+                echo $this->formatter->getErrorMessage();
+            }
             return $value;
         } else {
             if (empty($this->display_numberformat)) {
@@ -127,6 +131,10 @@ class NumberProperty extends FloatBoxProperty
                 $this->value = $this->formatter->parse($value);
             } catch (Exception $e) {
                 throw new Exception(xarML('Incorrect value for setValue method of number property #(1)', $this->name));
+            }
+            if (xarModVars::get('dynamicdata', 'debugmode') &&
+                in_array(xarUserGetVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+                echo $this->formatter->getErrorMessage();
             }
         } else {
             if (empty($value)) {
