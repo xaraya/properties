@@ -54,7 +54,7 @@ class ESRProperty extends TextBoxProperty
             // Reformat the compressed value. This will help show up any errors
             $error_value = strrev(chunk_split(strrev(str_pad($compressed_value, 27 ,'0', STR_PAD_LEFT)), 5, ' ')); 
             $this->invalid = xarML('The string #(1) is not a valid ESR number', $value);
-            xarLog::message($this->invalid, XARLOG_LEVEL_ERROR);
+            xarLog::message($this->invalid, xarLog::LEVEL_ERROR);
             $this->value = null;
             return false;
         } else {
