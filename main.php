@@ -108,7 +108,8 @@ class NumberProperty extends FloatBoxProperty
             }
             if (xarModVars::get('dynamicdata', 'debugmode') &&
                 in_array(xarUserGetVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
-                if (!empty($this->formatter->getErrorCode())) echo $this->formatter->getErrorMessage();
+                $error_code = $this->formatter->getErrorCode();
+                if (!empty($error_code)) echo $this->formatter->getErrorMessage();
             }
             return $value;
         } else {
@@ -134,7 +135,8 @@ class NumberProperty extends FloatBoxProperty
             }
             if (xarModVars::get('dynamicdata', 'debugmode') &&
                 in_array(xarUserGetVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
-                if (!empty($this->formatter->getErrorCode())) echo $this->formatter->getErrorMessage();
+                $error_code = $this->formatter->getErrorCode();
+                if (!empty($error_code)) echo $this->formatter->getErrorMessage();
             }
         } else {
             if (empty($value)) {
