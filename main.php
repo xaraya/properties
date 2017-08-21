@@ -36,7 +36,10 @@ class IBANProperty extends TextBoxProperty
     {
         if (!parent::validateValue($value)) return false;
 
+        // Remove any spaces
         $iban_compressed = str_replace(' ', '', $value);
+        // Set non numeric chars to upper case
+        $value = strtoupper($value);
         if (!$this->iban->Verify($iban_compressed)) {
             if (!empty($this->validation_max_length_invalid)) {
                 $this->invalid = xarML($this->validation_max_length_invalid);
