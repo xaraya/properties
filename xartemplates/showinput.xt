@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- Featherlight -->
+    <xar:style scope="property" property="featherlight" file="featherlight.min" />
+
+    <style type="text/css">
+        @media all {
+            .lightbox { display: none; }
+
+    </style>
+    
+    <!-- jQuery -->
+    <xar:set name="remote_libs">
+        xarMod::apiFunc('themes','admin','get_js_libs',array('scope' => 'remote', 'lib' => 'jquery'))
+    </xar:set>
+    <xar:if condition="!empty($remote_libs)">
+        <xar:javascript type="lib" lib="jquery" position="head"/>
+    <xar:else/>
+        <xar:javascript type="src" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" position="head"/>
+    </xar:if>
+    <!-- Featherlight -->
+    <xar:javascript filename="featherlight.min.js" property="featherlight" position="body"/>
+
+    <xar:if condition="!isset($displaytype)">
+        <xar:set name="displaytype">'button'</xar:set>
+    </xar:if>
+    <xar:if condition="!isset($label)">
+        <xar:var name="label">Show</xar:var>
+    </xar:if>
+
+    <xar:if condition="$displaytype eq 'button'">
+        <a href="##" data-featherlight="###$id#">#$label#</a>
+    <xar:elseif condition="$displaytype eq 'link'"/>
+        <a href="##" data-featherlight="###$id#">#$label#</a>
+    </xar:if>
+    
+<!-- This is an example for a box
+    <div class="lightbox" id="#$id#">
+        <h3>Featherlight Default</h3>
+        <p>
+            This is a default featherlight lightbox.<br/>
+            It's flexible in height and width.<br/>
+            Everything that is used to display and style the box can be found in the <a href="https://github.com/noelboss/featherlight/blob/master/src/featherlight.css">featherlight.css</a> file which is pretty simple.</p>
+    </div>
+-->
+</xar:template>
