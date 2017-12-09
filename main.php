@@ -591,8 +591,13 @@ Notes:
                 xarSession::delVar('listing.' . $objectname);
                 xarSession::setVar('listing.' . $objectname, serialize($values));
             } else {
-                if (xarVariableCache::isCached('listing.' . $objectname)) xarVariableCache::delCached('listing.' . $objectname);
-                xarVariableCache::setCached('listing.' . $objectname, serialize($values));
+                if (class_exists('xarVariableCache')) {
+                    if (xarVariableCache::isCached('listing.' . $objectname)) xarVariableCache::delCached('listing.' . $objectname);
+                    xarVariableCache::setCached('listing.' . $objectname, serialize($values));
+                } else {
+                    $message = xarML('Variable Caching needs to be turned on');
+                    die($message);
+                }
             }
         }
         
