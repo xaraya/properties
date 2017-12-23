@@ -36,6 +36,7 @@ class ESRProperty extends TextBoxProperty
     public function validateValue($value = null)
     {
         if (!parent::validateValue($value)) return false;
+        if (empty($value)) return false;
         
         // Remove any spaces
         $compressed_value = str_replace(' ', '', $value);
@@ -65,7 +66,7 @@ class ESRProperty extends TextBoxProperty
 
     public function transformAccount($value = null)
     {
-        if (empty($value)) throw new Exception(xarML('Missing parameter for transformAccount method'));
+        if (empty($value)) throw new Exception(xarML('Missing item parameter for the ESR transformAccount method'));
 
         // Postal accounts with 8 digits are post accounts
         $account_array = explode('-', $value);
