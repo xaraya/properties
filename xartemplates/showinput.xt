@@ -1,76 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:template
+    xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:style method="link" source="http://fonts.googleapis.com/css?family=Noto+Serif:400italic"/>
     <xar:style method="link" source="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700"/>
     <xar:style method="link" source="http://fonts.googleapis.com/css?family=Grand+Hotel"/>
     <xar:style scope="property" property="subscribeform" file="subscribe-better" />
-
-
     <xar:javascript type="lib" lib="jquery" position="head"/>
     <xar:javascript type="src" src="http://code.jquery.com/ui/1.11.4/jquery-ui.js" position="head"/>
     <xar:javascript filename="jquery.subscribe-better.js" property="subscribeform" position="head"/>
-
     <style type="text/css">
         .subscribeform:not( .subscribeform--active ) input[type='submit']
         {
             display: none;
         }
     </style>
-
     <![CDATA[
        <script type="text/javascript">
         
          $(document).ready(function(){
+
+         console.log(getCookie("subscribe"));
+        if ( getCookie("subscribe") =="" || getCookie("subscribe")=="shown" ) {
+
                 $(".subscribebox").subscribeBetter({
                     animation: "flyInUp",
-                    autoClose: true,
+                    autoClose: false,
                     delay: 1000,
                     showOnce: true
                 });
-                
+                createCookie("subscribe","shown",#$timeout#)
+        }else{
+         $(".subscribebox").html('');
+        }
                 $(".subscribebox input[type='submit']").click(function(){
-			setTimeout(function(){
-				$(".sb.sb-withoverlay").hide();
-				$("body").removeClass("sb-open sb-open-with-overlay");
-				setTimeout(function() {
-					$(".sb-overlay").remove();
-					$(".subscribebox").css("display", "none");
-				}, 500);
-			}, 500);
-	        });
-	        
-		$(".subscribebox input[type='email']").first().keyup(function(){
-		    	$email = $(this).val();// use val here to get value of input
-		    	validateEmail($email);
-		});
-	   	function validateEmail($email) {
-		        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-		        if( !emailReg.test( $email ) ) {
-			    	$(".subscribebox input[type='submit']").css("display", "none");
-		        } else {
-			        $(".subscribebox input[type='submit']").css("display", "inline");
-		        }
-       		}	
-   		});
-   		
+            setTimeout(function(){
+                $(".sb.sb-withoverlay").hide();
+                $("body").removeClass("sb-open sb-open-with-overlay");
+                setTimeout(function() {
+                    $(".sb-overlay").remove();
+                    $(".subscribebox").css("display", "none");
+                }, 500);
+            }, 500);
+
+            createCookie("subscribe","hide",#$timeout#)
+
+            });
+
+              $(".close_subscribe").click(function(){
+            createCookie("subscribe","hide",#$timeout#);
+            });
+            
+        $(".subscribebox input[type='email']").first().keyup(function(){
+                $email = $(this).val();// use val here to get value of input
+                validateEmail($email);
+        });
+        function validateEmail($email) {
+                var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+                if( !emailReg.test( $email ) ) {
+                    $(".subscribebox input[type='submit']").css("display", "none");
+                } else {
+                    $(".subscribebox input[type='submit']").css("display", "inline");
+                }
+            }   
+        });
+
+    function getCookie(cn) {
+        var name = cn+"=";
+        var allCookie = decodeURIComponent(document.cookie).split(';');
+        var cval = [];
+        for(var i=0; i < allCookie.length; i++) {
+        if (allCookie[i].trim().indexOf(name) == 0) {
+            cval = allCookie[i].trim().split("=");
+            }   
+        }
+            return (cval.length > 0) ? cval[1] : "";
+        }
+
+     function createCookie(name, value, days)
+     {
+        if (days)
+        {
+        var date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
+        }   
+        else
+        {
+        var expires = "";
+         }   
+
+         document.cookie = name+"="+value+expires+"; path=/";
+    }
+    
+    function eraseCookie(name) {
+        createCookie(name,"",-1);
+    }
+        
         </script>
     ]]>
-    
     <xar:set name="action">xarModURL('pubsub','user','submit_form')</xar:set>
     <xar:ajax-form url="#$action#" form="subscribeform"/>
     <div class="subscribebox">
         <h2>Subscribe</h2>
-        <a href="##close" class="sb-close-btn">X</a>
+        <a href="##close" class="sb-close-btn close_subscribe">X</a>
         <!-- <p>Get notifications from our site</p> -->
-        <p>Never miss out on an event again. See all the best Sacramento events in our weekly email when you signup below.</p>
-
+        <p>Please subscribe and get notifications from our site.</p>
         <form method="post" id="subscribeform" class="subscribeform" action="#$action#">
             <input name="email" type="email" placeholder="Email Address"/>
             <xar:var name="label">Sign up</xar:var>
             <xar:button type="submit" label="$label"/>
-	    <input type="hidden" name="returnurl" id="returnurl" value="#xarServer::getCurrentURL()#"/>
+            <input type="hidden" name="returnurl" id="returnurl" value="#xarServer::getCurrentURL()#"/>
         </form>
     </div>
-    
-	
 </xar:template>

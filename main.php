@@ -28,6 +28,12 @@ class SubscribeFormProperty extends DataProperty
         $this->template  = 'subscribeform';
         $this->filepath  = 'auto';
     }
+      public function showInput(Array $data = array())
+    {
+        if (!isset($data['timeout'])) $data['timeout'] = xarConfigVars::get(null,'Site.Session.CookieTimeout');
+
+        return parent::showInput($data);
+    }
 }
 
 ?>
