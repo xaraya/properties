@@ -118,7 +118,7 @@ class DHTML_Calendar
     {
         $attrstr = '';
         reset($array);
-        while (list($key, $val) = each($array)) {
+        foreach ($array as $key => $val) {
             $attrstr .= $key . '="' . $val . '" ';
         }
         return $attrstr;
