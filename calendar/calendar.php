@@ -18,7 +18,7 @@ class DHTML_Calendar
     public $calendar_lang_file;
     public $calendar_setup_file;
     public $calendar_theme_file;
-    public $calendar_options;
+    public $calendar_options = array();
 
     function DHTML_Calendar($calendar_lib_path = '/calendar/',
                             $lang              = 'en',
@@ -103,7 +103,7 @@ class DHTML_Calendar
     {
         $jstr = '';
         reset($array);
-        while (list($key, $val) = each($array)) {
+        foreach ($array as $key => $val) {
             if (is_bool($val))
                 $val = $val ? 'true' : 'false';
             else if (!is_numeric($val))
