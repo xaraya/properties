@@ -55,7 +55,7 @@ class CounterProperty extends TextBoxProperty
         // The variable the counter is stored in
         $store  = $this->initialization_counter_store;
         
-        if (empty($store)) {
+        if (!empty($store)) {
             // Might have a variable or function, so evaluate it
             @eval('$evaled = ' . $store .';');
             $store = isset($evaled) ? $evaled : null;
