@@ -54,35 +54,38 @@ class CounterProperty extends TextBoxProperty
         
         // The variable the counter is stored in
         $store  = $this->initialization_counter_store;
-        // Might have a variable or function, so evaluate it
-        @eval('$evaled = ' . $store .';');
-        $store = isset($evaled) ? $evaled : null;
-        // We add a prefix to make it more human readable
-        $store  = 'counter_' . $store;
         
-        // Get the currently stored counter value in the (assumed) current store
-        $value = xarModVars::get($module, $store);
+        if (empty($store)) {
+            // Might have a variable or function, so evaluate it
+            @eval('$evaled = ' . $store .';');
+            $store = isset($evaled) ? $evaled : null;
+            // We add a prefix to make it more human readable
+            $store  = 'counter_' . $store;
         
-        // If the value is empty it means the modvar doesn't exist. So we create it.
-        if ((NULL == $value)) {
-            $parts = explode(',',$this->initialization_counter_store);
-            $counterparts = explode(',',$this->initialization_counter_value);
-            xarModVars::set($module,$store,serialize($counterparts));
+            // Get the currently stored counter value in the (assumed) current store
+            $value = xarModVars::get($module, $store);
+        
+            // If the value is empty it means the modvar doesn't exist. So we create it.
+            if ((NULL == $value)) {
+                $parts = explode(',',$this->initialization_counter_store);
+                $counterparts = explode(',',$this->initialization_counter_value);
+                xarModVars::set($module,$store,serialize($counterparts));
+            }
+        
+            // Store the module and store var for reuse
+            $this->counter_module = $module;
+            $this->counter_store = $store;
+        
+            // When no $args['value'] is present, this would make the value the default value,
+            // but we cannot use the default value here.
+            // We get around this by populating the value directly and so avoid that standard 
+            // behavior in the parent
+            if(!isset($args['value'])) {
+                $args['value'] = $this->getCounterValue();
+                $descriptor->setArgs($args);
+                $this->value = $args['value'];
+            } 
         }
-        
-        // Store the module and store var for reuse
-        $this->counter_module = $module;
-        $this->counter_store = $store;
-        
-        // When no $args['value'] is present, this would make the value the default value,
-        // but we cannot use the default value here.
-        // We get around this by populating the value directly and so avoid that standard 
-        // behavior in the parent
-        if(!isset($args['value'])) {
-            $args['value'] = $this->getCounterValue();
-            $descriptor->setArgs($args);
-            $this->value = $args['value'];
-        } 
 
         // Now pass the descriptor to the parent. The default value will not be triggered. See the base property code.
         parent::__construct($descriptor);
