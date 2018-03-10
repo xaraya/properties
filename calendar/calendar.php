@@ -20,7 +20,7 @@ class DHTML_Calendar
     public $calendar_theme_file;
     public $calendar_options = array();
 
-    function DHTML_Calendar($calendar_lib_path = '/calendar/',
+    function __construct($calendar_lib_path = '/calendar/',
                             $lang              = 'en',
                             $theme             = 'calendar-win2k-1',
                             $stripped          = true) {
