@@ -52,7 +52,7 @@ class AutocompleteProperty extends SelectProperty
         if (!isset($data['urlargs']))     $data['urlargs'] = '';
 
         
-        if (empty($data['urlmod']) && empty($data['urlmod'])){
+        if (empty($data['urlmod']) && empty($data['urlmod'])) {
             $data['target_url'] = '';
         } else {
             xarController::$entryPoint = 'ws.php';
