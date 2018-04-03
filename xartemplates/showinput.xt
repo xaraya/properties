@@ -10,7 +10,7 @@
     <xar:else/>
         <xar:javascript type="src" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js" position="head"/>
     </xar:if>
-
+    <xar:javascript type="src" src="https://code.jquery.com/ui/1.9.1/jquery-ui.js" position="head"/>
     <!-- Load the autocomplete JS -->
     <xar:javascript filename="jquery.autocomplete.min.js" property="autocomplete" position="head"/>
      
@@ -47,7 +47,7 @@
                         minChars: 2,
                         onSelect: function(suggestion) {
                             $('##selection-ajax').html('You selected: ' + suggestion.value + ', ' + suggestion.data);
-                            $('###$id#').val(suggestion.data);
+                            $('###$id#').next().val(suggestion.data);
                         },
                     });
 
