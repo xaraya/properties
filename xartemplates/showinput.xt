@@ -28,7 +28,7 @@
     <xar:if condition="empty($target_url)">
         Don't have a valid target URL
     <xar:else/>
-        <!-- The autocomplete script  -->
+        <!-- The autocomplete script -->
         <![CDATA[
             <script>    
                 $(function () {
