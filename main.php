@@ -55,19 +55,32 @@ class AutocompleteProperty extends SelectProperty
         if (empty($data['urlmod']) && empty($data['urlmod'])) {
             $data['target_url'] = '';
         } else {
-            xarController::$entryPoint = 'ws.php';
             $args = array(
                 'store_field'   => $this->initialization_store_field,
                 'display_field' => $this->initialization_display_field,
             );
-            $redirect = xarServer::getBaseURL();
-            $data['target_url'] = $redirect.xarController::$entryPoint.'?module='.$data['urlmod'].'&type=native&func='.$data['urlfunc'].'&store_field='.$this->initialization_store_field.'&display_field='.$this->initialization_display_field;
+            $data['target_url'] = xarController::URL($data['urlmod'], 'native', $data['urlfunc'],
+                                                            $args,
+                                                            null, null,
+                                                            'ws.php');
         }
 
         // Check if the file for this URL exists
         $file = sys::code() . 'modules/' . $data['urlmod'] . '/xarwsapi/' . $data['urlfunc'] . '.php';
         if (!file_exists($file)) $data['target_url'] = '';
+        else if($this->value){
 
+             $items = xarMod::apiFunc($data['urlmod'], 'ws', $data['urlfunc'], array($this->initialization_store_field => (int)$this->value));
+              if (!is_array($items)) {
+            $items = json_decode($items, true);
+            $items = $items['suggestions'];
+            foreach ($items as $k => $v) {
+                $data['name_value'] = $items[$k]['value'];
+        
+            }
+        }
+        }
+   
         return parent::showInput($data);
     }
 
