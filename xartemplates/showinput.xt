@@ -46,7 +46,7 @@
                         minChars: 2,
                         onSelect: function(suggestion) {
                             $('##selection-ajax').html('You selected: ' + suggestion.value + ', ' + suggestion.data);
-                            $('###$id#').val(suggestion.data);
+                            $('###$id#').next().val(suggestion.data);
                         },
                     });
 

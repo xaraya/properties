@@ -60,7 +60,8 @@ class AutocompleteProperty extends SelectProperty
                 'store_field'   => $this->initialization_store_field,
                 'display_field' => $this->initialization_display_field,
             );
-            $data['target_url'] = xarController::URL($data['urlmod'], 'native', $data['urlfunc'], $args);
+            $redirect = xarServer::getBaseURL();
+            $data['target_url'] = $redirect.xarController::$entryPoint.'?module='.$data['urlmod'].'&type=native&func='.$data['urlfunc'].'&store_field='.$this->initialization_store_field.'&display_field='.$this->initialization_display_field;
         }
 
         // Check if the file for this URL exists
