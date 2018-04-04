@@ -55,13 +55,14 @@ class AutocompleteProperty extends SelectProperty
         if (empty($data['urlmod']) && empty($data['urlmod'])) {
             $data['target_url'] = '';
         } else {
-            xarController::$entryPoint = 'ws.php';
             $args = array(
                 'store_field'   => $this->initialization_store_field,
                 'display_field' => $this->initialization_display_field,
             );
-            $redirect = xarServer::getBaseURL();
-            $data['target_url'] = $redirect.xarController::$entryPoint.'?module='.$data['urlmod'].'&type=native&func='.$data['urlfunc'].'&store_field='.$this->initialization_store_field.'&display_field='.$this->initialization_display_field;
+            $data['target_url'] = xarController::URL($data['urlmod'], 'native', $data['urlfunc'],
+                                                            $args,
+                                                            null, null,
+                                                            'ws.php');
         }
 
         // Check if the file for this URL exists
