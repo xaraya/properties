@@ -51,6 +51,8 @@ class AutocompleteProperty extends SelectProperty
         if (!isset($data['urlfunc']))     $data['urlfunc'] = $this->initialization_urlfunc;
         if (!isset($data['urlargs']))     $data['urlargs'] = '';
 
+        // Assemble the target URL that holds the values we are looking through
+        // By convention this is usually a get or getall function in the xarwsapi folder
         if (empty($data['urlmod']) && empty($data['urlmod'])) {
             $data['target_url'] = '';
         } else {
@@ -66,18 +68,19 @@ class AutocompleteProperty extends SelectProperty
 
         // Check if the file for this URL exists
         $file = sys::code() . 'modules/' . $data['urlmod'] . '/xarwsapi/' . $data['urlfunc'] . '.php';
-        if (!file_exists($file)) $data['target_url'] = '';
-        else if($this->value){
-
-             $items = xarMod::apiFunc($data['urlmod'], 'ws', $data['urlfunc'], array($this->initialization_store_field => (int)$this->value));
-              if (!is_array($items)) {
-            $items = json_decode($items, true);
-            $items = $items['suggestions'];
-            foreach ($items as $k => $v) {
-                $data['name_value'] = $items[$k]['value'];
-        
+        if (!file_exists($file)) {
+            // No sense continuing if the file doesn't exist
+            $data['target_url'] = '';
+        } else if (!empty($this->value)) {
+            // We are modifying an existing value. Get its information from the target URL
+            $items = xarMod::apiFunc($data['urlmod'], 'ws', $data['urlfunc'], array($this->initialization_store_field => (int)$this->value));
+            if (!is_array($items)) {
+                $items = json_decode($items, true);
+                $items = $items['suggestions'];
+                foreach ($items as $k => $v) {
+                    $data['name_value'] = $items[$k]['value'];
+                }
             }
-        }
         }
    
         return parent::showInput($data);
