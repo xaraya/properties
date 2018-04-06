@@ -51,7 +51,6 @@ class AutocompleteProperty extends SelectProperty
         if (!isset($data['urlfunc']))     $data['urlfunc'] = $this->initialization_urlfunc;
         if (!isset($data['urlargs']))     $data['urlargs'] = '';
 
-        
         if (empty($data['urlmod']) && empty($data['urlmod'])) {
             $data['target_url'] = '';
         } else {
