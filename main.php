@@ -67,7 +67,19 @@ class AutocompleteProperty extends SelectProperty
         // Check if the file for this URL exists
         $file = sys::code() . 'modules/' . $data['urlmod'] . '/xarwsapi/' . $data['urlfunc'] . '.php';
         if (!file_exists($file)) $data['target_url'] = '';
+        else if($this->value){
 
+             $items = xarMod::apiFunc($data['urlmod'], 'ws', $data['urlfunc'], array($this->initialization_store_field => (int)$this->value));
+              if (!is_array($items)) {
+            $items = json_decode($items, true);
+            $items = $items['suggestions'];
+            foreach ($items as $k => $v) {
+                $data['name_value'] = $items[$k]['value'];
+        
+            }
+        }
+        }
+   
         return parent::showInput($data);
     }
 
