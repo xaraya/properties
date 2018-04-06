@@ -85,9 +85,11 @@
         <xar:if condition="!isset($placeholder)">
             <xar:set name="placeholder">''</xar:set>
         </xar:if>
-        
+         <xar:if condition="!isset($name_value)">
+            <xar:set name="name_value">''</xar:set>
+        </xar:if>
         <!-- This shows the hints -->
-        <input type="text" id="#$id#_hints" name="#$name#" placeholder="#$placeholder#" onfocus="#$onfocus#" size="#$size#" style="#$style#" class="#$class#"/>
+        <input type="text" id="#$id#_hints" name="#$name#" placeholder="#$placeholder#" onfocus="#$onfocus#" size="#$size#" style="#$style#" class="#$class#" value="#$name_value#" />
         <!-- This holds the value -->
         <input type="hidden" id="#$id#" name="#$name#"/>
     
