@@ -52,7 +52,7 @@ class TimeFrameProperty extends DataProperty
         
         // Give the period precedence if it was chosen
         if (!empty($period)) {
-            list($startdate, $enddate) = $this->settimeperiod($period);
+            list($startdate, $enddate) = $this->getTimeperiod($period);
         } else {
             $date = new XarDateTime();
             $date->setTimeStamp($enddate);
@@ -75,7 +75,7 @@ class TimeFrameProperty extends DataProperty
         } catch (Exception $e) {
             $value = $this->default;
         }
-        if (!empty($value[2])) list($value[0],$value[1]) = $this->settimeperiod($value[2]);
+        if (!empty($value[2])) list($value[0],$value[1]) = $this->getTimeperiod($value[2]);
         return $value;
     }
 
@@ -101,7 +101,7 @@ class TimeFrameProperty extends DataProperty
 
         // If displaying the dropdown, give it precedence unless it is "no period"
         if (in_array('dropdown',$data['show']) && !empty($data['value'][2])) 
-            list($data['value'][0],$data['value'][1]) = $this->settimeperiod($data['value'][2]);
+            list($data['value'][0],$data['value'][1]) = $this->getTimeperiod($data['value'][2]);
 
         // The timeframes to show in the dropdown
         if (empty($data['frames'])) $data['frames'] = array();
@@ -133,7 +133,7 @@ class TimeFrameProperty extends DataProperty
         return parent::showOutput($data);
     }
 
-    private function settimeperiod($period)
+    private function getTimeperiod($period)
     {
         $startdate = new XarDateTime();
         $startdate->setnow();
