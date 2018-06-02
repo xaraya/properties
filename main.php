@@ -44,7 +44,7 @@ class BICProperty extends TextBoxProperty
         $check = (bool) ( preg_match('/^[a-z]{6}[0-9a-z]{2}([0-9a-z]{3})?\z/i', $value) == 1 );
         if (!$check) {
             $this->invalid = xarML('The string #(1) is not a valid BIC code', $value);
-            xarLog::message($this->invalid, XARLOG_LEVEL_ERROR);
+            xarLog::message($this->invalid, xarLog::LEVEL_ERROR);
             $this->value = null;
             return false;
         } else {
