@@ -29,6 +29,8 @@ class JQAddressPickerProperty extends DataProperty
     public $initialization_lng       = '-121.033859';
     public $initialization_zoom      = '6';
 
+    private $connection_error;
+
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
@@ -73,7 +75,8 @@ class JQAddressPickerProperty extends DataProperty
     public function validateValue($value = null)
     {
         if ($value === false) {
-            $this->invalid = xarML('Unreadable or empty address');
+//            $this->invalid = xarML('Unreadable or empty address');
+            $this->invalid = $this->connection_error;
             xarLog::message($this->invalid, xarLog::LEVEL_ERROR);
             $this->value = null; 
             return false;
@@ -138,7 +141,8 @@ class JQAddressPickerProperty extends DataProperty
             $response = curl_exec($ch);            
             curl_close($ch);
         } catch (Exception $e) {
-            $response = xarML('Connection to Google maps failed');
+//            $response = xarML('Connection to Google maps failed');
+            $this->connection_error = $e->getMessage();
             return false;
         }
         $json = json_decode($response,true);
