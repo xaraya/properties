@@ -91,7 +91,7 @@
         <!-- This shows the hints -->
         <input type="text" id="#$id#_hints" name="#$name#" placeholder="#$placeholder#" onfocus="#$onfocus#" size="#$size#" style="#$style#" class="#$class#" value="#$name_value#" />
         <!-- This holds the value -->
-        <input type="hidden" id="#$id#" name="#$name#" value="$value"/>
+        <input type="hidden" id="#$id#" name="#$name#" value="#$value#"/>
     
     </xar:if>
 
