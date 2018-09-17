@@ -28,6 +28,7 @@ class JQAddressPickerProperty extends DataProperty
     public $initialization_lat       = '38.550313';
     public $initialization_lng       = '-121.033859';
     public $initialization_zoom      = '6';
+    public $initialization_api_key   = '';
 
     private $connection_error;
 
@@ -131,7 +132,7 @@ class JQAddressPickerProperty extends DataProperty
     public function get_gps_coordinates($address='')
     {
         $address = urlencode($address);
-        $url = "http://maps.google.com/maps/api/geocode/json?sensor=false&address=" . $address;
+        $url = "http://maps.google.com/maps/api/geocode/json?sensor=false&address=" . $address . "&key=" . $this->initialization_api_key;
         try {
             $ch = curl_init();            
             curl_setopt($ch, CURLOPT_URL, $url);            
