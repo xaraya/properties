@@ -53,4 +53,13 @@
     <ignore_empty>1</ignore_empty>
     <configuration>a:0:{}</configuration>
   </configurations>
+  <configurations itemid="570">
+    <id>570</id>
+    <name>initialization_api_key</name>
+    <label>API Key</label>
+    <description>The Google API key for this property</description>
+    <property_id>2</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration>a:0:{}</configuration>
+  </configurations>
 </items>
