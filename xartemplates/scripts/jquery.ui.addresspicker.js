@@ -23,6 +23,7 @@
         reverseGeocode: true,
         autocomplete: 'default',
         language: '',
+        apikey : '',
         mapOptions: {
             zoom: 5,
             center: new google.maps.LatLng(46, 2),
@@ -181,7 +182,7 @@
     },
 
     _updateAddressPartsViaReverseGeocode: function(location){
-      this.geocoder.geocode({'latlng': location.lat() + "," + location.lng()}, $.proxy(function(results, status){
+      this.geocoder.geocode({'key': this.options.apikey,'latlng': location.lat() + "," + location.lng()}, $.proxy(function(results, status){
         if (status == google.maps.GeocoderStatus.OK){
 
           this._updateAddressParts(results[0]);
@@ -234,6 +235,7 @@
     _geocode: function(request, response) {
         var address = request.term, self = this;
         this.geocoder.geocode({
+          'key': this.options.apikey,
           'language': this.options.language,
           'address': address + this.options.appendAddressString,
           'region': this.options.regionBias,

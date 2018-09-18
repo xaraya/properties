@@ -36,6 +36,7 @@
           regionBias: "#$region#",
           language: "#$language#",
           updateCallback: showCallback,
+          apikey : "#$api_key#",
           mapOptions: {
             zoom: #$zoom#,
             center: new google.maps.LatLng(#$lat#, #$lng#),
