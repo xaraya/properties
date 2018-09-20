@@ -132,7 +132,7 @@ class JQAddressPickerProperty extends DataProperty
     public function get_gps_coordinates($address='')
     {
         $address = urlencode($address);
-        $url = "https://maps.google.com/maps/api/geocode/json?sensor=false&address=" . $address . "&key=" . strip($this->initialization_api_key);
+        $url = "https://maps.google.com/maps/api/geocode/json?sensor=false&address=" . $address . "&key=" . trim($this->initialization_api_key);
         try {
             $ch = curl_init();            
             curl_setopt($ch, CURLOPT_URL, $url);            
