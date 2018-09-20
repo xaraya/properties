@@ -132,7 +132,7 @@ class JQAddressPickerProperty extends DataProperty
     public function get_gps_coordinates($address='')
     {
         $address = urlencode($address);
-        $url = "https://maps.google.com/maps/api/geocode/json?sensor=false&address=" . $address . "&key=" . $this->initialization_api_key;
+        $url = "https://maps.google.com/maps/api/geocode/json?sensor=false&address=" . $address . "&key=" . strip($this->initialization_api_key);
         try {
             $ch = curl_init();            
             curl_setopt($ch, CURLOPT_URL, $url);            
@@ -140,6 +140,10 @@ class JQAddressPickerProperty extends DataProperty
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);            
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);            
             $response = curl_exec($ch);            
+            if (curl_error($ch)) {
+                $this->connection_error = curl_error($ch);
+                return false;
+            }        
             curl_close($ch);
         } catch (Exception $e) {
 //            $response = xarML('Connection to Google maps failed');
