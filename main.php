@@ -43,9 +43,9 @@ class DateProperty extends DataProperty
         // store the fieldname for validations who need them (e.g. file uploads)
         $this->fieldname = $name;
         if (!isset($value)) {
-            list($isvalid, $years) = $this->fetchValue($name . '_year');
-            list($isvalid, $months) = $this->fetchValue($name . '_month');
-            list($isvalid, $days) = $this->fetchValue($name . '_day');
+            list($isvalid, $years) = $this->fetchValue($name . '["year"]');
+            list($isvalid, $months) = $this->fetchValue($name . '["month"]');
+            list($isvalid, $days) = $this->fetchValue($name . '["day"]');
         }
         if (!isset($years) ||!isset($months) ||!isset($days)) {
             $this->objectref->missingfields[] = $this->name;

@@ -9,7 +9,7 @@
     <xar:if condition="!isset($style)">
         <xar:set name="style">''</xar:set>
     </xar:if>
-    <input type="hidden" name="#$name#_day" id="#$id#_day" value="01"/>
+    <input type="hidden" name="#$name#[day]" id="#$id#_day" value="01"/>
     <select name="#$name#_month" id="#$id#_month" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#" class="#$class#-month">
         <xar:for start="$i =1" test="$i le 12" iter="$i++">
             <xar:set name="m">
@@ -23,7 +23,7 @@
         </xar:for>
     </select>
 
-    <select name="#$name#_year" id="#$id#_year" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#" class="#$class#-year">
+    <select name="#$name#_year" id="#$id#[year]" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#" class="#$class#-year">
         <xar:for start="$i = $start_year" test="$i le $end_year" iter="$i++">
             <xar:if condition="$i eq $value['year']">
                 <option value="#$i#" selected="selected">#$i#</option>
