@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:set name="nameampm">$name . "_ampm"</xar:set>
+    <xar:set name="nameampm">$name . "[ampm]"</xar:set>
     <xar:set name="idampm1">$id . "_ampm1"</xar:set>
     <xar:set name="idampm2">$id . "_ampm2"</xar:set>
 
