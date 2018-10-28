@@ -47,10 +47,10 @@ class TimeProperty extends DataProperty
         // store the fieldname for validations who need them (e.g. file uploads)
         $this->fieldname = $name;
         if (!isset($value)) {
-            list($isvalid, $ampm) = $this->fetchValue($name . '_ampm');
-            list($isvalid, $hours) = $this->fetchValue($name . '_hour');
-            list($isvalid, $minutes) = $this->fetchValue($name . '_minute');
-            list($isvalid, $seconds) = $this->fetchValue($name . '_second');
+            list($isvalid, $ampm) = $this->fetchValue($name . '["ampm"]');
+            list($isvalid, $hours) = $this->fetchValue($name . '["hour"]');
+            list($isvalid, $minutes) = $this->fetchValue($name . '["minute"]');
+            list($isvalid, $seconds) = $this->fetchValue($name . '["second"]');
         }
         if (!isset($ampm) && !isset($hours) && !isset($minutes) && !isset($seconds)) {
             $this->objectref->missingfields[] = $this->name;
