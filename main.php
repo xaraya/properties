@@ -44,12 +44,12 @@ class DateTimeProperty extends DataProperty
         // store the fieldname for validations who need them (e.g. file uploads)
         $this->fieldname = $name;
         if (!isset($value)) {
-            list($isvalid, $years) = $this->fetchValue($name . "[year]");
-            list($isvalid, $months) = $this->fetchValue($name . "[month]");
-            list($isvalid, $days) = $this->fetchValue($name . "[day]");
-            list($isvalid, $hours) = $this->fetchValue($name . "[hour]");
-            list($isvalid, $minutes) = $this->fetchValue($name . "[minute]");
-            list($isvalid, $seconds) = $this->fetchValue($name . "[second]");
+            list($isvalid, $years) = $this->fetchValue($name . '["year"]');
+            list($isvalid, $months) = $this->fetchValue($name . '["month"]');
+            list($isvalid, $days) = $this->fetchValue($name . '["day"]');
+            list($isvalid, $hours) = $this->fetchValue($name . '["hour"]');
+            list($isvalid, $minutes) = $this->fetchValue($name . '["minute"]');
+            list($isvalid, $seconds) = $this->fetchValue($name . '["second"]');
         }
         if (!isset($years) ||!isset($months) ||!isset($days) ||!isset($hours) ||!isset($minutes) ||!isset($seconds)) {
             $this->objectref->missingfields[] = $this->name;
