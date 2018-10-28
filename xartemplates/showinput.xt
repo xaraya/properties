@@ -22,7 +22,7 @@
     <xar:if condition="$layout eq 'vertical'">
         <xar:if condition="!empty($name_components)">
             <xar:foreach in="$name_components" key="$k" value="$v">
-                <xar:set name="namestring">$name . '_' . $v['id']</xar:set>
+                <xar:set name="namestring">$name . '[' . $v['id'] . ']'</xar:set>
                 <div class="xar-row">
                     <div class="xar-col">
                         <xar:data-label label="$v['name']" for="id"/>
@@ -68,7 +68,7 @@
     <xar:else/>
         <xar:if condition="!empty($name_components)">
             <xar:foreach in="$name_components" key="$k" value="$v">
-                <xar:set name="namestring">$name . '_' . $v['id']</xar:set>
+                <xar:set name="namestring">$name . '[' . $v['id'] . ']'</xar:set>
                 <xar:if condition="isset($value[$v['id']])">
                     <xar:if condition="$v['id'] eq 'salutation'">
                         <xar:set name="thisclass">$class . '-salutation'</xar:set>

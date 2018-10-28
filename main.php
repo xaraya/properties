@@ -62,7 +62,7 @@ class NameProperty extends TextBoxProperty
             $name_components = $this->getNameComponents($this->display_name_components);
             $textbox->validation_min_length = 0;
             foreach ($name_components as $field) {
-                $isvalid = $textbox->checkInput($name . '_' . $field['id']);
+                $isvalid = $textbox->checkInput($name . '[' . $field['id'] . ']');
                 $valid = $valid && $isvalid;
                 if ($isvalid) {
                     $value[] = array('id' => $field['id'], 'value' => $textbox->value);
@@ -123,8 +123,9 @@ class NameProperty extends TextBoxProperty
         $data['value'] = $this->getValueArray();
         
         // Cater to values as simple strings (errors, old versions etc.)
-        if (!is_array($data['value'])) {
+        if (!is_array($data['value']) || empty($data['value'])) {
             $this->display_name_components = 'last_name,Last Name;';
+            if (empty($data['value'])) $data['value'] = '';
             $data['value'] = array(array('id' => 'last_name', 'value' => $data['value']));
         }
 
