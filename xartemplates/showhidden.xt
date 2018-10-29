@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <input type="hidden" name="#$name#[day]" id="#$id#_day" value="#$value['day']#"/>
     <input type="hidden" name="#$name#[month]" id="#$id#_month" value="#$value['month']#"/>
-    <input type="hidden" name="#$name#[year" id="#$id#_year" value="#$value['year']#"/>
+    <input type="hidden" name="#$name#[year]" id="#$id#_year" value="#$value['year']#"/>
     <input type="hidden" name="#$name#[hour]" id="#$id#_hour" value="#$value['hour']#"/>
     <input type="hidden" name="#$name#[minute]" id="#$id#_minute" value="#$value['minute']#"/>
     <input type="hidden" name="#$name#[second]" id="#$id#_second" value="#$value['second']#"/>
