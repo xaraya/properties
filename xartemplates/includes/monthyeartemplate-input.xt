@@ -23,7 +23,7 @@
         </xar:for>
     </select>
 
-    <select name="#$name#_year" id="#$id#[year]" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#" class="#$class#-year">
+    <select name="#$name#[year]" id="#$id#_year" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#" class="#$class#-year">
         <xar:for start="$i = $start_year" test="$i le $end_year" iter="$i++">
             <xar:if condition="$i eq $value['year']">
                 <option value="#$i#" selected="selected">#$i#</option>

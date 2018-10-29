@@ -10,7 +10,7 @@
         <xar:set name="style">''</xar:set>
     </xar:if>
 
-    <select name="#$name#_day" id="#$id#[day]" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#" class="#$class#-day">
+    <select name="#$name#[day]" id="#$id#_day" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#" class="#$class#-day">
         <xar:for start="$i =1" test="$i le 31" iter="$i++">
             <xar:if condition="$i eq $value['day']">
                 <option value="#$i#" selected="selected">#$i#</option>
@@ -20,7 +20,7 @@
         </xar:for>
     </select>
 
-    <select name="#$name#_month" id="#$id#[month]" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#" class="#$class#-month">
+    <select name="#$name#[month]" id="#$id#_month" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#" class="#$class#-month">
         <xar:for start="$i =1" test="$i le 12" iter="$i++">
             <xar:set name="m">
                 strftime('%b', mktime(0, 0, 0, $i, 1, $value['year']))
