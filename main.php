@@ -74,7 +74,7 @@ class AddressProperty extends TextBoxProperty
                 $textbox->validation_min_length = 2;
             }
             foreach ($address_components as $field) {
-                $isvalid = $textbox->checkInput($name . '[' . $field['id'] . ']');
+                $isvalid = $textbox->checkInput($name . '["' . $field['id'] . '"]');
                 $valid = $valid && $isvalid;
                 if ($isvalid) {
                     $value[] = array('id' => $field['id'], 'value' => $textbox->value);
