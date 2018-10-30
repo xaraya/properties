@@ -19,7 +19,7 @@
  * The components the property can have are of the form
  * array(
  *     [array('id' => <component name>, 'name' => <component label>)]      (one or more elements)
- * Default components displayed are: street, city, region, postal_code, country
+ * Default components displayed are: street, street2, city, region, postal_code, country
  * These are given by $this->display_address_components and can be configured
  *
  * The property has a notion of country and will display a country listing  when it encounters a field called "country"
@@ -51,7 +51,7 @@ class AddressProperty extends TextBoxProperty
 
     function __construct(ObjectDescriptor $descriptor)
     {
-        $this->display_address_components = 'street,' . xarML('Street') . ';city,' . xarML('City') . ';postal_code,' . xarML('Postal Code') . ';region,' . xarML('Region') . ';country,' . xarML('Country') . ';';
+        $this->display_address_components = 'street,' . xarML('Street') . ';street2,' . xarML('Street') . ';city,' . xarML('City') . ';postal_code,' . xarML('Postal Code') . ';region,' . xarML('Region') . ';country,' . xarML('Country') . ';';
 
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
@@ -74,7 +74,7 @@ class AddressProperty extends TextBoxProperty
                 $textbox->validation_min_length = 2;
             }
             foreach ($address_components as $field) {
-                $isvalid = $textbox->checkInput($name . '_' . $field['id']);
+                $isvalid = $textbox->checkInput($name . '[' . $field['id'] . ']');
                 $valid = $valid && $isvalid;
                 if ($isvalid) {
                     $value[] = array('id' => $field['id'], 'value' => $textbox->value);
@@ -106,7 +106,7 @@ class AddressProperty extends TextBoxProperty
     public function validateValue($value = null)
     {
         // Dummy method
-        xarLog::message("DataProperty::validateValue: Validating property " . $this->name);
+        xarLog::message("DataProperty::validateValue: Validating property " . $this->name, xarLog::LEVEL_INFO);
         return true;
     }
 

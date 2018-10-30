@@ -3,12 +3,12 @@
     <xar:if condition="!empty($value['company'])">
         <div class="xar-row">
             <div class="xar-col">
-                <label for="#$name#_company">
+                <label for="#$name#[company]">
                     <xar:var name="value.company.label"/>
                 </label>
             </div>
             <div class="xar-col">
-                <input type="text" name="#$name#_company" id="#$id#_company" value="#$value['company']['value']#"/>
+                <input type="text" name="#$name#[company]" id="#$id#_company" value="#$value['company']['value']#"/>
             </div>
         </div>
     </xar:if>
@@ -21,7 +21,7 @@
                 </label>
             </div>
             <div class="xar-col">
-                <input type="text" name="#$name#_street" id="#$id#_street" value="#$value['street']['value']#"/>
+                <input type="text" name="#$name#[street]" id="#$id#_street" value="#$value['street']['value']#"/>
             </div>
         </div>
     </xar:if>
@@ -29,12 +29,12 @@
     <xar:if condition="!empty($value['city'])">
         <div class="xar-row">
             <div class="xar-col">
-                <label for="#$name#_city">
+                <label for="#$name#[city]">
                     <xar:var name="value.city.label"/>
                 </label>
             </div>
             <div class="xar-col">
-                <input type="text" name="#$name#_city" id="#$id#_city" value="#$value['city']['value']#"/>
+                <input type="text" name="#$name#[city]" id="#$id#_city" value="#$value['city']['value']#"/>
             </div>
         </div>
     </xar:if>
@@ -49,7 +49,7 @@
             <div class="xar-col">
                 <xar:var name="firstline">Choose a state</xar:var>
                 <xar:set name="firstline">"0,$firstline"</xar:set>
-                <xar:set name="regionname">$name . '_region'</xar:set>
+                <xar:set name="regionname">$name . '[region]'</xar:set>
                 <xar:data-input type="province" name="$regionname" value="$value['region']['value']" country="$value['country']['value']" firstline="$firstline"/>
             </div>
         </div>
@@ -58,12 +58,12 @@
     <xar:if condition="!empty($value['postal_code'])">
         <div class="xar-row">
             <div class="xar-col">
-                <label for="#$name#_postal_code">
+                <label for="#$name#[postal_code]">
                     <xar:var name="value.postal_code.label"/>
                 </label>
             </div>
             <div class="xar-col">
-                <input type="text" name="#$name#_postal_code" id="#$id#_postal_code" value="#$value['postal_code']['value']#"/>
+                <input type="text" name="#$name#[postal_code]" id="#$id#_postal_code" value="#$value['postal_code']['value']#"/>
             </div>
         </div>
     </xar:if>
@@ -78,7 +78,7 @@
             <div class="xar-col">
                 <xar:var name="firstline">Choose a country</xar:var>
                 <xar:set name="firstline">"0,$firstline"</xar:set>
-                <xar:set name="countryname">$name . '_country'</xar:set>
+                <xar:set name="countryname">$name . '[country]'</xar:set>
                 <xar:data-input type="countrylisting" name="$countryname" value="$value['country']['value']" firstline="$firstline"/>
             </div>
         </div>

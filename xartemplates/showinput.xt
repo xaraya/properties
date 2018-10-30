@@ -23,7 +23,7 @@
                             <div class="xar-col">
                                 <!-- Display the raw value for debugging -->
                                 <!-- <xar:set name="dummy">var_dump($rawvalue)</xar:set> -->
-                                <xar:set name="namestring">$name . '_' . $v['id']</xar:set>
+                                <xar:set name="namestring">$name . '[' . $v['id'] . ']'</xar:set>
                                 <xar:if condition="$part['id'] eq 'country'">
                                     <xar:if condition="empty($default_country)">
                                         <xar:var name="firstline">Choose a country</xar:var>
