@@ -4,7 +4,7 @@
     <xar:style scope="property" property="name" file="label"/>
     <xar:style scope="property" property="name" file="style" />
     
-    <xar:if condition="!isset($class)">
+    <xar:if condition="empty($class)">
         <xar:set name="class">'xar-name'</xar:set>
     <xar:else/>
         <xar:set name="class">'xar-name-' . $class</xar:set>
