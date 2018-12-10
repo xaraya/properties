@@ -146,10 +146,6 @@ class NameProperty extends TextBoxProperty
         }
         $data['value'] = $newarray;
 
-        if (empty($data['salutation_options'])) $data['salutation_options'] = $this->display_salutation_options;
-        else $this->display_salutation_options = $data['salutation_options'];
-        $data['salutation_options'] = $this->getSalutationOptions($data['salutation_options']);
-
         return DataProperty::showOutput($data);
     }
 
