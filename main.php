@@ -122,15 +122,18 @@ class NameProperty extends TextBoxProperty
         if (isset($data['value'])) $this->value = $data['value'];
         $data['value'] = $this->getValueArray();
         
-        // Cater to values as simple strings (errors, old versions etc.)
         if (!is_array($data['value']) || empty($data['value'])) {
-            $this->display_name_components = 'last_name,Last Name;';
+            // Cater to values as simple strings (errors, old versions etc.)
+            $data['name_components'] = 'last_name,Last Name;';
             if (empty($data['value'])) $data['value'] = '';
             $data['value'] = array(array('id' => 'last_name', 'value' => $data['value']));
+        } else {
+            // In the "normal" case we have a well formed string
+            if (empty($data['name_components'])) $data['name_components'] = $this->display_name_components;
+            else $this->display_name_components = $data['name_components'];
         }
 
-        if (empty($data['name_components'])) $data['name_components'] = $this->display_name_components;
-        else $this->display_name_components = $data['name_components'];
+        // Turn the string into an array
         $data['name_components'] = $this->getNameComponents($data['name_components']);
 
         // Rework the arrays to put the id in the index
@@ -233,6 +236,12 @@ class NameProperty extends TextBoxProperty
         return $valuearray;
     }
 
+/**
+ * Turn a string representing a set of name components into an array
+ * 
+ * @param string of name components
+ * return array
+ */
     function getNameComponents($componentstring)
     {
         $components = explode(';', $componentstring);
