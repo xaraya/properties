@@ -248,15 +248,26 @@ class AddressProperty extends TextBoxProperty
     function getValueArray()
     {
         $value = @unserialize($this->value);
+
+        if (!is_array($value)) return array();
         
+        // Cater to old array definition
+        $first_row = array_shift($value);var_dump($first_row);
+        if (!is_array($first_row)) {
+            $reworked_array = array();
+            foreach ($value as $k => $v) {
+                $reworked_array[] = array('id' => $k, 'value' => $v);
+            }
+            $value = $reworked_array;
+        }
         // Rework old definitions of street address components
         foreach ($value as $k => $v) {
             if ($v['id'] == 'line1') $v['id'] = 'street';
             if ($v['id'] == 'line2') $v['id'] = 'street2';
+            if ($v['id'] == 'line_1') $v['id'] = 'street';
+            if ($v['id'] == 'line_2') $v['id'] = 'street2';
             $value[$k] = $v;
         }
-        
-        if (!is_array($value)) $value = array();
 
         $components = $this->getAddressComponents($this->display_address_components);
         $valuearray = array();
