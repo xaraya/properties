@@ -51,7 +51,12 @@ class AddressProperty extends TextBoxProperty
 
     function __construct(ObjectDescriptor $descriptor)
     {
-        $this->display_address_components = 'street,' . xarML('Street') . ';street2,' . xarML('Street') . ';city,' . xarML('City') . ';postal_code,' . xarML('Postal Code') . ';region,' . xarML('Region') . ';country,' . xarML('Country') . ';';
+        $this->display_address_components = 'street,' . xarML('Street') . 
+                                            ';street2,' . xarML('Street') . 
+                                            ';city,' . xarML('City') . 
+                                            ';postal_code,' . xarML('Postal Code') . 
+                                            ';region,' . xarML('Region') . 
+                                            ';country,' . xarML('Country') . ';';
 
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
@@ -243,14 +248,23 @@ class AddressProperty extends TextBoxProperty
     function getValueArray()
     {
         $value = @unserialize($this->value);
+        
+        // Rework old definitions of street address components
+        foreach ($value as $k => $v) {
+            if ($v['id'] == 'line1') $v['id'] = 'street';
+            if ($v['id'] == 'line2') $v['id'] = 'street2';
+            $value[$k] = $v;
+        }
+        
         if (!is_array($value)) $value = array();
 
         $components = $this->getAddressComponents($this->display_address_components);
+        $valuearray = array();
         foreach ($components as $v) {
             $found = false;
             foreach ($value as $part) {
                 if (isset($part['id']) && ($part['id'] == $v['id'])) {
-                    if (!isset($part['value'])) $part['value'] = '';
+                    if (empty($part['value'])) $part['value'] = '';
                     $valuearray[] = array('id' => $v['id'], 'value' => $part['value']);
                     $found = true;
                     break;
