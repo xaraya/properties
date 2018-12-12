@@ -252,7 +252,7 @@ class AddressProperty extends TextBoxProperty
         if (!is_array($value)) return array();
         
         // Cater to old array definition
-        $first_row = array_shift($value);var_dump($first_row);
+        $first_row = array_shift($value);
         if (!is_array($first_row)) {
             $reworked_array = array();
             foreach ($value as $k => $v) {
