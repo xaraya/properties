@@ -201,7 +201,7 @@ Notes:
         if(!xarVarFetch('conditions',    'isset',     $conditions, NULL, XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('export',        'int',       $export,     0, XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('store',         'str:1',     $store,      'session', XARVAR_NOT_REQUIRED)) {return;}
-    
+
     //--- 5. Get configuration settings from modvars and tag attributes
 
     //--- 6. Assemble the fields to be displayed
@@ -563,14 +563,13 @@ Notes:
                     $labels[$column] = $properties[$column]->label;
                 }
                 $values = array($labels);
-                
                 // Now add the data
                 foreach ($exportitems as $row) {
                     $fields = array();
                     foreach ($firstrow as $column) {
                         //Check that all columns are among the fields to be displayed
                         if (!isset($data['fieldnames'][$column])) continue;
-                        $properties[$column]->setValue($row[$column]);
+                        $properties[$column]->value = $row[$column];
                         
                         // Let formatting of numbers happen downstream
                         switch ($properties[$column]->basetype) {
