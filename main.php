@@ -251,8 +251,9 @@ class AddressProperty extends TextBoxProperty
 
         if (!is_array($value)) return array();
         
-        // Cater to old array definition
-        $first_row = array_shift($value);
+        // Cater to old array definitions
+        reset($value);
+        $first_row = current($value);
         if (!is_array($first_row)) {
             $reworked_array = array();
             foreach ($value as $k => $v) {
