@@ -16,6 +16,15 @@
             <xar:set name="newline">1</xar:set>
         </xar:if>
 
+        <xar:if condition="!empty($value['street2']['value'])">
+            <xar:if condition="$newline">
+                <br/>
+                <xar:set name="newline">0</xar:set>
+            </xar:if>
+            <span class="street-address">#$value['street2']['value']#</span>
+            <xar:set name="newline">1</xar:set>
+        </xar:if>
+
         <xar:if condition="!empty($value['city']['value'])">
             <xar:if condition="$newline">
                 <br/>

@@ -26,6 +26,19 @@
         </div>
     </xar:if>
 
+    <xar:if condition="!empty($value['street2'])">
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="#$name#_street2">
+                    <xar:var name="value.street2.label"/>
+                </label>
+            </div>
+            <div class="xar-col">
+                <input type="text" name="#$name#[street2]" id="#$id#_street2" value="#$value['street2']['value']#"/>
+            </div>
+        </div>
+    </xar:if>
+
     <xar:if condition="!empty($value['city'])">
         <div class="xar-row">
             <div class="xar-col">
