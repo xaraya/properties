@@ -167,9 +167,13 @@ class AddressProperty extends TextBoxProperty
             $data['value'] = array(array('id' => 'street', 'value' => $data['value']));
         }
         
-        // For country specific layouts we need to reformat the value array
+        // Check if we should use country layouts
+        if ($this->display_country_layout) $data['layout'] = 'country';
+        // The setting can be overridden
         if (empty($data['layout'])) $data['layout'] = $this->display_layout;
         else $this->display_layout = $data['layout'];
+
+        // For country specific layouts we need to reformat the value array
         if ($data['layout'] == 'country') {
             $newvalue = array();
             foreach ($data['value'] as $value) {
