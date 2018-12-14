@@ -9,7 +9,7 @@
     <name>display_address_default_country</name>
     <label>Default Country</label>
     <description>The code of the country to display as default in the country listing</description>
-    <property_id>2</property_id>
+    <property_id>30072</property_id>
   </configurations>
   <configurations>
     <name>display_country_layout</name>
