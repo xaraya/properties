@@ -11,4 +11,10 @@
     <description>The code of the country to display as default in the country listing</description>
     <property_id>2</property_id>
   </configurations>
+  <configurations>
+    <name>display_country_layout</name>
+    <label>Display Country Layout</label>
+    <description>Use the country value to define the layout to display</description>
+    <property_id>14</property_id>
+  </configurations>
 </items>
