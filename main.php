@@ -222,7 +222,7 @@ class AddressProperty extends TextBoxProperty
         if (isset($data['value'])) $this->value = $data['value'];
 
         // Check if we should use country layouts
-        if ($this->display_country_layout) $data['layout'] == 'country';
+        if ($this->display_country_layout) $data['layout'] = 'country';
         // The setting can be overridden
         if (empty($data['layout'])) $data['layout'] = $this->display_layout;
         else $this->display_layout = $data['layout'];
