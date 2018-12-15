@@ -46,9 +46,7 @@
             <xar:if condition="$newline">
                 <br/>
                 <xar:set name="newline">0</xar:set>
-            <xar:else/>
-                &#160;
-            </xar:if>
+            <xar:else/>&#160;</xar:if>
             <span class="postal-code"><xar:var name="value.postal_code.value"/></span>
         </xar:if>
 
