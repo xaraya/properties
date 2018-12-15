@@ -41,7 +41,7 @@
                 <br/>
                 <xar:set name="newline">0</xar:set>
             <xar:else/>
-                <xar:if condition="!empty($value['city']['value'])">,</xar:if>
+                <xar:if condition="!empty($value['city']['value'])">,&#160;</xar:if>
             </xar:if>
             <span class="region"><xar:data-output type="province" value="$value['region']['value']" provinces="ch"/></span>
         </xar:if>
