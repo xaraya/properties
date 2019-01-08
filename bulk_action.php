@@ -16,17 +16,17 @@ function listing_bulk_action()
     sys::import('modules.dynamicdata.class.objects.base');
 
     // Get parameters
-    if(!xarVarFetch('idlist',         'isset', $idlist,         array(), XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('idlist',         'isset', $idlist,         '',   XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('operation',      'isset', $operation,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('redirecttarget', 'isset', $redirecttarget, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('returnurl',      'str',   $returnurl,      '', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('returnurl',      'str',   $returnurl,      '',   XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('objectname',     'str',   $objectname,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('module',         'str',   $module,         'listings', XARVAR_DONT_SET)) {return;}
 
     // Must have an object defined
     if (empty($objectname)) xarController::redirect($returnurl);
     // Must have some records defined
-    if (empty($idlist) || count($idlist) == 0) xarController::redirect($returnurl);
+    if (empty($idlist)) xarController::redirect($returnurl);
     // Must have an operation defined
     if (empty($operation)) xarController::redirect($returnurl);
 
@@ -36,7 +36,8 @@ function listing_bulk_action()
         case 1: /* reject item */
         case 2: /* processed */
         case 3: /* item is active, ready */
-            foreach ($ids as $id => $val) {
+            $idlist = explode(',', $idlist);
+            foreach ($idlist as $id => $val) {
                 if (empty($val)) continue;
                 //get the listing and update
                  $item = $listing->getItem(array('itemid' => $val));
@@ -44,7 +45,8 @@ function listing_bulk_action()
             }
             break;
         case 10: /* physically delete each item */
-            foreach ($ids as $id => $val) {
+            $idlist = explode(',', $idlist);
+            foreach ($idlist as $id => $val) {
                 if (empty($val)) continue;
                 //delete the listing
                 if (!$listing->deleteItem(array('itemid' => $val))) return;
