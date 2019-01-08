@@ -729,7 +729,7 @@ Notes:
         $data['params']['sort'] = $sort;
     //    $data['params']['items_per_page'] = $items_per_page;
         $data['params']['startnum'] = "%%";
-        // The startnum parameter needs to be passed directly to th templae (pager and such)
+        // The startnum parameter needs to be passed directly to the template (pager and such)
         $data['startnum'] = $startnum;
 
         // Need this in case this code is turned into a dprop
