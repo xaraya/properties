@@ -30,7 +30,7 @@ class NumberProperty extends FloatBoxProperty
     public $currencyformat = null;
 
     public $display_show_zeros = 1;
-    public $display_numberpattern = '#,##0.00';
+    public $display_numberpattern = '#,##0.##';
 
     public function __construct(ObjectDescriptor $descriptor)
     {
@@ -42,9 +42,9 @@ class NumberProperty extends FloatBoxProperty
         $this->isOO   = extension_loaded('intl');
         if ($this->isOO) {
             // Create the formatter object using the current locale
-            $localeinfo = xarLocaleGetInfo(xarMLSGetCurrentLocale());
+            $localeinfo = xarLocaleGetInfo(xarMLS::getCurrentLocale());
             $locale = $localeinfo['lang'] . "_" . $localeinfo['country'];
-            $this->formatter = new NumberFormatter($locale, NumberFormatter::PATTERN_DECIMAL);
+            $this->formatter = new NumberFormatter($locale, NumberFormatter::DEFAULT_STYLE);
             
             // Fall back if the constructor failed
             if (!$this->formatter) $this->isOO = false;
@@ -62,7 +62,9 @@ class NumberProperty extends FloatBoxProperty
         extract($data);
 
         if ($this->isOO) {
+            // Override the locale's display pattern if a pattern was passed
             if (isset($data['pattern'])) $this->display_numberpattern = $data['pattern'];
+
             if (isset($data['value'])) $this->setValue($data['value']);
             $data['rawvalue'] = $this->value;
             $data['value'] = $this->getValue();
@@ -83,7 +85,9 @@ class NumberProperty extends FloatBoxProperty
         if (isset($data['show_zeros'])) $this->display_show_zeros = $data['show_zeros'];
 
         if ($this->isOO) {
-            if (isset($data['pattern'])) $this->display_numberpattern = $data['pattern'];
+            // Override the locale's display pattern if a pattern was passed
+            if (isset($data['pattern'])) $this->formatter->setPattern($data['pattern']);
+
             if (isset($data['value'])) $this->setValue($data['value']);
             $data['rawvalue'] = $this->value;
             $data['value'] = $this->getValue();
@@ -100,9 +104,8 @@ class NumberProperty extends FloatBoxProperty
     public function getValue()
     {
         if ($this->isOO) {
-            $this->formatter->setPattern($this->display_numberpattern);
             try {
-                $value = $this->formatter->format($this->value);
+                $display_string = $this->formatter->format($this->value);
             } catch (Exception $e) {
                 throw new Exception(xarML('Incorrect value for getValue method of number property #(1)', $this->name));
             }
@@ -111,25 +114,24 @@ class NumberProperty extends FloatBoxProperty
                 $error_code = $this->formatter->getErrorCode();
                 if (!empty($error_code)) echo $this->formatter->getErrorMessage();
             }
-            return $value;
+            return $display_string;
         } else {
             if (empty($this->display_numberformat)) {
                 $settings =& xarMLSLoadLocaleData();
             } else {
                 $settings = $this->assembleSettings();
             }
-            $value = xarLocaleFormatNumber(trim($this->value),$settings);
+            $display_string = xarLocaleFormatNumber(trim($this->value),$settings);
     
-            return xarVarPrepHTMLDisplay($value);
+            return xarVarPrepHTMLDisplay($display_string);
         }
     }
 
     public function setValue($value=null)
     {
         if ($this->isOO) {
-            $this->formatter->setPattern($this->display_numberpattern);
             try {
-                $this->value = $this->formatter->parse($value);
+                $this->value = $value;
             } catch (Exception $e) {
                 throw new Exception(xarML('Incorrect value for setValue method of number property #(1)', $this->name));
             }
@@ -214,12 +216,6 @@ class NumberProperty extends FloatBoxProperty
     {
         $data['value'] = $this->getValue();
         return parent::showHidden($data);
-    }    
-
-    function setPattern($pattern="")
-    {
-        if ($pattern == '') return true;
-        $this->display_numberpattern = $pattern;
     }    
 }
 
