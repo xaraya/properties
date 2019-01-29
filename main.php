@@ -30,7 +30,7 @@ class NumberProperty extends FloatBoxProperty
     public $currencyformat = null;
 
     public $display_show_zeros = 1;
-    public $display_numberpattern = '#,##0.##';
+    public $display_numberpattern = '#,##0.00';
 
     public function __construct(ObjectDescriptor $descriptor)
     {
@@ -45,6 +45,8 @@ class NumberProperty extends FloatBoxProperty
             $localeinfo = xarLocaleGetInfo(xarMLS::getCurrentLocale());
             $locale = $localeinfo['lang'] . "_" . $localeinfo['country'];
             $this->formatter = new NumberFormatter($locale, NumberFormatter::DEFAULT_STYLE);
+            // Force the display to 2 decimals for now
+            $this->formatter->setPattern($this->display_numberpattern);
             
             // Fall back if the constructor failed
             if (!$this->formatter) $this->isOO = false;
