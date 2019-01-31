@@ -216,7 +216,8 @@ class NumberProperty extends FloatBoxProperty
     
     function showHidden(Array $data = array())
     {
-        $data['value'] = $this->getValue();
+        // The hidden value is the raw value
+        //$data['value'] = $this->getValue();
         return parent::showHidden($data);
     }    
 }
