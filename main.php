@@ -55,8 +55,8 @@ class NumberProperty extends FloatBoxProperty
 
     public function validateValue($value = null)
     {
-        $this->setValue(trim($value));
-        return parent::validateValue($this->value);
+        $value = $fmt->parse($value);
+        return parent::validateValue($value);
     }
 
     public function showInput(Array $data = array())
