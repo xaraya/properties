@@ -55,7 +55,7 @@ class NumberProperty extends FloatBoxProperty
 
     public function validateValue($value = null)
     {
-        $value = $fmt->parse($value);
+        $value = $this->formatter->parse($value);
         return parent::validateValue($value);
     }
 
