@@ -161,8 +161,7 @@ class DateTimeProperty extends DataProperty
 
     function showHidden(Array $data = array())
     {
-        $array = $this->getvaluearray($data);
-        $data['value'] = $array['time'];
+        $data['value'] = $this->getvaluearray($data);
         return parent::showHidden($data);
     }
 }
