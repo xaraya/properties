@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
     <script src="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/lib/codemirror.js" type="text/javascript"/>
     <link rel="stylesheet" href="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/lib/codemirror.css"/>
@@ -11,8 +10,20 @@
     <link rel="stylesheet" href="#sys::code()#properties/codemirror/codemirrorui/css/codemirror-ui.css" type="text/css" media="screen" />
 
 
+    <xar:if condition="empty($style)">
+        <xar:set name="style">''</xar:set>
+    </xar:if>
+    <xar:if condition="empty($class)">
+        <xar:set name="class">''</xar:set>
+    </xar:if>
+    <xar:if condition="empty($rows)">
+        <xar:set name="rows">0</xar:set>
+    </xar:if>
+    <xar:if condition="empty($cols)">
+        <xar:set name="cols">0</xar:set>
+    </xar:if>
     <div style="clear:both; border: 1px dotted black; padding: 3px; background-color: ##F8F8F8">
-        <textarea id="#$name#" name="#$name#">#$value#</textarea>
+        <xar:data-input type="textarea" id="$name" name="$name" style="$style" rows="$rows" cols="$cols" value="$value"/>
     </div>
     
     <script>
