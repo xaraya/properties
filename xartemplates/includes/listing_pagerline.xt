@@ -4,7 +4,7 @@
         <form action="#$url#" method="post" style="clear: both">
             <xar:if condition="($items_per_page lt $total)">
                 <div class="xar-align-center">
-                    <xar:data-input type="pager" url="$url" items_per_page ="$items_per_page" startnum="$startnum" itemstotal="$total"/>
+                    <xar:data-input type="pager" url="$url" items_per_page="$items_per_page" startnum="$startnum" itemstotal="$total"/>
                 </div>
             </xar:if>
             <xar:if condition="$show_items_per_page">

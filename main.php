@@ -724,11 +724,12 @@ Notes:
         // A bunch of params the pager will want to see in its target url
         // order and sort are used by the up and down arrows
         // items_per_page is needed because we may be using dynamic items per page
-        $data['params']['op'] = 'page';
-        $data['params']['order'] = $order;
-        $data['params']['sort'] = $sort;
-    //    $data['params']['items_per_page'] = $items_per_page;
-        $data['params']['startnum'] = "%%";
+        $data['params']['op']             = 'page';
+        $data['params']['order']          = $order;
+        $data['params']['sort']           = $sort;
+        $data['params']['items_per_page'] = $items_per_page;
+        $data['params']['startnum']       = "%%";
+        
         // The startnum parameter needs to be passed directly to the template (pager and such)
         $data['startnum'] = $startnum;
 
