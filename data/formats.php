@@ -16,6 +16,7 @@ function date_formats()
     $formats[1] = array('id' => 1, 'name' => 'Universal - short', 'format' => 'Y-m-d', 'useoffset' => 0);
     $formats[2] = array('id' => 2, 'name' => 'US - short', 'format' => 'm-d-Y', 'useoffset' => 0);
     $formats[3] = array('id' => 3, 'name' => 'Euro - short', 'format' => 'd.m.Y', 'useoffset' => 0);
+    $formats[4] = array('id' => 4, 'name' => 'Long', 'format' => 'r', 'useoffset' => 0);
 
     return $formats;
 }
