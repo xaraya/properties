@@ -123,7 +123,7 @@ Notes:
         extract($data);
 
     //--- 2. Get the object for this listing
-        // if no object name is passed, bail
+        // if no object or object name is passed, bail
         if (!isset($object) && !isset($objectname)) throw new Exception('No object passed to the listing property');
 
         // We accept both object names and objects, but objectname overrides
@@ -405,9 +405,10 @@ Notes:
                 if (isset($thesesettings['laststartnum'])) $startnum = $thesesettings['laststartnum'];
             break;
 
-    //--- 10. Any other operation:get the query if it was passed as conditions, or create a new one
+    //--- 10. Any other operation: get the query if it was passed as conditions, or create a new one
             case "lettersearch":
             case "textsearch":
+            case "categorysearch":
 
                 if (!empty($conditions)) {
                     $object->dataquery->addconditions($conditions);
@@ -420,7 +421,7 @@ Notes:
             break;
 
             default:
-                throw new Exception(xarML('Illegal operation: #(1)',$operation));
+                throw new Exception(xarML('Illegal operation: #(1)', $operation));
             break;
         }
 
@@ -528,6 +529,7 @@ Notes:
             break;
             case "pagerclick":
             case "columnclick":
+            case "categorysearch":
 
     //--- 18. Operation filters: likely navigation, take last msg
 
@@ -535,7 +537,7 @@ Notes:
             break;
 
             default:
-                throw new Exception(xarML('Illegal operation: #(1)',$operation));
+                throw new Exception(xarML('Illegal operation: #(1)', $operation));
             break;
         }
 
