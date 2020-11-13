@@ -203,11 +203,19 @@ class NameProperty extends TextBoxProperty
         return $value;
     }
 
+    public function setValue(Array $components)
+    {
+        $components = $this->getNameComponents($this->display_name_components);
+        $keys = array_keys($components);
+        
+        return true;
+    }
+
 /**
  * Get an array of the name property's components
  * 
  * @param index if true return an indexed array of values where the id is the index
- *              otherwise return an array of id and name sutiable for dropdowns
+ *              otherwise return an array of id and name suitiable for dropdowns
  * return array
  */
     function getValueArray($index=false)
