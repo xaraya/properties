@@ -209,14 +209,18 @@ class NameProperty extends TextBoxProperty
 		if (!is_array($name_array)) return parent::setValue($name_array);
 
 		// This is an array. We need to remove any "bad" values and serialize it
+		// Get an array of the components in a name
 		$components = $this->getNameComponents($this->display_name_components);
 		$component_keys = array();
 		foreach ($components as $key => $component) $component_keys[] = $component['id'];
+		
+		// Weed out any of the parts of the name that don't have "good" components
 		foreach ($name_array as $key => $value) {
-        	if (!in_array($key, $component_keys)) unset($name_array[$key]);
+        	if (!isset($value['id']) || !in_array($value['id'], $component_keys)) unset($name_array[$key]);
 		}
+		
+		// Serialize and store what's left
 		$this->value = serialize($name_array);
-        
         return true;
     }
 
