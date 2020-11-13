@@ -203,10 +203,10 @@ class NameProperty extends TextBoxProperty
         return $value;
     }
 
-    public function setValue(Array $components)
+    public function setValue($name_array=NULL)
     {
 		// If a string is passed, we assume it is a serialized form of the name and let the textbox parent handle it 
-		if (!is_array($components)) return parent::setValue($components);
+		if (!is_array($name_array)) return parent::setValue($name_array);
 
 		// This is an array. We need to remove any "bad" values and serialize it
 		$components = $this->getNameComponents($this->display_name_components);
