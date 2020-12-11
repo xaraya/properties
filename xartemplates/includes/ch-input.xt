@@ -76,7 +76,7 @@
                 <xar:var name="firstline">Choose a canton</xar:var>
                 <xar:set name="firstline">"0,$firstline"</xar:set>
                 <xar:set name="regionname">$name . '[region]'</xar:set>
-                <xar:set name="regionname">$id . '_region'</xar:set>
+                <xar:set name="regionid">$id . '_region'</xar:set>
                 <xar:data-input type="province" name="$regionname" id="$regionid" value="$value['region']['value']" country="$value['country']['value']" firstline="$firstline"/>
             </div>
         </div>
