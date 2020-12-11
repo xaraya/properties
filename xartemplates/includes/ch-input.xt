@@ -93,7 +93,7 @@
                 <xar:var name="firstline">Choose a country</xar:var>
                 <xar:set name="firstline">"0,$firstline"</xar:set>
                 <xar:set name="countryname">$name . '[country]'</xar:set>
-                <xar:set name="countryid">$id . '_region'</xar:set>
+                <xar:set name="countryid">$id . '_country'</xar:set>
                 <xar:data-input type="countrylisting" name="$countryname" id="$countryid" value="$value['country']['value']" firstline="$firstline"/>
             </div>
         </div>
