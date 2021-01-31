@@ -638,6 +638,21 @@ Notes:
             echo "<br />";
         }
 
+        // Get the total number of rows
+        // Use isset here to check whether a $items param was even passed
+        if (!isset($items)) {
+            $data['total'] = $object->dataquery->getrows();
+        } else {
+            $data['total'] = count($items);
+        }
+        
+        // Based on the total of items, reset the startat parameter if need be to make it smaller than the total number of items
+        if ($data['total'] <= $object->dataquery->startat) {
+        	$startat = (int)($data['total']/$object->dataquery->rowstodo * ($object->dataquery->rowstodo - 1));
+        	if ($startat < 1) $startat = 1;
+        	$object->dataquery->startat = $startat;
+        }
+
         // Now we run the query, if that is required
         // Use isset here to check whether a $items param was even passed
         if (!isset($items)) {
@@ -647,9 +662,7 @@ Notes:
             $items = $object->getItems(array('fieldlist' => $data['fieldnames']));
             // We may need to recalculate the total if we have linked tables
             // Just force it for now
-            $data['total'] = $object->dataquery->getrows();
         } else {
-            $data['total'] = count($items);
             if (!empty($data['items_per_page'])) {
                 // items were passed, but we need to get the correct subset
                 // first get the total
@@ -686,7 +699,7 @@ Notes:
 			// Reorder
 			array_multisort($temp, $sort_order, $items);
         }
-
+        
         // Save the sequence of items for whoever. Do this only when an ID parameter was passed
         // We save both the keys and the query object, in case we need to recreate the query
         if (isset($data['id'])) {
