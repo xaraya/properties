@@ -164,6 +164,10 @@ class DateTimeProperty extends DataProperty
         $data['value'] = $this->getvaluearray($data);
         return parent::showHidden($data);
     }
-}
 
-?>
+    function showConfiguration(Array $data = array())
+    {
+        sys::import('properties.datetime.data.formats');
+        return parent::showConfiguration($data);
+    }
+}
