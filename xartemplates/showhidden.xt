@@ -7,7 +7,7 @@
 		<input type="hidden" name="#$name#[month]" id="#$id#_month" value="#$value.month#"/>
 		<input type="hidden" name="#$name#[year]" id="#$id#_year" value="#$value.year#"/>
     <xar:else />
-    	<input type="datetime-local" name="#$name#" id="#$id#" value="#$value#" hidden="hidden"/>
+    	<input type="date" name="#$name#" id="#$id#" value="#$value#" hidden="hidden"/>
     </xar:if>
 
     <xar:template file="dataproperty_additions" module="base"/>
