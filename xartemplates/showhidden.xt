@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <input type="hidden" name="#$name#[day]" id="#$id#_day" value="#$value['day']#"/>
-    <input type="hidden" name="#$name#[month]" id="#$id#_month" value="#$value['month']#"/>
-    <input type="hidden" name="#$name#[year]" id="#$id#_year" value="#$value['year']#"/>
-    <input type="hidden" name="#$name#[hour]" id="#$id#_hour" value="#$value['hour']#"/>
-    <input type="hidden" name="#$name#[minute]" id="#$id#_minute" value="#$value['minute']#"/>
-    <input type="hidden" name="#$name#[second]" id="#$id#_second" value="#$value['second']#"/>
-    <xar:if condition="isset($value['ampm'])">
-        <input type="hidden" name="#$name#[ampm]" id="#$id#_ampm" value="#$value['ampm']#"/>
+
+    <input type="text" name="#$name#_input_type" id="#$id#_input_type" value="#$input_type#" hidden="hidden"/>
+    <xar:if condition="$input_type eq 'dropdown'">
+		<input type="hidden" name="#$name#[day]" id="#$id#_day" value="#$value['day']#"/>
+		<input type="hidden" name="#$name#[month]" id="#$id#_month" value="#$value['month']#"/>
+		<input type="hidden" name="#$name#[year]" id="#$id#_year" value="#$value['year']#"/>
+		<input type="hidden" name="#$name#[hour]" id="#$id#_hour" value="#$value['hour']#"/>
+		<input type="hidden" name="#$name#[minute]" id="#$id#_minute" value="#$value['minute']#"/>
+		<input type="hidden" name="#$name#[second]" id="#$id#_second" value="#$value['second']#"/>
+		<xar:if condition="isset($value['ampm'])">
+			<input type="hidden" name="#$name#[ampm]" id="#$id#_ampm" value="#$value['ampm']#"/>
+		</xar:if>
+    <xar:else />
+    	<input type="datetime-local" name="#$name#" id="#$id#" value="#$value#" hidden="hidden"/>
     </xar:if>
 
     <xar:template file="dataproperty_additions" module="base"/>

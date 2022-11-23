@@ -6,8 +6,13 @@
       <xar:set name="evt_change">'return true;'</xar:set>
     </xar:if>
 
-    <xar:template file="datetemplate-input"/>
-    <xar:template file="timetemplate-input"/>
+    <input type="text" name="#$name#_input_type" id="#$id#_input_type" value="#$input_type#" hidden="hidden"/>
+    <xar:if condition="$input_type eq 'dropdown'">
+		<xar:template file="datetemplate-input"/>
+		<xar:template file="timetemplate-input"/>
+    <xar:else />
+    	<input type="datetime-local" name="#$name#" id="#$id#" value="#$value#"/>
+    </xar:if>
 
     <xar:template file="dataproperty_additions" module="base"/>
 </xar:template>
