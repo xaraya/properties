@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-    <input type="text" name="#$name#_input_type" id="#$id#_input_type" value="#$input_type#" hidden="hidden"/>
+    <input type="text" name="input_type_#$name#" id="#$id#_input_type" value="#$input_type#" hidden="hidden"/>
     <xar:if condition="$input_type eq 'dropdown'">
 		<input type="hidden" name="#$name#[day]" id="#$id#_day" value="#$value['day']#"/>
 		<input type="hidden" name="#$name#[month]" id="#$id#_month" value="#$value['month']#"/>

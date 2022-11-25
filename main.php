@@ -45,7 +45,7 @@ class DateTimeProperty extends DataProperty
         $name = empty($name) ? 'dd_'.$this->id : $name;
         
     	// Get the input type flag from the template so we know how to proceed
-    	if (!xarVarFetch($name . '_input_type', 'str:1:100', $input_type, '', XARVAR_NOT_REQUIRED)) return;
+    	if (!xarVarFetch('input_type_' . $name, 'str:1:100', $input_type, '', XARVAR_NOT_REQUIRED)) return;
 		if (empty($input_type)) $input_type = $this->input_type;
 
         // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)

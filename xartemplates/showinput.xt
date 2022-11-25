@@ -6,7 +6,7 @@
       <xar:set name="evt_change">'return true;'</xar:set>
     </xar:if>
 
-    <input type="text" name="#$name#_input_type" id="#$id#_input_type" value="#$input_type#" hidden="hidden"/>
+    <input type="text" name="input_type_#$name#" id="#$id#_input_type" value="#$input_type#" hidden="hidden"/>
     <xar:if condition="$input_type eq 'dropdown'">
 		<xar:template file="datetemplate-input"/>
 		<xar:template file="timetemplate-input"/>
