@@ -21,7 +21,8 @@ class QRCodeProperty extends TextBoxProperty
     public $desc       = 'QR Code';
     public $reqmodules = array();
 
-    public $initialization_image_size  = 150;
+    public $initialization_code_size  = 500;
+    public $initialization_code_color  = '#000000';
     public $display_url;
 
 //    public $name;
@@ -42,18 +43,15 @@ class QRCodeProperty extends TextBoxProperty
         $this->tplmodule = 'auto';
         $this->template =  'qrcode';
         $this->filepath   = 'auto';
-
-		$this->qr = new QR_BarCode($this->initialization_image_size);
-    }
-
-    public function showInput(Array $data = array())
-    {
     }
 
     public function showOutput(Array $data = array())
     {
-		if (empty($url)) $url = $this->display_url;
-        $this->qr->url($url);
+		if (empty($data['code_size'])) $data['code_size'] = $this->initialization_code_size;
+		if (empty($data['code_color'])) $data['code_color'] = $this->initialization_code_color;
+		$this->qr = new QR_BarCode($data['code_size'], $data['code_color']);
+		if (empty($data['url'])) $data['url'] = $this->display_url;
+        $this->qr->url($data['url']);
         $data['qrimage'] = base64_encode($this->qr->qrCode());
         
 		return parent::showOutput($data);

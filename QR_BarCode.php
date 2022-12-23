@@ -4,12 +4,22 @@
  * @author Legend Blogs
  * @url http://www.legendblogs.com
  */
-class QR_BarCode{
 
+class QR_BarCode extends xarObject
+{
     // Google Chart API URL
     private $googleChartAPI = 'http://chart.apis.google.com/chart';
     // Code data
     private $codeData;
+    private $code_size;
+    private $code_color;
+    
+    public function __construct($code_size=150, $code_color='#000000')
+    {
+    	$this->code_size  = $code_size;
+    	// Remove the hash from hex color codes
+    	$this->code_color = str_replace('#', '', $code_color);
+    }
     
     /**
      * URL QR code
@@ -90,11 +100,11 @@ class QR_BarCode{
      * @param string $filename
      * @return bool
      */
-    public function qrCode($size = 200, $filename = null) {
+    public function qrCode($filename = null) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->googleChartAPI);
         curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "chs={$size}x{$size}&cht=qr&chl=" . urlencode($this->codeData));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "chs={$this->code_size}x{$this->code_size}&cht=qr&chco=" . $this->code_color . "&chl=" . urlencode($this->codeData));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
