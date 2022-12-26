@@ -29,6 +29,8 @@ class DateTimeProperty extends DataProperty
     public $initialization_encrypt         = false;
     public $initialization_start_year;
     public $initialization_end_year;
+    // Allow for dropdowns or calendar (datetime-local) in HTML5
+    public $input_type                     = 'dropdown';
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -41,39 +43,68 @@ class DateTimeProperty extends DataProperty
     public function checkInput($name = '', $value = null)
     {
         $name = empty($name) ? 'dd_'.$this->id : $name;
-        // store the fieldname for validations who need them (e.g. file uploads)
-        $this->fieldname = $name;
-        if (!isset($value)) {
-            list($isvalid, $years) = $this->fetchValue($name . '["year"]');
-            list($isvalid, $months) = $this->fetchValue($name . '["month"]');
-            list($isvalid, $days) = $this->fetchValue($name . '["day"]');
-            list($isvalid, $hours) = $this->fetchValue($name . '["hour"]');
-            list($isvalid, $minutes) = $this->fetchValue($name . '["minute"]');
-            list($isvalid, $seconds) = $this->fetchValue($name . '["second"]');
+        
+    	// Get the input type flag from the template so we know how to proceed
+    	if (!xarVarFetch('input_type_' . $name, 'str:1:100', $input_type, '', XARVAR_NOT_REQUIRED)) return;
+		if (empty($input_type)) $input_type = $this->input_type;
+
+        // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
+        if ($input_type == 'dropdown') {
+			// store the fieldname for validations who need them (e.g. file uploads)
+			$this->fieldname = $name;
+			if (!isset($value)) {
+				list($isvalid, $years) = $this->fetchValue($name . '["year"]');
+				list($isvalid, $months) = $this->fetchValue($name . '["month"]');
+				list($isvalid, $days) = $this->fetchValue($name . '["day"]');
+				list($isvalid, $hours) = $this->fetchValue($name . '["hour"]');
+				list($isvalid, $minutes) = $this->fetchValue($name . '["minute"]');
+				list($isvalid, $seconds) = $this->fetchValue($name . '["second"]');
+			}
+			if (!isset($years) ||!isset($months) ||!isset($days) ||!isset($hours) ||!isset($minutes) ||!isset($seconds)) {
+				$this->objectref->missingfields[] = $this->name;
+				return null;
+			}
+			$value = mktime($hours,$minutes,$seconds,$months,$days,$years);
+        } else {
+    		// Get the date value from a datetime-local input
+    		if (!xarVarFetch($name, 'str:1:100', $template_value, '', XARVAR_NOT_REQUIRED)) return;
+    		if ($template_value != '') {
+    			$value = strtotime($template_value);
+    		} else {
+    			$value = $template_value;
+    		}
         }
-        if (!isset($years) ||!isset($months) ||!isset($days) ||!isset($hours) ||!isset($minutes) ||!isset($seconds)) {
-            $this->objectref->missingfields[] = $this->name;
-            return null;
-        }
-        $value = mktime($hours,$minutes,$seconds,$months,$days,$years);
         return $this->validateValue($value);
     }
 
     public function showInput(Array $data = array())
     {
-        $data['value'] = $this->getvaluearray($data);
-        if(!isset($data['onchange'])) $data['onchange'] = null; // let tpl decide what to do
-        $data['extraparams'] =!empty($extraparams) ? $extraparams : "";
+        // Send this value to the template so it knows what to display
+		if (!isset($data['input_type'])) $data['input_type'] = $this->input_type;
+
+		if(!isset($data['onchange'])) $data['onchange'] = null; // let tpl decide what to do
+		$data['extraparams'] =!empty($extraparams) ? $extraparams : "";
+		
+        // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
+        if ($data['input_type'] == 'dropdown') {
+		
+			$data['value'] = $this->getvaluearray($data);
+		
+			if($this->initialization_start_year == null)            
+				$this->initialization_start_year =  min($data['value']['year'], date("Y")) - 5;
+		
+			if($this->initialization_end_year == null)          
+				$this->initialization_end_year = max($data['value']['year'], date("Y")) + 5;
+				
+			$data['start_year'] = isset($data['start_year'])? $data['start_year'] : $this->initialization_start_year;
+			$data['end_year'] = isset($data['end_year'])? $data['end_year'] : $this->initialization_end_year;        
         
-        if($this->initialization_start_year == null)            
-            $this->initialization_start_year =  min($data['value']['year'], date("Y")) - 5;
-        
-        if($this->initialization_end_year == null)          
-            $this->initialization_end_year = max($data['value']['year'], date("Y")) + 5;
-                
-        $data['start_year'] = isset($data['start_year'])? $data['start_year'] : $this->initialization_start_year;
-        $data['end_year'] = isset($data['end_year'])? $data['end_year'] : $this->initialization_end_year;        
-        
+        } else {
+    		// Use the datetime-local input
+			if (!isset($data['value'])) $data['value'] = $this->value;
+			// The format is important here: no timezones allowed, and set the seconds to 00
+			$data['value'] = date('Y-m-d\TH:i:00', $data['value']);
+    	}
         return DataProperty::showInput($data);
     }
 
@@ -118,7 +149,7 @@ class DateTimeProperty extends DataProperty
         // This is already a time array
         if (is_array($value)) return $value;
 
-// Not a good ideea to force to time()
+// Not a good idea to force to time()
 //        $value = $value == 0 ? time() : $value;
         if (empty($value)) $value = 0;
         $date = new XarDateTime();
@@ -161,8 +192,19 @@ class DateTimeProperty extends DataProperty
 
     function showHidden(Array $data = array())
     {
-        $data['value'] = $this->getvaluearray($data);
-        return parent::showHidden($data);
+        // Send this value to the template so it knows what to display
+		if (!isset($data['input_type'])) $data['input_type'] = $this->input_type;
+
+        // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
+        if ($data['input_type'] == 'dropdown') {
+			$data['value'] = $this->getvaluearray($data);
+        } else {
+    		// Use the datetime-local input
+			if (!isset($data['value'])) $data['value'] = $this->value;
+			// The format is important here: no timezones allowed, and set the seconds to 00
+			$data['value'] = date('Y-m-d\TH:i:00', $data['value']);
+    	}
+		return parent::showHidden($data);
     }
 
     function showConfiguration(Array $data = array())
