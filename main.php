@@ -58,8 +58,8 @@ class IconDropdownProperty extends SelectProperty
         if (isset($data['icon_options'])) $this->icon_options = $data['icon_options'];
         // get the icon option corresponding to this value
         $result = $this->getIconOption();
-        // only apply xarVarPrepForDisplay on strings, not arrays et al.
-        if (!empty($result) && is_string($result)) $result = xarVarPrepForDisplay($result);
+        // only apply xarVar::prepForDisplay on strings, not arrays et al.
+        if (!empty($result) && is_string($result)) $result = xarVar::prepForDisplay($result);
         $data['icon_option'] = $result;
         return parent::showOutput($data);
     }
@@ -109,7 +109,7 @@ class IconDropdownProperty extends SelectProperty
         if (count($this->icon_options) > 0) {
             $options = $this->icon_options;
         } else {
-            $options = $this->getIconOptions();
+            $options = $this->getOptions();
         }
         foreach ($options as $option) {
             if ($option['id'] == $this->value) {
@@ -121,4 +121,3 @@ class IconDropdownProperty extends SelectProperty
         return $this->value;
     }
 }
-?>
