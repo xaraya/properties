@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+        <div>
+            <h2>QRCode Property</h2>
+                <h3>Description</h3>
+                <p>
+                    The QRCode dataproperty displays a QR code based on content passed through its attributes.  
+                </p>
+                <p>
+                    At present the property only accepts a URL attribute. 
+                </p>
+                <p>
+                    The property uses a third party wrapper class around a call to Google's Chart API. This API is deprecated as of 2016, and its replacement does not support QR codes. 
+                    In the future this property will need to be rewritten to use some other third party library to generate the codes. But hey, as long as it works..
+                </p>
+                <p>
+                    This property is meant to be used standalone. There is at present no input display.
+                </p>
+                <h3>Usage</h3>
+                <h4>Standalone</h4>
+                    <pre>
+    &lt;xar:data-output type="qrcode" <i>[attr1="value1",...]</i> /&gt;
+                    </pre>
+            <h3>Examples</h3>
+                    <pre>
+    &lt;xar:data-output type="qrcode" url="https//:www.google.com" /&gt;
+                    </pre>
+            <h3>Attributes</h3>
+            <ul>
+                <li>
+                    <strong>url</strong>: string&#160;A valid URL.
+                </li>
+            </ul>
+        </div>
+</xar:template>
