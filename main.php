@@ -24,9 +24,9 @@ class CodeMirrorProperty extends TextAreaProperty
     public $id         = 30101;
     public $name       = 'codemirror';
     public $desc       = 'CodeMirror';
-    public $reqmodules = array();
-    
-    function __construct(ObjectDescriptor $descriptor)
+    public $reqmodules = [];
+
+    public function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
@@ -34,11 +34,9 @@ class CodeMirrorProperty extends TextAreaProperty
         $this->filepath   = 'auto';
     }
 
-    public function showInput(Array $data = array())
+    public function showInput(array $data = [])
     {
         $data['basepath'] = sys::code() . 'properties/codemirror/xartemplates/includes/codemirror/';
         return parent::showInput($data);
     }
 }
-
-?>
