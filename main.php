@@ -1,7 +1,8 @@
-<?php 
+<?php
+
 /**
  * IconDropdown Property
- * 
+ *
  * @package properties
  * @subpackage icondropdown property
  * @category Third Party Xaraya Property
@@ -22,9 +23,9 @@ class IconDropdownProperty extends SelectProperty
     public $id         = 30123;
     public $name       = 'icondropdown';
     public $desc       = 'IconDropdown';
-    public $reqmodules = array();
+    public $reqmodules = [];
 
-    public $icon_options = array();
+    public $icon_options = [];
     public $initialization_icon_directory    = 'set1';
     public $initialization_icon_options   = '0,red-12.png;
                                              1,yellow-12-png;
@@ -33,56 +34,64 @@ class IconDropdownProperty extends SelectProperty
                                              4,blue-12.png;
                                              5,clear-12.png;';
 
-    function __construct(ObjectDescriptor $descriptor)
+    public function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
         $this->tplmodule  = 'auto';
         $this->filepath   = 'auto';
         $this->template   = 'icondropdown';
-        
     }
 
-    function showInput(Array $data=array())
+    public function showInput(array $data=[])
     {
         $data['template'] = 'dropdown';
         return parent::showInput($data);
     }
 
-    function showOutput(Array $data=array())
+    public function showOutput(array $data=[])
     {
-        if (!empty($data['value'])) $this->value = $data['value'];
-        if (!empty($data['icon_directory'])) $this->initialization_icon_directory = $data['icon_directory'];
-        if (!empty($data['icon_options'])) $this->initialization_icon_options = $data['icon_options'];
+        if (!empty($data['value'])) {
+            $this->value = $data['value'];
+        }
+        if (!empty($data['icon_directory'])) {
+            $this->initialization_icon_directory = $data['icon_directory'];
+        }
+        if (!empty($data['icon_options'])) {
+            $this->initialization_icon_options = $data['icon_options'];
+        }
 
         // If we have icon options passed, take them.
-        if (isset($data['icon_options'])) $this->icon_options = $data['icon_options'];
+        if (isset($data['icon_options'])) {
+            $this->icon_options = $data['icon_options'];
+        }
         // get the icon option corresponding to this value
         $result = $this->getIconOption();
         // only apply xarVar::prepForDisplay on strings, not arrays et al.
-        if (!empty($result) && is_string($result)) $result = xarVar::prepForDisplay($result);
+        if (!empty($result) && is_string($result)) {
+            $result = xarVar::prepForDisplay($result);
+        }
         $data['icon_option'] = $result;
         return parent::showOutput($data);
     }
 
-    function getOptions()
+    public function getOptions()
     {
-        $options = array();
-        $lines = explode(';',$this->initialization_icon_options);
+        $options = [];
+        $lines = explode(';', $this->initialization_icon_options);
         // remove the last (empty) element
         array_pop($lines);
-        foreach ($lines as $option)
-        {
+        foreach ($lines as $option) {
             // allow escaping \, for values that need a comma
             if (preg_match('/(?<!\\\),/', $option)) {
                 // if the option contains a , we'll assume it's an id,name combination
-                list($id,$name) = preg_split('/(?<!\\\),/', $option);
-                $id = trim(strtr($id,array('\,' => ',')));
-                $name = trim(strtr($name,array('\,' => ',')));
-                array_push($options, array('id' => $id, 'name' => $name));
+                [$id, $name] = preg_split('/(?<!\\\),/', $option);
+                $id = trim(strtr($id, ['\,' => ',']));
+                $name = trim(strtr($name, ['\,' => ',']));
+                array_push($options, ['id' => $id, 'name' => $name]);
             } else {
                 // otherwise we'll use the option for both id and name
-                $option = trim(strtr($option,array('\,' => ',')));
-                array_push($options, array('id' => $option, 'name' => $option));
+                $option = trim(strtr($option, ['\,' => ',']));
+                array_push($options, ['id' => $option, 'name' => $option]);
             }
         }
         return $options;
@@ -98,11 +107,13 @@ class IconDropdownProperty extends SelectProperty
      *                - true, if an option exists whose store value is $this->value
      *                - false, if no such option exists
      */
-    function getIconOption($check = false)
+    public function getIconOption($check = false)
     {
         if (!isset($this->value)) {
-             if ($check) return true;
-             return null;
+            if ($check) {
+                return true;
+            }
+            return null;
         }
 
         // we're interested in one of the known options (= default behaviour)
@@ -113,11 +124,15 @@ class IconDropdownProperty extends SelectProperty
         }
         foreach ($options as $option) {
             if ($option['id'] == $this->value) {
-                if ($check) return true;
+                if ($check) {
+                    return true;
+                }
                 return $option['name'];
             }
         }
-        if ($check) return false;
+        if ($check) {
+            return false;
+        }
         return $this->value;
     }
 }
