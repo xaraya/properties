@@ -16,12 +16,12 @@ function listing_bulk_action()
     sys::import('modules.dynamicdata.class.objects.base');
 
     // Get parameters
-    if(!xarVarFetch('idlist',         'isset', $idlist,         '',   XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('operation',      'isset', $operation,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('redirecttarget', 'isset', $redirecttarget, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('returnurl',      'str',   $returnurl,      '',   XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('objectname',     'str',   $objectname,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('module',         'str',   $module,         'listings', XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('idlist',         'isset', $idlist,         '',   xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('operation',      'isset', $operation,      NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('redirecttarget', 'isset', $redirecttarget, NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('returnurl',      'str',   $returnurl,      '',   xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('objectname',     'str',   $objectname,     NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('module',         'str',   $module,         'listings', xarVar::DONT_SET)) {return;}
 
     // Must have an object defined
     if (empty($objectname)) xarController::redirect($returnurl);
@@ -55,7 +55,7 @@ function listing_bulk_action()
         default: /* custom function */
             // Get the URL corresponding to this custom function
             $urlstring = 'funcurl_' . $operation;
-            xarVarFetch($urlstring,   'str', $funcurl,  '', XARVAR_NOT_REQUIRED);
+            xarVar::fetch($urlstring,   'str', $funcurl,  '', xarVar::NOT_REQUIRED);
 
             // If the URL is empty, bail
             if (empty($funcurl)) {

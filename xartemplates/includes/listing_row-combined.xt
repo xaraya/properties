@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:set name="foo">xarVarFetch('itemid','int',$itemid,0,XARVAR_NOT_REQUIRED)</xar:set>
+    <xar:set name="foo">xarVar::fetch('itemid','int',$itemid,0,xarVar::NOT_REQUIRED)</xar:set>
     <xar:set name="itemidvalue">$loopitem[$primaryalias]</xar:set>
     <xar:if condition="isset($itemid) AND ($itemid eq $itemidvalue)">
         <xar:set name="colspan">count($fields)</xar:set>
         <tr class="#$item_class#">
             <td colspan="#$colspan#">
-                <xar:if condition="xarUserIsLoggedIn() AND $allowedit">
+                <xar:if condition="xarUser::isLoggedIn() AND $allowedit">
                     <xar:set name="thisobject">DataObjectMaster::getObject(array('name' => $objectname))</xar:set>
                     <xar:set name="isupload">#$thisobject:upload#</xar:set>
                     <xar:if condition="!empty($isupload)">
@@ -15,10 +15,10 @@
                         <xar:set name="enc_type">'application/x-www-form-urlencoded'</xar:set>
                     </xar:if>
 
-                    <form method="post" action="#xarModURL($module,'user','modify')" enctype="#$enc_type#">
+                    <form method="post" action="#xarController::URL($module,'user','modify')" enctype="#$enc_type#">
                         <xar:data-form name="$objectname" itemid="$itemid" tplmodule="$tplmodule" template="$objectname"/>
                         <div>
-                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                            <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#"/>
                             <input type="hidden" name="confirm" id="confirm" value="1"/>
                             <input type="hidden" name="objectid" id="objectid" value="#$thisobject:objectid#"/>
                             <input type="hidden" name="itemid" id="itemid" value="#$itemid#"/>
