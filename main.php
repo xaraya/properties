@@ -54,8 +54,8 @@ class IconCheckboxProperty extends CheckboxProperty
         if (isset($data['icon_options'])) $this->icon_options = $data['icon_options'];
         // get the icon option corresponding to this value
         $result = $this->getIconOption();
-        // only apply xarVarPrepForDisplay on strings, not arrays et al.
-        if (!empty($result) && is_string($result)) $result = xarVarPrepForDisplay($result);
+        // only apply xarVar::prepForDisplay on strings, not arrays et al.
+        if (!empty($result) && is_string($result)) $result = xarVar::prepForDisplay($result);
         $data['icon_option'] = $result;
         return parent::showOutput($data);
     }
