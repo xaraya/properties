@@ -45,7 +45,7 @@ class DateTimeProperty extends DataProperty
         $name = empty($name) ? 'dd_'.$this->id : $name;
         
     	// Get the input type flag from the template so we know how to proceed
-    	if (!xarVarFetch('input_type_' . $name, 'str:1:100', $input_type, '', XARVAR_NOT_REQUIRED)) return;
+    	if (!xarVar::fetch('input_type_' . $name, 'str:1:100', $input_type, '', xarVar::NOT_REQUIRED)) return;
 		if (empty($input_type)) $input_type = $this->input_type;
 
         // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
@@ -67,7 +67,7 @@ class DateTimeProperty extends DataProperty
 			$value = mktime($hours,$minutes,$seconds,$months,$days,$years);
         } else {
     		// Get the date value from a datetime-local input
-    		if (!xarVarFetch($name, 'str:1:100', $template_value, '', XARVAR_NOT_REQUIRED)) return;
+    		if (!xarVar::fetch($name, 'str:1:100', $template_value, '', xarVar::NOT_REQUIRED)) return;
     		if ($template_value != '') {
     			$value = strtotime($template_value);
     		} else {
@@ -170,8 +170,8 @@ class DateTimeProperty extends DataProperty
         switch($this->display_datetime_format_type) {
             case 1:
             default:
-                $date = xarLocaleGetFormattedDate('short', $value, false);
-                $time = xarLocaleGetFormattedTime('short', $value, false);
+                $date = xarLocale::getFormattedDate('short', $value, false);
+                $time = xarLocale::getFormattedTime('short', $value, false);
                 $value = $date . " " . $time;
             break;
             case 2:
