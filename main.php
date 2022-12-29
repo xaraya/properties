@@ -64,16 +64,16 @@ class PagerProperty extends TextBoxProperty
             );
             $this->urltemplate = xarServer::getCurrentURL($addons);
          }
-         $this->module = xarModGetName();
+         $this->module = xarMod::getName();
      }
 
     function checkInput($name = '', $value = null)
     {
         if (!empty($name)) $name = $name . "_";
-        if(!xarVarFetch($name . 'startnum',        'int', $this->startnum,   NULL,  XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch($name . 'order',           'str', $this->order,      NULL,  XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch($name . 'items_per_page',  'int', $this->items_per_page,      NULL,  XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch($name . 'itemstotal',      'int', $this->itemstotal,      NULL,  XARVAR_DONT_SET)) {return;}
+        if(!xarVar::fetch($name . 'startnum',        'int', $this->startnum,   NULL,  xarVar::DONT_SET)) {return;}
+        if(!xarVar::fetch($name . 'order',           'str', $this->order,      NULL,  xarVar::DONT_SET)) {return;}
+        if(!xarVar::fetch($name . 'items_per_page',  'int', $this->items_per_page,      NULL,  xarVar::DONT_SET)) {return;}
+        if(!xarVar::fetch($name . 'itemstotal',      'int', $this->itemstotal,      NULL,  xarVar::DONT_SET)) {return;}
         return true;
     }
 
