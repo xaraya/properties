@@ -34,7 +34,7 @@ class PagerProperty extends TextBoxProperty
     public $id         = 30099;
     public $name       = 'pager';
     public $desc       = 'Pager';
-    public $reqmodules = array();
+    public $reqmodules = [];
 
     public $itemstotal = 0;
     public $items_per_page = 20;
@@ -43,9 +43,9 @@ class PagerProperty extends TextBoxProperty
 
     public $blocksize = 1;
     public $urltemplate = '';
-    public $blockoptions = array();
+    public $blockoptions = [];
 
-    function __construct(ObjectDescriptor $descriptor)
+    public function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
@@ -54,41 +54,55 @@ class PagerProperty extends TextBoxProperty
 
         extract($descriptor->getArgs());
 
-        if (!empty($startnum)) $this->startnum = $startnum;
+        if (!empty($startnum)) {
+            $this->startnum = $startnum;
+        }
         if (!empty($url)) {
             $this->urltemplate = $url;
-         }else {
-            $addons = array(
+        } else {
+            $addons = [
                 'startnum' => "%%",
                 'items_per_page' => $this->items_per_page,
-            );
+            ];
             $this->urltemplate = xarServer::getCurrentURL($addons);
-         }
-         $this->module = xarMod::getName();
-     }
+        }
+        $this->module = xarMod::getName();
+    }
 
-    function checkInput($name = '', $value = null)
+    public function checkInput($name = '', $value = null)
     {
-        if (!empty($name)) $name = $name . "_";
-        if(!xarVar::fetch($name . 'startnum',        'int', $this->startnum,   NULL,  xarVar::DONT_SET)) {return;}
-        if(!xarVar::fetch($name . 'order',           'str', $this->order,      NULL,  xarVar::DONT_SET)) {return;}
-        if(!xarVar::fetch($name . 'items_per_page',  'int', $this->items_per_page,      NULL,  xarVar::DONT_SET)) {return;}
-        if(!xarVar::fetch($name . 'itemstotal',      'int', $this->itemstotal,      NULL,  xarVar::DONT_SET)) {return;}
+        if (!empty($name)) {
+            $name = $name . "_";
+        }
+        if (!xarVar::fetch($name . 'startnum', 'int', $this->startnum, null, xarVar::DONT_SET)) {
+            return;
+        }
+        if (!xarVar::fetch($name . 'order', 'str', $this->order, null, xarVar::DONT_SET)) {
+            return;
+        }
+        if (!xarVar::fetch($name . 'items_per_page', 'int', $this->items_per_page, null, xarVar::DONT_SET)) {
+            return;
+        }
+        if (!xarVar::fetch($name . 'itemstotal', 'int', $this->itemstotal, null, xarVar::DONT_SET)) {
+            return;
+        }
         return true;
     }
 
-    function getArgs(Array $args=array())
+    public function getArgs(array $args=[])
     {
-        $position = array(
+        $position = [
                         'startnum' => $this->startnum,
                         'order'    => $this->order,
                         'items_per_page'     => $this->items_per_page,
-                     );
-        foreach ($args as $key => $value) $position[$key] = $value;
+                     ];
+        foreach ($args as $key => $value) {
+            $position[$key] = $value;
+        }
         return $position;
     }
 
-    function validate()
+    public function validate()
     {
         $validated = true;
         if (empty($this->itemstotal) ||
@@ -99,32 +113,40 @@ class PagerProperty extends TextBoxProperty
         return $validated;
     }
 
-    public function showInput(Array $data = array())
+    public function showInput(array $data = [])
     {
         extract($data);
 
-        if (isset($localmodule)) $this->module = $localmodule;
+        if (isset($localmodule)) {
+            $this->module = $localmodule;
+        }
 
         if (isset($items_per_page)) {
             $this->items_per_page = $items_per_page;
         } else {
             $moduleitems_per_page = xarModVars::get($this->module, 'items_per_page');
-            if (!empty($moduleitems_per_page)) $this->items_per_page = $moduleitems_per_page;
+            if (!empty($moduleitems_per_page)) {
+                $this->items_per_page = $moduleitems_per_page;
+            }
         }
 
-        if (isset($itemstotal)) $this->itemstotal = $itemstotal;
-        if (isset($urltemplate)) $this->urltemplate = $urltemplate;
+        if (isset($itemstotal)) {
+            $this->itemstotal = $itemstotal;
+        }
+        if (isset($urltemplate)) {
+            $this->urltemplate = $urltemplate;
+        }
         if ($this->validate()) {
             $data = $this->getPagerInfo($this->startnum);
         } else {
-            $data = array();
+            $data = [];
         }
         return parent::showInput($data);
     }
 
-    public function showOutput(Array $data = array())
+    public function showOutput(array $data = [])
     {
-        return parent::showInput(array());
+        return parent::showInput([]);
     }
 
 /**
@@ -139,7 +161,7 @@ class PagerProperty extends TextBoxProperty
  *
  * @todo  Move this somewhere else, preferably transparent and a widget (which might be mutually exclusive)
  */
-    function getPagerInfo($currentItem)
+    public function getPagerInfo($currentItem)
     {
         // Default block options.
         if (is_numeric($this->blockoptions)) {
@@ -147,10 +169,18 @@ class PagerProperty extends TextBoxProperty
         }
 
         if (is_array($this->blockoptions)) {
-            if (!empty($this->blockoptions['blocksize'])) {$blockSize = $this->blockoptions['blocksize'];}
-            if (!empty($this->blockoptions['firstitem'])) {$firstItem = $this->blockoptions['firstitem'];}
-            if (!empty($this->blockoptions['firstpage'])) {$firstPage = $this->blockoptions['firstpage'];}
-            if (!empty($this->blockoptions['urltemplate'])) {$this->urltemplate = $this->blockoptions['urltemplate'];}
+            if (!empty($this->blockoptions['blocksize'])) {
+                $blockSize = $this->blockoptions['blocksize'];
+            }
+            if (!empty($this->blockoptions['firstitem'])) {
+                $firstItem = $this->blockoptions['firstitem'];
+            }
+            if (!empty($this->blockoptions['firstpage'])) {
+                $firstPage = $this->blockoptions['firstpage'];
+            }
+            if (!empty($this->blockoptions['urltemplate'])) {
+                $this->urltemplate = $this->blockoptions['urltemplate'];
+            }
             if (!empty($this->blockoptions['urlitemmatch'])) {
                 $urlItemMatch = $this->blockoptions['urlitemmatch'];
             } else {
@@ -160,16 +190,26 @@ class PagerProperty extends TextBoxProperty
         }
 
         // Default values.
-        if (empty($blockSize) || $blockSize < 1) {$blockSize = 10;}
-        if (empty($firstItem)) {$firstItem = 1;}
-        if (empty($firstPage)) {$firstPage = 1;}
+        if (empty($blockSize) || $blockSize < 1) {
+            $blockSize = 10;
+        }
+        if (empty($firstItem)) {
+            $firstItem = 1;
+        }
+        if (empty($firstPage)) {
+            $firstPage = 1;
+        }
 
         // The last item may be offset if the first item is not 1.
         $lastItem = ($this->itemstotal + $firstItem - 1);
 
         // Sanity check on arguments.
-        if ($currentItem < $firstItem) {$currentItem = $firstItem;}
-        if ($currentItem > $lastItem) {$currentItem = $lastItem;}
+        if ($currentItem < $firstItem) {
+            $currentItem = $firstItem;
+        }
+        if ($currentItem > $lastItem) {
+            $currentItem = $lastItem;
+        }
 
         // If this request was the same as the last one, then return the cached pager details.
         // TODO: is there a better way of caching for each unique request?
@@ -187,7 +227,9 @@ class PagerProperty extends TextBoxProperty
         // Get the start and end items of the page block containing the current item.
         $blockFirstItem = $currentItem - (($currentItem - $firstItem) % $itemsPerBlock);
         $blockLastItem = $blockFirstItem + $itemsPerBlock - 1;
-        if ($blockLastItem > $lastItem) {$blockLastItem = $lastItem;}
+        if ($blockLastItem > $lastItem) {
+            $blockLastItem = $lastItem;
+        }
 
         // Current/Last page numbers.
         $currentPage = (int)ceil(($currentItem-$firstItem+1) / $this->items_per_page) + $firstPage - 1;
@@ -201,22 +243,26 @@ class PagerProperty extends TextBoxProperty
         // Get start and end items of the current page.
         $pageFirstItem = $currentItem - (($currentItem-$firstItem) % $this->items_per_page);
         $pageLastItem = $pageFirstItem + $this->items_per_page - 1;
-        if ($pageLastItem > $lastItem) {$pageLastItem = $lastItem;}
+        if ($pageLastItem > $lastItem) {
+            $pageLastItem = $lastItem;
+        }
 
         // Initialise data array.
-        $data = array();
+        $data = [];
 
-        $data['middleitems'] = array();
-        $data['middleurls'] = array();
+        $data['middleitems'] = [];
+        $data['middleurls'] = [];
         $pageNum = (int)ceil(($blockFirstItem - $firstItem + 1) / $this->items_per_page) + $firstPage - 1;
         for ($i = $blockFirstItem; $i <= $blockLastItem; $i += $this->items_per_page) {
             if (!empty($this->urltemplate)) {
-                $data['middleurls'][$pageNum] = str_replace(array($urlItemMatch,$urlItemMatchEnc), $i, $this->urltemplate);
+                $data['middleurls'][$pageNum] = str_replace([$urlItemMatch,$urlItemMatchEnc], $i, $this->urltemplate);
             }
             $data['middleitems'][$pageNum] = $i;
             $data['middleitemsfrom'][$pageNum] = $i;
             $data['middleitemsto'][$pageNum] = $i + $this->items_per_page - 1;
-            if ($data['middleitemsto'][$pageNum] > $this->itemstotal) {$data['middleitemsto'][$pageNum] = $this->itemstotal;}
+            if ($data['middleitemsto'][$pageNum] > $this->itemstotal) {
+                $data['middleitemsto'][$pageNum] = $this->itemstotal;
+            }
             $pageNum += 1;
         }
 
@@ -247,8 +293,8 @@ class PagerProperty extends TextBoxProperty
 
         if (!empty($this->urltemplate)) {
             // These two links are for first and last pages.
-            $data['firsturl'] = str_replace(array($urlItemMatch,$urlItemMatchEnc), $data['firstpage'], $this->urltemplate);
-            $data['lasturl'] = str_replace(array($urlItemMatch,$urlItemMatchEnc), $data['lastpage'], $this->urltemplate);
+            $data['firsturl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], $data['firstpage'], $this->urltemplate);
+            $data['lasturl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], $data['lastpage'], $this->urltemplate);
         }
 
         $data['firstpagenum'] = $firstPage;
@@ -259,7 +305,7 @@ class PagerProperty extends TextBoxProperty
             $data['prevpageitems'] = $this->items_per_page;
             $data['prevpage'] = ($pageFirstItem - $this->items_per_page);
             if (!empty($this->urltemplate)) {
-                $data['prevpageurl'] = str_replace(array($urlItemMatch,$urlItemMatchEnc), $data['prevpage'], $this->urltemplate);
+                $data['prevpageurl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], $data['prevpage'], $this->urltemplate);
             }
         } else {
             $data['prevpageitems'] = 0;
@@ -268,11 +314,13 @@ class PagerProperty extends TextBoxProperty
         // Data for next page of items.
         if ($pageLastItem < $lastItem) {
             $nextPageLastItem = ($pageLastItem + $this->items_per_page);
-            if ($nextPageLastItem > $lastItem) {$nextPageLastItem = $lastItem;}
+            if ($nextPageLastItem > $lastItem) {
+                $nextPageLastItem = $lastItem;
+            }
             $data['nextpageitems'] = ($nextPageLastItem - $pageLastItem);
             $data['nextpage'] = ($pageLastItem + 1);
             if (!empty($this->urltemplate)) {
-                $data['nextpageurl'] = str_replace(array($urlItemMatch,$urlItemMatchEnc), $data['nextpage'], $this->urltemplate);
+                $data['nextpageurl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], $data['nextpage'], $this->urltemplate);
             }
         } else {
             $data['nextpageitems'] = 0;
@@ -283,7 +331,7 @@ class PagerProperty extends TextBoxProperty
             $data['prevblockpages'] = $blockSize;
             $data['prevblock'] = ($blockFirstItem - $itemsPerBlock);
             if (!empty($this->urltemplate)) {
-                $data['prevblockurl'] = str_replace(array($urlItemMatch,$urlItemMatchEnc), $data['prevblock'], $this->urltemplate);
+                $data['prevblockurl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], $data['prevblock'], $this->urltemplate);
             }
         } else {
             $data['prevblockpages'] = 0;
@@ -292,11 +340,13 @@ class PagerProperty extends TextBoxProperty
         // Data for next block of pages.
         if ($currentBlock < $totalBlocks) {
             $nextBlockLastItem = ($blockLastItem + $itemsPerBlock);
-            if ($nextBlockLastItem > $lastItem) {$nextBlockLastItem = $lastItem;}
+            if ($nextBlockLastItem > $lastItem) {
+                $nextBlockLastItem = $lastItem;
+            }
             $data['nextblockpages'] = ceil(($nextBlockLastItem - $blockLastItem) / $this->items_per_page);
             $data['nextblock'] = ($blockLastItem + 1);
             if (!empty($this->urltemplate)) {
-                $data['nextblockurl'] = str_replace(array($urlItemMatch,$urlItemMatchEnc), $data['nextblock'], $this->urltemplate);
+                $data['nextblockurl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], $data['nextblock'], $this->urltemplate);
             }
         } else {
             $data['nextblockpages'] = 0;
@@ -308,5 +358,3 @@ class PagerProperty extends TextBoxProperty
         return $data;
     }
 }
-
-?>
