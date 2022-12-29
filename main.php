@@ -18,22 +18,22 @@ class ListingProperty extends DataProperty
     public $id   = 30100;
     public $name = 'listing';
     public $desc = 'Listing';
-    public $reqmodules = array();
+    public $reqmodules = [];
 
     public $module;
     public $object      = null;
     public $objectname  = null;
     public $fieldlist   = '';
     public $conditions  = null;
-    public $listing = array();
+    public $listing = [];
 
-    public $alphabet = array(
+    public $alphabet = [
         'A', 'B', 'C', 'D', 'E', 'F',
         'G', 'H', 'I', 'J', 'K', 'L',
         'M', 'N', 'O', 'P', 'Q', 'R',
         'S', 'T', 'U', 'V', 'W', 'X',
-        'Y', 'Z'
-    );
+        'Y', 'Z',
+    ];
 
     public $display_show_primary        = false;
     public $display_show_search         = true;
@@ -43,7 +43,7 @@ class ListingProperty extends DataProperty
     public $display_show_items_per_page = false;
     public $display_items_per_page = 20;
 
-    function __construct(ObjectDescriptor $descriptor)
+    public function __construct(ObjectDescriptor $descriptor)
     {
         $this->tplmodule = 'auto';
         $this->template =  'listing';
@@ -52,7 +52,7 @@ class ListingProperty extends DataProperty
         parent::__construct($descriptor);
     }
 
-    public function showInput(Array $data = array())
+    public function showInput(array $data = [])
     {
         $data = array_merge($data, $this->runquery($data));
         return parent::showInput($data);
@@ -61,7 +61,7 @@ class ListingProperty extends DataProperty
 /*
 Notes:
 - We support 2 search types: by alphabet, by text search
-- Text searches and alphabet searches are mutually exclusive 
+- Text searches and alphabet searches are mutually exclusive
 - Sorting direction, ordering field is preserved across the search types
 - The itemtype is fundamental in determining if we are in an existing context (and have a current query) or a new context
 - As a general rule we try to pass everything that has not changed via session vars.
@@ -78,16 +78,28 @@ Notes:
     The second part of the name is the Label it will be given in the column header
     The third part of the name can have the values input / output (default) / hidden
 */
-    function runquery($data)
+    public function runquery($data)
     {
-    //--- -2. Initial parameters
-        if (!isset($data['object']))     $data['object'] = $this->object;
-        if (!isset($data['objectname'])) $data['objectname'] = $this->objectname;
-        if (!isset($data['fieldlist']))  $data['fieldlist'] = $this->fieldlist;
+        //--- -2. Initial parameters
+        if (!isset($data['object'])) {
+            $data['object'] = $this->object;
+        }
+        if (!isset($data['objectname'])) {
+            $data['objectname'] = $this->objectname;
+        }
+        if (!isset($data['fieldlist'])) {
+            $data['fieldlist'] = $this->fieldlist;
+        }
 //        if (!isset($data['tplmodule'])) $data['tplmodule'] = $this->tplmodule;
-        if (isset($data['tplmodule']))   $data['module'] = $data['tplmodule'];
-        if (!isset($data['layout']))     $data['layout'] = $this->layout;
-        if (!isset($data['conditions'])) $data['conditions'] = $this->conditions;
+        if (isset($data['tplmodule'])) {
+            $data['module'] = $data['tplmodule'];
+        }
+        if (!isset($data['layout'])) {
+            $data['layout'] = $this->layout;
+        }
+        if (!isset($data['conditions'])) {
+            $data['conditions'] = $this->conditions;
+        }
         if (isset($data['module'])) {
             $this->module = $data['module'];
         } else {
@@ -97,48 +109,69 @@ Notes:
         }
 
         $ipp = xarModVars::get($this->module, 'items_per_page');
-        if (!empty($ipp)) $this->display_items_per_page = $ipp;
+        if (!empty($ipp)) {
+            $this->display_items_per_page = $ipp;
+        }
 
         // Send any config settings not overwritten to the template
-        if (!isset($data['show_items_per_page'])) $data['show_items_per_page'] = $this->display_show_items_per_page;
-        if (!isset($data['items_per_page']))      $data['items_per_page']      = $this->display_items_per_page;
-        if (!isset($data['show_primary']))        $data['show_primary']        = $this->display_show_primary;
-        if (!isset($data['show_search']))         $data['show_search']         = $this->display_show_search;
-        if (!isset($data['show_alphabet']))       $data['show_alphabet']       = $this->display_show_alphabet;
-        if (!isset($data['showall_tab']))         $data['showall_tab']         = $this->display_showall_tab;
-        if (!isset($data['showother_tab']))       $data['showother_tab']       = $this->display_showother_tab;
+        if (!isset($data['show_items_per_page'])) {
+            $data['show_items_per_page'] = $this->display_show_items_per_page;
+        }
+        if (!isset($data['items_per_page'])) {
+            $data['items_per_page']      = $this->display_items_per_page;
+        }
+        if (!isset($data['show_primary'])) {
+            $data['show_primary']        = $this->display_show_primary;
+        }
+        if (!isset($data['show_search'])) {
+            $data['show_search']         = $this->display_show_search;
+        }
+        if (!isset($data['show_alphabet'])) {
+            $data['show_alphabet']       = $this->display_show_alphabet;
+        }
+        if (!isset($data['showall_tab'])) {
+            $data['showall_tab']         = $this->display_showall_tab;
+        }
+        if (!isset($data['showother_tab'])) {
+            $data['showother_tab']       = $this->display_showother_tab;
+        }
 
         // give the template the alphabet chars
         $data['alphabet'] = $this->alphabet;
 
-    //--- -1. Get the classes we need
+        //--- -1. Get the classes we need
         sys::import('xaraya.structures.query');
         sys::import('modules.dynamicdata.class.properties.master');
 
-    //--- 0. Local parameters
-        $baddatasources = array('dynamic_data','dummy','modulevars');
+        //--- 0. Local parameters
+        $baddatasources = ['dynamic_data','dummy','modulevars'];
 
-    //--- 1. Get the args passed to this function
+        //--- 1. Get the args passed to this function
 
         extract($data);
 
-    //--- 2. Get the object for this listing
+        //--- 2. Get the object for this listing
         // if no object or object name is passed, bail
-        if (!isset($object) && !isset($objectname)) throw new Exception('No object passed to the listing property');
+        if (!isset($object) && !isset($objectname)) {
+            throw new Exception('No object passed to the listing property');
+        }
 
         // We accept both object names and objects, but objectname overrides
         if (isset($objectname)) {
-            if (is_object($object)) throw new Exception('Object passed to the listing property instead of name');
+            if (is_object($object)) {
+                throw new Exception('Object passed to the listing property instead of name');
+            }
             sys::import('modules.dynamicdata.class.objects.master');
-            $object = DataObjectMaster::getObjectList(array('name' => $objectname));
+            $object = DataObjectMaster::getObjectList(['name' => $objectname]);
         } elseif (isset($object)) {
-            if (!is_object($object)) throw new Exception('No object passed to the listing property');
-            else {
+            if (!is_object($object)) {
+                throw new Exception('No object passed to the listing property');
+            } else {
                 $objectname = $object->name;
                 $data['objectname'] = $objectname;
-                if (!method_exists($object,'getItems')) {
+                if (!method_exists($object, 'getItems')) {
                     sys::import('modules.dynamicdata.class.objects.master');
-                    $object = DataObjectMaster::getObjectList(array('name' => $objectname));
+                    $object = DataObjectMaster::getObjectList(['name' => $objectname]);
                 }
             }
         } else {
@@ -146,23 +179,23 @@ Notes:
         }
 
         // itemtype 0 means all itemtypes
-        $itemtype = isset($itemtype) ? $itemtype : 0;
+        $itemtype ??= 0;
 
-        $module = isset($module) ? $module : xarMod::getName();
+        $module ??= xarMod::getName();
         xarMod::apiLoad($module);
         $regid = xarMod::getRegID($module);
 
-    /*    $searchandor = xarModVars::get('listing','searchandor'); //toggle for AND /OR logic in category query, default AND for categories
-        if ($searchandor != 1) { //default to AND
-            $searchop = 'and';
-        } else {
-            $searchop = 'or';
-        }*/
+        /*    $searchandor = xarModVars::get('listing','searchandor'); //toggle for AND /OR logic in category query, default AND for categories
+            if ($searchandor != 1) { //default to AND
+                $searchop = 'and';
+            } else {
+                $searchop = 'or';
+            }*/
 
-    //--- 3. Retrieve session vars we work with
+        //--- 3. Retrieve session vars we work with
 
         $q = xarSession::getVar('listing.' . $objectname . '.currentquery');
-        
+
         // Default values for a first time search; possibly overridden below
         // We check for settings from the object's dataquery or just hardcode
         $lastmsg      = '';
@@ -175,36 +208,64 @@ Notes:
             $lastorder    = '';
             $lastsort     = 'ASC';
         }
-            
+
         // Create a unique internal ID for this query
         $thissearch = md5($object->dataquery->tostring());
-        
+
         $settings = xarSession::getVar('listing.settings');
         if (!empty($settings) && isset($settings[$thissearch])) {
             // Get the settings of this search if they exist, overriding the above
             $thesesettings = $settings[$thissearch];
-            if (isset($thesesettings['lastmsg']))      $lastmsg = $thesesettings['lastmsg'];
-            if (isset($thesesettings['lastorder']))    $lastorder = $thesesettings['lastorder'];
-            if (isset($thesesettings['lastsort']))     $lastsort = $thesesettings['lastsort'];
-            if (isset($thesesettings['laststartnum'])) $laststartnum = $thesesettings['laststartnum'];
+            if (isset($thesesettings['lastmsg'])) {
+                $lastmsg = $thesesettings['lastmsg'];
+            }
+            if (isset($thesesettings['lastorder'])) {
+                $lastorder = $thesesettings['lastorder'];
+            }
+            if (isset($thesesettings['lastsort'])) {
+                $lastsort = $thesesettings['lastsort'];
+            }
+            if (isset($thesesettings['laststartnum'])) {
+                $laststartnum = $thesesettings['laststartnum'];
+            }
         }
 
-    //--- 4. Get all the parameters we need from the form. These can override the sessionvar settings
+        //--- 4. Get all the parameters we need from the form. These can override the sessionvar settings
 
-        if(!xarVar::fetch('startnum',      'int',       $startnum,   $laststartnum, xarVar::NOT_REQUIRED)) {return;}
-        if(!xarVar::fetch('letter',        'str:1',     $letter,     '', xarVar::NOT_REQUIRED)) {return;}
-        if(!xarVar::fetch('search',        'str:1:100', $search,     '', xarVar::NOT_REQUIRED)) {return;}
-        if(!xarVar::fetch('order',         'str',       $order,      $lastorder, xarVar::NOT_REQUIRED)) {return;}
-        if(!xarVar::fetch('sort',          'str',       $sort,       $lastsort, xarVar::NOT_REQUIRED)) {return;}
-        if(!xarVar::fetch('submit',        'str',       $submit,     '', xarVar::NOT_REQUIRED)) {return;}
-        if(!xarVar::fetch('op',            'str',       $op,         '', xarVar::NOT_REQUIRED)) {return;}
-        if(!xarVar::fetch('conditions',    'isset',     $conditions, NULL, xarVar::NOT_REQUIRED)) {return;}
-        if(!xarVar::fetch('export',        'int',       $export,     0, xarVar::NOT_REQUIRED)) {return;}
-        if(!xarVar::fetch('store',         'str:1',     $store,      'session', xarVar::NOT_REQUIRED)) {return;}
+        if (!xarVar::fetch('startnum', 'int', $startnum, $laststartnum, xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('letter', 'str:1', $letter, '', xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('search', 'str:1:100', $search, '', xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('order', 'str', $order, $lastorder, xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('sort', 'str', $sort, $lastsort, xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('submit', 'str', $submit, '', xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('op', 'str', $op, '', xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('conditions', 'isset', $conditions, null, xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('export', 'int', $export, 0, xarVar::NOT_REQUIRED)) {
+            return;
+        }
+        if (!xarVar::fetch('store', 'str:1', $store, 'session', xarVar::NOT_REQUIRED)) {
+            return;
+        }
 
-    //--- 5. Get configuration settings from modvars and tag attributes
+        //--- 5. Get configuration settings from modvars and tag attributes
 
-    //--- 6. Assemble the fields to be displayed
+        //--- 6. Assemble the fields to be displayed
 
         // Check if the object has a primary key
         if (empty($object->primary)) {
@@ -220,40 +281,43 @@ Notes:
             $fieldlist = $object->getFieldList();
             $nofieldlist = true;
         } elseif (!is_array($fieldlist)) {
-        // If a string was passed rather than an array, turn it into an array
-            $fieldlist = explode(',',$fieldlist);
+            // If a string was passed rather than an array, turn it into an array
+            $fieldlist = explode(',', $fieldlist);
         }
 
         // Someone passed a keyfield attribute
-        if (!empty($keyfield)) $defaultkey = $keyfield;
+        if (!empty($keyfield)) {
+            $defaultkey = $keyfield;
+        }
 
-        $data['fieldlabels'] = array();
-        $data['fieldnames'] = array();
-        $data['formfieldnames'] = array();
-        $data['formfieldstates'] = array();
-        $data['fields'] = array();                  // Deprecated - remove from templates!!!
-        $data['columns'] = array();                 // Deprecated - remove from templates!!!
-        $sourcefields = array();
+        $data['fieldlabels'] = [];
+        $data['fieldnames'] = [];
+        $data['formfieldnames'] = [];
+        $data['formfieldstates'] = [];
+        $data['fields'] = [];                  // Deprecated - remove from templates!!!
+        $data['columns'] = [];                 // Deprecated - remove from templates!!!
+        $sourcefields = [];
 
         $primarysource = '';
         $primaryalias = '';
-        $indices = array();
+        $indices = [];
         $defaultkeyname = '';
         $tablekeyfield = '';
         $keyfieldalias = '';
 
-        $properties =& $object->getProperties(array('status' => array(DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY)));
+        $properties =& $object->getProperties(['status' => [DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY]]);
         $has_primary = false;
         foreach ($fieldlist as $fielditem) {
-
             // Explode the single item in the fieldlist
-            $parts = explode(':',$fielditem);
+            $parts = explode(':', $fielditem);
             // The name of the field/property
             $fieldname = trim($parts[0]);
-            
+
             // Ignore items in the fieldlist that don't corresond to properties
-            if (!isset($properties[$fieldname])) continue;
-            
+            if (!isset($properties[$fieldname])) {
+                continue;
+            }
+
             // We have a corresponding property. Check it
             $property = $properties[$fieldname];
             $source = $property->source;
@@ -265,13 +329,15 @@ Notes:
             $formfieldstate = (isset($parts[2])) ? trim($parts[2]) : 'output';
 
             // Ignore fields with "bad" data sources for now
-            if (in_array($property->source, $baddatasources)) continue;
+            if (in_array($property->source, $baddatasources)) {
+                continue;
+            }
 
             // if the property source is "None", then only include it if an $items param was passed
             // We don't want to run a query with such property
             // CHECKEME: preList method now takes care of this
             // if (empty($property->source) && !isset($data['items'])) continue;
-            
+
             // Special treatment if this is the primary key
             if ($property->type == 21) {
                 if ($fieldname == $object->primary) {
@@ -292,14 +358,18 @@ Notes:
             }
 
             // Ignore other fields that don't have active or list status
-            if ($nofieldlist) { 
+            if ($nofieldlist) {
                 if (($property->getDisplayStatus() != DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE) &&
                     ($property->getDisplayStatus() != DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY)
-                ) continue;
+                ) {
+                    continue;
+                }
             }
-            
+
             // Do we need this?
-            if ($property->name == 'itemtype') $itemtypefield = $source;
+            if ($property->name == 'itemtype') {
+                $itemtypefield = $source;
+            }
 
             // We found a property that corresponds to the fieldlist entry
             if ($alias != $primaryalias) {
@@ -318,7 +388,9 @@ Notes:
             // If no key was passed take the first columne
             if (empty($defaultkey) || (!empty($defaultkey) && $property->name == $defaultkey)) {
                 // Only pick the primary key if it's being shown
-                if ($property->type == 21 && !$this->display_show_primary) continue;
+                if ($property->type == 21 && !$this->display_show_primary) {
+                    continue;
+                }
                 $defaultkey = $property->name;
                 $defaultkeyname = $property->label;
                 $tablekeyfield = $source;
@@ -341,7 +413,7 @@ Notes:
             $data['fields'][$alias] = $property->label;                  // Deprecated - remove from templates!!!
             $data['columns'][$alias] = $property->name;                  // Deprecated - remove from templates!!!
             $sourcefields[$alias] = $property->source;
-            
+
             // If we got here, then we need to check for a default key
             if (empty($defaultkey) && $this->display_show_primary) {
                 $defaultkey = $property->name;
@@ -364,24 +436,39 @@ Notes:
             $thesesettings['lastorder'] = $order;
         }
 
-    //--- 7. Figure out the operation we are performing
+        //--- 7. Figure out the operation we are performing
 
         $lastsearch = xarSession::getVar('listing.lastsearch');                 // get the ID of the last search
         $firsttime = empty($lastsearch) || ($thissearch != $lastsearch);        // criterium for first time display
-        if ($firsttime) $op = 'pagejump';                                       // override if we moved to a new page with a different query
+        if ($firsttime) {
+            $op = 'pagejump';
+        }                                       // override if we moved to a new page with a different query
 
-        if ($op == 'column') $operation = 'columnclick';                        // a  column header was clicked
-        elseif ($op == 'letter') { $startnum =1; $operation = 'lettersearch'; }                   // an alphabet link was clicked
-        elseif ($op == 'submit') { $startnum =1; $operation = 'textsearch'; }                    // a string was entered into the text field
-        elseif ($op == 'page')   $operation = 'pagerclick';                     // the pager was clicked
-        elseif (!empty($submit) && !$firsttime) $operation = 'categorysearch';  // the submit button was clicked (= any other search)
-        else $operation = 'newsearch';                                          // any other operation: we fall back to new search
+        if ($op == 'column') {
+            $operation = 'columnclick';
+        }                        // a  column header was clicked
+        elseif ($op == 'letter') {
+            $startnum =1;
+            $operation = 'lettersearch';
+        }                   // an alphabet link was clicked
+        elseif ($op == 'submit') {
+            $startnum =1;
+            $operation = 'textsearch';
+        }                    // a string was entered into the text field
+        elseif ($op == 'page') {
+            $operation = 'pagerclick';
+        }                     // the pager was clicked
+        elseif (!empty($submit) && !$firsttime) {
+            $operation = 'categorysearch';
+        }  // the submit button was clicked (= any other search)
+        else {
+            $operation = 'newsearch';
+        }                                          // any other operation: we fall back to new search
 
-        $data['params'] = array();
+        $data['params'] = [];
 
         switch ($operation) {
-
-    //--- 8. Prepare a navigation operation (click on the pager or one of the columns)
+            //--- 8. Prepare a navigation operation (click on the pager or one of the columns)
             case "pagerclick":
             case "columnclick":
 
@@ -393,20 +480,30 @@ Notes:
                     $q = unserialize($q);
                     $q->open();
                 }
-                if (!empty($conditions)) $object->dataquery->addconditions($conditions);
+                if (!empty($conditions)) {
+                    $object->dataquery->addconditions($conditions);
+                }
                 $data['msg'] = $lastmsg;
-            break;
+                break;
 
-    //--- 9. First time visit to this page; empty the sessionvars and reset the categories
+                //--- 9. First time visit to this page; empty the sessionvars and reset the categories
             case "newsearch":
                 // Go back to the persistent settings
-                if (isset($thesesettings['lastmsg']))      $msg = $thesesettings['lastmsg'];
-                if (isset($thesesettings['lastorder']))    $order = $thesesettings['lastorder'];
-                if (isset($thesesettings['lastsort']))     $sort = $thesesettings['lastsort'];
-                if (isset($thesesettings['laststartnum'])) $startnum = $thesesettings['laststartnum'];
-            break;
+                if (isset($thesesettings['lastmsg'])) {
+                    $msg = $thesesettings['lastmsg'];
+                }
+                if (isset($thesesettings['lastorder'])) {
+                    $order = $thesesettings['lastorder'];
+                }
+                if (isset($thesesettings['lastsort'])) {
+                    $sort = $thesesettings['lastsort'];
+                }
+                if (isset($thesesettings['laststartnum'])) {
+                    $startnum = $thesesettings['laststartnum'];
+                }
+                break;
 
-    //--- 10. Any other operation: get the query if it was passed as conditions, or create a new one
+                //--- 10. Any other operation: get the query if it was passed as conditions, or create a new one
             case "lettersearch":
             case "textsearch":
             case "categorysearch":
@@ -416,32 +513,39 @@ Notes:
                 }
                 $object->dataquery->setdistinct();
 
-    //--- 11. Filter on the objects and itemtypes we'll be displaying
+                //--- 11. Filter on the objects and itemtypes we'll be displaying
 
                 $data['msg'] = '';
-            break;
+                break;
 
             default:
                 throw new Exception(xarML('Illegal operation: #(1)', $operation));
-            break;
+                break;
         }
 
-    //--- 12. Add categories to the query if they are active
+        //--- 12. Add categories to the query if they are active
 
 
-    //--- 13. Define which field will be sorted on
+        //--- 13. Define which field will be sorted on
 
         // if there is no order defined use the key field
-        if (empty($order))  $order = $keyfieldalias;
-        if (empty($lastsort) && $operation != 'lettersearch')  $sort = 'ASC';
+        if (empty($order)) {
+            $order = $keyfieldalias;
+        }
+        if (empty($lastsort) && $operation != 'lettersearch') {
+            $sort = 'ASC';
+        }
         // change  the sort direction if I clicked one of the column names
         // but only if the column name is the same so it acts like a toggle for that field
         // only change sort if column name is clicked, not a letter which will retain the current settings
         if ($operation == "columnclick") {
-            if (isset($order)){
+            if (isset($order)) {
                 if ($order == $lastorder) {
-                    if($lastsort == 'ASC') $sort = 'DESC';
-                       else $sort = 'ASC';
+                    if ($lastsort == 'ASC') {
+                        $sort = 'DESC';
+                    } else {
+                        $sort = 'ASC';
+                    }
                 } else {
                     $sort = 'ASC';
                 }
@@ -454,37 +558,46 @@ Notes:
             $data['msg'] = '';
         }
 
-    //--- 14. Add the order and sort parameters to the query
-        if (is_array($order)) $order = trim($order[0]);
-        if (is_array($sort)) $sort = trim($sort[0]);
+        //--- 14. Add the order and sort parameters to the query
+        if (is_array($order)) {
+            $order = trim($order[0]);
+        }
+        if (is_array($sort)) {
+            $sort = trim($sort[0]);
+        }
         if (isset($sourcefields[$order])) {
-            $object->dataquery->setorder($sourcefields[$order],$sort);
+            $object->dataquery->setorder($sourcefields[$order], $sort);
         } else {
             // Support multiple orders/sort
             $order = explode(',', $order);
             $sort = explode(',', $sort);
             for ($i=0;$i<count($order);$i++) {
-                if (!isset($sort[$i])) $sort[$i] = 'ASC';
+                if (!isset($sort[$i])) {
+                    $sort[$i] = 'ASC';
+                }
                 $object->dataquery->addorder(trim($order[$i]), trim($sort[$i]));
             }
         }
 
         switch ($operation) {
             case "lettersearch":
-    //--- 16. Operation filters: we clicked one of the alphabet links
+                //--- 16. Operation filters: we clicked one of the alphabet links
 
                 if ($letter == 'Other') {
                     // In this case we create a bunch of SQL conditions
                     // this is better than the 1x way: no using SQL functions, and we can accomodate any type of 'alphabet'
                     //foreach ($alphabet as $let) $q->notlike('r.name', $let.'%');
-                    foreach ($alphabet as $let) $q->notlike($tablekeyfield, $let.'%');
+                    foreach ($alphabet as $let) {
+                        $q->notlike($tablekeyfield, $let.'%');
+                    }
                     $data['msg'] = xarML(
-                        'Listing where #(1) begins with character not listed in alphabet above (labeled as "Other")',$defaultkeyname
+                        'Listing where #(1) begins with character not listed in alphabet above (labeled as "Other")',
+                        $defaultkeyname
                     );
                 } elseif ($letter == 'All') {
                     $data['msg'] = xarML("All items");
                 } else {
-                // TODO: handle case-sensitive databases
+                    // TODO: handle case-sensitive databases
                     //$q->like('r.name', $letter.'%');
                     $object->dataquery->regex($tablekeyfield, '^(\\\%)*' . $letter);
                     $data['msg'] = xarML('Listing where #(1) begins with "#(2)"', $defaultkeyname, $letter);
@@ -493,12 +606,12 @@ Notes:
                 //Adjust session vars and parameters
                 $data['params']['letter'] = '';
                 $startnum = 1;
-            break;
+                break;
 
             case "newsearch":
             case "textsearch":
 
-    //--- 17. Operation filters: we are submitting a search text
+                //--- 17. Operation filters: we are submitting a search text
 
                 if (!empty($search)) {
                     $qsearch = '%'.$search.'%';
@@ -506,81 +619,90 @@ Notes:
                     $i = 0;
                     $msg = '';
                     foreach ($sourcefields as $sourcefield => $value) {
-                    	if (!empty($value)) {
-	                        if ($i >0) {
-	                            $msg .= ' or';
-	                        }
-	                        $c[$i]= $object->dataquery->plike($value, $qsearch);
-	                        $msg .= ' '.$data['fieldlabels'][$sourcefield].' ';
-	                        $i++;
-                    	}
+                        if (!empty($value)) {
+                            if ($i >0) {
+                                $msg .= ' or';
+                            }
+                            $c[$i]= $object->dataquery->plike($value, $qsearch);
+                            $msg .= ' '.$data['fieldlabels'][$sourcefield].' ';
+                            $i++;
+                        }
                     }
                     if (!empty($msg) && $i>0) {
-                        if (empty($data['msg'])) $data['msg'] = xarML('Listing where #(1) contain "#(2)"',$msg,$search);
-                        else  $data['msg'] .= xarML(' and listing where #(1) contain "#(2)"',$msg,$search);
+                        if (empty($data['msg'])) {
+                            $data['msg'] = xarML('Listing where #(1) contain "#(2)"', $msg, $search);
+                        } else {
+                            $data['msg'] .= xarML(' and listing where #(1) contain "#(2)"', $msg, $search);
+                        }
                     }
                     // take the conditions we decided on above and add them to the query as a bunch of ORs
                     $object->dataquery->qor($c);
                 }
-                if (empty($data['msg'])) $data['msg'] = xarML('All items');
+                if (empty($data['msg'])) {
+                    $data['msg'] = xarML('All items');
+                }
 
                 //Adjust session vars and parameters
                 $data['params']['letter'] = '';
 
-            break;
+                break;
             case "pagerclick":
             case "columnclick":
             case "categorysearch":
 
-    //--- 18. Operation filters: likely navigation, take last msg
+                //--- 18. Operation filters: likely navigation, take last msg
 
                 $data['msg'] = $lastmsg;
-            break;
+                break;
 
             default:
                 throw new Exception(xarML('Illegal operation: #(1)', $operation));
-            break;
+                break;
         }
 
-    //--- 19. Cache the dd object for reuse (if called)
+        //--- 19. Cache the dd object for reuse (if called)
 
         if ($export) {
             // Use isset here to check whether a $items param was passed
             if (!isset($items)) {
                 // Add the fieldlist defined above and get the raw values of the items
-                $exportitems = $object->getItems(array('fieldlist' => $data['fieldnames']));
+                $exportitems = $object->getItems(['fieldlist' => $data['fieldnames']]);
             } else {
                 $exportitems = $items;
             }
-            $values = array();
-            
+            $values = [];
+
             // Proceed if we have data
             if (is_array(reset($exportitems))) {
                 $firstrow = array_keys(reset($exportitems));
 
                 // First get the labels
-                $labels = array();
+                $labels = [];
                 foreach ($firstrow as $column) {
                     //Check that all columns are among the fields to be displayed
-                    if (!isset($data['fieldnames'][$column])) continue;
+                    if (!isset($data['fieldnames'][$column])) {
+                        continue;
+                    }
                     $labels[$column] = $properties[$column]->label;
                 }
-                $values = array($labels);
+                $values = [$labels];
                 // Now add the data
                 foreach ($exportitems as $row) {
-                    $fields = array();
+                    $fields = [];
                     foreach ($firstrow as $column) {
                         //Check that all columns are among the fields to be displayed
-                        if (!isset($data['fieldnames'][$column])) continue;
+                        if (!isset($data['fieldnames'][$column])) {
+                            continue;
+                        }
                         $properties[$column]->value = $row[$column];
-                        
+
                         // Let formatting of numbers happen downstream
                         switch ($properties[$column]->basetype) {
                             case 'integer':
                             case 'numeric':
                             case 'decimal':
                                 $fields[$column] = $properties[$column]->value;
-                            break;
+                                break;
                             default:
                                 $fields[$column] = $properties[$column]->getValue();
                         }
@@ -594,7 +716,9 @@ Notes:
                 xarSession::setVar('listing.' . $objectname, serialize($values));
             } else {
                 if (class_exists('xarVariableCache')) {
-                    if (xarVariableCache::isCached('listing.' . $objectname)) xarVariableCache::delCached('listing.' . $objectname);
+                    if (xarVariableCache::isCached('listing.' . $objectname)) {
+                        xarVariableCache::delCached('listing.' . $objectname);
+                    }
                     xarVariableCache::setCached('listing.' . $objectname, serialize($values));
                 } else {
                     $message = xarML('Variable Caching needs to be turned on');
@@ -602,10 +726,12 @@ Notes:
                 }
             }
         }
-        
-    //--- 20. Set the number of rows to display and the starting point
-    
-        if (!empty($data['items_per_page'])) $object->dataquery->setrowstodo($data['items_per_page']);
+
+        //--- 20. Set the number of rows to display and the starting point
+
+        if (!empty($data['items_per_page'])) {
+            $object->dataquery->setrowstodo($data['items_per_page']);
+        }
 
         // The record to start at needs to come from the template or from the session var
         $object->dataquery->setstartat($startnum);
@@ -616,8 +742,8 @@ Notes:
         $data['searchstring'] = $search;
 
         // Debug display
-        if (xarModVars::get('dynamicdata','debugmode') && 
-        in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+        if (xarModVars::get('dynamicdata', 'debugmode') &&
+        in_array(xarUser::getVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
             echo "ID: " . $thissearch;
             echo "<br />";
             echo "Operation: " . $operation . " [" . $op . "]";
@@ -628,13 +754,17 @@ Notes:
             echo "<br />";
             echo "Items per page: " . $data['items_per_page'];
             echo "<br />";
-            echo "Order: "; var_dump($order);
+            echo "Order: ";
+            var_dump($order);
             echo "<br />";
-            echo "Sort: "; var_dump($sort);
+            echo "Sort: ";
+            var_dump($sort);
             echo "<br />";
-            echo "Object: "; echo $object->name;
+            echo "Object: ";
+            echo $object->name;
             echo "<br />";
-            echo "Query: "; $object->dataquery->qecho();
+            echo "Query: ";
+            $object->dataquery->qecho();
             echo "<br />";
         }
 
@@ -645,88 +775,110 @@ Notes:
         } else {
             $data['total'] = count($items);
         }
-        
+
         // Based on the total of items, reset the startat parameter if need be to make it smaller than the total number of items
         if ($data['total'] <= $object->dataquery->startat) {
-        	$startat = (int)($data['total']/$object->dataquery->rowstodo * ($object->dataquery->rowstodo - 1));
-        	if ($startat < 1) $startat = 1;
-        	$object->dataquery->startat = $startat;
+            $startat = (int)($data['total']/$object->dataquery->rowstodo * ($object->dataquery->rowstodo - 1));
+            if ($startat < 1) {
+                $startat = 1;
+            }
+            $object->dataquery->startat = $startat;
         }
 
         // Now we run the query, if that is required
         // Use isset here to check whether a $items param was even passed
         if (!isset($items)) {
             // add conditions if they were passed
-            if (!empty($conditions)) $object->dataquery->addconditions($conditions);
+            if (!empty($conditions)) {
+                $object->dataquery->addconditions($conditions);
+            }
             // Add the fieldlist defined above and get the records to be displayed
-            $items = $object->getItems(array('fieldlist' => $data['fieldnames']));
-            // We may need to recalculate the total if we have linked tables
-            // Just force it for now
+            $items = $object->getItems(['fieldlist' => $data['fieldnames']]);
+        // We may need to recalculate the total if we have linked tables
+        // Just force it for now
         } else {
             if (!empty($data['items_per_page'])) {
                 // items were passed, but we need to get the correct subset
                 // first get the total
-                $tempitems = array();
+                $tempitems = [];
                 $item_values = array_values($items);
                 $startat = $object->dataquery->startat-1;
                 $endat = $startat + $object->dataquery->rowstodo;
-                for ($i=$startat;$i<$endat;$i++)  {
-                    if (!isset($item_values[$i])) break;
+                for ($i=$startat;$i<$endat;$i++) {
+                    if (!isset($item_values[$i])) {
+                        break;
+                    }
                     $tempitems[] = $item_values[$i];
                 }
                 $items = $tempitems;
             }
             // Now sort the items according to whatever sort column was defined
             // In this case we need to make sure that the $order var is not compound table + field
-            if (is_array($order)) $currentorder = current($order);
-            else $currentorder = $order;
-            
-            // Check if the order is a table field (first time) or a property name 
+            if (is_array($order)) {
+                $currentorder = current($order);
+            } else {
+                $currentorder = $order;
+            }
+
+            // Check if the order is a table field (first time) or a property name
             $flipped = array_flip($sourcefields);
-            if (isset($flipped[$currentorder])) $thisorder = $flipped[$currentorder];
-            else $thisorder = $currentorder;
-            
+            if (isset($flipped[$currentorder])) {
+                $thisorder = $flipped[$currentorder];
+            } else {
+                $thisorder = $currentorder;
+            }
+
             // Prepare to reorder the array
-            $temp = array();
-			foreach ($items as $key => $row) {
-				$temp[$key]  = $row[$thisorder];
-			}
-            
+            $temp = [];
+            foreach ($items as $key => $row) {
+                $temp[$key]  = $row[$thisorder];
+            }
+
             // Add the sort
-            if ($sort == 'DESC') $sort_order = SORT_DESC;
-            else $sort_order = SORT_ASC;
-            
-			// Reorder
-			array_multisort($temp, $sort_order, $items);
+            if ($sort == 'DESC') {
+                $sort_order = SORT_DESC;
+            } else {
+                $sort_order = SORT_ASC;
+            }
+
+            // Reorder
+            array_multisort($temp, $sort_order, $items);
         }
-        
+
         // Save the sequence of items for whoever. Do this only when an ID parameter was passed
         // We save both the keys and the query object, in case we need to recreate the query
         if (isset($data['id'])) {
             $keys = xarSession::getVar('listing.lastkeys');
-            if (empty($keys)) $keys = array();
+            if (empty($keys)) {
+                $keys = [];
+            }
             $thisquerystring = serialize($object->dataquery->tostring());
-            $keys[$data['id']] = array('keys' => array_keys($items), 'query' => $thisquerystring);
+            $keys[$data['id']] = ['keys' => array_keys($items), 'query' => $thisquerystring];
             xarSession::setVar('listing.lastkeys', $keys);
         }
 
         // Debug display
-        if (xarModVars::get('dynamicdata','debugmode') && 
-        in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
-            echo "Total rows: "; echo $data['total'];
+        if (xarModVars::get('dynamicdata', 'debugmode') &&
+        in_array(xarUser::getVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+            echo "Total rows: ";
+            echo $data['total'];
             echo "<br />";
             echo "First 10 rows: ";
             $index = 0;
             foreach ($items as $item) {
-            var_dump($item);
-            echo "<br />";
-            if ($index >= 10) break;
-            $index++;
+                var_dump($item);
+                echo "<br />";
+                if ($index >= 10) {
+                    break;
+                }
+                $index++;
             }
         }
-    
+
         // Add the filter variable to show a filter form
-        if (!isset($data['filter'])) $data['filter'] = 0;
+        if (!isset($data['filter'])) {
+            $data['filter'] = 0;
+        }
 
         // Add field definitions to the template variables
         $data['tablekeyfield'] = $tablekeyfield;
@@ -745,7 +897,7 @@ Notes:
         $data['params']['sort']           = $sort;
         $data['params']['items_per_page'] = $items_per_page;
         $data['params']['startnum']       = "%%";
-        
+
         // The startnum parameter needs to be passed directly to the template (pager and such)
         $data['startnum'] = $startnum;
 
@@ -760,9 +912,13 @@ Notes:
 
         // Set the session vars to the latest state
         $thesesettings['lastmsg']            = $data['msg'];
-        if (is_array($order)) $order = $order[0];
+        if (is_array($order)) {
+            $order = $order[0];
+        }
         $thesesettings['lastorder']          = $order;
-        if (is_array($sort)) $sort = $sort[0];
+        if (is_array($sort)) {
+            $sort = $sort[0];
+        }
         $thesesettings['lastsort']           = $sort;
         $thesesettings['laststartnum']       = $startnum;
         $thesesettings['lastitemsperpage']   = $items_per_page;
@@ -771,8 +927,10 @@ Notes:
         xarSession::setVar('listing.lastsearch', $thissearch);
 
         // Sort of ugly. How can we do better?
-        unset($q->dbconn);unset($q->output);unset($q->result);
-        
+        unset($q->dbconn);
+        unset($q->output);
+        unset($q->result);
+
         return $data;
     }
 
@@ -783,7 +941,9 @@ Notes:
     public function ajaxConfirm($flag='confirm')
     {
         if (xarController::$request->isAjax()) {
-            if(!xarVar::fetch($flag, 'int', $confirm, 0, xarVar::NOT_REQUIRED)) {return false;}
+            if (!xarVar::fetch($flag, 'int', $confirm, 0, xarVar::NOT_REQUIRED)) {
+                return false;
+            }
             return $confirm;
         } else {
             return false;
@@ -795,7 +955,7 @@ Notes:
  * TODO: allow overrides (module, theme) for the showoutput template.
  * Right now the template in the property is used, although included templates can be overrides
  */
-    public function ajaxRefresh($data=array())
+    public function ajaxRefresh($data=[])
     {
         if (xarController::$request->isAjax()) {
             $file = sys::code().'properties/listing/xartemplates/showinput.xt';
@@ -803,7 +963,7 @@ Notes:
             $compiler = XarayaCompiler::instance();
             $output = $compiler->compileFile($file);
             $data = $this->runquery($data);
-            $output = xarTpl::string($output,$data);
+            $output = xarTpl::string($output, $data);
             echo $output;
             exit;
         } else {
@@ -811,5 +971,3 @@ Notes:
         }
     }
 }
-
-?>
