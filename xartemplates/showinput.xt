@@ -31,7 +31,7 @@
       var textarea = document.getElementById('#$name#');
       var editor = new CodeMirrorUI(textarea,
        {
-        path : '#$path#',
+        path : '#$path#/',
           searchMode : 'inline',
           buttons : ['undo','redo','jump','reindent','about']
        },
