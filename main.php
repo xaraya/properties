@@ -12,6 +12,7 @@
  */
 
 sys::import('modules.dynamicdata.class.properties.base');
+sys::import('xaraya.structures.datetime');
 sys::import('properties.date.data.formats');
 
 class DateProperty extends DataProperty
@@ -21,17 +22,19 @@ class DateProperty extends DataProperty
     public $desc       = 'Date';
     public $reqmodules = array();
     public $basetype   = 'date';
-    // Allow for dropdowns or calendar (datetime-local) in HTML5
-    public $input_type                     = 'dropdown';
 
     // The default display is short uniersal display
     public $display_date_format_type   = 2;
     public $display_date_format_predef = 1;
     public $display_date_format_custom = 'c';
     public $initialization_encrypt     = false;
+    public $initialization_timezone;
     public $display_start_year;
     public $display_end_year;
 
+    // Allow for dropdowns or calendar (datetime-local) in HTML5
+    public $input_type                     = 'dropdown';
+    
     public function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
@@ -71,6 +74,10 @@ class DateProperty extends DataProperty
     			$value = $template_value;
     		}
         }
+
+        // Adjust the value for a timezone offset, if it exists
+        $value -= $this->getOffset();
+       
         return $this->validateValue($value);
     }
 
@@ -121,12 +128,19 @@ class DateProperty extends DataProperty
         if (is_array($value)) {
             // An array was passed
             $timestamp = mktime(0,0,0,$value['month'],$value['day'],$value['year']);
+            
+            // Adjust for timezone
+            $timestamp += $this->getOffset();
+            
             $value['date'] = $this->format($timestamp);
             $data['value'] = $value;
         } else {
             // A timestamp was passed
-            sys::import('xaraya.structures.datetime');
             $date = new XarDateTime();
+
+            // Adjust for timezone
+            $value += $this->getOffset();
+
             $date->settimestamp($value);
             $valuearray['day'] = $date->getDay();
             $valuearray['month'] = $date->getMonth();
@@ -140,7 +154,6 @@ class DateProperty extends DataProperty
 
     public function getValue()
     {
-        if (empty($this->value)) $this->value = time();
         return $this->format($this->value);
     }
     
@@ -156,7 +169,6 @@ class DateProperty extends DataProperty
 // Not a good ideea to force to time()
 //        $value = $value == 0 ? time() : $value;
         if (empty($value)) $value = 0;
-        sys::import('xaraya.structures.datetime');
         $date = new XarDateTime();
         $date->settimestamp($value);
         $valuearray['day'] = $date->getDay();
@@ -230,7 +242,6 @@ class DateProperty extends DataProperty
 
     private function get_daymonth_timestamp($timestamp=null)
     {
-        sys::import('xaraya.structures.datetime');
         $date = new XarDateTime();
         $this_date = $this->getvaluearray($timestamp);
         $date->day = $this_date['day'];
@@ -238,6 +249,34 @@ class DateProperty extends DataProperty
         $this_timestamp = $date->getTimestamp();
         return $this_timestamp;
     }
+/*
+ *  Support for time zone if it exists
+ * This function gets the offset in seconds to universal time
+ */
+    function getOffset()
+    {
+		if (empty($this->initialization_timezone)) {
+			return 0;
+		} else {
+			// Check for a xar function
+			if (strpos($this->initialization_timezone, 'xar') === 0) {
+            	@eval('$timezone_code = ' . $this->initialization_timezone .';');
+			} else {
+				// Do nothing nothing else for now
+				$timezone_code = $this->initialization_timezone;
+			}
+
+			try {
+				$timezone = new DateTimeZone($timezone_code);
+				$time = new DateTime("now", $timezone);
+				$offset = $timezone->getOffset($time);
+				return $offset;
+			} catch (Exception $e) {
+				return 0;
+			}
+		}
+		
+	}
 }
 
 ?>
