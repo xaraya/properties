@@ -14,6 +14,7 @@
 
 sys::import('modules.dynamicdata.class.properties.base');
 sys::import('xaraya.structures.datetime');
+sys::import('properties.datetime.data.formats');
 
 class DateTimeProperty extends DataProperty
 {
@@ -28,8 +29,10 @@ class DateTimeProperty extends DataProperty
     public $display_datetime_format_predef = 1;
     public $display_datetime_format_custom = 'c';
     public $initialization_encrypt         = false;
+    public $initialization_timezone;
     public $initialization_start_year;
     public $initialization_end_year;
+    
     // Allow for dropdowns or calendar (datetime-local) in HTML5
     public $input_type                     = 'dropdown';
 
@@ -37,8 +40,8 @@ class DateTimeProperty extends DataProperty
     {
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
-        $this->template =  'datetime';
-        $this->filepath   = 'auto';
+        $this->template  = 'datetime';
+        $this->filepath  = 'auto';
     }
 
     public function checkInput($name = '', $value = null)
@@ -81,6 +84,10 @@ class DateTimeProperty extends DataProperty
                 $value = $template_value;
             }
         }
+        
+        // Adjust the value for a timezone offset, if it exists
+        $value -= $this->getOffset();
+
         return $this->validateValue($value);
     }
 
@@ -146,9 +153,15 @@ class DateTimeProperty extends DataProperty
             $value = time();
         }
         if (!is_array($value)) {
+            // Adjust for timezone
+            $value += $this->getOffset();
+
             $valuearray['date'] = $this->format($value);
             $valuearray['time'] = $this->getvaluearray(['value' => $value]);
         } else {
+            // Adjust for timezone
+            $value['timestamp'] += $this->getOffset();
+
             $valuearray['date'] = $this->format($value['timestamp']);
             $valuearray['time'] = $value;
         }
@@ -157,7 +170,7 @@ class DateTimeProperty extends DataProperty
     }
 
     // Review this
-    public function getValue_x()
+    public function getValue()
     {
         return $this->format($this->value);
     }
@@ -238,6 +251,36 @@ class DateTimeProperty extends DataProperty
         }
         return parent::showHidden($data);
     }
+    
+/*
+ *  Support for time zone if it exists
+ * This function gets the offset in seconds to universal time
+ */
+    function getOffset()
+    {
+		if (empty($this->initialization_timezone)) {
+			return 0;
+		} else {
+			// Check for a xar function
+			if (strpos($this->initialization_timezone, 'xar') === 0) {
+            	@eval('$timezone_code = ' . $this->initialization_timezone .';');
+			} else {
+				// Do nothing nothing else for now
+				$timezone_code = $this->initialization_timezone;
+			}
+
+			try {
+				$timezone = new DateTimeZone($timezone_code);
+				$time = new DateTime("now", $timezone);
+				$offset = $timezone->getOffset($time);
+				return $offset;
+			} catch (Exception $e) {
+				return 0;
+			}
+		}
+		
+	}
+}
 
     public function showConfiguration(array $data = [])
     {

@@ -1,4 +1,13 @@
 <items>
+  <configurations itemid="565">
+    <id>565</id>
+    <name>initialization_timezone</name>
+    <label>Time zone</label>
+    <description>A string representing a timezone</description>
+    <property_id>2</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
   <configurations itemid="566">
     <id>566</id>
     <name>display_datetime_format_type</name>
@@ -12,7 +21,7 @@
     <id>567</id>
     <name>display_datetime_format_custom</name>
     <label>Custom format</label>
-    <description>A custom datetime fomat PHP can understand</description>
+    <description>A custom datetime format PHP can understand</description>
     <property_id>2</property_id>
     <ignore_empty>1</ignore_empty>
     <configuration>a:1:{s:14:"display_layout";s:7:"default";}</configuration>
