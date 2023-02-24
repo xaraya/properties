@@ -1,4 +1,13 @@
 <items>
+  <configurations itemid="565">
+    <id>565</id>
+    <name>initialization_timezone</name>
+    <label>Time zone</label>
+    <description>A string representing a timezone</description>
+    <property_id>2</property_id>
+    <ignore_empty>1</ignore_empty>
+    <configuration></configuration>
+  </configurations>
   <configurations itemid="566">
     <id>566</id>
     <name>display_date_format_type</name>

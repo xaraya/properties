@@ -13,7 +13,7 @@
     <select name="#$name#_month" id="#$id#_month" tabindex="#$tabindex#" onchange="#$evt_change#" style="#$style#" class="#$class#-month">
         <xar:for start="$i =1" test="$i le 12" iter="$i++">
             <xar:set name="m">
-                date('M', mktime(0, 0, 0, $i, 1, $value['year']))
+                date('F', mktime(0, 0, 0, $i, 1, $value['year']))
             </xar:set>
             <xar:if condition="$i eq $value['month']">
                 <option value="#$i#" selected="selected">#$m#</option>
