@@ -144,6 +144,7 @@ class DateTimeProperty extends DataProperty
             $valuearray['time'] = $this->getvaluearray(array('value' => $value));
         } else {
             // Adjust for timezone
+            $value['second'] += $this->getOffset();
             $value['timestamp'] += $this->getOffset();
 
             $valuearray['date'] = $this->format($value['timestamp']);
@@ -216,9 +217,13 @@ class DateTimeProperty extends DataProperty
         // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
         if ($data['input_type'] == 'dropdown') {
 			$data['value'] = $this->getvaluearray($data);
+            $data['value']['second'] += $this->getOffset();
+            $data['value']['timestamp'] += $this->getOffset();
         } else {
     		// Use the datetime-local input
 			if (!isset($data['value'])) $data['value'] = $this->value;
+            // Adjust for timezone
+            $data['value'] += $this->getOffset();
 			// The format is important here: no timezones allowed, and set the seconds to 00
 			$data['value'] = date('Y-m-d\TH:i:00', $data['value']);
     	}
