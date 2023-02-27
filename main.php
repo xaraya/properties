@@ -96,7 +96,10 @@ class DateTimeProperty extends DataProperty
         if ($data['input_type'] == 'dropdown') {
 		
 			$data['value'] = $this->getvaluearray($data);
-		
+            // Adjust for timezone
+            $data['value']['second'] += $this->getOffset();
+            $data['value']['timestamp'] += $this->getOffset();
+			
 			if($this->initialization_start_year == null)            
 				$this->initialization_start_year =  min($data['value']['year'], date("Y")) - 5;
 		
@@ -109,6 +112,8 @@ class DateTimeProperty extends DataProperty
         } else {
     		// Use the datetime-local input
 			if (!isset($data['value'])) $data['value'] = $this->value;
+            // Adjust for timezone
+            $data['value'] += $this->getOffset();
 			// The format is important here: no timezones allowed, and set the seconds to 00
 			$data['value'] = date('Y-m-d\TH:i:00', $data['value']);
     	}
