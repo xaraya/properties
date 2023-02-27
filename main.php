@@ -158,8 +158,8 @@ class DateTimeProperty extends DataProperty
     public function getValue()
     {
         // Adjust for timezone
-        $this->value += $this->getOffset();
-        return $this->format($this->value);
+        $value = $this->value + $this->getOffset();
+        return $this->format($value);
     }
     
     function getvaluearray($data)
