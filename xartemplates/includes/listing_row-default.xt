@@ -23,10 +23,13 @@
                     <xar:else />
                         <!-- Output field -->
                         <xar:if condition="$field eq $keyfieldalias">
-                            <a href="#xarModURL($module,'user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
+                            <a href="#xarController::URL($module,'user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
                                 <xar:data-output property="$properties[$column]" value="$value"/>
                             </a>
                         <xar:else />
+                    		<xar:if condition="is_null($value)">
+                    			<xar:set name="value">''</xar:set>
+                    		</xar:if>
                             <xar:data-output property="$properties[$column]" value="$value"/>
                         </xar:if>
                     </xar:if>

@@ -148,7 +148,7 @@ Notes:
         // itemtype 0 means all itemtypes
         $itemtype = isset($itemtype) ? $itemtype : 0;
 
-        $module = isset($module) ? $module : xarModGetName();
+        $module = isset($module) ? $module : xarMod::getName();
         xarMod::apiLoad($module);
         $regid = xarMod::getRegID($module);
 
@@ -191,16 +191,16 @@ Notes:
 
     //--- 4. Get all the parameters we need from the form. These can override the sessionvar settings
 
-        if(!xarVarFetch('startnum',      'int',       $startnum,   $laststartnum, XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('letter',        'str:1',     $letter,     '', XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('search',        'str:1:100', $search,     '', XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('order',         'str',       $order,      $lastorder, XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('sort',          'str',       $sort,       $lastsort, XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('submit',        'str',       $submit,     '', XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('op',            'str',       $op,         '', XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('conditions',    'isset',     $conditions, NULL, XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('export',        'int',       $export,     0, XARVAR_NOT_REQUIRED)) {return;}
-        if(!xarVarFetch('store',         'str:1',     $store,      'session', XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVar::fetch('startnum',      'int',       $startnum,   $laststartnum, xarVar::NOT_REQUIRED)) {return;}
+        if(!xarVar::fetch('letter',        'str:1',     $letter,     '', xarVar::NOT_REQUIRED)) {return;}
+        if(!xarVar::fetch('search',        'str:1:100', $search,     '', xarVar::NOT_REQUIRED)) {return;}
+        if(!xarVar::fetch('order',         'str',       $order,      $lastorder, xarVar::NOT_REQUIRED)) {return;}
+        if(!xarVar::fetch('sort',          'str',       $sort,       $lastsort, xarVar::NOT_REQUIRED)) {return;}
+        if(!xarVar::fetch('submit',        'str',       $submit,     '', xarVar::NOT_REQUIRED)) {return;}
+        if(!xarVar::fetch('op',            'str',       $op,         '', xarVar::NOT_REQUIRED)) {return;}
+        if(!xarVar::fetch('conditions',    'isset',     $conditions, NULL, xarVar::NOT_REQUIRED)) {return;}
+        if(!xarVar::fetch('export',        'int',       $export,     0, xarVar::NOT_REQUIRED)) {return;}
+        if(!xarVar::fetch('store',         'str:1',     $store,      'session', xarVar::NOT_REQUIRED)) {return;}
 
     //--- 5. Get configuration settings from modvars and tag attributes
 
@@ -783,7 +783,7 @@ Notes:
     public function ajaxConfirm($flag='confirm')
     {
         if (xarController::$request->isAjax()) {
-            if(!xarVarFetch($flag, 'int', $confirm, 0, XARVAR_NOT_REQUIRED)) {return false;}
+            if(!xarVar::fetch($flag, 'int', $confirm, 0, xarVar::NOT_REQUIRED)) {return false;}
             return $confirm;
         } else {
             return false;
