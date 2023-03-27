@@ -106,6 +106,9 @@ class DateTimeProperty extends DataProperty
         // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
         if ($data['input_type'] == 'dropdown') {
             $data['value'] = $this->getvaluearray($data);
+            // Adjust for timezone
+            $data['value']['second'] += $this->getOffset();
+            $data['value']['timestamp'] += $this->getOffset();
 
             if ($this->initialization_start_year == null) {
                 $this->initialization_start_year =  min($data['value']['year'], date("Y")) - 5;
@@ -122,6 +125,8 @@ class DateTimeProperty extends DataProperty
             if (!isset($data['value'])) {
                 $data['value'] = $this->value;
             }
+            // Adjust for timezone
+            $data['value'] += $this->getOffset();
             // The format is important here: no timezones allowed, and set the seconds to 00
             $data['value'] = date('Y-m-d\TH:i:00', $data['value']);
         }
@@ -160,6 +165,7 @@ class DateTimeProperty extends DataProperty
             $valuearray['time'] = $this->getvaluearray(['value' => $value]);
         } else {
             // Adjust for timezone
+            $value['second'] += $this->getOffset();
             $value['timestamp'] += $this->getOffset();
 
             $valuearray['date'] = $this->format($value['timestamp']);
@@ -169,10 +175,14 @@ class DateTimeProperty extends DataProperty
         return DataProperty::showOutput($data);
     }
 
-    // Review this
     public function getValue()
     {
-        return $this->format($this->value);
+        $value = $this->value;
+        $value = !empty($value) ? $value : 0;
+
+        // Adjust for timezone
+        $value += $this->getOffset();
+        return $this->format($value);
     }
 
     public function getvaluearray($data)
@@ -241,11 +251,15 @@ class DateTimeProperty extends DataProperty
         // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
         if ($data['input_type'] == 'dropdown') {
             $data['value'] = $this->getvaluearray($data);
+            $data['value']['second'] += $this->getOffset();
+            $data['value']['timestamp'] += $this->getOffset();
         } else {
             // Use the datetime-local input
             if (!isset($data['value'])) {
                 $data['value'] = $this->value;
             }
+            // Adjust for timezone
+            $data['value'] += $this->getOffset();
             // The format is important here: no timezones allowed, and set the seconds to 00
             $data['value'] = date('Y-m-d\TH:i:00', $data['value']);
         }
