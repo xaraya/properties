@@ -103,6 +103,8 @@ class DateProperty extends DataProperty
         // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
         if ($data['input_type'] == 'dropdown') {
             $data['value'] = $this->getvaluearray($data);
+            // Adjust for timezone
+            $data['value']['timestamp'] += $this->getOffset();
 
             if ($this->display_start_year == null) {
                 $this->display_start_year =  min($data['value']['year'], date("Y")) - 5;
@@ -119,6 +121,8 @@ class DateProperty extends DataProperty
             if (!isset($data['value'])) {
                 $data['value'] = $this->value;
             }
+            // Adjust for timezone
+            $data['value'] += $this->getOffset();
             // The format is important here:
             $data['value'] = date('Y-m-d', $data['value']);
         }
@@ -175,7 +179,12 @@ class DateProperty extends DataProperty
 
     public function getValue()
     {
-        return $this->format($this->value);
+        $value = $this->value;
+        $value = !empty($value) ? $value : 0;
+
+        // Adjust for timezone
+        $value += $this->getOffset();
+        return $this->format($value);
     }
 
     public function getvaluearray($data)
@@ -242,11 +251,15 @@ class DateProperty extends DataProperty
         // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
         if ($data['input_type'] == 'dropdown') {
             $data['value'] = $this->getvaluearray($data);
+            $data['value']['timestamp'] += $this->getOffset();
         } else {
             // Use the datetime-local input
             if (!isset($data['value'])) {
                 $data['value'] = $this->value;
             }
+            // Adjust for timezone
+        	  $data['value'] = !empty($value) ? $value : 0;
+            $data['value'] += $this->getOffset();
             // The format is important here:
             $data['value'] = date('YYYY-mm-dd', $data['value']);
         }
