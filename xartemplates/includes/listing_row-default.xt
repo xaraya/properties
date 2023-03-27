@@ -27,6 +27,9 @@
                                 <xar:data-output property="$properties[$column]" value="$value"/>
                             </a>
                         <xar:else />
+                    		<xar:if condition="is_null($value)">
+                    			<xar:set name="value">''</xar:set>
+                    		</xar:if>
                             <xar:data-output property="$properties[$column]" value="$value"/>
                         </xar:if>
                     </xar:if>

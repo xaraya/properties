@@ -4,6 +4,16 @@
         <xar:access level="700">
             <xar:if condition="$total gt 0">
                 <div style="text-align:center; padding-top:10px;">
+                
+					<!-- URLs for custom functions -->
+					<!-- We set a line for each function: 
+						- the name contains an ID in the dropdown below
+						- the name is the URL (in Xaraya format) that will be executed
+					-->
+					<!--
+					<input type="hidden" name="funcurl_99" id="funcurl_99" value="modulefoo_adminapi_funcbar"/>
+					-->
+
                     <input type="hidden" name="idlist" id="idlist"/>
                     <input type="hidden" name="redirecttarget" id="redirecttarget"/>
 
