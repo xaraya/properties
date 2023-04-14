@@ -9,13 +9,13 @@
                 <h3>Usage</h3>
                 <h4>Standalone</h4>
                     <pre>
-    &lt;xar:data-input type="icondropdown" <i>[attr1="value1",...]</i> /&gt;
-    &lt;xar:data-output type="icondropdown" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-input type="icondropdown" <em>[attr1="value1",...]</em> /&gt;
+    &lt;xar:data-output type="icondropdown" <em>[attr1="value1",...]</em> /&gt;
                     </pre>
             <h4>Bound</h4>
                 <pre>
-    &lt;xar:data-input property="$properties['icondropdown']" <i>[attr1="value1",...]</i> /&gt;
-    &lt;xar:data-output property="$properties['icondropdown']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-input property="$properties['icondropdown']" <em>[attr1="value1",...]</em> /&gt;
+    &lt;xar:data-output property="$properties['icondropdown']" <em>[attr1="value1",...]</em> /&gt;
                 </pre>
             <h3> Configuration Values</h3>
             <ul>

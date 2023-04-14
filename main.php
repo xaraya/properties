@@ -26,12 +26,12 @@ class IconDropdownProperty extends SelectProperty
 
     public $icon_options = array();
     public $initialization_icon_directory    = 'set1';
-    public $initialization_icon_options   = '0,red-12.png;
-                                             1,yellow-12-png;
-                                             2,orange-12.png;
-                                             3,green-12.png;
-                                             4,blue-12.png;
-                                             5,clear-12.png;';
+    public $initialization_icon_options   = ['0,red-12.png',
+                                             '1,yellow-12-png',
+                                             '2,orange-12.png',
+                                             '3,green-12.png',
+                                             '4,blue-12.png',
+                                             '5,clear-12.png'];
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -67,13 +67,13 @@ class IconDropdownProperty extends SelectProperty
     function getOptions()
     {
         $options = array();
-        $lines = explode(';',$this->initialization_icon_options);
-        // remove the last (empty) element
-        array_pop($lines);
-        foreach ($lines as $option)
+        foreach ($this->initialization_icon_options as $option)
         {
-            // allow escaping \, for values that need a comma
-            if (preg_match('/(?<!\\\),/', $option)) {
+        	if (is_array($option)) {
+            	// If the option itself is an arrya, then we assume its a dropdown array with ID and name
+        		return $this->initialization_icon_options;
+        	} elseif (preg_match('/(?<!\\\),/', $option)) {
+            	// allow escaping \, for values that need a comma
                 // if the option contains a , we'll assume it's an id,name combination
                 list($id,$name) = preg_split('/(?<!\\\),/', $option);
                 $id = trim(strtr($id,array('\,' => ',')));
