@@ -95,10 +95,11 @@ class DateTimeProperty extends DataProperty
         // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
         if ($data['input_type'] == 'dropdown') {
 		
-			$data['value'] = $this->getvaluearray($data);
+			$value = $this->getvaluearray($data);
             // Adjust for timezone
-            $data['value']['second'] += $this->getOffset();
-            $data['value']['timestamp'] += $this->getOffset();
+            $value['timestamp'] += $this->getOffset();
+            $data['value'] = $value['timestamp'];
+			$data['value'] = $this->getvaluearray($data);
 			
 			if($this->initialization_start_year == null)            
 				$this->initialization_start_year =  min($data['value']['year'], date("Y")) - 5;
@@ -130,25 +131,28 @@ class DateTimeProperty extends DataProperty
         if (isset($data['format_type']))   $this->display_datetime_format_type   = $data['format_type'];
         if (isset($data['format_predef'])) $this->display_datetime_format_predef = $data['format_predef'];
         if (isset($data['format_custom'])) $this->display_datetime_format_custom = $data['format_custom'];
+
         if (!isset($data['value'])) {
             $value = $this->value;
         } else {
             $value = $data['value'];
         }
+        
         if (empty($value)) $value = time();
-        if (!is_array($value)) {
-            // Adjust for timezone
-            $value += $this->getOffset();
-
-            $valuearray['date'] = $this->format($value);
-            $valuearray['time'] = $this->getvaluearray(array('value' => $value));
-        } else {
+        if (is_array($value)) {
+            // An array was passed
             // Adjust for timezone
             $value['second'] += $this->getOffset();
             $value['timestamp'] += $this->getOffset();
 
             $valuearray['date'] = $this->format($value['timestamp']);
             $valuearray['time'] = $value;
+        } else {
+            // Adjust for timezone
+            $value += $this->getOffset();
+
+            $valuearray['date'] = $this->format($value);
+            $valuearray['time'] = $this->getvaluearray(array('value' => $value));
         }
         $data['value'] = $valuearray;
         return DataProperty::showOutput($data);
