@@ -130,6 +130,7 @@ class DateProperty extends DataProperty
         } else {
             $value = $data['value'];
         }
+        
         if (empty($value)) $value = time();
         if (is_array($value)) {
             // An array was passed
