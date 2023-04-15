@@ -91,10 +91,12 @@ class DateProperty extends DataProperty
         
         // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
         if ($data['input_type'] == 'dropdown') {
-		
-			$data['value'] = $this->getvaluearray($data);
+	
+			$value = $this->getvaluearray($data);
             // Adjust for timezone
-            $data['value']['timestamp'] += $this->getOffset();
+            $value['timestamp'] += $this->getOffset();
+            $data['value'] = $value['timestamp'];
+			$data['value'] = $this->getvaluearray($data);
 		
 			if($this->display_start_year == null)            
 				$this->display_start_year =  min($data['value']['year'], date("Y")) - 5;
@@ -144,15 +146,10 @@ class DateProperty extends DataProperty
 
             // Adjust for timezone
             $value += $this->getOffset();
-
-            $date->settimestamp($value);
-            $valuearray['day'] = $date->getDay();
-            $valuearray['month'] = $date->getMonth();
-            $valuearray['year'] = $date->getYear();
-            $valuearray['date'] = $this->format($value);
-            $data['value'] = $valuearray;
+            $data['value'] = $value;
+			$data['value'] = $this->getvaluearray($data);
+            $data['value']['date'] = $this->format($value);
         }
-
         return DataProperty::showOutput($data);
     }
 
