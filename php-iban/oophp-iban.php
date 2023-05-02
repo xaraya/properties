@@ -3,6 +3,7 @@
 # OO wrapper for 'php-iban.php'
 Class IBAN {
 
+	public $iban;
  function __construct($iban = '') {
   require_once('php-iban.php'); # load the procedural codebase
   $this->iban = $iban;
