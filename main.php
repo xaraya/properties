@@ -42,7 +42,7 @@ class NumberProperty extends FloatBoxProperty
         $this->isOO   = extension_loaded('intl');
         if ($this->isOO) {
             // Create the formatter object using the current locale
-            $localeinfo = xarLocaleGetInfo(xarMLS::getCurrentLocale());
+            $localeinfo = xarMLS::localeGetInfo(xarMLS::getCurrentLocale());
             $locale = $localeinfo['lang'] . "_" . $localeinfo['country'];
             $this->formatter = new NumberFormatter($locale, NumberFormatter::DEFAULT_STYLE);
             // Force the display to 2 decimals for now
@@ -55,6 +55,8 @@ class NumberProperty extends FloatBoxProperty
 
     public function validateValue($value = null)
     {
+        xarLog::message("DataProperty::validateValue: Validating property " . $this->name, xarLog::LEVEL_DEBUG);
+
         $value = $this->formatter->parse($value);
         return parent::validateValue($value);
     }
@@ -112,7 +114,7 @@ class NumberProperty extends FloatBoxProperty
                 throw new Exception(xarML('Incorrect value for getValue method of number property #(1)', $this->name));
             }
             if (xarModVars::get('dynamicdata', 'debugmode') &&
-                in_array(xarUserGetVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+                in_array(xarUser::getVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
                 $error_code = $this->formatter->getErrorCode();
                 if (!empty($error_code)) echo $this->formatter->getErrorMessage();
             }
@@ -138,7 +140,7 @@ class NumberProperty extends FloatBoxProperty
                 throw new Exception(xarML('Incorrect value for setValue method of number property #(1)', $this->name));
             }
             if (xarModVars::get('dynamicdata', 'debugmode') &&
-                in_array(xarUserGetVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+                in_array(xarUser::getVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
                 $error_code = $this->formatter->getErrorCode();
                 if (!empty($error_code)) echo $this->formatter->getErrorMessage();
             }
