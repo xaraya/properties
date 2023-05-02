@@ -34,7 +34,7 @@ class LinkTrailProperty extends DataProperty
         if (empty($links)) $links = array();
         
         // Get the title of the current page
-        $title = xarTplGetPageTitle();
+        $title = xarTpl::getPageTitle();
         // Kludge: need to remove unwanted stuff
         $separator  = xarModVars::get('themes', 'SiteTitleSeparator');
         $titlearray = explode($separator,$title);
