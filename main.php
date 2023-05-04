@@ -32,7 +32,7 @@ class JSCalendarDateProperty extends CalendarProperty
             $theme = 'calendar-win2k-1';
         }
         if (empty($locale)) {
-            $locale = xarLocaleGetInfo(xarMLSGetCurrentLocale());
+            $locale = xarMLS::localeGetInfo(xarMLS::getCurrentLocale());
         }
         if (empty($tabindex)) {
             $tabindex = '';
@@ -70,7 +70,7 @@ class JSCalendarDateProperty extends CalendarProperty
 
         $cal->set_option('ifFormat',$dateformat);
         $cal->set_option('daFormat',$dateformat);
-        // $timeval = xarLocaleFormatDate($dateformat, $value);
+        // $timeval = xarLocale::formatDate($dateformat, $value);
         $data['baseuri']    = xarServer::getBaseURI();
         $data['dateformat'] = $dateformat;
         // $data['timeval']    = $timeval;

@@ -16,7 +16,7 @@
     </xar:if>
 
     <xar:style method="link" scope="property" property="jscalendardate" file="$calendartheme" />
-    <input type="text" name="#$name#" id="#$link['id']#" value="#xarLocaleFormatDate($dateformat,$value)#" maxlength="19" tabindex="#$tabindex#" class="#$class#" style="#$style#"/>
+    <input type="text" name="#$name#" id="#$link['id']#" value="#xarLocale::formatDate($dateformat,$value)#" maxlength="19" tabindex="#$tabindex#" class="#$class#" style="#$style#"/>
 
     <xar:var name="alttext">Click here to pick a date</xar:var>
     <a href="#" id="#$link['trigger']#">
