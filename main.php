@@ -48,7 +48,7 @@ class TimeFrameProperty extends DataProperty
         $jscalendardate->checkInput($name . "_end_date"); 
         $enddate = !empty($jscalendardate->value) ? $jscalendardate->value : time();
         $dropdown->checkInput($name . "_period"); 
-        xarVarFetch($name . "_period", 'int' ,$period,  0, XARVAR_NOT_REQUIRED);
+        xarVar::fetch($name . "_period", 'int' ,$period,  0, xarVar::NOT_REQUIRED);
         
         // Give the period precedence if it was chosen
         if (!empty($period)) {
