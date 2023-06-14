@@ -16,13 +16,13 @@
             <h3>Usage</h3>
             <h4>Standalone</h4>
                 <pre>
-    &lt;xar:data-input type="timeframe" <i>[attr1="value1",...]</i> /&gt;
-    &lt;xar:data-output type="timeframe" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-input type="timeframe" <em>[attr1="value1",...]</em> /&gt;
+    &lt;xar:data-output type="timeframe" <em>[attr1="value1",...]</em> /&gt;
                     </pre>
             <h4>Bound</h4>
                 <pre>
-    &lt;xar:data-input property="$properties['timeframe']" <i>[attr1="value1",...]</i> /&gt;
-    &lt;xar:data-output property="$properties['timeframe']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-input property="$properties['timeframe']" <em>[attr1="value1",...]</em> /&gt;
+    &lt;xar:data-output property="$properties['timeframe']" <em>[attr1="value1",...]</em> /&gt;
                 </pre>
             <h3>Attributes</h3>
             <ul>

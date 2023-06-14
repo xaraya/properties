@@ -11,11 +11,11 @@
     <div style="float: left; margin-right: 50px">
         Start:
         <xar:set name="startname">$name . "_start_date"</xar:set>
-        <xar:data-input type="jscalendardate" name="$startname" value="$value[0]" dateformat="%Y-%m-%d" validation="date" class="$class" style="$style"/>
+        <xar:data-input type="date" input_type="calendar" name="$startname" value="$value[0]" class="$class" style="$style"/>
     </div>
     <div style="float: left; margin-right: 50px">
         End:
         <xar:set name="endname">$name . "_end_date"</xar:set>
-        <xar:data-input type="jscalendardate" name="$endname" value="$value[1]" dateformat="%Y-%m-%d" validation="date" class="$class" style="$style"/>
+        <xar:data-input type="date" input_type="calendar" name="$endname" value="$value[1]" class="$class" style="$style"/>
     </div>
 </xar:template>
