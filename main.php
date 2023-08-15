@@ -34,8 +34,8 @@ class TimePeriodProperty extends DataProperty
         // store the fieldname for validations who need them (e.g. file uploads)
         $this->fieldname = $name;
         if (!isset($value)) {
-            if (!xarVarFetch($name . '_time', 'isset', $time,  NULL, XARVAR_DONT_SET)) {return;}
-            if (!xarVarFetch($name . '_unit', 'isset', $unit,  NULL, XARVAR_DONT_SET)) {return;}
+            if (!xarVar::fetch($name . '_time', 'isset', $time,  NULL, xarVar::DONT_SET)) {return;}
+            if (!xarVar::fetch($name . '_unit', 'isset', $unit,  NULL, xarVar::DONT_SET)) {return;}
         }
         if (!isset($time)) return;
         $seconds = 1.0;
