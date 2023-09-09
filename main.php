@@ -109,7 +109,7 @@ class NumberProperty extends FloatBoxProperty
     {
         if ($this->isOO) {
             try {
-                $display_string = $this->formatter->format($this->value);
+                $display_string = $this->formatter->format((float)$this->value);
             } catch (Exception $e) {
                 throw new Exception(xarML('Incorrect value for getValue method of number property #(1)', $this->name));
             }
