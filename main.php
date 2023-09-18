@@ -61,7 +61,7 @@ class DateProperty extends DataProperty
 				list($isvalid, $days) = $this->fetchValue($name . '["day"]');
 			}
 			if (!isset($years) ||!isset($months) ||!isset($days)) {
-				$this->objectref->missingfields[] = $this->name;
+				if (!empty($this->objectref)) $this->objectref->missingfields[] = $this->name;
 				return null;
 			}
 			$value = mktime(0,0,0,$months,$days,$years);
