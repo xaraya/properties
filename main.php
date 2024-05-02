@@ -16,7 +16,7 @@ sys::import('modules.dynamicdata.class.properties.master');
 /**
  * Handle a mimic property
  *
- * @author Marc Lutolf <mfl@netspan.ch>
+ * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 class MimicProperty extends DataProperty
 {
@@ -78,6 +78,8 @@ class MimicProperty extends DataProperty
     
     public function validateValue($value = null)
     {
+        xarLog::message("DataProperty::validateValue: Validating property " . $this->name, xarLog::LEVEL_DEBUG);
+
         $container_verify = $this->container->validateValue($value);
         if ($container_verify) {
             $this->value = $this->container->value;
