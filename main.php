@@ -110,6 +110,7 @@ class DateProperty extends DataProperty
         } else {
     		// Use the datetime-local input
 			if (!isset($data['value'])) $data['value'] = $this->value;
+			if (empty($data['value'])) $data['value'] = 0;
             // Adjust for timezone
             $data['value'] += $this->getOffset();
 			// The format is important here:
