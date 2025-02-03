@@ -43,10 +43,12 @@ class TimeFrameProperty extends DataProperty
         $jscalendardate = DataPropertyMaster::getProperty(array('name' => 'jscalendardate'));
         $dropdown = DataPropertyMaster::getProperty(array('name' => 'dropdown'));
 
+        // The data needed for calendars
         $jscalendardate->checkInput($name . "_start_date"); 
         $startdate = !empty($jscalendardate->value) ? $jscalendardate->value : time();
         $jscalendardate->checkInput($name . "_end_date"); 
         $enddate = !empty($jscalendardate->value) ? $jscalendardate->value : time();
+        // The data needed for the dropdown
         $dropdown->checkInput($name . "_period"); 
         xarVar::fetch($name . "_period", 'int' ,$period,  0, xarVar::NOT_REQUIRED);
         
