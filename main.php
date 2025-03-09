@@ -48,11 +48,11 @@ class TimeFrameProperty extends DataProperty
         $startdate = !empty($jscalendardate->value) ? $jscalendardate->value : time();
         $jscalendardate->checkInput($name . "_end_date"); 
         $enddate = !empty($jscalendardate->value) ? $jscalendardate->value : time();
+
         // The data needed for the dropdown
-        $dropdown->checkInput($name . "_period"); 
         xarVar::fetch($name . "_period", 'int' ,$period,  0, xarVar::NOT_REQUIRED);
-        
-        // Give the period precedence if it was chosen
+       
+        // If the period was chosen, give it precedence for the end date
         if (!empty($period)) {
             list($startdate, $enddate) = $this->getTimeperiod($period);
         } else {
